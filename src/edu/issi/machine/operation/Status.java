@@ -8,11 +8,11 @@ public enum Status {
     /**
      * 
      */
-    OK, 
+    OK,
     /**
      * 
      */
-    WARNING, 
+    WARNING,
     /**
      * 
      */

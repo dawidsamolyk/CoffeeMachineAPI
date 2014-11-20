@@ -58,7 +58,7 @@ public class Operation {
     }
 
     private boolean canDoThisOperation(Subassembly subassembly) {
-	return subassembly.supports(this) == false;
+	return subassembly.supports(this);
     }
 
     private boolean isRequiredElementsProvided() {

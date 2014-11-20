@@ -14,12 +14,12 @@ public class ApiException extends Exception {
     public ApiException(int stateCodeNumber) {
 	// TODO
     }
-    
+
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * @return Status wyjatku.
      */

@@ -7,7 +7,7 @@ package edu.issi.machine;
 public class ObjectWithId {
     @SuppressWarnings("unused")
     private Identity id;
-    
+
     /**
      * @param id
      */

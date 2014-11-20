@@ -10,7 +10,7 @@ import org.junit.Test;
 public class OperationStateTest {
 
     @Test
-    public void shouldProvideState(){
+    public void shouldProvideState() {
 	OperationState state = new OperationState(Status.OK);
 
 	assertNotNull(state.getStatus());
@@ -52,13 +52,13 @@ public class OperationStateTest {
 	    fail("Powinien wystapic blad");
 	} catch (IllegalStateException e) {
 	}
-	
+
 	try {
 	    new OperationState(Status.ERROR);
 	    fail("Powinien wystapic blad");
 	} catch (IllegalStateException e) {
 	}
-	
+
 	try {
 	    new OperationState(Status.WARNING);
 	    fail("Powinien wystapic blad");

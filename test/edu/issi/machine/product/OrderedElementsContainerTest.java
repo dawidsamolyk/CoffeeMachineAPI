@@ -1,8 +1,6 @@
 package edu.issi.machine.product;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -62,7 +60,7 @@ public class OrderedElementsContainerTest {
 	assertEquals(4, product.numberOfElements());
 	assertEquals(ingredient, product.getElementAt(0));
     }
-    
+
     @Test
     public void shouldBeAbleToRemoveAnyExistingObject() {
 	OrderedElementsContainer<Object> product = new OrderedElementsContainer<Object>();
@@ -97,7 +95,7 @@ public class OrderedElementsContainerTest {
 	secondIterator.next();
 	Object secondIteratorObject = secondIterator.next();
 
-	assertNotEquals(firstIteratorObject, secondIteratorObject);
+	assertFalse(firstIteratorObject == secondIteratorObject);
     }
 
     @Test
@@ -122,13 +120,13 @@ public class OrderedElementsContainerTest {
 	OrderedElementsContainer<Object> product = productWithThreeExampleObjects();
 	product.addAt(100, new Object());
     }
-    
+
     @Test(expected = NoSuchElementException.class)
     public void shouldNotBeAbleToRemoveObjectAtNonexistentIndex() {
 	OrderedElementsContainer<Object> product = productWithThreeExampleObjects();
 	product.removeAt(100);
     }
-    
+
     @Test(expected = NoSuchElementException.class)
     public void shouldNotBeAbleToGetObjectAtNonexistentIndex() {
 	OrderedElementsContainer<Object> product = productWithThreeExampleObjects();

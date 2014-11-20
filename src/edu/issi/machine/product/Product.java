@@ -12,7 +12,7 @@ import edu.issi.machine.ObjectWithId;
  */
 public class Product extends ObjectWithId {
     private OrderedElementsContainer<Ingredient> ingredients;
-    
+
     /**
      * @param id
      */

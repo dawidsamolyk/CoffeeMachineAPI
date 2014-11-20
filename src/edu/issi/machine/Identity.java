@@ -17,7 +17,7 @@ public class Identity {
 
     /**
      * @param id
-     * @throws SecurityException 
+     * @throws SecurityException
      */
     public Identity(int id) throws SecurityException {
 	this.id = id;
@@ -39,10 +39,12 @@ public class Identity {
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
 	if (obj == null)
 	    return false;
+	if (obj instanceof Identity == false)
+	    return false;
+	if (this == obj)
+	    return true;
 	if (getClass() != obj.getClass())
 	    return false;
 	Identity other = (Identity) obj;

@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="CofeeMachine.makejar" default="makejar" basedir=".">
-  <target name ="makejar" description="Create a jar for the CoffeeMachine project">
-    <jar jarfile="Application.jar" includes="*.class" basedir="bin"/>
-  </target>
+<project name="CofeeMachine" default="test.report" basedir=".">
+	<target name="test">
+		<mkdir dir="report" />
+
+		<junit printsummary="yes" haltonerror="yes" haltonfailure="yes">
+			<formatter type="plain" usefile="false" />
+			<formatter type="xml" />
+			<batchtest todir="report">
+				<fileset dir="test">
+					<include name="**/*Test.java" />
+					<exclude name="**/Test*All.java" />
+				</fileset>
+			</batchtest>
+			<classpath>
+				<pathelement location="bin" />
+				<pathelement path="lib/junit.jar" />
+			</classpath>
+		</junit>
+	</target>
+
+	<target name="test.report" depends="test">
+		<mkdir dir="report/html" />
+		<junitreport todir="report">
+			<fileset dir="report">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="report/html" />
+		</junitreport>
+	</target>
+
+	<target name="delete_reports" description="Delete JUnit tests reports">
+		<delete dir="${reports}" />
+	</target>
 </project>

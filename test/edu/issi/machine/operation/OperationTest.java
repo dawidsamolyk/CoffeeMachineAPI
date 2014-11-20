@@ -34,7 +34,7 @@ public class OperationTest {
 
 	assertNotNull(state);
     }
-    
+
     @Test
     public void shouldGiveErrorResponseWhenOnlySubassemblySetted() throws Exception {
 	Subassembly subassembly = sampleSubassembly(operation);

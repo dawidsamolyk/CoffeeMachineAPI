@@ -37,7 +37,7 @@ public class OperationState {
 	this.status = status;
 	this.description = description;
     }
-    
+
     /**
      * @param status
      * @param stateCodeNumber
@@ -45,7 +45,7 @@ public class OperationState {
      */
     public OperationState(Status status, int stateCodeNumber) throws IllegalStateException {
 	ensureIsNotEmpty(status);
-	
+
 	if (Status.requiresAttention(status)) {
 	    this.description = "Blad numer: " + stateCodeNumber;
 	}
