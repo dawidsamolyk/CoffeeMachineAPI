@@ -23,7 +23,9 @@ public class Properties {
 
     /**
      * @param key
+     *            Numer ID obiektu.
      * @param value
+     *            Wartoœæ obiektu.
      */
     public void add(Identity key, Object value) {
 	properties.put(key, value);
@@ -31,6 +33,7 @@ public class Properties {
 
     /**
      * @param key
+     *            Numer ID obiektu
      */
     public void remove(Identity key) {
 	properties.remove(key);
@@ -38,8 +41,10 @@ public class Properties {
 
     /**
      * @param key
+     *            Numer ID obiektu
      * @return Obiekt przypisany do podanego identyfikatora.
      * @throws NoSuchElementException
+     *             Wyst¹pi, jeœli nie ma we w³aœciwoœciach obiektu o podanym ID.
      */
     public Object get(Identity key) throws NoSuchElementException {
 	Object result = properties.get(key);

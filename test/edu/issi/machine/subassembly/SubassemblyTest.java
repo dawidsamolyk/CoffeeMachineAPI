@@ -55,14 +55,14 @@ public class SubassemblyTest {
     @Test
     public void shouldCorrectRecognizeNotSupportedOperations() throws InvalidAttributeValueException {
 	Operation testOperation = new Operation(null);
-	Subassembly subassembly = new Subassembly(Identity.SAMPLE, null, new Operation(null));
+	Subassembly subassembly = mockSubassembly();
 
 	assertFalse(subassembly.supports(testOperation));
     }
 
     @Test(expected = NoSuchElementException.class)
     public void shouldInformWhenPropertiesNotSetted() throws InvalidAttributeValueException {
-	Subassembly subassembly = new Subassembly(Identity.SAMPLE, null, new Operation(null));
+	Subassembly subassembly = mockSubassembly();
 
 	subassembly.getProperty(null);
     }
@@ -74,7 +74,7 @@ public class SubassemblyTest {
 	properties.add(new Identity(5), 5);
 	properties.add(new Identity(10), 10);
 
-	Subassembly subassembly = new Subassembly(Identity.SAMPLE, properties, new Operation(null));
+	Subassembly subassembly = mockSubassembly();
 
 	subassembly.getProperty(new Identity(4));
     }
@@ -91,6 +91,10 @@ public class SubassemblyTest {
 
 	assertNotNull(subassembly.getProperty(firstId));
 	assertNotNull(subassembly.getProperty(secondId));
+    }
+
+    public static Subassembly mockSubassembly() throws InvalidAttributeValueException {
+	return new Subassembly(Identity.SAMPLE, null, new Operation(null));
     }
 
 }

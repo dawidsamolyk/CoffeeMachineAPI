@@ -10,6 +10,7 @@ public class ApiException extends Exception {
 
     /**
      * @param stateCodeNumber
+     *            Numer kodu b³êdu.
      */
     public ApiException(int stateCodeNumber) {
 	// TODO

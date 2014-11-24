@@ -19,6 +19,7 @@ public class Operation {
 
     /**
      * @param apiMethod
+     *            Metoda (funkcja) API maszyny.
      */
     public Operation(Method apiMethod) {
 	this.apiMethod = apiMethod;
@@ -26,6 +27,7 @@ public class Operation {
 
     /**
      * @param subassembly
+     *            Podzespó³, na którym ma zostaæ wykonana operacja.
      * @return Zwraca referencje do siebie - wzorzec Fluent Interface.
      */
     public Operation setSubassembly(Subassembly subassembly) {
@@ -35,6 +37,7 @@ public class Operation {
 
     /**
      * @param ingredient
+     *            Sk³adnik, na którym ma zostaæ wykonana operacja.
      * @return Zwraca referencje do siebie - wzorzec Fluent Interface.
      */
     public Operation setIngredient(Ingredient ingredient) {
@@ -46,11 +49,11 @@ public class Operation {
      * @return Stan operacji.
      */
     public OperationState execute() {
-	if (isRequiredElementsProvided()) {
+	if (isRequiredElementsProvided() == false) {
 	    return new OperationState(Status.ERROR, "Nie podano podzespolu lub skladnika dla tej operacji!");
 	}
 
-	if (canDoThisOperation(this.subassembly)) {
+	if (canDoThisOperation(this.subassembly) == false) {
 	    return new OperationState(Status.ERROR, "Podzespol nie moze wykonac tej operacji!");
 	}
 
@@ -62,7 +65,7 @@ public class Operation {
     }
 
     private boolean isRequiredElementsProvided() {
-	return (this.subassembly == null || this.ingredient == null);
+	return (this.subassembly != null && this.ingredient != null);
     }
 
     private OperationState executeApiOperation() {

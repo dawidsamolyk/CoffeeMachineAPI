@@ -22,9 +22,13 @@ public class Subassembly extends ObjectWithId {
 
     /**
      * @param id
+     *            Numer ID.
      * @param operations
+     *            Operacje, które mo¿e wykonaæ wybrany podzespó³.
      * @param properties
+     *            Dodatkowe w³aœciwoœci podzespo³u.
      * @throws InvalidAttributeValueException
+     *             Wyst¹pi, jeœli lista operacji bêdzie pusta.
      */
     public Subassembly(Identity id, Properties properties, Operation... operations)
 	    throws InvalidAttributeValueException {
@@ -41,6 +45,7 @@ public class Subassembly extends ObjectWithId {
 
     /**
      * @param operation
+     *            Operacja.
      * @return Czy podzespol wspiera podana operacje.
      */
     public boolean supports(Operation operation) {
@@ -49,8 +54,11 @@ public class Subassembly extends ObjectWithId {
 
     /**
      * @param id
+     *            Numer ID.
      * @return Wlasciwosc dla obiektu o podanym identyfikatorze.
      * @throws NoSuchElementException
+     *             Wyst¹pi, jeœli nie istnieje dodatkowa w³aœciwoœæ podzespo³u o
+     *             podanym ID.
      */
     public Object getProperty(Identity id) throws NoSuchElementException {
 	MachineValidatorException.generateExceptionWhenObjectIsNotCreated(this.properties,

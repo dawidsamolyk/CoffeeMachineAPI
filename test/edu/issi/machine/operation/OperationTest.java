@@ -21,23 +21,23 @@ public class OperationTest {
 
     @Before
     public void setUp() throws Exception {
-	Method apiOperation = sampleApiMethod();
+	Method apiOperation = mockApiMethod();
 	this.operation = new Operation(apiOperation);
     }
 
     @Test
     public void shouldGiveResponseAfterExecution() throws Exception {
-	Subassembly subassembly = sampleSubassembly(operation);
+	Subassembly subassembly = mockSubassembly(operation);
 
 	OperationState state;
-	state = operation.setIngredient(sampleIngredient()).setSubassembly(subassembly).execute();
+	state = operation.setIngredient(mockIngredient()).setSubassembly(subassembly).execute();
 
 	assertNotNull(state);
     }
 
     @Test
     public void shouldGiveErrorResponseWhenOnlySubassemblySetted() throws Exception {
-	Subassembly subassembly = sampleSubassembly(operation);
+	Subassembly subassembly = mockSubassembly(operation);
 
 	OperationState state = operation.setSubassembly(subassembly).execute();
 
@@ -46,41 +46,41 @@ public class OperationTest {
 
     @Test
     public void shouldGiveErrorResponseWhenOnlyIngredientSetted() throws Exception {
-	OperationState state = operation.setIngredient(sampleIngredient()).execute();
+	OperationState state = operation.setIngredient(mockIngredient()).execute();
 
 	assertEquals(Status.ERROR, state.getStatus());
     }
 
     @Test
     public void shouldExecuteValidlyWhenIngredientAndSubassemblySetted() throws Exception {
-	Subassembly subassembly = sampleSubassembly(operation);
+	Subassembly subassembly = mockSubassembly(operation);
 
 	OperationState state;
-	state = operation.setIngredient(sampleIngredient()).setSubassembly(subassembly).execute();
+	state = operation.setIngredient(mockIngredient()).setSubassembly(subassembly).execute();
 
 	assertEquals(Status.OK, state.getStatus());
     }
 
     @Test
     public void shouldSetSubassemblyOnlyWhenItCanDoSpecifiedOperation() throws Exception {
-	Subassembly subassembly = sampleSubassembly(operation);
+	Subassembly subassembly = mockSubassembly(operation);
 
 	OperationState state;
-	state = operation.setSubassembly(subassembly).setIngredient(sampleIngredient()).execute();
+	state = operation.setSubassembly(subassembly).setIngredient(mockIngredient()).execute();
 
 	assertEquals(Status.OK, state.getStatus());
     }
 
     @Test
     public void shouldGiveErrorResponseWhenSettedSubassemblyCanNotDoSpecifiedOperation() {
-	Subassembly subassembly = sampleSubassembly(new Operation(null));
+	Subassembly subassembly = mockSubassembly(new Operation(null));
 
 	OperationState state = operation.setSubassembly(subassembly).execute();
 
 	assertEquals(Status.ERROR, state.getStatus());
     }
 
-    private Subassembly sampleSubassembly(Operation... operations) {
+    public static Subassembly mockSubassembly(Operation... operations) {
 	try {
 	    return new Subassembly(Identity.SAMPLE, null, operations);
 	} catch (InvalidAttributeValueException e) {
@@ -89,11 +89,11 @@ public class OperationTest {
 	return null;
     }
 
-    private Method sampleApiMethod() throws NoSuchMethodException {
+    public static Method mockApiMethod() throws NoSuchMethodException {
 	return API.class.getMethod("giveTheCup", Integer.class);
     }
 
-    private Ingredient sampleIngredient() {
+    public static Ingredient mockIngredient() {
 	return new Ingredient(Identity.SAMPLE);
     }
 

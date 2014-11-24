@@ -11,6 +11,7 @@ public class Ingredient extends ObjectWithId {
 
     /**
      * @param id
+     *            Numer ID.
      */
     public Ingredient(Identity id) {
 	super(id);

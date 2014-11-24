@@ -10,7 +10,10 @@ public class OperationState {
 
     /**
      * @param status
+     *            Status operacji (@see {@link Status}).
      * @throws IllegalStateException
+     *             Wyst¹pi, gdy status bêdzie wyamga³ uwagi (b³¹d lub
+     *             ostrze¿enie), poniewa¿ nie zosta³ ustawiony dla niego opis.
      */
     public OperationState(Status status) throws IllegalStateException {
 	ensureIsNotEmpty(status);
@@ -24,8 +27,12 @@ public class OperationState {
 
     /**
      * @param status
+     *            Status operacji (@see {@link Status}).
      * @param description
+     *            Dodatkowy opis stanu operacji.
      * @throws IllegalStateException
+     *             Wyst¹pi, gdy status bêdzie wyamga³ uwagi (b³¹d lub
+     *             ostrze¿enie) i nie zostanie ustawiony dla niego opis.
      */
     public OperationState(Status status, String description) throws IllegalStateException {
 	ensureIsNotEmpty(status);
@@ -40,8 +47,13 @@ public class OperationState {
 
     /**
      * @param status
+     *            Status operacji (@see {@link Status}).
      * @param stateCodeNumber
+     *            Kod operacji.
      * @throws IllegalStateException
+     *             Wyst¹pi, gdy status bêdzie wyamga³ uwagi (b³¹d lub
+     *             ostrze¿enie) i nie zostanie ustawiony dla niego opis lub kod
+     *             operacji.
      */
     public OperationState(Status status, int stateCodeNumber) throws IllegalStateException {
 	ensureIsNotEmpty(status);

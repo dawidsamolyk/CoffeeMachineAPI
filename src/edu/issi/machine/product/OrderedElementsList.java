@@ -7,41 +7,49 @@ import java.util.NoSuchElementException;
 /**
  * @author Dawid
  * @param <Type>
+ *            Typ obiektów, które bêd¹ przechowywane w tej liœcie.
  * 
  */
-public class OrderedElementsContainer<Type> {
+public class OrderedElementsList<Type> {
     private LinkedList<Type> elements;
 
     /**
      * 
      */
-    public OrderedElementsContainer() {
+    public OrderedElementsList() {
 	elements = new LinkedList<Type>();
     }
 
     /**
-     * @param ingredient
+     * @param object
+     *            Obiekt, który zostanie dodany na koñcu listy.
      */
-    public void addAtTheEnd(Type ingredient) {
-	elements.add(ingredient);
+    public void addAtTheEnd(Type object) {
+	elements.add(object);
     }
 
     /**
      * @param index
-     * @param ingredient
+     *            Indeks, pod który ma zostaæ wstawiony nowy obiekt.
+     * @param object
+     *            Obiekt, który zostanie dodany do listy, pod wskazanym
+     *            indeksem.
      * @throws UnsupportedOperationException
+     *             Wyst¹pi, jeœli podano nieprawid³owy indeks.
      */
-    public void addAt(int index, Type ingredient) throws UnsupportedOperationException {
+    public void addAt(int index, Type object) throws UnsupportedOperationException {
 	if (index >= elements.size() || index < 0) {
 	    throw new UnsupportedOperationException("Nie mozna dodac elementu pod indeksem " + index + "!");
 	}
-	elements.add(index, ingredient);
+	elements.add(index, object);
     }
 
     /**
      * @param index
+     *            Indeks, spod którego ma zostaæ pobrany obiekt.
      * @return Skladnik na podanym indeksie.
      * @throws NoSuchElementException
+     *             Wyst¹pi, jeœli nie ma obiektu pod podanym indeksem.
      */
     public Type getElementAt(int index) throws NoSuchElementException {
 	checkIsThereSuchElementAt(index);
@@ -50,7 +58,9 @@ public class OrderedElementsContainer<Type> {
 
     /**
      * @param index
+     *            Indeks, spod którego ma zostaæ usuniêty obiekt.
      * @throws NoSuchElementException
+     *             Wyst¹pi, jeœli nie ma obiektu pod podanym indeksem.
      */
     public void removeAt(int index) throws NoSuchElementException {
 	checkIsThereSuchElementAt(index);

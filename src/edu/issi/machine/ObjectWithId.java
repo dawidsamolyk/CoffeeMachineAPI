@@ -10,6 +10,7 @@ public class ObjectWithId {
 
     /**
      * @param id
+     *            Numer ID.
      */
     public ObjectWithId(final Identity id) {
 	this.id = id;

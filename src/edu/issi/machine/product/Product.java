@@ -11,19 +11,21 @@ import edu.issi.machine.ObjectWithId;
  *
  */
 public class Product extends ObjectWithId {
-    private OrderedElementsContainer<Ingredient> ingredients;
+    private OrderedElementsList<Ingredient> ingredients;
 
     /**
      * @param id
+     *            Numer ID.
      */
     public Product(final Identity id) {
 	super(id);
-	ingredients = new OrderedElementsContainer<Ingredient>();
+	ingredients = new OrderedElementsList<Ingredient>();
     }
 
     /**
      * @param ingredient
-     * @see edu.issi.machine.product.OrderedElementsContainer#addAtTheEnd(Object)
+     *            Sk³adnik, który zostanie dodany na koñcu listy.
+     * @see edu.issi.machine.product.OrderedElementsList#addAtTheEnd(Object)
      */
     public void addAtTheEnd(Ingredient ingredient) {
 	ingredients.addAtTheEnd(ingredient);
@@ -31,9 +33,11 @@ public class Product extends ObjectWithId {
 
     /**
      * @param index
+     *            Indeks, spod którego ma zostaæ pobrany sk³adnik.
      * @return Skladnik umieszczony na podanym indeksie.
      * @throws NoSuchElementException
-     * @see edu.issi.machine.product.OrderedElementsContainer#getElementAt(int)
+     *             Wyst¹pi, jeœli pod podanym indeksem nie ma ¿adnego sk³adnika.
+     * @see edu.issi.machine.product.OrderedElementsList#getElementAt(int)
      */
     public Ingredient getIngredientAt(int index) throws NoSuchElementException {
 	return ingredients.getElementAt(index);
@@ -41,7 +45,7 @@ public class Product extends ObjectWithId {
 
     /**
      * @return Liczba skladnikow.
-     * @see edu.issi.machine.product.OrderedElementsContainer#numberOfElements()
+     * @see edu.issi.machine.product.OrderedElementsList#numberOfElements()
      */
     public int numberOfElements() {
 	return ingredients.numberOfElements();
@@ -49,16 +53,18 @@ public class Product extends ObjectWithId {
 
     /**
      * @param index
+     *            Indeks, pod który ma zostaæ dodany sk³adnik.
      * @param ingredient
-     * @see edu.issi.machine.product.OrderedElementsContainer#addAt(int, Object)
+     *            Sk³adnik.
+     * @see edu.issi.machine.product.OrderedElementsList#addAt(int, Object)
      */
     public void addAt(int index, Ingredient ingredient) {
 	ingredients.addAt(index, ingredient);
     }
 
     /**
-     * @param index
-     * @see edu.issi.machine.product.OrderedElementsContainer#removeAt(int)
+     * @param index Indeks, spod którego ma zostaæ usuniêty sk³adnik.
+     * @see edu.issi.machine.product.OrderedElementsList#removeAt(int)
      */
     public void removeAt(int index) {
 	ingredients.removeAt(index);
@@ -66,7 +72,7 @@ public class Product extends ObjectWithId {
 
     /**
      * @return Iterator po skladnikach.
-     * @see edu.issi.machine.product.OrderedElementsContainer#iterator()
+     * @see edu.issi.machine.product.OrderedElementsList#iterator()
      */
     public Iterator<Ingredient> iterator() {
 	return ingredients.iterator();

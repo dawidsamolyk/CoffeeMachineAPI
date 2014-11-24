@@ -17,7 +17,10 @@ public class Identity {
 
     /**
      * @param id
+     *            Numer identyfikacyjny.
      * @throws SecurityException
+     *             Wyst¹pi, gdy nast¹pi próba stworzenia dwóch obiektów o tym
+     *             samym numerze ID.
      */
     public Identity(int id) throws SecurityException {
 	this.id = id;
