@@ -1,4 +1,6 @@
-package edu.issi.machine.subassembly;
+package edu.issi.machine.subassembly.handler;
+
+import java.io.Serializable;
 
 import edu.issi.machine.operation.Operation;
 
@@ -6,7 +8,12 @@ import edu.issi.machine.operation.Operation;
  * @author Dawid
  *
  */
-public class Handler extends Thread {
+public class Handler implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5027179270529781719L;
+    
     private Handler nextHandler;
     protected Operation operation;
 
@@ -26,15 +33,18 @@ public class Handler extends Thread {
      *            Operacja do wykonania.
      */
     public void doOperation(Operation operation) {
-	start();
+	if (operation == null) {
+	    throw new UnsupportedOperationException("Nie mo¿na obs³u¿yæ pustej operacji!");
+	}
+	run();
 	nextHandler.doOperation(operation);
     }
 
-    @Override
-    public void run() {
-	if (operation == null) {
-	    throw new UnsupportedOperationException("Nie mo¿na wykonaæ pustej operacji!");
-	}
+    /**
+     * 
+     */
+    protected void run() {
+	operation.execute();
     }
 
     @Override

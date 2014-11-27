@@ -1,23 +1,28 @@
 package edu.issi.machine.subassembly;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import javax.naming.directory.InvalidAttributeValueException;
 
 import edu.issi.exceptions.Validator;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.properties.Properties;
+import edu.issi.machine.subassembly.handler.Handler;
 
 /**
  * @author Dawid
  * 
  */
-public class Subassembly extends ObjectWithIdentity {
+public class Subassembly extends ObjectWithIdentity implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1208676282732135179L;
+    
     private List<Handler> handlers;
     private List<Operation> operations;
     private Properties properties;
@@ -29,15 +34,16 @@ public class Subassembly extends ObjectWithIdentity {
      *            Operacje, które mo¿e wykonaæ wybrany podzespó³.
      * @param properties
      *            Dodatkowe w³aœciwoœci podzespo³u.
-     * @throws InvalidAttributeValueException
-     *             Wyst¹pi, jeœli lista operacji bêdzie pusta.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli lista operacji bêdzie pusta lub niepoprawna.
      */
     public Subassembly(Identity id, Properties properties, Operation... operations)
-	    throws InvalidAttributeValueException {
+	    throws IllegalArgumentException {
 
 	super(id);
 
-	Validator.throwExceptionWhenEmpty(operations, "Lista operacji nie mo¿e byæ pusta!");
+	Validator.throwExceptionWhenContainsNullOrEmpty(operations,
+		"Lista operacji nie mo¿e byæ pusta oraz nie mo¿e zawieraæ pustych operacji!");
 
 	this.properties = properties;
 
@@ -47,7 +53,7 @@ public class Subassembly extends ObjectWithIdentity {
 
     private List<Handler> getNewListWithDefaultHandler() {
 	List<Handler> result = new ArrayList<Handler>();
-	handlers.add(new DefaultHandler());
+	result.add(new Handler());
 	return result;
     }
 

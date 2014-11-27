@@ -70,14 +70,14 @@ public class MachineConfiguration {
      * @return Iterator po podzespo³ach maszyny.
      */
     public Iterator<Subassembly> subassemblies() {
-	return new IteratorForMachineConfiguration<Subassembly>(subassemblies);
+	return subassemblies.iterator();
     }
 
     /**
      * @return Iterator po produktach, które mo¿e wytworzyæ maszyna.
      */
     public Iterator<Product> products() {
-	return new IteratorForMachineConfiguration<Product>(products);
+	return products.iterator();
     }
 
     /**

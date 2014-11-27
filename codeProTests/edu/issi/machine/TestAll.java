@@ -14,27 +14,21 @@ import org.junit.runners.Suite;
  * @version $Revision: 1.0 $
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({
-	ApplicationCodeProTest.class,
-	edu.issi.machine.api.TestAll.class,
-	edu.issi.machine.configuration.TestAll.class,
-	edu.issi.machine.controller.TestAll.class,
-	edu.issi.machine.id.TestAll.class,
-	edu.issi.machine.operation.TestAll.class,
-	edu.issi.machine.product.TestAll.class,
-	edu.issi.machine.properties.TestAll.class,
-	edu.issi.machine.subassembly.TestAll.class,
-})
+@Suite.SuiteClasses({ ApplicationCodeProTest.class, edu.issi.machine.api.TestAll.class,
+	edu.issi.machine.configuration.TestAll.class, edu.issi.machine.controller.TestAll.class,
+	edu.issi.machine.id.TestAll.class, edu.issi.machine.operation.TestAll.class,
+	edu.issi.machine.product.TestAll.class, edu.issi.machine.properties.TestAll.class, })
 public class TestAll {
 
     /**
      * Launch the test.
      *
-     * @param args the command line arguments
+     * @param args
+     *            the command line arguments
      *
      * @generatedBy CodePro at 27.11.14 17:52
      */
     public static void main(String[] args) {
-    	JUnitCore.runClasses(new Class[] { TestAll.class });
+	JUnitCore.runClasses(new Class[] { TestAll.class });
     }
 }

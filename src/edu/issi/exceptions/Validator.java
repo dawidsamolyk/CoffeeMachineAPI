@@ -31,13 +31,10 @@ public class Validator {
      *            Lista obiektów do sprawdzenia.
      * @param exceptionMessage
      *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
-     * @throws IllegalStateException
-     *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenEmpty(List<?> list, String exceptionMessage)
-	    throws IllegalStateException {
+    public static void throwExceptionWhenEmpty(List<?> list, String exceptionMessage) {
 	if (list == null || list.size() == 0 || (countNullObjects(list.toArray()) == list.size())) {
-	    throw new IllegalStateException(exceptionMessage);
+	    throw new IllegalArgumentException(exceptionMessage);
 	}
     }
 
@@ -46,12 +43,22 @@ public class Validator {
      *            Tablica obiektów do sprawdzenia.
      * @param exceptionMessage
      *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
-     * @throws IllegalStateException
-     *             Wygenerowany b³¹d.
+     */
+    public static void throwExceptionWhenContainsNullOrEmpty(Object[] table, String exceptionMessage) {
+	if (table == null || table.length == 0 || countNullObjects(table) > 0) {
+	    throw new IllegalArgumentException(exceptionMessage);
+	}
+    }
+
+    /**
+     * @param table
+     *            Tablica obiektów do sprawdzenia.
+     * @param exceptionMessage
+     *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
      */
     public static void throwExceptionWhenEmpty(Object[] table, String exceptionMessage) {
 	if (table == null || table.length == 0 || countNullObjects(table) == table.length) {
-	    throw new IllegalStateException(exceptionMessage);
+	    throw new IllegalArgumentException(exceptionMessage);
 	}
     }
 

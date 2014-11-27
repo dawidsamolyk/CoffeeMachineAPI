@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import edu.issi.machine.api.ExampleApi;
 import edu.issi.machine.id.Identity;
-import edu.issi.machine.product.Ingredient;
+import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.subassembly.Subassembly;
 
 @SuppressWarnings("javadoc")
@@ -83,7 +83,7 @@ public class OperationTest {
     public static Subassembly mockSubassembly(Operation... operations) {
 	try {
 	    return new Subassembly(Identity.SAMPLE, null, operations);
-	} catch (InvalidAttributeValueException e) {
+	} catch (IllegalArgumentException e) {
 	    e.printStackTrace();
 	}
 	return null;

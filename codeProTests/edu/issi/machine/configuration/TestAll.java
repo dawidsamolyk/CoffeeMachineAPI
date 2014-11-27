@@ -14,8 +14,7 @@ import org.junit.runners.Suite;
  * @version $Revision: 1.0 $
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ MachineConfigurationCodeProTest.class, IteratorForMachineConfigurationTest.class,
-	ConfigurationFileTest.class,
+@Suite.SuiteClasses({ MachineConfigurationCodeProTest.class, ConfigurationFileTest.class,
 
 })
 public class TestAll {

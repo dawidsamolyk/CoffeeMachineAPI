@@ -1,16 +1,16 @@
 package edu.issi.machine.configuration;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URI;
 
 import javax.naming.directory.InvalidAttributesException;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import static org.junit.Assert.*;
 
 /**
  * The class <code>ConfigurationFileTest</code> contains tests for the class
@@ -67,9 +67,9 @@ public class ConfigurationFileTest {
      */
     @Test
     public void testConfigurationFile_6() throws Exception {
-	File file = File.createTempFile("An??t-1.0.txt", "An??t-1.0.txt", (File) null);
+	File file = File.createTempFile("Ant-1.0.txt", "Ant-1.0.txt", (File) null);
 
-	exception.expect(IOException.class);
+	exception.expect(InvalidAttributesException.class);
 	ConfigurationFile result = new ConfigurationFile(file);
 
 	// add additional test code here

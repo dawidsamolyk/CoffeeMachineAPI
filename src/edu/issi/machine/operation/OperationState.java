@@ -1,10 +1,17 @@
 package edu.issi.machine.operation;
 
+import java.io.Serializable;
+
 /**
  * @author Dawid
  * 
  */
-public class OperationState {
+public class OperationState implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3500522852398313366L;
+    
     private Status status;
     private String description;
 
@@ -18,7 +25,7 @@ public class OperationState {
     public OperationState(Status status) throws IllegalStateException {
 	ensureIsNotEmpty(status);
 
-	if (Status.requiresAttention(status)) {
+	if (status.requiresAttention()) {
 	    throw new IllegalStateException("Wybrany status wymaga opisu!");
 	}
 
@@ -37,7 +44,7 @@ public class OperationState {
     public OperationState(Status status, String description) throws IllegalStateException {
 	ensureIsNotEmpty(status);
 
-	if (Status.requiresAttention(status) && isEmpty(description)) {
+	if (status.requiresAttention() && isEmpty(description)) {
 	    throw new IllegalStateException("Nie podano prawidlowego opisu statusu!");
 	}
 
@@ -58,7 +65,7 @@ public class OperationState {
     public OperationState(Status status, int stateCodeNumber) throws IllegalStateException {
 	ensureIsNotEmpty(status);
 
-	if (Status.requiresAttention(status)) {
+	if (status.requiresAttention()) {
 	    description = "Blad numer: " + stateCodeNumber;
 	}
 

@@ -1,13 +1,19 @@
 package edu.issi.machine.product;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static org.junit.Assert.*;
 import edu.issi.machine.id.Identity;
+import edu.issi.machine.product.ingredient.Ingredient;
 
 /**
  * The class <code>ProductTest</code> contains tests for the class
@@ -171,7 +177,7 @@ public class ProductTest {
 	Product fixture2 = getFixture();
 	Ingredient ingredient = new Ingredient(Identity.SAMPLE);
 
-	fixture2.addAtTheEnd(ingredient);
+	fixture2.add(ingredient);
 
 	// add additional test code here
     }

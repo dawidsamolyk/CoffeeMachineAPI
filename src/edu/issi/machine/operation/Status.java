@@ -1,10 +1,12 @@
 package edu.issi.machine.operation;
 
+import java.io.Serializable;
+
 /**
  * @author Dawid
  *
  */
-public enum Status {
+public enum Status implements Serializable {
     /**
      * 
      */
@@ -23,8 +25,8 @@ public enum Status {
      *            Status.
      * @return Czy dany status wymaga uwagi.
      */
-    public static boolean requiresAttention(Status status) {
-	return status == ERROR || status == WARNING;
+    public boolean requiresAttention() {
+	return this == ERROR || this == WARNING;
     }
 
 }

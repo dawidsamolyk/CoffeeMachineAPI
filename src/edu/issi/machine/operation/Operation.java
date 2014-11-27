@@ -1,18 +1,24 @@
 package edu.issi.machine.operation;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import edu.issi.exceptions.ApiException;
 import edu.issi.machine.api.ExampleApi;
-import edu.issi.machine.product.Ingredient;
+import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.subassembly.Subassembly;
 
 /**
  * @author Dawid
  * 
  */
-public class Operation {
+public class Operation implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8742139834110667380L;
+    
     private Method apiMethod;
     private Subassembly subassembly = null;
     private Ingredient ingredient = null;

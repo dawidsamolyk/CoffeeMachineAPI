@@ -1,16 +1,23 @@
 package edu.issi.machine.product;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.ObjectWithIdentity;
+import edu.issi.machine.product.ingredient.Ingredient;
 
 /**
  * @author Dawid
  *
  */
-public class Product extends ObjectWithIdentity implements Iterable<Ingredient> {
+public class Product extends ObjectWithIdentity implements Iterable<Ingredient>, Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3905169041940315445L;
+    
     private OrderedElementsList<Ingredient> ingredients;
 
     /**
@@ -27,7 +34,7 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
      *            Sk³adnik, który zostanie dodany na koñcu listy.
      * @see edu.issi.machine.product.OrderedElementsList#addAtTheEnd(Object)
      */
-    public void addAtTheEnd(Ingredient ingredient) {
+    public void add(Ingredient ingredient) {
 	ingredients.addAtTheEnd(ingredient);
     }
 

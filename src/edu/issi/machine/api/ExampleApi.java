@@ -3,6 +3,7 @@ package edu.issi.machine.api;
 import java.io.PrintStream;
 
 import edu.issi.machine.TestingApi;
+import edu.issi.machine.product.ingredient.IngredientUnit;
 
 @SuppressWarnings("javadoc")
 public class ExampleApi {
@@ -16,6 +17,16 @@ public class ExampleApi {
 	printStream.print("Podaje ");
 	printStream.print(quantity);
 	printStream.println(" kubków...");
+    }
+
+    public void heat(Integer quantity, IngredientUnit unit) {
+	printStream.print("Podgrzewam przy temperaturze " + quantity + unit.toString() + "...");
+    }
+
+    public void giveIngredient(Integer quantity, IngredientUnit unit) {
+	printStream.print("Podaje ");
+	printStream.print(quantity);
+	printStream.println(unit.toString() + " sk³adnika...");
     }
 
     public void log(String message) {

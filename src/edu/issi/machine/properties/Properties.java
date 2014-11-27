@@ -1,5 +1,6 @@
 package edu.issi.machine.properties;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,7 +13,12 @@ import edu.issi.machine.id.Identity;
  * @author Dawid
  *
  */
-public class Properties implements Iterable<Entry<Identity, Object>> {
+public class Properties implements Iterable<Entry<Identity, Object>>, Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4770142835855297172L;
+    
     private Map<Identity, Object> properties;
 
     /**

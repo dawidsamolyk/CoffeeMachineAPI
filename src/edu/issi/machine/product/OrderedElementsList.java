@@ -1,5 +1,6 @@
 package edu.issi.machine.product;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.NoSuchElementException;
  *            Typ obiektów, które bêd¹ przechowywane w tej liœcie.
  * 
  */
-public class OrderedElementsList<Type> implements Iterable<Type> {
+public class OrderedElementsList<Type> implements Iterable<Type>  {
     private List<Type> elements;
 
     /**

@@ -1,13 +1,10 @@
 package edu.issi.machine.controller;
 
-import java.io.File;
-
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import static org.junit.Assert.*;
-import edu.issi.machine.configuration.ConfigurationFile;
-import edu.issi.machine.configuration.MachineConfigurationReader;
 
 /**
  * The class <code>MachineControllerTest</code> contains tests for the class

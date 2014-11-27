@@ -14,21 +14,18 @@ import org.junit.runners.Suite;
  * @version $Revision: 1.0 $
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({
-	ProductTest.class,
-	OrderedElementsListTest.class,
-	IngredientTest.class,
-})
+@Suite.SuiteClasses({ ProductTest.class, OrderedElementsListTest.class, IngredientTest.class, })
 public class TestAll {
 
     /**
      * Launch the test.
      *
-     * @param args the command line arguments
+     * @param args
+     *            the command line arguments
      *
      * @generatedBy CodePro at 27.11.14 17:52
      */
     public static void main(String[] args) {
-    	JUnitCore.runClasses(new Class[] { TestAll.class });
+	JUnitCore.runClasses(new Class[] { TestAll.class });
     }
 }
