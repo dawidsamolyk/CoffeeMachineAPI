@@ -4,7 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.Method;
 import java.util.NoSuchElementException;
 
 import javax.naming.directory.InvalidAttributeValueException;
@@ -13,7 +12,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import edu.issi.machine.api.MachineApi;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationTest;

@@ -1,5 +1,6 @@
 package edu.issi.machine.subassembly;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -7,6 +8,7 @@ import java.util.NoSuchElementException;
 import javax.naming.directory.InvalidAttributeValueException;
 
 import edu.issi.exceptions.MachineValidatorException;
+import edu.issi.machine.Handler;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.operation.Operation;
@@ -17,8 +19,9 @@ import edu.issi.machine.properties.Properties;
  * 
  */
 public class Subassembly extends ObjectWithIdentity {
-    private Properties properties;
+    private List<Handler> handlersChains;
     private List<Operation> operations;
+    private Properties properties;
 
     /**
      * @param id
@@ -41,6 +44,8 @@ public class Subassembly extends ObjectWithIdentity {
 
 	this.operations = Arrays.asList(operations);
 	this.properties = properties;
+	this.handlersChains = new ArrayList<Handler>();
+	//handlersChains.add(new DefaultHandler());
     }
 
     /**
@@ -72,14 +77,19 @@ public class Subassembly extends ObjectWithIdentity {
 	return result;
     }
 
-    private boolean isEmpty(Operation[] operations) {
-	return operations == null || operations.length == 0;
+    /**
+     * @param handler
+     *            Wykonawca operacji.
+     */
+    public void addLastHandler(Handler handler) {
+	this.handlersChains.add(handler);
     }
 
     @Override
     public int hashCode() {
 	final int prime = 31;
-	int result = 1;
+	int result = super.hashCode();
+	result = prime * result + ((handlersChains == null) ? 0 : handlersChains.hashCode());
 	result = prime * result + ((operations == null) ? 0 : operations.hashCode());
 	result = prime * result + ((properties == null) ? 0 : properties.hashCode());
 	return result;
@@ -89,11 +99,16 @@ public class Subassembly extends ObjectWithIdentity {
     public boolean equals(Object obj) {
 	if (this == obj)
 	    return true;
-	if (obj == null)
+	if (!super.equals(obj))
 	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
 	Subassembly other = (Subassembly) obj;
+	if (handlersChains == null) {
+	    if (other.handlersChains != null)
+		return false;
+	} else if (!handlersChains.equals(other.handlersChains))
+	    return false;
 	if (operations == null) {
 	    if (other.operations != null)
 		return false;
@@ -105,6 +120,10 @@ public class Subassembly extends ObjectWithIdentity {
 	} else if (!properties.equals(other.properties))
 	    return false;
 	return true;
+    }
+
+    private boolean isEmpty(Operation[] operations) {
+	return operations == null || operations.length == 0;
     }
 
 }
