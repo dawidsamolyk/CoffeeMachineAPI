@@ -10,7 +10,7 @@ import javax.naming.directory.InvalidAttributeValueException;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.issi.machine.api.MachineApi;
+import edu.issi.machine.api.ExampleApi;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.product.Ingredient;
 import edu.issi.machine.subassembly.Subassembly;
@@ -90,7 +90,7 @@ public class OperationTest {
     }
 
     public static Method mockApiMethod() throws NoSuchMethodException {
-	return MachineApi.class.getMethod("giveTheCup", Integer.class);
+	return ExampleApi.class.getMethod("giveTheCup", Integer.class);
     }
 
     public static Ingredient mockIngredient() {

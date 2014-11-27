@@ -7,6 +7,7 @@ import javax.naming.directory.InvalidAttributesException;
 
 import edu.issi.machine.configuration.ConfigurationFile;
 import edu.issi.machine.configuration.MachineConfigurationReader;
+import edu.issi.machine.controller.MachineController;
 
 /**
  * @author Dawid
@@ -15,21 +16,21 @@ import edu.issi.machine.configuration.MachineConfigurationReader;
 public class Application {
 
     /**
+     * Spodziewany jest tylko jeden argument wejœciowy - pe³na œcie¿ka do pliku
+     * konfiguracyjnego, zapisanego w formacie (i z rozszrzeniem) JSON.
+     * 
      * @param args
-     *            Argumenty wejœciowe aplikacji.
+     *            Argumenty uruchomieniowe.
      * @throws IOException
      *             Wyst¹pi w przypadku b³êdów odczytu/zapisu przy operacjach na
      *             plikach.
      * @throws InvalidAttributesException
      *             Wyst¹pi w przypadku b³êdnego pliku konfiguracyjnego.
-     * @throws ParseException
-     *             Wyst¹pi w przypadku b³êdów parsowania komend CLI.
      */
     public static void main(String[] args) throws IOException, InvalidAttributesException {
-	if (args.length != 1) {
-	    System.err
-		    .println("Nieprawid³owe wywo³anie! Jako argument podaj œcie¿kê do katalogu z plikami konfiguracyjnymi.");
-	    System.exit(0);
+	if (args == null || args.length != 1) {
+	    throw new InvalidAttributesException(
+		    "Nieprawid³owe wywo³anie! Jako argument podaj œcie¿kê do katalogu z plikami konfiguracyjnymi.");
 	}
 
 	ConfigurationFile file = new ConfigurationFile(new File(args[0]));

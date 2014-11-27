@@ -59,7 +59,7 @@ public class OperationState {
 	ensureIsNotEmpty(status);
 
 	if (Status.requiresAttention(status)) {
-	    this.description = "Blad numer: " + stateCodeNumber;
+	    description = "Blad numer: " + stateCodeNumber;
 	}
 
 	this.status = status;

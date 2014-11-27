@@ -10,7 +10,7 @@ import edu.issi.machine.id.ObjectWithIdentity;
  * @author Dawid
  *
  */
-public class Product extends ObjectWithIdentity {
+public class Product extends ObjectWithIdentity implements Iterable<Ingredient> {
     private OrderedElementsList<Ingredient> ingredients;
 
     /**

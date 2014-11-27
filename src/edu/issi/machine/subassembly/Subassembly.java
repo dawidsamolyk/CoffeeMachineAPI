@@ -7,8 +7,7 @@ import java.util.NoSuchElementException;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
-import edu.issi.exceptions.MachineValidatorException;
-import edu.issi.machine.Handler;
+import edu.issi.exceptions.Validator;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.operation.Operation;
@@ -19,7 +18,7 @@ import edu.issi.machine.properties.Properties;
  * 
  */
 public class Subassembly extends ObjectWithIdentity {
-    private List<Handler> handlersChains;
+    private List<Handler> handlers;
     private List<Operation> operations;
     private Properties properties;
 
@@ -38,14 +37,22 @@ public class Subassembly extends ObjectWithIdentity {
 
 	super(id);
 
-	if (isEmpty(operations)) {
-	    throw new InvalidAttributeValueException();
-	}
+	Validator.throwExceptionWhenEmpty(operations, "Lista operacji nie mo¿e byæ pusta!");
 
-	this.operations = Arrays.asList(operations);
 	this.properties = properties;
-	this.handlersChains = new ArrayList<Handler>();
-	//handlersChains.add(new DefaultHandler());
+
+	this.operations = getAsList(operations);
+	this.handlers = getNewListWithDefaultHandler();
+    }
+
+    private List<Handler> getNewListWithDefaultHandler() {
+	List<Handler> result = new ArrayList<Handler>();
+	handlers.add(new DefaultHandler());
+	return result;
+    }
+
+    private List<Operation> getAsList(Operation... operations) {
+	return Arrays.asList(operations);
     }
 
     /**
@@ -66,12 +73,12 @@ public class Subassembly extends ObjectWithIdentity {
      *             podanym ID.
      */
     public Object getProperty(Identity id) throws NoSuchElementException {
-	MachineValidatorException.generateExceptionWhenObjectIsNotCreated(this.properties,
+	Validator.generateExceptionWhenObjectIsNotCreated(properties,
 		"Ten podzespol nie ma ustawionych zadnych wlasciwosci.");
 
 	Object result = properties.get(id);
 
-	MachineValidatorException.generateExceptionWhenObjectIsNotCreated(result,
+	Validator.generateExceptionWhenObjectIsNotCreated(result,
 		"Ten podzespol nie posiada wlasciwosci o podanym identyfikatorze.");
 
 	return result;
@@ -82,14 +89,14 @@ public class Subassembly extends ObjectWithIdentity {
      *            Wykonawca operacji.
      */
     public void addLastHandler(Handler handler) {
-	this.handlersChains.add(handler);
+	handlers.add(handler);
     }
 
     @Override
     public int hashCode() {
 	final int prime = 31;
 	int result = super.hashCode();
-	result = prime * result + ((handlersChains == null) ? 0 : handlersChains.hashCode());
+	result = prime * result + ((handlers == null) ? 0 : handlers.hashCode());
 	result = prime * result + ((operations == null) ? 0 : operations.hashCode());
 	result = prime * result + ((properties == null) ? 0 : properties.hashCode());
 	return result;
@@ -104,10 +111,10 @@ public class Subassembly extends ObjectWithIdentity {
 	if (getClass() != obj.getClass())
 	    return false;
 	Subassembly other = (Subassembly) obj;
-	if (handlersChains == null) {
-	    if (other.handlersChains != null)
+	if (handlers == null) {
+	    if (other.handlers != null)
 		return false;
-	} else if (!handlersChains.equals(other.handlersChains))
+	} else if (!handlers.equals(other.handlers))
 	    return false;
 	if (operations == null) {
 	    if (other.operations != null)
@@ -120,10 +127,6 @@ public class Subassembly extends ObjectWithIdentity {
 	} else if (!properties.equals(other.properties))
 	    return false;
 	return true;
-    }
-
-    private boolean isEmpty(Operation[] operations) {
-	return operations == null || operations.length == 0;
     }
 
 }

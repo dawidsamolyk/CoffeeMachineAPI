@@ -1,6 +1,6 @@
-package edu.issi.machine;
+package edu.issi.machine.controller;
 
-import edu.issi.machine.api.MachineApi;
+import edu.issi.machine.api.ExampleApi;
 import edu.issi.machine.configuration.MachineConfiguration;
 import edu.issi.machine.configuration.MachineConfigurationReader;
 
@@ -11,7 +11,10 @@ import edu.issi.machine.configuration.MachineConfigurationReader;
 public class MachineController extends Thread {
     private boolean working = false;
     private MachineConfiguration configuration;
-    private MachineApi api = MachineApi.API;
+    /**
+     * 
+     */
+    public static ExampleApi API = ExampleApi.API;
 
     /**
      * @param configurationReader
@@ -19,15 +22,10 @@ public class MachineController extends Thread {
      * 
      */
     public void setUpUsing(MachineConfigurationReader configurationReader) {
-	UnsupportedOperationException throwWhenError = new UnsupportedOperationException(
-		"Nie mo¿na zmieniæ konfiguracji w trakcie dzia³ania maszyny!");
-
-	if (working == true && api != null) {
-	    api.log(throwWhenError);
-
-	} else if (working == true && api == null) {
-	    throw throwWhenError;
-
+	if (working) {
+	    API.log(new UnsupportedOperationException(
+		    "Nie mo¿na zmieniæ konfiguracji w trakcie dzia³ania maszyny!"));
+	    
 	} else {
 	    readConfiguration(configurationReader);
 	}
@@ -39,21 +37,21 @@ public class MachineController extends Thread {
 
     @Override
     public void run() {
-	if (configuration == null || api == null) {
+	if (configuration == null) {
 	    throw new UnsupportedOperationException(
 		    "Nie mo¿na uruchomiæ maszyny bez ustawionej konfiguracji!");
 	}
-	this.working = true;
+	working = true;
 
-	api.log("START");
+	API.log("START");
     }
 
     /**
      * 
      */
     public void stopWorking() {
-	api.log("STOP");
-	this.working = false;
+	API.log("STOP");
+	working = false;
     }
 
     /**

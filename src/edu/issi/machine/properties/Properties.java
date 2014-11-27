@@ -2,6 +2,7 @@ package edu.issi.machine.properties;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
@@ -11,14 +12,14 @@ import edu.issi.machine.id.Identity;
  * @author Dawid
  *
  */
-public class Properties {
-    private HashMap<Identity, Object> properties;
+public class Properties implements Iterable<Entry<Identity, Object>> {
+    private Map<Identity, Object> properties;
 
     /**
      * 
      */
     public Properties() {
-	properties = new HashMap<Identity, Object>();
+	properties = new HashMap<Identity, Object>(32, 0.75f);
     }
 
     /**

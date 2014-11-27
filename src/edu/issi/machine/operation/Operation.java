@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import edu.issi.exceptions.ApiException;
-import edu.issi.machine.api.MachineApi;
+import edu.issi.machine.api.ExampleApi;
 import edu.issi.machine.product.Ingredient;
 import edu.issi.machine.subassembly.Subassembly;
 
@@ -49,11 +49,11 @@ public class Operation {
      * @return Stan operacji.
      */
     public OperationState execute() {
-	if (isRequiredElementsProvided() == false) {
+	if (!isRequiredElementsProvided()) {
 	    return new OperationState(Status.ERROR, "Nie podano podzespolu lub skladnika dla tej operacji!");
 	}
 
-	if (canDoThisOperation(this.subassembly) == false) {
+	if (!canDoThisOperation(subassembly)) {
 	    return new OperationState(Status.ERROR, "Podzespol nie moze wykonac tej operacji!");
 	}
 
@@ -65,7 +65,7 @@ public class Operation {
     }
 
     private boolean isRequiredElementsProvided() {
-	return (this.subassembly != null && this.ingredient != null);
+	return (subassembly != null && ingredient != null);
     }
 
     private OperationState executeApiOperation() {
@@ -83,7 +83,7 @@ public class Operation {
 
     private void ivokeApiMethod() throws IllegalAccessException, IllegalArgumentException,
 	    InvocationTargetException, ApiException {
-	this.apiMethod.invoke(MachineApi.API, MachineApi.EXAMPLE_VALUE);
+	apiMethod.invoke(ExampleApi.API, 1);
     }
 
     @Override

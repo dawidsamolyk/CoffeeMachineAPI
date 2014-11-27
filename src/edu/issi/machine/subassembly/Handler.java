@@ -1,4 +1,4 @@
-package edu.issi.machine;
+package edu.issi.machine.subassembly;
 
 import edu.issi.machine.operation.Operation;
 
@@ -6,7 +6,7 @@ import edu.issi.machine.operation.Operation;
  * @author Dawid
  *
  */
-public abstract class Handler {
+public class Handler extends Thread {
     private Handler nextHandler;
     protected Operation operation;
 
@@ -16,8 +16,8 @@ public abstract class Handler {
      *            kolejnoœci.
      * @return Kolejny wykonawca zadañ, który zosta³ ustawiony za aktualnym.
      */
-    public Handler setNext(Handler handler) {
-	this.nextHandler = handler;
+    public Handler next(Handler handler) {
+	nextHandler = handler;
 	return handler;
     }
 
@@ -26,16 +26,16 @@ public abstract class Handler {
      *            Operacja do wykonania.
      */
     public void doOperation(Operation operation) {
-	//start();
+	start();
 	nextHandler.doOperation(operation);
     }
 
-//    @Override
-//    public void run() {
-//	if (operation == null) {
-//	    throw new UnsupportedOperationException("Nie mo¿na wykonaæ pustej operacji!");
-//	}
-//    }
+    @Override
+    public void run() {
+	if (operation == null) {
+	    throw new UnsupportedOperationException("Nie mo¿na wykonaæ pustej operacji!");
+	}
+    }
 
     @Override
     public int hashCode() {

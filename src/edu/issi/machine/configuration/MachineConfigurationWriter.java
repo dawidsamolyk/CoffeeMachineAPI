@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * @author Dawid
@@ -21,7 +22,7 @@ public class MachineConfigurationWriter {
      *             ni¿ json).
      */
     public MachineConfigurationWriter(ConfigurationFile file) throws IOException {
-	this.configurationFile = file;
+	configurationFile = file;
     }
 
     /**
@@ -36,7 +37,11 @@ public class MachineConfigurationWriter {
     }
 
     private String getAsJson(Object object) {
-	return new Gson().toJson(object);
+	return jsonCreator().toJson(object);
+    }
+    
+    private Gson jsonCreator() {
+	return new GsonBuilder().setPrettyPrinting().create();
     }
 
     private void write(String json, File file) throws IOException {

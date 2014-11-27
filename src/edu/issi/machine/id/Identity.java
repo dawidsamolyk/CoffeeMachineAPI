@@ -32,12 +32,10 @@ public class Identity {
 
     @Override
     public boolean equals(Object obj) {
-	if (obj == null)
-	    return false;
-	if (obj instanceof Identity == false)
-	    return false;
 	if (this == obj)
 	    return true;
+	if (obj == null)
+	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
 	Identity other = (Identity) obj;
@@ -45,4 +43,5 @@ public class Identity {
 	    return false;
 	return true;
     }
+
 }

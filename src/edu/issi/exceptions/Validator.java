@@ -4,15 +4,12 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
+ * Sytuacja wyj¹tkowa podczas walidacji
+ * 
  * @author Dawid
  * 
  */
-public class MachineValidatorException extends Exception {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+public class Validator {
 
     /**
      * @param object
@@ -39,8 +36,32 @@ public class MachineValidatorException extends Exception {
      */
     public static void throwExceptionWhenEmpty(List<?> list, String exceptionMessage)
 	    throws IllegalStateException {
-	if (list == null || list.size() == 0) {
+	if (list == null || list.size() == 0 || (countNullObjects(list.toArray()) == list.size())) {
 	    throw new IllegalStateException(exceptionMessage);
 	}
+    }
+
+    /**
+     * @param table
+     *            Tablica obiektów do sprawdzenia.
+     * @param exceptionMessage
+     *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
+     * @throws IllegalStateException
+     *             Wygenerowany b³¹d.
+     */
+    public static void throwExceptionWhenEmpty(Object[] table, String exceptionMessage) {
+	if (table == null || table.length == 0 || countNullObjects(table) == table.length) {
+	    throw new IllegalStateException(exceptionMessage);
+	}
+    }
+
+    private static int countNullObjects(Object[] table) {
+	int nullObjects = 0;
+	for (int x = 0; x < table.length; x++) {
+	    if (table[x] == null) {
+		nullObjects++;
+	    }
+	}
+	return nullObjects;
     }
 }

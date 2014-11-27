@@ -3,18 +3,12 @@ package edu.issi.exceptions;
 import edu.issi.machine.operation.Status;
 
 /**
+ * Sytuacja wyj¹tkowa dla API.
+ * 
  * @author Dawid
  *
  */
 public class ApiException extends Exception {
-
-    /**
-     * @param stateCodeNumber
-     *            Numer kodu b³êdu.
-     */
-    public ApiException(int stateCodeNumber) {
-	// TODO
-    }
 
     /**
      * 

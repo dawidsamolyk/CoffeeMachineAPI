@@ -1,6 +1,5 @@
 package edu.issi.machine.subassembly;
 
-import edu.issi.machine.Handler;
 
 /**
  * @author Dawid
@@ -8,9 +7,8 @@ import edu.issi.machine.Handler;
  */
 public class SubassemblyHandler extends Handler {
 
-//    @Override
-//    public void run() {
-//	super.run();
-//	// DO STH
-//    }
+    @Override
+    public void run() {
+	super.run();
+    }
 }

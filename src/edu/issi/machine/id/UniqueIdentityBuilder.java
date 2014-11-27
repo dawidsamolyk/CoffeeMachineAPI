@@ -16,7 +16,7 @@ public class UniqueIdentityBuilder {
      * 
      */
     public UniqueIdentityBuilder() {
-	identities = new HashSet<Identity>();
+	identities = new HashSet<Identity>(32, 0.75f);
     }
 
     /**
@@ -30,7 +30,7 @@ public class UniqueIdentityBuilder {
      *             istnieje).
      */
     public Identity build(int id, String name) throws InvalidAttributeIdentifierException {
-	Identity result = new Identity(id);
+	final Identity result = new Identity(id);
 
 	ensureUniqueness(result);
 

@@ -1,9 +1,11 @@
-package edu.issi.machine;
+package edu.issi.machine.configuration;
 
 import java.util.Iterator;
 import java.util.List;
 
 /**
+ * 
+ * 
  * @author Dawid
  *
  * @param <Type>
@@ -17,7 +19,7 @@ public class IteratorForMachineConfiguration<Type> implements Iterator<Type> {
      *            èrÛd≥owa lista, dla ktÛrej ma zostaÊ utworzony iterator.
      */
     public IteratorForMachineConfiguration(List<Type> list) {
-	this.iterator = list.iterator();
+	iterator = list.iterator();
     }
 
     @Override

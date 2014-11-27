@@ -12,15 +12,15 @@ import javax.naming.directory.InvalidAttributesException;
  */
 public class ConfigurationFile extends File {
     /**
-     * 
+     * Wygenerowany kod UID.
      */
-    private static final long serialVersionUID = -1837539726725202425L;
+    private static final long serialVersionUID = 2324343097316631855L;
 
     /**
      * @param file
-     *            Katalog.
+     *            Plik konfiguracyjny.
      * @throws IOException
-     *             Wyst¹pi w przypadku b³êdu odczytu/zapisu.
+     *             Wyst¹pi w przypadku b³êdu odczytu danych z dyskuF.
      * @throws InvalidAttributesException
      *             Wyst¹pi w przypadku, gdy u¿ytkownik poda nieprawid³owe
      *             rozszerzenie pliku.

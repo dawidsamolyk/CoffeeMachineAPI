@@ -4,8 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-import edu.issi.exceptions.MachineValidatorException;
-import edu.issi.machine.IteratorForMachineConfiguration;
+import edu.issi.exceptions.Validator;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.properties.Properties;
@@ -43,11 +42,11 @@ public class MachineConfiguration {
      *             Wyst¹pi w przypadku niepoprawnych parametrów konfiguracji
      *             (pusta lista podzespo³ów lub produktów).
      */
-    public void ensureValidity() throws IllegalStateException {
+    public final void ensureValidity() throws IllegalStateException {
 	String message = "Nie mozna utworzyc konfiguracji maszyny bez zadnych ";
 
-	MachineValidatorException.throwExceptionWhenEmpty(this.subassemblies, message + "podzespolow!");
-	MachineValidatorException.throwExceptionWhenEmpty(this.products, message + "produktow!");
+	Validator.throwExceptionWhenEmpty(subassemblies, message + "podzespo³ów!");
+	Validator.throwExceptionWhenEmpty(products, message + "produktów!");
     }
 
     /**

@@ -26,12 +26,16 @@ public class MachineConfigurationReader {
     private MachineConfiguration readMachineConfiguration(ConfigurationFile file) throws IOException {
 	BufferedReader configurationReader = new BufferedReader(new FileReader(file));
 
-	MachineConfiguration result = new Gson().fromJson(configurationReader, MachineConfiguration.class);
-	
-	result.ensureValidity();
+	final MachineConfiguration result = readMachineConfiguration(configurationReader);
 
 	configurationReader.close();
 
+	return result;
+    }
+
+    private MachineConfiguration readMachineConfiguration(BufferedReader configurationReader) {
+	final MachineConfiguration result = new Gson().fromJson(configurationReader, MachineConfiguration.class);
+	result.ensureValidity();
 	return result;
     }
 
