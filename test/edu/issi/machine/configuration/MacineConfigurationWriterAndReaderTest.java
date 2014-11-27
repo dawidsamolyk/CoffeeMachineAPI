@@ -4,35 +4,28 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+
+import edu.issi.machine.api.MachineApi;
 
 @SuppressWarnings("javadoc")
 public class MacineConfigurationWriterAndReaderTest {
-    private File testFile;
-    
-    @Before
-    public void setUp() throws Exception {
-	testFile = new File("machineConfiguration.json");
-	testFile.createNewFile();
-    }
-    
-    @After
-    public void tearDown() throws Exception {
-	testFile.delete();
-    }
 
     @Test
     public void shouldWriteConfiguration() throws Exception {
-	MachineConfiguration conf = MachineConfigurationTest.mockMachineConfiguration();
-
-	MachineConfigurationWriter writer = new MachineConfigurationWriter(testFile);
-	writer.write(conf);
-
-	MachineConfigurationReader reader = new MachineConfigurationReader(testFile);
+	FileSystemDirectory testDirectory = new FileSystemDirectory(new File("./bin"));
 	
-	assertTrue(conf.equals(reader.getMachineConfiguration()));
+	MachineConfiguration conf = MachineConfigurationTest.mockMachineConfiguration();
+	MachineApi api = MachineApi.API;
+
+	MachineConfigurationWriter writer = new MachineConfigurationWriter(testDirectory);
+	writer.write(conf);
+	writer.write(api);
+
+	MachineConfigurationReader reader = new MachineConfigurationReader(testDirectory);
+
+	assertTrue(conf.equals(reader.getMachineConfiguration()) );
+	assertTrue(api.equals(reader.getMachineApi()));
     }
 
 }

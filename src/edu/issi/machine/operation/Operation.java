@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import edu.issi.exceptions.ApiException;
-import edu.issi.machine.api.API;
+import edu.issi.machine.api.MachineApi;
 import edu.issi.machine.product.Ingredient;
 import edu.issi.machine.subassembly.Subassembly;
 
@@ -83,7 +83,7 @@ public class Operation {
 
     private void ivokeApiMethod() throws IllegalAccessException, IllegalArgumentException,
 	    InvocationTargetException, ApiException {
-	this.apiMethod.invoke(API.API, API.EXAMPLE_VALUE);
+	this.apiMethod.invoke(MachineApi.API, MachineApi.EXAMPLE_VALUE);
     }
 
     @Override

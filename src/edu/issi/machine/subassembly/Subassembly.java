@@ -7,8 +7,8 @@ import java.util.NoSuchElementException;
 import javax.naming.directory.InvalidAttributeValueException;
 
 import edu.issi.exceptions.MachineValidatorException;
-import edu.issi.machine.Identity;
-import edu.issi.machine.ObjectWithId;
+import edu.issi.machine.id.Identity;
+import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.properties.Properties;
 
@@ -16,7 +16,7 @@ import edu.issi.machine.properties.Properties;
  * @author Dawid
  * 
  */
-public class Subassembly extends ObjectWithId {
+public class Subassembly extends ObjectWithIdentity {
     private Properties properties;
     private List<Operation> operations;
 

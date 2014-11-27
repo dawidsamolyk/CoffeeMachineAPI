@@ -10,7 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import edu.issi.machine.Identity;
+import edu.issi.machine.id.Identity;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.subassembly.Subassembly;
 import edu.issi.machine.subassembly.SubassemblyTest;

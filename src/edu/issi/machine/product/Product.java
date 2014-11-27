@@ -3,14 +3,14 @@ package edu.issi.machine.product;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import edu.issi.machine.Identity;
-import edu.issi.machine.ObjectWithId;
+import edu.issi.machine.id.Identity;
+import edu.issi.machine.id.ObjectWithIdentity;
 
 /**
  * @author Dawid
  *
  */
-public class Product extends ObjectWithId {
+public class Product extends ObjectWithIdentity {
     private OrderedElementsList<Ingredient> ingredients;
 
     /**

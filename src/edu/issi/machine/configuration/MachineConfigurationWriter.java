@@ -6,26 +6,37 @@ import java.io.IOException;
 
 import com.google.gson.Gson;
 
+import edu.issi.machine.api.MachineApi;
+
 /**
  * @author Dawid
  *
  */
 public class MachineConfigurationWriter {
     private Gson gson = new Gson();
-    private File file;
+    private File apiFile;
+    private File configurationFile;
 
     /**
-     * @param file
-     *            Plik, do którego zostanie zapisana konfiguracja.
+     * @param directory
+     *            Folder, do którego zostanie zapisana konfiguracja.
      * @throws IOException
-     *             Wyst¹pi, gdy plik nie
+     *             Wyst¹pi, gdy plik nie istnieje lub ma niepoprawny typ (inny
+     *             ni¿ json).
      */
-    public MachineConfigurationWriter(File file) throws IOException {
-	if (file.exists() == false && file.isFile() == false && isJsonFile(file)) {
-	    throw new IOException("Niepoprawny plik docelowy!");
-	}
+    public MachineConfigurationWriter(FileSystemDirectory directory) throws IOException {
+	this.apiFile = createFileInDirectory(directory, ConfigurationFileName.API);
+	this.configurationFile = createFileInDirectory(directory, ConfigurationFileName.MACHINE_CONFIGURATION);
+    }
 
-	this.file = file;
+    private File createFileInDirectory(FileSystemDirectory directory, ConfigurationFileName filename) throws IOException {
+	File file = new File(directory + File.separator + filename.toString());
+	
+	if (file.exists() == false) {
+	    file.createNewFile();
+	}
+	
+	return file;
     }
 
     /**
@@ -36,20 +47,27 @@ public class MachineConfigurationWriter {
      */
     public void write(MachineConfiguration configuration) throws IOException {
 	String json = getAsJson(configuration);
-	writeToFile(json);
+	write(json, configurationFile);
     }
 
-    private void writeToFile(String json) throws IOException {
+    /**
+     * @param api
+     *            API, które ma zostaæ zapisane.
+     * @throws IOException
+     *             Wyst¹pi w przypadku b³êdu zapisu pliku.
+     */
+    public void write(MachineApi api) throws IOException {
+	String json = getAsJson(api);
+	write(json, apiFile);
+    }
+
+    private String getAsJson(Object object) {
+	return gson.toJson(object);
+    }
+
+    private void write(String json, File file) throws IOException {
 	FileWriter writer = new FileWriter(file);
 	writer.write(json);
 	writer.close();
-    }
-
-    private String getAsJson(MachineConfiguration configuration) {
-	return gson.toJson(configuration);
-    }
-
-    private boolean isJsonFile(File file) {
-	return file.getName().toLowerCase().endsWith(".json");
     }
 }

@@ -1,17 +1,17 @@
-package edu.issi.machine;
+package edu.issi.machine.id;
 
 /**
  * @author Dawid
  *
  */
-public class ObjectWithId {
+public class ObjectWithIdentity {
     private Identity id;
 
     /**
      * @param id
      *            Numer ID.
      */
-    public ObjectWithId(final Identity id) {
+    public ObjectWithIdentity(final Identity id) {
 	this.id = id;
     }
 
@@ -31,7 +31,7 @@ public class ObjectWithId {
 	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
-	ObjectWithId other = (ObjectWithId) obj;
+	ObjectWithIdentity other = (ObjectWithIdentity) obj;
 	if (id == null) {
 	    if (other.id != null)
 		return false;

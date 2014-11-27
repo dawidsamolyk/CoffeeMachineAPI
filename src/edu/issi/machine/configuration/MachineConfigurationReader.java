@@ -7,22 +7,32 @@ import java.io.FileReader;
 
 import com.google.gson.Gson;
 
+import edu.issi.machine.api.MachineApi;
+
 /**
  * @author Dawid
  *
  */
 public class MachineConfigurationReader {
-    private BufferedReader br;
+    private final BufferedReader configurationReader;
+    private final BufferedReader apiReader;
     private MachineConfiguration confifuration;
+    private MachineApi api;
 
     /**
-     * @param file
-     *            Plik, z którego ma byæ odczytana konfiguracja.
+     * @param directory
+     *            Katalog, z którego zostanie odczytana konfiguracja i API.
      * @throws FileNotFoundException
      *             Wyst¹pi, gdy plik z konfiguracj¹ nie zostanie odnaleziony.
      */
-    public MachineConfigurationReader(File file) throws FileNotFoundException {
-	this.br = new BufferedReader(new FileReader(file));
+    public MachineConfigurationReader(FileSystemDirectory directory) throws FileNotFoundException {
+	if (!containsRequiredFiles(directory)) {
+	    throw new FileNotFoundException(
+		    "W podanym katalogu nie znaleziono wymaganych plików konfiguracyjnych!");
+	}
+
+	this.apiReader = getReader(directory, ConfigurationFileName.API);
+	this.configurationReader = getReader(directory, ConfigurationFileName.MACHINE_CONFIGURATION);
     }
 
     /**
@@ -30,10 +40,30 @@ public class MachineConfigurationReader {
      */
     public MachineConfiguration getMachineConfiguration() {
 	if (confifuration == null) {
-	    confifuration = new Gson().fromJson(br, MachineConfiguration.class);
+	    confifuration = new Gson().fromJson(configurationReader, MachineConfiguration.class);
 	}
-
 	return confifuration;
     }
 
+    /**
+     * @return Obiekt reprezentuj¹cy API maszyny.
+     */
+    public MachineApi getMachineApi() {
+	if (api == null) {
+	    api = new Gson().fromJson(apiReader, MachineApi.class);
+	}
+	return api;
+    }
+
+    private BufferedReader getReader(FileSystemDirectory directory, ConfigurationFileName fileName)
+	    throws FileNotFoundException {
+	File configurationFile = new File(directory + File.separator + fileName.toString());
+
+	return new BufferedReader(new FileReader(configurationFile));
+    }
+
+    private boolean containsRequiredFiles(FileSystemDirectory directory) {
+	return directory.contains(ConfigurationFileName.API)
+		&& directory.contains(ConfigurationFileName.MACHINE_CONFIGURATION);
+    }
 }

@@ -1,5 +1,4 @@
-package edu.issi.machine;
-
+package edu.issi.machine.id;
 
 /**
  * @author Dawid
@@ -46,5 +45,4 @@ public class Identity {
 	    return false;
 	return true;
     }
-
 }

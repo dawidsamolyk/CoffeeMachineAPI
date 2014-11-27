@@ -13,8 +13,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import edu.issi.machine.Identity;
-import edu.issi.machine.api.API;
+import edu.issi.machine.api.MachineApi;
+import edu.issi.machine.id.Identity;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationTest;
 import edu.issi.machine.properties.Properties;

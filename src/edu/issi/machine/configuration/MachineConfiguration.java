@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import edu.issi.exceptions.MachineValidatorException;
-import edu.issi.machine.Identity;
 import edu.issi.machine.IteratorForMachineConfiguration;
+import edu.issi.machine.id.Identity;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.properties.Properties;
 import edu.issi.machine.subassembly.Subassembly;

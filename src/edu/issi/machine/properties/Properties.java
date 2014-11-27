@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
-import edu.issi.machine.Identity;
+import edu.issi.machine.id.Identity;
 
 /**
  * @author Dawid
