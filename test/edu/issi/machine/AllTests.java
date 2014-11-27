@@ -13,7 +13,7 @@ import edu.issi.machine.subassembly.SubassemblyTest;
 
 @SuppressWarnings("javadoc")
 @RunWith(Suite.class)
-@SuiteClasses({ IdentityTest.class, MachineConfigurationTest.class,
+@SuiteClasses({ MachineConfigurationTest.class,
 	MacineConfigurationWriterAndReaderTest.class, OperationTest.class, OperationStateTest.class,
 	OrderedElementsContainerTest.class, SubassemblyTest.class })
 public class AllTests {

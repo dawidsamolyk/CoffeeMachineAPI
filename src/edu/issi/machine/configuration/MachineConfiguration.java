@@ -32,14 +32,22 @@ public class MachineConfiguration {
     public MachineConfiguration(List<Subassembly> subassemblies, List<Product> products)
 	    throws IllegalStateException {
 
-	MachineValidatorException.throwExceptionWhenEmpty(subassemblies,
-		"Nie mozna utworzyc konfiguracji maszyny bez zadnych podzespolow!");
-
-	MachineValidatorException.throwExceptionWhenEmpty(products,
-		"Nie mozna utworzyc konfiguracji maszyny bez zadnych produktow!");
-
 	this.subassemblies = subassemblies;
 	this.products = products;
+
+	this.ensureValidity();
+    }
+
+    /**
+     * @throws IllegalStateException
+     *             Wyst¹pi w przypadku niepoprawnych parametrów konfiguracji
+     *             (pusta lista podzespo³ów lub produktów).
+     */
+    public void ensureValidity() throws IllegalStateException {
+	String message = "Nie mozna utworzyc konfiguracji maszyny bez zadnych ";
+
+	MachineValidatorException.throwExceptionWhenEmpty(this.subassemblies, message + "podzespolow!");
+	MachineValidatorException.throwExceptionWhenEmpty(this.products, message + "produktow!");
     }
 
     /**

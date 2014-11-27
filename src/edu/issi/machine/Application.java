@@ -40,7 +40,6 @@ public class Application {
 	controller.start();
 
 	while (controller.isAlive()) {
-
 	}
 
 	controller.stopWorking();

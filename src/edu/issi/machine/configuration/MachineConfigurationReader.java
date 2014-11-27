@@ -27,6 +27,8 @@ public class MachineConfigurationReader {
 	BufferedReader configurationReader = new BufferedReader(new FileReader(file));
 
 	MachineConfiguration result = new Gson().fromJson(configurationReader, MachineConfiguration.class);
+	
+	result.ensureValidity();
 
 	configurationReader.close();
 
