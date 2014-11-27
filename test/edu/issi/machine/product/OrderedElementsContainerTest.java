@@ -6,10 +6,14 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 @SuppressWarnings("javadoc")
 public class OrderedElementsContainerTest {
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void shouldAgregateOrderedObjectsIndexedFromZero() {
@@ -77,11 +81,8 @@ public class OrderedElementsContainerTest {
 	assertEquals(firstObject, product.getElementAt(0));
 	assertEquals(thirdObject, product.getElementAt(1));
 
-	try {
-	    product.getElementAt(2);
-	    fail("Element powinien zostac usuniety, a nie zostalo to zrealizowane!");
-	} catch (NoSuchElementException e) {
-	}
+	exception.expect(NoSuchElementException.class);
+	product.getElementAt(2);
     }
 
     @Test
@@ -115,21 +116,26 @@ public class OrderedElementsContainerTest {
 	assertEquals(thirdObject, iterator.next());
     }
 
-    @Test(expected = UnsupportedOperationException.class)
     public void shouldNotBeAbleToAddObjectAtNonexistentIndex() {
 	OrderedElementsList<Object> product = productWithThreeExampleObjects();
+	
+	exception.expect(UnsupportedOperationException.class);
 	product.addAt(100, new Object());
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void shouldNotBeAbleToRemoveObjectAtNonexistentIndex() {
 	OrderedElementsList<Object> product = productWithThreeExampleObjects();
+	
+	exception.expect(NoSuchElementException.class);
 	product.removeAt(100);
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void shouldNotBeAbleToGetObjectAtNonexistentIndex() {
 	OrderedElementsList<Object> product = productWithThreeExampleObjects();
+	
+	exception.expect(NoSuchElementException.class);
 	product.getElementAt(100);
     }
 

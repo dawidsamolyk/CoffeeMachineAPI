@@ -86,4 +86,41 @@ public class Operation {
 	this.apiMethod.invoke(API.API, API.EXAMPLE_VALUE);
     }
 
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((apiMethod == null) ? 0 : apiMethod.hashCode());
+	result = prime * result + ((ingredient == null) ? 0 : ingredient.hashCode());
+	result = prime * result + ((subassembly == null) ? 0 : subassembly.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	Operation other = (Operation) obj;
+	if (apiMethod == null) {
+	    if (other.apiMethod != null)
+		return false;
+	} else if (!apiMethod.equals(other.apiMethod))
+	    return false;
+	if (ingredient == null) {
+	    if (other.ingredient != null)
+		return false;
+	} else if (!ingredient.equals(other.ingredient))
+	    return false;
+	if (subassembly == null) {
+	    if (other.subassembly != null)
+		return false;
+	} else if (!subassembly.equals(other.subassembly))
+	    return false;
+	return true;
+    }
+
 }

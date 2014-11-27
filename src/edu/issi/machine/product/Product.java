@@ -63,7 +63,8 @@ public class Product extends ObjectWithId {
     }
 
     /**
-     * @param index Indeks, spod którego ma zostaæ usuniêty sk³adnik.
+     * @param index
+     *            Indeks, spod którego ma zostaæ usuniêty sk³adnik.
      * @see edu.issi.machine.product.OrderedElementsList#removeAt(int)
      */
     public void removeAt(int index) {
@@ -77,4 +78,30 @@ public class Product extends ObjectWithId {
     public Iterator<Ingredient> iterator() {
 	return ingredients.iterator();
     }
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((ingredients == null) ? 0 : ingredients.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	Product other = (Product) obj;
+	if (ingredients == null) {
+	    if (other.ingredients != null)
+		return false;
+	} else if (!ingredients.equals(other.ingredients))
+	    return false;
+	return true;
+    }
+
 }

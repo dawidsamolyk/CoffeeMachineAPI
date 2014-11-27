@@ -2,12 +2,15 @@ package edu.issi.machine.operation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 @SuppressWarnings("javadoc")
 public class OperationStateTest {
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void shouldProvideState() {
@@ -16,8 +19,9 @@ public class OperationStateTest {
 	assertNotNull(state.getStatus());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void shouldNotCreatesWhenStatusIsNotProvided() {
+	exception.expect(IllegalStateException.class);
 	new OperationState(null);
     }
 
@@ -40,30 +44,18 @@ public class OperationStateTest {
     }
 
     @Test
-    public void shouldProvideDescriptionWhenStatusRequiresAttention() {
-	try {
-	    new OperationState(Status.ERROR, null);
-	    fail("Powinien wystapic blad");
-	} catch (IllegalStateException e) {
-	}
+    public void IllegalStateException() {
+	exception.expect(IllegalStateException.class);
+	new OperationState(Status.ERROR, null);
 
-	try {
-	    new OperationState(Status.WARNING, "");
-	    fail("Powinien wystapic blad");
-	} catch (IllegalStateException e) {
-	}
+	exception.expect(IllegalStateException.class);
+	new OperationState(Status.WARNING, "");
 
-	try {
-	    new OperationState(Status.ERROR);
-	    fail("Powinien wystapic blad");
-	} catch (IllegalStateException e) {
-	}
+	exception.expect(IllegalStateException.class);
+	new OperationState(Status.ERROR);
 
-	try {
-	    new OperationState(Status.WARNING);
-	    fail("Powinien wystapic blad");
-	} catch (IllegalStateException e) {
-	}
+	exception.expect(IllegalStateException.class);
+	new OperationState(Status.WARNING);
     }
 
     @Test

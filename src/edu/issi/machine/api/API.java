@@ -8,4 +8,5 @@ public class API {
     public static void giveTheCup(Integer quantity) {
 	// System.out.println("Podaje " + quantity + " kubków...");
     }
+
 }

@@ -19,10 +19,12 @@ public enum Status {
     ERROR;
 
     /**
-     * @param status Status.
+     * @param status
+     *            Status.
      * @return Czy dany status wymaga uwagi.
      */
     public static boolean requiresAttention(Status status) {
 	return status == ERROR || status == WARNING;
     }
+
 }

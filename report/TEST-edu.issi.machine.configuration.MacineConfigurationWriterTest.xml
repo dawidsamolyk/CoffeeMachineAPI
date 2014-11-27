@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="MSI-GT663R-WIN7" name="edu.issi.machine.subassembly.SubassemblyTest" skipped="0" tests="8" time="0.02" timestamp="2014-11-27T07:26:22">
+<testsuite errors="0" failures="0" hostname="MSI-GT663R-WIN7" name="edu.issi.machine.configuration.MacineConfigurationWriterTest" skipped="0" tests="2" time="0.01" timestamp="2014-11-27T07:26:21">
   <properties>
     <property name="ant.project.invoked-targets" value="test" />
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
@@ -71,14 +71,8 @@
     <property name="sun.desktop" value="windows" />
     <property name="sun.cpu.isalist" value="amd64" />
   </properties>
-  <testcase classname="edu.issi.machine.subassembly.SubassemblyTest" name="shouldProvideProperties" time="0.0" />
-  <testcase classname="edu.issi.machine.subassembly.SubassemblyTest" name="shouldCreatesWithNotEmptyOperations" time="0.0" />
-  <testcase classname="edu.issi.machine.subassembly.SubassemblyTest" name="shouldNotCreatesWhenOperationsAreNotSetted" time="0.0" />
-  <testcase classname="edu.issi.machine.subassembly.SubassemblyTest" name="shouldNotCreatesWhenOperationsListIsEmpty" time="0.0" />
-  <testcase classname="edu.issi.machine.subassembly.SubassemblyTest" name="shouldCorrectRecognizeSupportedOperations" time="0.0" />
-  <testcase classname="edu.issi.machine.subassembly.SubassemblyTest" name="shouldCorrectRecognizeNotSupportedOperations" time="0.01" />
-  <testcase classname="edu.issi.machine.subassembly.SubassemblyTest" name="shouldInformWhenPropertiesNotSetted" time="0.0" />
-  <testcase classname="edu.issi.machine.subassembly.SubassemblyTest" name="shouldInformWhenSubassemblyHasNotPropertyWithSpecifiedIdentifier" time="0.0" />
+  <testcase classname="edu.issi.machine.configuration.MacineConfigurationWriterTest" name="shouldCreateNewFileIfNotExists" time="0.0" />
+  <testcase classname="edu.issi.machine.configuration.MacineConfigurationWriterTest" name="shouldClearFileContentIfExistsAndThenWriteNewData" time="0.0" />
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

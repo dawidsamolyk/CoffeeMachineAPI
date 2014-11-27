@@ -80,4 +80,47 @@ public class MachineConfiguration {
 	return properties.iterator();
     }
 
+    @Override
+    public String toString() {
+	return "MachineConfiguration [subassemblies=" + subassemblies + ", products=" + products
+		+ ", properties=" + properties + "]";
+    }
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((products == null) ? 0 : products.hashCode());
+	result = prime * result + ((properties == null) ? 0 : properties.hashCode());
+	result = prime * result + ((subassemblies == null) ? 0 : subassemblies.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	MachineConfiguration other = (MachineConfiguration) obj;
+	if (products == null) {
+	    if (other.products != null)
+		return false;
+	} else if (!products.equals(other.products))
+	    return false;
+	if (properties == null) {
+	    if (other.properties != null)
+		return false;
+	} else if (!properties.equals(other.properties))
+	    return false;
+	if (subassemblies == null) {
+	    if (other.subassemblies != null)
+		return false;
+	} else if (!subassemblies.equals(other.subassemblies))
+	    return false;
+	return true;
+    }
+
 }

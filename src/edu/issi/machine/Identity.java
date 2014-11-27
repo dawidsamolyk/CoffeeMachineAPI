@@ -1,14 +1,11 @@
 package edu.issi.machine;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Dawid
  * 
  */
 public class Identity {
-    private static final List<Identity> actualIdentities = new ArrayList<Identity>();
     private int id;
     /**
      * 
@@ -24,12 +21,6 @@ public class Identity {
      */
     public Identity(int id) throws SecurityException {
 	this.id = id;
-
-	if (actualIdentities.contains(this)) {
-	    throw new SecurityException("Nie moga istniec dwa obiekty o tym samym numerze ID!");
-	}
-
-	actualIdentities.add(this);
     }
 
     @Override

@@ -3,20 +3,26 @@ package edu.issi.machine.subassembly;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
+import java.lang.reflect.Method;
 import java.util.NoSuchElementException;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import edu.issi.machine.Identity;
+import edu.issi.machine.api.API;
 import edu.issi.machine.operation.Operation;
+import edu.issi.machine.operation.OperationTest;
 import edu.issi.machine.properties.Properties;
 
 @SuppressWarnings("javadoc")
 public class SubassemblyTest {
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void shouldCreatesWithNotEmptyOperations() throws InvalidAttributeValueException {
@@ -27,21 +33,16 @@ public class SubassemblyTest {
 
     @Test
     public void shouldNotCreatesWhenOperationsAreNotSetted() throws InvalidAttributeValueException {
-	try {
-	    Operation[] operations = null;
-	    new Subassembly(Identity.SAMPLE, null, operations);
-	    fail("Powinien wystapic blad, poniewaz lista operacji nie zostala podana!");
-	} catch (InvalidAttributeValueException e) {
-	}
+	Operation[] operations = null;
+
+	exception.expect(InvalidAttributeValueException.class);
+	new Subassembly(Identity.SAMPLE, null, operations);
     }
 
     @Test
     public void shouldNotCreatesWhenOperationsListIsEmpty() throws InvalidAttributeValueException {
-	try {
-	    new Subassembly(Identity.SAMPLE, null, new Operation[] {});
-	    fail("Powinien wystapic blad, poniewaz lista operacji jest pusta!");
-	} catch (InvalidAttributeValueException e) {
-	}
+	exception.expect(InvalidAttributeValueException.class);
+	new Subassembly(Identity.SAMPLE, null, new Operation[] {});
     }
 
     @Test
@@ -53,29 +54,30 @@ public class SubassemblyTest {
     }
 
     @Test
-    public void shouldCorrectRecognizeNotSupportedOperations() throws InvalidAttributeValueException {
-	Operation testOperation = new Operation(null);
+    public void shouldCorrectRecognizeNotSupportedOperations() throws Exception {
+	Operation testOperation = new Operation(OperationTest.mockApiMethod());
 	Subassembly subassembly = mockSubassembly();
 
 	assertFalse(subassembly.supports(testOperation));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldInformWhenPropertiesNotSetted() throws InvalidAttributeValueException {
+    @Test
+    public void shouldInformWhenPropertiesNotSetted() throws Exception {
 	Subassembly subassembly = mockSubassembly();
 
+	exception.expect(NoSuchElementException.class);
 	subassembly.getProperty(null);
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldInformWhenSubassemblyHasNotPropertyWithSpecifiedIdentifier()
-	    throws InvalidAttributeValueException {
+    @Test
+    public void shouldInformWhenSubassemblyHasNotPropertyWithSpecifiedIdentifier() throws Exception {
 	Properties properties = new Properties();
 	properties.add(new Identity(5), 5);
 	properties.add(new Identity(10), 10);
 
 	Subassembly subassembly = mockSubassembly();
 
+	exception.expect(NoSuchElementException.class);
 	subassembly.getProperty(new Identity(4));
     }
 
@@ -93,7 +95,7 @@ public class SubassemblyTest {
 	assertNotNull(subassembly.getProperty(secondId));
     }
 
-    public static Subassembly mockSubassembly() throws InvalidAttributeValueException {
+    public static Subassembly mockSubassembly() throws Exception {
 	return new Subassembly(Identity.SAMPLE, null, new Operation(null));
     }
 
