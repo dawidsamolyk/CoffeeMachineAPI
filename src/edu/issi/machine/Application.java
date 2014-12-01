@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.naming.directory.InvalidAttributesException;
 
+import edu.issi.machine.api.Api;
 import edu.issi.machine.configuration.ConfigurationFile;
 import edu.issi.machine.configuration.MachineConfigurationReader;
 import edu.issi.machine.controller.MachineController;
@@ -14,6 +15,13 @@ import edu.issi.machine.controller.MachineController;
  *
  */
 public class Application {
+
+    private static void checkInputArguments(String[] args) throws InvalidAttributesException {
+	if (args == null || args.length != 1) {
+	    throw new InvalidAttributesException(
+		    "Nieprawid³owe wywo³anie! Jako argument podaj œcie¿kê do katalogu z plikami konfiguracyjnymi.");
+	}
+    }
 
     /**
      * Spodziewany jest tylko jeden argument wejœciowy - pe³na œcie¿ka do pliku
@@ -27,16 +35,13 @@ public class Application {
      * @throws InvalidAttributesException
      *             Wyst¹pi w przypadku b³êdnego pliku konfiguracyjnego.
      */
-    public static void main(String[] args) throws IOException, InvalidAttributesException {
-	if (args == null || args.length != 1) {
-	    throw new InvalidAttributesException(
-		    "Nieprawid³owe wywo³anie! Jako argument podaj œcie¿kê do katalogu z plikami konfiguracyjnymi.");
-	}
-	
-	ConfigurationFile configurationFile = new ConfigurationFile(new File(args[0]));
-	MachineConfigurationReader reader = new MachineConfigurationReader(configurationFile);
+    public static void main(String[] args) throws InvalidAttributesException, IOException {
+	checkInputArguments(args);
 
-	MachineController controller = new MachineController();
+	final ConfigurationFile configurationFile = new ConfigurationFile(new File(args[0]));
+	final MachineConfigurationReader reader = new MachineConfigurationReader(configurationFile);
+
+	final MachineController controller = new MachineController(new Api());
 	controller.setUpUsing(reader);
 	controller.start();
 

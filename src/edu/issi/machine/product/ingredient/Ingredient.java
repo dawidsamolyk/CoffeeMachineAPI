@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import edu.issi.machine.Validator;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.ObjectWithIdentity;
+import edu.issi.machine.id.PropertyIdentity;
 
 /**
  * @author Dawid
@@ -14,22 +15,22 @@ import edu.issi.machine.id.ObjectWithIdentity;
  */
 public class Ingredient extends ObjectWithIdentity implements Serializable {
     /**
-     * 
+     * Wygenerowany numer UID.
      */
     private static final long serialVersionUID = -2437259497186892897L;
 
-    private Map<IngredientProperty, Double> properties;
+    private final Map<PropertyIdentity, Double> properties;
 
     /**
-     * @param id
+     * @param identity
      *            Identyfikator.
      * @param properties
      *            W³aœciwoœci sk³adnika.
      */
-    public Ingredient(Identity id, Map<IngredientProperty, Double> properties) {
-	super(id);
+    public Ingredient(Identity identity, Map<PropertyIdentity, Double> properties) {
+	super(identity);
 
-	Validator.throwExceptionWhenContainsNullOrEmpty(properties,
+	Validator.throwExceptionWhenMapContainsNullOrEmpty(properties,
 		"Lista w³aœciwoœci sk³adnika nie mo¿e byæ pusta lub niepe³na!");
 
 	this.properties = properties;
@@ -40,8 +41,8 @@ public class Ingredient extends ObjectWithIdentity implements Serializable {
      *            W³asnoœæ sk³adnika, któr¹ chcemy pobraæ.
      * @return Zwraca wartoœæ przypisan¹ do wybranej w³aœciwoœci sk³adnika.
      */
-    public Double get(IngredientProperty property) {
-	Double result = properties.get(property);
+    public Double get(PropertyIdentity property) {
+	final Double result = properties.get(property);
 
 	if (result == null) {
 	    throw new NoSuchElementException("Wybrany sk³adnik nie posiada podanej w³aœciwoœci!");
@@ -56,14 +57,15 @@ public class Ingredient extends ObjectWithIdentity implements Serializable {
      * @param value
      *            Wartoœæ przypisana do w³asnoœci.
      */
-    public void add(IngredientProperty property, Double value) {
+    public void add(PropertyIdentity property, Double value) {
 	properties.put(property, value);
     }
-    
+
     /**
-     * @param property W³asnoœæ sk³adnika.
+     * @param property
+     *            W³asnoœæ sk³adnika.
      */
-    public void remove(IngredientProperty property) {
+    public void remove(PropertyIdentity property) {
 	properties.remove(property);
     }
 }

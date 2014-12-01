@@ -1,6 +1,6 @@
 package edu.issi.machine.controller;
 
-import edu.issi.machine.api.ExampleApi;
+import edu.issi.machine.api.Api;
 import edu.issi.machine.configuration.MachineConfiguration;
 import edu.issi.machine.configuration.MachineConfigurationReader;
 
@@ -9,12 +9,18 @@ import edu.issi.machine.configuration.MachineConfigurationReader;
  *
  */
 public class MachineController extends Thread {
+    private final Api api;
+    
     private boolean working = false;
     private MachineConfiguration configuration;
+
     /**
-     * 
+     * @param api
+     *            API.
      */
-    public static ExampleApi API = ExampleApi.INSTANCE;
+    public MachineController(Api api) {
+	this.api = api;
+    }
 
     /**
      * @param configurationReader
@@ -23,9 +29,9 @@ public class MachineController extends Thread {
      */
     public void setUpUsing(MachineConfigurationReader configurationReader) {
 	if (working) {
-	    API.log(new UnsupportedOperationException(
+	    api.logError(new UnsupportedOperationException(
 		    "Nie mo¿na zmieniæ konfiguracji w trakcie dzia³ania maszyny!"));
-	    
+
 	} else {
 	    readConfiguration(configurationReader);
 	}
@@ -43,14 +49,14 @@ public class MachineController extends Thread {
 	}
 	working = true;
 
-	API.log("START");
+	api.log("START");
     }
 
     /**
      * 
      */
     public void stopWorking() {
-	API.log("STOP");
+	api.log("STOP");
 	working = false;
     }
 

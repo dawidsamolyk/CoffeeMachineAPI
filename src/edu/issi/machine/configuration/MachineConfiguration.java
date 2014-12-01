@@ -12,8 +12,8 @@ import edu.issi.machine.subassembly.Subassembly;
  * 
  */
 public class MachineConfiguration {
-    private List<Subassembly> subassemblies;
-    private List<Product> products;
+    private final List<Subassembly> subassemblies;
+    private final List<Product> products;
 
     /**
      * @param subassemblies
@@ -26,11 +26,10 @@ public class MachineConfiguration {
      */
     public MachineConfiguration(List<Subassembly> subassemblies, List<Product> products)
 	    throws IllegalStateException {
-
+	ensureValidity();
+	
 	this.subassemblies = subassemblies;
 	this.products = products;
-
-	this.ensureValidity();
     }
 
     /**
@@ -39,17 +38,10 @@ public class MachineConfiguration {
      *             (pusta lista podzespo³ów lub produktów).
      */
     public final void ensureValidity() throws IllegalStateException {
-	String message = "Nie mozna utworzyc konfiguracji maszyny bez zadnych ";
+	final String message = "Nie mozna utworzyc konfiguracji maszyny bez zadnych ";
 
 	Validator.throwExceptionWhenEmpty(subassemblies, message + "podzespo³ów!");
 	Validator.throwExceptionWhenEmpty(products, message + "produktów!");
-    }
-
-    /**
-     * @return Iterator po podzespo³ach maszyny.
-     */
-    public Iterator<Subassembly> subassemblies() {
-	return subassemblies.iterator();
     }
 
     /**
@@ -57,5 +49,12 @@ public class MachineConfiguration {
      */
     public Iterator<Product> products() {
 	return products.iterator();
+    }
+
+    /**
+     * @return Iterator po podzespo³ach maszyny.
+     */
+    public Iterator<Subassembly> subassemblies() {
+	return subassemblies.iterator();
     }
 }

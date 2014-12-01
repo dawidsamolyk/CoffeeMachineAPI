@@ -13,11 +13,15 @@ import javax.naming.directory.InvalidAttributesException;
 
 import org.junit.Test;
 
+import edu.issi.machine.TestingApi;
+import edu.issi.machine.api.Api;
 import edu.issi.machine.id.Identity;
+import edu.issi.machine.id.PropertyIdentity;
+import edu.issi.machine.operation.ApiMethod;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Ingredient;
-import edu.issi.machine.product.ingredient.IngredientProperty;
+import edu.issi.machine.product.ingredient.Unit;
 import edu.issi.machine.subassembly.Subassembly;
 
 @SuppressWarnings("javadoc")
@@ -54,40 +58,42 @@ public class MachineConfigurationWriterAndReaderTest {
 
     private Product blackCoffee() {
 	Product blackCoffee = new Product(new Identity(0, "Kawa czarna"));
+
 	blackCoffee.add(coffee());
 	blackCoffee.add(water());
+
 	return blackCoffee;
     }
 
     private Operation giveWaterOperation() {
-	Operation giveWater = new Operation(new Identity(8, "Wpompowanie wody"));
-	return giveWater;
+	return new Operation(new Identity(8, "Wpompowanie wody"), TestingApi.mockApiMethod());
     }
 
     private Operation heatWaterOperation() {
-	Operation heatWater = new Operation(new Identity(6, "Podgrzanie wody"));
-	return heatWater;
+	return new Operation(new Identity(6, "Podgrzanie wody"), TestingApi.mockApiMethod());
     }
 
     private Operation[] operations() {
-	return new Operation[] { new Operation(new Identity(4, "Zmielenie kawy")),
-		new Operation(new Identity(3, "Wsypanie kawy")) };
+	return new Operation[] {
+		new Operation(new Identity(4, "Zmielenie kawy"), TestingApi.mockApiMethod()),
+		new Operation(new Identity(3, "Wsypanie kawy"), TestingApi.mockApiMethod()) };
     }
 
     private Ingredient water() {
-	Map<IngredientProperty, Double> waterProperties = new HashMap<IngredientProperty, Double>();
-	
-	waterProperties.put(IngredientProperty.QUANTITY_IN_ML, 250.0);
-	waterProperties.put(IngredientProperty.PRESSURE_IN_BAR, 0.5);
-	
+	Map<PropertyIdentity, Double> waterProperties = new HashMap<PropertyIdentity, Double>();
+
+	waterProperties.put(new PropertyIdentity(100, "Ciœnienie", Unit.BAR), 1.0);
+	waterProperties.put(new PropertyIdentity(101, "Temperatura", Unit.C), 2.5);
+	waterProperties.put(new PropertyIdentity(101, "Iloœæ", Unit.L), 2.5);
+
 	return new Ingredient(new Identity(2, "Woda"), waterProperties);
     }
 
     private Ingredient coffee() {
-	Map<IngredientProperty, Double> coffeeProperties = new HashMap<IngredientProperty, Double>();
-	
-	coffeeProperties.put(IngredientProperty.QUANTITY_IN_G, 10.0);
-	
+	Map<PropertyIdentity, Double> coffeeProperties = new HashMap<PropertyIdentity, Double>();
+
+	coffeeProperties.put(new PropertyIdentity(101, "Iloœæ", Unit.G), 10.0);
+
 	return new Ingredient(new Identity(1, "Kawa"), coffeeProperties);
     }
 }

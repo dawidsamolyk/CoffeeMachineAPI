@@ -11,8 +11,8 @@ public class OperationState implements Serializable {
      * 
      */
     private static final long serialVersionUID = -3500522852398313366L;
-    
-    private Status status;
+
+    private final Status status;
     private String description;
 
     /**
@@ -100,7 +100,7 @@ public class OperationState implements Serializable {
      * @return Status operacji i opis w jednym tekscie.
      */
     public String getCompensatedStatus() {
-	String statusInBrackets = "[" + status.name() + "] ";
+	final String statusInBrackets = "[" + status.name() + "] ";
 
 	if (description != null) {
 	    return statusInBrackets + description;
@@ -123,9 +123,9 @@ public class OperationState implements Serializable {
 	    return true;
 	if (obj == null)
 	    return false;
-	if (getClass() != obj.getClass())
+	if (!getClass().equals(obj.getClass()))
 	    return false;
-	OperationState other = (OperationState) obj;
+	final OperationState other = (OperationState) obj;
 	if (description == null) {
 	    if (other.description != null)
 		return false;

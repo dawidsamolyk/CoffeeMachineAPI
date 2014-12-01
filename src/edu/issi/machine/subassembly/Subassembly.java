@@ -9,6 +9,7 @@ import edu.issi.machine.Validator;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.operation.Operation;
+import edu.issi.machine.subassembly.handler.DefaultHandler;
 import edu.issi.machine.subassembly.handler.Handler;
 
 /**
@@ -21,8 +22,8 @@ public class Subassembly extends ObjectWithIdentity implements Serializable {
      */
     private static final long serialVersionUID = 1208676282732135179L;
 
-    private List<Handler> handlers;
-    private List<Operation> operations;
+    private final List<Handler> handlers;
+    private final List<Operation> operations;
 
     /**
      * @param id
@@ -35,20 +36,21 @@ public class Subassembly extends ObjectWithIdentity implements Serializable {
      *             Wyst¹pi, jeœli lista operacji bêdzie pusta lub niepoprawna.
      */
     public Subassembly(Identity id, Operation... operations) throws IllegalArgumentException {
-
 	super(id);
 
-	Validator.throwExceptionWhenContainsNullOrEmpty(operations,
+	Validator.throwExceptionWhenArrayContainsNullOrEmpty(operations,
 		"Lista operacji nie mo¿e byæ pusta oraz nie mo¿e zawieraæ pustych operacji!");
 
 	this.operations = getAsList(operations);
-	this.handlers = getNewListWithDefaultHandler();
+	handlers = getNewListWithDefaultHandler();
     }
 
     private List<Handler> getNewListWithDefaultHandler() {
-	List<Handler> result = new ArrayList<Handler>();
-	result.add(new Handler());
-	return result;
+	final List<Handler> results = new ArrayList<Handler>();
+
+	results.add(new DefaultHandler());
+
+	return results;
     }
 
     private List<Operation> getAsList(Operation... operations) {

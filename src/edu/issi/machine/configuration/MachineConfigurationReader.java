@@ -11,7 +11,7 @@ import com.google.gson.Gson;
  *
  */
 public class MachineConfigurationReader {
-    private MachineConfiguration confifuration;
+    private final MachineConfiguration confifuration;
 
     /**
      * @param file
@@ -20,11 +20,11 @@ public class MachineConfigurationReader {
      *             Wyst¹pi w przypadku b³êdów odczytu z pliku.
      */
     public MachineConfigurationReader(ConfigurationFile file) throws IOException {
-	confifuration = readMachineConfiguration(file);
+	confifuration = readMachineConfigurationFromFile(file);
     }
 
-    private MachineConfiguration readMachineConfiguration(ConfigurationFile file) throws IOException {
-	BufferedReader configurationReader = new BufferedReader(new FileReader(file));
+    private MachineConfiguration readMachineConfigurationFromFile(ConfigurationFile file) throws IOException {
+	final BufferedReader configurationReader = new BufferedReader(new FileReader(file));
 
 	final MachineConfiguration result = readMachineConfiguration(configurationReader);
 
@@ -34,10 +34,11 @@ public class MachineConfigurationReader {
     }
 
     private MachineConfiguration readMachineConfiguration(BufferedReader configurationReader) {
-	final MachineConfiguration result = new Gson().fromJson(configurationReader, MachineConfiguration.class);
-	
+	final MachineConfiguration result = new Gson().fromJson(configurationReader,
+		MachineConfiguration.class);
+
 	result.ensureValidity();
-	
+
 	return result;
     }
 

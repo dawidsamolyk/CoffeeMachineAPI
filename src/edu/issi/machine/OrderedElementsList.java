@@ -1,6 +1,5 @@
-package edu.issi.machine.product;
+package edu.issi.machine;
 
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,8 +11,8 @@ import java.util.NoSuchElementException;
  *            Typ obiektów, które bêd¹ przechowywane w tej liœcie.
  * 
  */
-public class OrderedElementsList<Type> implements Iterable<Type>  {
-    private List<Type> elements;
+public class OrderedElementsList<Type> implements Iterable<Type> {
+    private final List<Type> elements;
 
     /**
      * 
@@ -26,7 +25,7 @@ public class OrderedElementsList<Type> implements Iterable<Type>  {
      * @param object
      *            Obiekt, który zostanie dodany na koñcu listy.
      */
-    public void addAtTheEnd(Type object) {
+    public void add(Type object) {
 	elements.add(object);
     }
 
@@ -53,7 +52,7 @@ public class OrderedElementsList<Type> implements Iterable<Type>  {
      * @throws NoSuchElementException
      *             Wyst¹pi, jeœli nie ma obiektu pod podanym indeksem.
      */
-    public Type getElementAt(int index) throws NoSuchElementException {
+    public Type getElement(int index) throws NoSuchElementException {
 	checkIsThereSuchElementAt(index);
 	return elements.get(index);
     }
@@ -64,7 +63,7 @@ public class OrderedElementsList<Type> implements Iterable<Type>  {
      * @throws NoSuchElementException
      *             Wyst¹pi, jeœli nie ma obiektu pod podanym indeksem.
      */
-    public void removeAt(int index) throws NoSuchElementException {
+    public void remove(int index) throws NoSuchElementException {
 	checkIsThereSuchElementAt(index);
 	elements.remove(index);
     }
@@ -72,6 +71,7 @@ public class OrderedElementsList<Type> implements Iterable<Type>  {
     /**
      * @return Iterator po elementach.
      */
+    @Override
     public Iterator<Type> iterator() {
 	return elements.iterator();
     }
@@ -103,9 +103,9 @@ public class OrderedElementsList<Type> implements Iterable<Type>  {
 	    return true;
 	if (obj == null)
 	    return false;
-	if (getClass() != obj.getClass())
+	if (!getClass().equals(obj.getClass()))
 	    return false;
-	OrderedElementsList<?> other = (OrderedElementsList<?>) obj;
+	final OrderedElementsList<?> other = (OrderedElementsList<?>) obj;
 	if (elements == null) {
 	    if (other.elements != null)
 		return false;

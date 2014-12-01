@@ -2,7 +2,6 @@ package edu.issi.machine;
 
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 /**
  * Sytuacja wyj¹tkowa podczas walidacji
@@ -12,29 +11,44 @@ import java.util.NoSuchElementException;
  */
 public class Validator {
 
+    private static int countNullObjects(Object[] table) {
+	int nullObjects = 0;
+
+	for (int index = 0; index < table.length; index++) {
+	    if (table[index] == null) {
+		nullObjects++;
+	    }
+	}
+
+	return nullObjects;
+    }
+
     /**
      * @param object
      *            Obiekt do sprawdzenia.
      * @param exceptionMessage
      *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
-     * @throws NoSuchElementException
+     * @throws IllegalArgumentException
      *             Wygenerowany b³¹d.
      */
-    public static void generateExceptionWhenObjectIsNotCreated(Object object, String exceptionMessage)
-	    throws NoSuchElementException {
+    public static void throwExceptionWhenObjectIsNotCreated(Object object, String exceptionMessage)
+	    throws IllegalArgumentException {
 	if (object == null) {
-	    throw new NoSuchElementException(exceptionMessage);
+	    throw new IllegalArgumentException(exceptionMessage);
 	}
     }
 
     /**
-     * @param list
-     *            Lista obiektów do sprawdzenia.
+     * @param text
+     *            Tekst do sprawdzenia.
      * @param exceptionMessage
      *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
+     * @throws IllegalArgumentException
+     *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenEmpty(List<?> list, String exceptionMessage) {
-	if (list == null || list.size() == 0 || (countNullObjects(list.toArray()) == list.size())) {
+    public static void throwExceptionWhenTextIsEmpty(String text, String exceptionMessage)
+	    throws IllegalArgumentException {
+	if (text == null || text.length() == 0) {
 	    throw new IllegalArgumentException(exceptionMessage);
 	}
     }
@@ -44,8 +58,11 @@ public class Validator {
      *            Tablica obiektów do sprawdzenia.
      * @param exceptionMessage
      *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
+     * @throws IllegalArgumentException
+     *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenContainsNullOrEmpty(Object[] table, String exceptionMessage) {
+    public static void throwExceptionWhenArrayContainsNullOrEmpty(Object[] table, String exceptionMessage)
+	    throws IllegalArgumentException {
 	if (table == null || table.length == 0 || countNullObjects(table) > 0) {
 	    throw new IllegalArgumentException(exceptionMessage);
 	}
@@ -56,9 +73,12 @@ public class Validator {
      *            Lista obiektów do sprawdzenia.
      * @param exceptionMessage
      *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
+     * @throws IllegalArgumentException
+     *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenContainsNullOrEmpty(List<?> list, String exceptionMessage) {
-	if (list == null || list.size() == 0 || countNullObjects(list.toArray()) > 0) {
+    public static void throwExceptionWhenEmpty(List<?> list, String exceptionMessage)
+	    throws IllegalArgumentException {
+	if (list == null || list.size() == 0 || (countNullObjects(list.toArray()) == list.size())) {
 	    throw new IllegalArgumentException(exceptionMessage);
 	}
     }
@@ -68,21 +88,29 @@ public class Validator {
      *            Tablica obiektów do sprawdzenia.
      * @param exceptionMessage
      *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
+     * @throws IllegalArgumentException
+     *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenEmpty(Object[] table, String exceptionMessage) {
+    public static void throwExceptionWhenEmpty(Object[] table, String exceptionMessage)
+	    throws IllegalArgumentException {
 	if (table == null || table.length == 0 || countNullObjects(table) == table.length) {
 	    throw new IllegalArgumentException(exceptionMessage);
 	}
     }
 
-    private static int countNullObjects(Object[] table) {
-	int nullObjects = 0;
-	for (int x = 0; x < table.length; x++) {
-	    if (table[x] == null) {
-		nullObjects++;
-	    }
+    /**
+     * @param list
+     *            Lista obiektów do sprawdzenia.
+     * @param exceptionMessage
+     *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
+     * @throws IllegalArgumentException
+     *             Wygenerowany b³¹d.
+     */
+    public static void throwExceptionWhenListContainsNullOrEmpty(List<?> list, String exceptionMessage)
+	    throws IllegalArgumentException {
+	if (list == null || list.size() == 0 || countNullObjects(list.toArray()) > 0) {
+	    throw new IllegalArgumentException(exceptionMessage);
 	}
-	return nullObjects;
     }
 
     /**
@@ -90,8 +118,11 @@ public class Validator {
      *            Mapa obiektów do sprawdzenia.
      * @param exceptionMessage
      *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
+     * @throws IllegalArgumentException
+     *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenContainsNullOrEmpty(Map<?, ?> map, String exceptionMessage) {
+    public static void throwExceptionWhenMapContainsNullOrEmpty(Map<?, ?> map, String exceptionMessage)
+	    throws IllegalArgumentException {
 	if (map == null || map.size() == 0 || countNullObjects(map.keySet().toArray()) == map.size()) {
 	    throw new IllegalArgumentException(exceptionMessage);
 	}

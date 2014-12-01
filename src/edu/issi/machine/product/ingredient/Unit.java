@@ -4,7 +4,7 @@ package edu.issi.machine.product.ingredient;
  * @author Dawid
  *
  */
-public enum IngredientUnit {
+public enum Unit {
 
     /**
      * Gram.
@@ -21,11 +21,19 @@ public enum IngredientUnit {
     /**
      * Litr
      */
-    L("l");
+    L("l"),
+    /**
+     * Bar
+     */
+    BAR("bar"),
+    /**
+     * Celsjusz
+     */
+    C("*C");
 
-    private String label;
+    private final String label;
 
-    private IngredientUnit(String label) {
+    private Unit(String label) {
 	this.label = label;
     }
 

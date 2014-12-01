@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import edu.issi.machine.OrderedElementsList;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.product.ingredient.Ingredient;
@@ -17,8 +18,8 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient>,
      * 
      */
     private static final long serialVersionUID = 3905169041940315445L;
-    
-    private OrderedElementsList<Ingredient> ingredients;
+
+    private final OrderedElementsList<Ingredient> ingredients;
 
     /**
      * @param id
@@ -32,10 +33,10 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient>,
     /**
      * @param ingredient
      *            Sk³adnik, który zostanie dodany na koñcu listy.
-     * @see edu.issi.machine.product.OrderedElementsList#addAtTheEnd(Object)
+     * @see edu.issi.machine.OrderedElementsList#add(Object)
      */
     public void add(Ingredient ingredient) {
-	ingredients.addAtTheEnd(ingredient);
+	ingredients.add(ingredient);
     }
 
     /**
@@ -44,15 +45,15 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient>,
      * @return Skladnik umieszczony na podanym indeksie.
      * @throws NoSuchElementException
      *             Wyst¹pi, jeœli pod podanym indeksem nie ma ¿adnego sk³adnika.
-     * @see edu.issi.machine.product.OrderedElementsList#getElementAt(int)
+     * @see edu.issi.machine.OrderedElementsList#getElement(int)
      */
     public Ingredient getIngredientAt(int index) throws NoSuchElementException {
-	return ingredients.getElementAt(index);
+	return ingredients.getElement(index);
     }
 
     /**
      * @return Liczba skladnikow.
-     * @see edu.issi.machine.product.OrderedElementsList#numberOfElements()
+     * @see edu.issi.machine.OrderedElementsList#numberOfElements()
      */
     public int numberOfElements() {
 	return ingredients.numberOfElements();
@@ -63,7 +64,7 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient>,
      *            Indeks, pod który ma zostaæ dodany sk³adnik.
      * @param ingredient
      *            Sk³adnik.
-     * @see edu.issi.machine.product.OrderedElementsList#addAt(int, Object)
+     * @see edu.issi.machine.OrderedElementsList#addAt(int, Object)
      */
     public void addAt(int index, Ingredient ingredient) {
 	ingredients.addAt(index, ingredient);
@@ -72,16 +73,17 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient>,
     /**
      * @param index
      *            Indeks, spod którego ma zostaæ usuniêty sk³adnik.
-     * @see edu.issi.machine.product.OrderedElementsList#removeAt(int)
+     * @see edu.issi.machine.OrderedElementsList#remove(int)
      */
-    public void removeAt(int index) {
-	ingredients.removeAt(index);
+    public void remove(int index) {
+	ingredients.remove(index);
     }
 
     /**
      * @return Iterator po skladnikach.
-     * @see edu.issi.machine.product.OrderedElementsList#iterator()
+     * @see edu.issi.machine.OrderedElementsList#iterator()
      */
+    @Override
     public Iterator<Ingredient> iterator() {
 	return ingredients.iterator();
     }
@@ -100,9 +102,9 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient>,
 	    return true;
 	if (obj == null)
 	    return false;
-	if (getClass() != obj.getClass())
+	if (!getClass().equals(obj.getClass()))
 	    return false;
-	Product other = (Product) obj;
+	final Product other = (Product) obj;
 	if (ingredients == null) {
 	    if (other.ingredients != null)
 		return false;

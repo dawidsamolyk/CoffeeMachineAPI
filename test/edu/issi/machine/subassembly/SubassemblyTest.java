@@ -4,12 +4,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import javax.naming.directory.InvalidAttributeValueException;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import edu.issi.machine.TestingApi;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.operation.Operation;
 
@@ -20,7 +19,8 @@ public class SubassemblyTest {
 
     @Test
     public void shouldCreatesWithNotEmptyOperations() {
-	Subassembly subassembly = new Subassembly(Identity.SAMPLE, new Operation(null));
+	Subassembly subassembly = new Subassembly(new Identity(0), new Operation(new Identity(1),
+		TestingApi.mockApiMethod()));
 
 	assertNotNull(subassembly);
     }
@@ -30,27 +30,29 @@ public class SubassemblyTest {
 	Operation[] operations = null;
 
 	exception.expect(IllegalArgumentException.class);
-	new Subassembly(Identity.SAMPLE, operations);
+	new Subassembly(new Identity(0), operations);
     }
 
     @Test
     public void shouldNotCreatesWhenOperationsListIsEmpty() {
 	exception.expect(IllegalArgumentException.class);
-	new Subassembly(Identity.SAMPLE, new Operation[] {});
+	new Subassembly(new Identity(0), new Operation[] {});
     }
 
     @Test
     public void shouldCorrectRecognizeSupportedOperations() {
-	Operation testOperation = new Operation(null);
-	Subassembly subassembly = new Subassembly(Identity.SAMPLE, testOperation, new Operation(null));
+	Operation testOperation = new Operation(new Identity(0), TestingApi.mockApiMethod());
+	Subassembly subassembly = new Subassembly(new Identity(0), testOperation, new Operation(new Identity(
+		11), TestingApi.mockApiMethod()));
 
 	assertTrue(subassembly.supports(testOperation));
     }
 
     @Test
     public void shouldCorrectRecognizeNotSupportedOperations() {
-	Operation testOperation = new Operation(new Identity(0));
-	Subassembly subassembly = new Subassembly(new Identity(1), new Operation(new Identity(1)));
+	Operation testOperation = new Operation(new Identity(0), TestingApi.mockApiMethod());
+	Subassembly subassembly = new Subassembly(new Identity(1), new Operation(new Identity(1),
+		TestingApi.mockApiMethod()));
 
 	assertFalse(subassembly.supports(testOperation));
     }

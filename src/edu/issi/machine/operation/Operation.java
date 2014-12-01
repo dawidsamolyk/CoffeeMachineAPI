@@ -2,6 +2,7 @@ package edu.issi.machine.operation;
 
 import java.io.Serializable;
 
+import edu.issi.machine.Validator;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.product.ingredient.Ingredient;
@@ -17,15 +18,20 @@ public class Operation extends ObjectWithIdentity implements Serializable {
      */
     private static final long serialVersionUID = -8742139834110667380L;
 
-    private Subassembly subassembly = null;
-    private Ingredient ingredient = null;
+    private Subassembly subassembly;
+    private Ingredient ingredient;
+    private ApiMethod[] methods;
 
     /**
      * @param id
      *            Identyfikator.
+     * @param methods
+     *            Funkcje do wykonania.
      */
-    public Operation(Identity id) {
+    public Operation(Identity id, ApiMethod... methods) {
 	super(id);
+	Validator.throwExceptionWhenEmpty(methods, "Funkcje dla wybranej operacji nie mog¹ byæ puste!");
+	this.methods = methods;
     }
 
     /**
@@ -60,8 +66,20 @@ public class Operation extends ObjectWithIdentity implements Serializable {
 	    return new OperationState(Status.ERROR, "Podzespol nie moze wykonac tej operacji!");
 	}
 
-	// TODO
-	
+	return executeAllApiMethods();
+    }
+
+    protected OperationState executeAllApiMethods() {
+	OperationState eachOperationState;
+
+	for (ApiMethod eachApiMethod : methods) {
+	    eachOperationState = eachApiMethod.execute(subassembly, ingredient);
+
+	    if (eachOperationState.getStatus().requiresAttention()) {
+		return eachOperationState;
+	    }
+	}
+
 	return new OperationState(Status.OK);
     }
 
@@ -70,7 +88,7 @@ public class Operation extends ObjectWithIdentity implements Serializable {
     }
 
     private boolean isRequiredElementsProvided() {
-	return (subassembly != null && ingredient != null);
+	return subassembly != null && ingredient != null;
     }
 
 }

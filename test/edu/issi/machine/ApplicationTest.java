@@ -4,24 +4,16 @@ import java.io.IOException;
 
 import javax.naming.directory.InvalidAttributesException;
 
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import com.google.gson.JsonSyntaxException;
 
-import edu.issi.machine.controller.MachineController;
-
 @SuppressWarnings("javadoc")
 public class ApplicationTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
-
-    @BeforeClass
-    public static void beforeClass() {
-	MachineController.API = TestingApi.INSTANCE;
-    }
 
     @Test
     public void shouldNotExecuteWithValidArguments() throws InvalidAttributesException, IOException {

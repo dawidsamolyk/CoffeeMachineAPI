@@ -10,6 +10,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import edu.issi.machine.OrderedElementsList;
+
 @SuppressWarnings("javadoc")
 public class OrderedElementsContainerTest {
     @Rule
@@ -22,13 +24,13 @@ public class OrderedElementsContainerTest {
 	Object secondObject = new Object();
 	Object thirdObject = new Object();
 
-	product.addAtTheEnd(firstObject);
-	product.addAtTheEnd(secondObject);
-	product.addAtTheEnd(thirdObject);
+	product.add(firstObject);
+	product.add(secondObject);
+	product.add(thirdObject);
 
-	assertEquals(firstObject, product.getElementAt(0));
-	assertEquals(secondObject, product.getElementAt(1));
-	assertEquals(thirdObject, product.getElementAt(2));
+	assertEquals(firstObject, product.getElement(0));
+	assertEquals(secondObject, product.getElement(1));
+	assertEquals(thirdObject, product.getElement(2));
     }
 
     @Test
@@ -37,7 +39,7 @@ public class OrderedElementsContainerTest {
 	OrderedElementsList<Object> product = new OrderedElementsList<Object>();
 
 	for (int x = 0; x < numberOfObjects; x++) {
-	    product.addAtTheEnd(new Object());
+	    product.add(new Object());
 	}
 
 	assertEquals(numberOfObjects, product.numberOfElements());
@@ -52,7 +54,7 @@ public class OrderedElementsContainerTest {
 	product.addAt(1, ingredient);
 
 	assertEquals(originalNumberOfObjects + 1, product.numberOfElements());
-	assertEquals(ingredient, product.getElementAt(1));
+	assertEquals(ingredient, product.getElement(1));
     }
 
     @Test
@@ -62,7 +64,7 @@ public class OrderedElementsContainerTest {
 	product.addAt(0, ingredient);
 
 	assertEquals(4, product.numberOfElements());
-	assertEquals(ingredient, product.getElementAt(0));
+	assertEquals(ingredient, product.getElement(0));
     }
 
     @Test
@@ -72,17 +74,17 @@ public class OrderedElementsContainerTest {
 	Object secondObject = new Object();
 	Object thirdObject = new Object();
 
-	product.addAtTheEnd(firstObject);
-	product.addAtTheEnd(secondObject);
-	product.addAtTheEnd(thirdObject);
+	product.add(firstObject);
+	product.add(secondObject);
+	product.add(thirdObject);
 
-	product.removeAt(1);
+	product.remove(1);
 
-	assertEquals(firstObject, product.getElementAt(0));
-	assertEquals(thirdObject, product.getElementAt(1));
+	assertEquals(firstObject, product.getElement(0));
+	assertEquals(thirdObject, product.getElement(1));
 
 	exception.expect(NoSuchElementException.class);
-	product.getElementAt(2);
+	product.getElement(2);
     }
 
     @Test
@@ -106,9 +108,9 @@ public class OrderedElementsContainerTest {
 	Object secondObject = new Object();
 	Object thirdObject = new Object();
 
-	product.addAtTheEnd(firstObject);
-	product.addAtTheEnd(secondObject);
-	product.addAtTheEnd(thirdObject);
+	product.add(firstObject);
+	product.add(secondObject);
+	product.add(thirdObject);
 
 	Iterator<Object> iterator = product.iterator();
 	assertEquals(firstObject, iterator.next());
@@ -128,7 +130,7 @@ public class OrderedElementsContainerTest {
 	OrderedElementsList<Object> product = productWithThreeExampleObjects();
 	
 	exception.expect(NoSuchElementException.class);
-	product.removeAt(100);
+	product.remove(100);
     }
 
     @Test
@@ -136,14 +138,14 @@ public class OrderedElementsContainerTest {
 	OrderedElementsList<Object> product = productWithThreeExampleObjects();
 	
 	exception.expect(NoSuchElementException.class);
-	product.getElementAt(100);
+	product.getElement(100);
     }
 
     private OrderedElementsList<Object> productWithThreeExampleObjects() {
 	OrderedElementsList<Object> product = new OrderedElementsList<Object>();
-	product.addAtTheEnd(new Object());
-	product.addAtTheEnd(new Object());
-	product.addAtTheEnd(new Object());
+	product.add(new Object());
+	product.add(new Object());
+	product.add(new Object());
 	return product;
     }
 

@@ -11,23 +11,17 @@ public class Identity implements Serializable {
      * 
      */
     private static final long serialVersionUID = -1494708831585331100L;
-    private int id;
+
+    private final int id;
     private String name;
-    /**
-     * 
-     */
-    public static final Identity SAMPLE = new Identity(0);
 
     /**
      * @param id
      *            Numer identyfikacyjny.
-     * @throws SecurityException
-     *             Wyst¹pi, gdy nast¹pi próba stworzenia dwóch obiektów o tym
-     *             samym numerze ID.
      */
-    public Identity(int id) throws SecurityException {
+    public Identity(int id) {
 	this.id = id;
-	this.name = new Integer(id).toString();
+	name = Integer.toString(id);
     }
 
     /**
@@ -35,13 +29,23 @@ public class Identity implements Serializable {
      *            Numer identyfikacyjny.
      * @param name
      *            Nazwa.
-     * @throws SecurityException
-     *             Wyst¹pi, gdy nast¹pi próba stworzenia dwóch obiektów o tym
-     *             samym numerze ID.
      */
-    public Identity(int id, String name) throws SecurityException {
+    public Identity(int id, String name) {
 	this(id);
 	this.name = name;
+    }
+
+    /**
+     * @param newName
+     *            Nowa nazwa.
+     * @return Poprzednia nazwa.
+     */
+    public String changeName(String newName) {
+	String actualName = name;
+
+	name = newName;
+
+	return actualName;
     }
 
     @Override
@@ -64,15 +68,10 @@ public class Identity implements Serializable {
 	    return true;
 	if (obj == null)
 	    return false;
-	if (getClass() != obj.getClass())
+	if (!getClass().equals(obj.getClass()))
 	    return false;
-	Identity other = (Identity) obj;
+	final Identity other = (Identity) obj;
 	if (id != other.id)
-	    return false;
-	if (name == null) {
-	    if (other.name != null)
-		return false;
-	} else if (!name.equals(other.name))
 	    return false;
 	return true;
     }

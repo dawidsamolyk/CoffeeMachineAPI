@@ -1,11 +1,18 @@
 package edu.issi.machine.id;
 
+import java.io.Serializable;
+
 /**
  * @author Dawid
  *
  */
-public class ObjectWithIdentity {
-    private Identity id;
+public class ObjectWithIdentity implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2962482263335184418L;
+
+    private final Identity id;
 
     /**
      * @param id
@@ -29,9 +36,9 @@ public class ObjectWithIdentity {
 	    return true;
 	if (obj == null)
 	    return false;
-	if (getClass() != obj.getClass())
+	if (!getClass().equals(obj.getClass()))
 	    return false;
-	ObjectWithIdentity other = (ObjectWithIdentity) obj;
+	final ObjectWithIdentity other = (ObjectWithIdentity) obj;
 	if (id == null) {
 	    if (other.id != null)
 		return false;
