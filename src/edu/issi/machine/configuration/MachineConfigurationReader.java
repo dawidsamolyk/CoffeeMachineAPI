@@ -35,7 +35,9 @@ public class MachineConfigurationReader {
 
     private MachineConfiguration readMachineConfiguration(BufferedReader configurationReader) {
 	final MachineConfiguration result = new Gson().fromJson(configurationReader, MachineConfiguration.class);
+	
 	result.ensureValidity();
+	
 	return result;
     }
 

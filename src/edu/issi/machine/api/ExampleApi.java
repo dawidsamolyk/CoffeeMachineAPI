@@ -7,20 +7,21 @@ import edu.issi.machine.product.ingredient.IngredientUnit;
 
 @SuppressWarnings("javadoc")
 public class ExampleApi {
-    public static final ExampleApi API = new ExampleApi();
-    public static final ExampleApi TESTING_API = new TestingApi();
+    public static final ExampleApi INSTANCE = new ExampleApi();
 
     private PrintStream printStream = System.out;
     private PrintStream exceptionsStream = System.err;
 
-    public void giveTheCup(Integer quantity) {
-	printStream.print("Podaje ");
-	printStream.print(quantity);
-	printStream.println(" kubków...");
+    public void prepareCup() {
+	printStream.print("Przygotowuje kubek...");
+    }
+    
+    public void giveCup() {
+	printStream.print("Podaje kubek...");
     }
 
     public void heat(Integer quantity, IngredientUnit unit) {
-	printStream.print("Podgrzewam przy temperaturze " + quantity + unit.toString() + "...");
+	printStream.print("Podgrzewa przy temperaturze " + quantity + unit.toString() + "...");
     }
 
     public void giveIngredient(Integer quantity, IngredientUnit unit) {

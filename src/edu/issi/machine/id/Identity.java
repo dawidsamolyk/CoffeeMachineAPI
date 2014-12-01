@@ -40,7 +40,7 @@ public class Identity implements Serializable {
      *             samym numerze ID.
      */
     public Identity(int id, String name) throws SecurityException {
-	this.id = id;
+	this(id);
 	this.name = name;
     }
 

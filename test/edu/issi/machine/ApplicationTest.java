@@ -11,17 +11,28 @@ import org.junit.rules.ExpectedException;
 
 import com.google.gson.JsonSyntaxException;
 
-import edu.issi.machine.api.ExampleApi;
 import edu.issi.machine.controller.MachineController;
 
 @SuppressWarnings("javadoc")
 public class ApplicationTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
-    
+
     @BeforeClass
     public static void beforeClass() {
-	MachineController.API = ExampleApi.TESTING_API;
+	MachineController.API = TestingApi.INSTANCE;
+    }
+
+    @Test
+    public void shouldNotExecuteWithValidArguments() throws InvalidAttributesException, IOException {
+	exception.expect(IllegalStateException.class);
+	Application.main(null);
+
+	exception.expect(IllegalStateException.class);
+	Application.main(new String[] {});
+
+	exception.expect(IllegalStateException.class);
+	Application.main(new String[] { "", "" });
     }
 
     @Test
@@ -63,18 +74,6 @@ public class ApplicationTest {
 	String[] args = new String[] { "./bin/testData/validConf.json" };
 
 	Application.main(args);
-    }
-
-    @Test
-    public void shouldNotExecuteWithValidArguments() throws InvalidAttributesException, IOException {
-	exception.expect(IllegalStateException.class);
-	Application.main(null);
-
-	exception.expect(IllegalStateException.class);
-	Application.main(new String[] {});
-
-	exception.expect(IllegalStateException.class);
-	Application.main(new String[] { "", "" });
     }
 
 }

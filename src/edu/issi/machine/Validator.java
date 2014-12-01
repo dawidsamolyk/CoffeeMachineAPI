@@ -1,6 +1,7 @@
-package edu.issi.exceptions;
+package edu.issi.machine;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
@@ -51,6 +52,18 @@ public class Validator {
     }
 
     /**
+     * @param list
+     *            Lista obiektów do sprawdzenia.
+     * @param exceptionMessage
+     *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
+     */
+    public static void throwExceptionWhenContainsNullOrEmpty(List<?> list, String exceptionMessage) {
+	if (list == null || list.size() == 0 || countNullObjects(list.toArray()) > 0) {
+	    throw new IllegalArgumentException(exceptionMessage);
+	}
+    }
+
+    /**
      * @param table
      *            Tablica obiektów do sprawdzenia.
      * @param exceptionMessage
@@ -70,5 +83,17 @@ public class Validator {
 	    }
 	}
 	return nullObjects;
+    }
+
+    /**
+     * @param map
+     *            Mapa obiektów do sprawdzenia.
+     * @param exceptionMessage
+     *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
+     */
+    public static void throwExceptionWhenContainsNullOrEmpty(Map<?, ?> map, String exceptionMessage) {
+	if (map == null || map.size() == 0 || countNullObjects(map.keySet().toArray()) == map.size()) {
+	    throw new IllegalArgumentException(exceptionMessage);
+	}
     }
 }

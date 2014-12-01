@@ -32,9 +32,9 @@ public class Application {
 	    throw new InvalidAttributesException(
 		    "Nieprawid³owe wywo³anie! Jako argument podaj œcie¿kê do katalogu z plikami konfiguracyjnymi.");
 	}
-
-	ConfigurationFile file = new ConfigurationFile(new File(args[0]));
-	MachineConfigurationReader reader = new MachineConfigurationReader(file);
+	
+	ConfigurationFile configurationFile = new ConfigurationFile(new File(args[0]));
+	MachineConfigurationReader reader = new MachineConfigurationReader(configurationFile);
 
 	MachineController controller = new MachineController();
 	controller.setUpUsing(reader);

@@ -14,7 +14,7 @@ public class MachineController extends Thread {
     /**
      * 
      */
-    public static ExampleApi API = ExampleApi.API;
+    public static ExampleApi API = ExampleApi.INSTANCE;
 
     /**
      * @param configurationReader

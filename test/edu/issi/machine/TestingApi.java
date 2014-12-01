@@ -2,11 +2,10 @@ package edu.issi.machine;
 
 import edu.issi.machine.api.ExampleApi;
 
-/**
- * @author Dawid
- *
- */
+@SuppressWarnings("javadoc")
 public class TestingApi extends ExampleApi {
+    public static final ExampleApi INSTANCE = new TestingApi();
+    
     public void giveTheCup(Integer quantity) {
     }
 

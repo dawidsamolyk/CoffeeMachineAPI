@@ -3,41 +3,30 @@ package edu.issi.machine.operation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.lang.reflect.Method;
-
-import javax.naming.directory.InvalidAttributeValueException;
-
-import org.junit.Before;
 import org.junit.Test;
 
-import edu.issi.machine.api.ExampleApi;
 import edu.issi.machine.id.Identity;
-import edu.issi.machine.product.ingredient.Ingredient;
+import edu.issi.machine.product.ingredient.IngredientTest;
 import edu.issi.machine.subassembly.Subassembly;
 
 @SuppressWarnings("javadoc")
 public class OperationTest {
-    private Operation operation;
-
-    @Before
-    public void setUp() throws Exception {
-	Method apiOperation = mockApiMethod();
-	this.operation = new Operation(apiOperation);
-    }
 
     @Test
     public void shouldGiveResponseAfterExecution() throws Exception {
-	Subassembly subassembly = mockSubassembly(operation);
+	Operation operation = new Operation(new Identity(0));
+	Subassembly subassembly = new Subassembly(new Identity(10), operation);
 
 	OperationState state;
-	state = operation.setIngredient(mockIngredient()).setSubassembly(subassembly).execute();
+	state = operation.setIngredient(IngredientTest.mockIngredient()).setSubassembly(subassembly).execute();
 
 	assertNotNull(state);
     }
 
     @Test
     public void shouldGiveErrorResponseWhenOnlySubassemblySetted() throws Exception {
-	Subassembly subassembly = mockSubassembly(operation);
+	Operation operation = new Operation(new Identity(0));
+	Subassembly subassembly = new Subassembly(new Identity(10), operation);
 
 	OperationState state = operation.setSubassembly(subassembly).execute();
 
@@ -46,55 +35,41 @@ public class OperationTest {
 
     @Test
     public void shouldGiveErrorResponseWhenOnlyIngredientSetted() throws Exception {
-	OperationState state = operation.setIngredient(mockIngredient()).execute();
+	Operation operation = new Operation(new Identity(0));
+	OperationState state = operation.setIngredient(IngredientTest.mockIngredient()).execute();
 
 	assertEquals(Status.ERROR, state.getStatus());
     }
 
     @Test
     public void shouldExecuteValidlyWhenIngredientAndSubassemblySetted() throws Exception {
-	Subassembly subassembly = mockSubassembly(operation);
+	Operation operation = new Operation(new Identity(0));
+	Subassembly subassembly = new Subassembly(new Identity(10), operation);
 
 	OperationState state;
-	state = operation.setIngredient(mockIngredient()).setSubassembly(subassembly).execute();
+	state = operation.setIngredient(IngredientTest.mockIngredient()).setSubassembly(subassembly).execute();
 
 	assertEquals(Status.OK, state.getStatus());
     }
 
     @Test
     public void shouldSetSubassemblyOnlyWhenItCanDoSpecifiedOperation() throws Exception {
-	Subassembly subassembly = mockSubassembly(operation);
+	Operation operation = new Operation(new Identity(0));
+	Subassembly subassembly = new Subassembly(new Identity(10), operation);
 
 	OperationState state;
-	state = operation.setSubassembly(subassembly).setIngredient(mockIngredient()).execute();
+	state = operation.setSubassembly(subassembly).setIngredient(IngredientTest.mockIngredient()).execute();
 
 	assertEquals(Status.OK, state.getStatus());
     }
 
     @Test
     public void shouldGiveErrorResponseWhenSettedSubassemblyCanNotDoSpecifiedOperation() {
-	Subassembly subassembly = mockSubassembly(new Operation(null));
+	Operation operation = new Operation(new Identity(0));
+	Subassembly subassembly = new Subassembly(new Identity(10), new Operation(new Identity(1)));
 
 	OperationState state = operation.setSubassembly(subassembly).execute();
 
 	assertEquals(Status.ERROR, state.getStatus());
     }
-
-    public static Subassembly mockSubassembly(Operation... operations) {
-	try {
-	    return new Subassembly(Identity.SAMPLE, null, operations);
-	} catch (IllegalArgumentException e) {
-	    e.printStackTrace();
-	}
-	return null;
-    }
-
-    public static Method mockApiMethod() throws NoSuchMethodException {
-	return ExampleApi.class.getMethod("giveTheCup", Integer.class);
-    }
-
-    public static Ingredient mockIngredient() {
-	return new Ingredient(Identity.SAMPLE);
-    }
-
 }
