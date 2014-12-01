@@ -1,5 +1,7 @@
 package edu.issi.machine;
 
+import java.lang.reflect.Method;
+
 import edu.issi.machine.api.Api;
 import edu.issi.machine.operation.ApiMethod;
 import edu.issi.machine.product.ingredient.Ingredient;
@@ -8,22 +10,17 @@ import edu.issi.machine.subassembly.Subassembly;
 @SuppressWarnings("javadoc")
 public class TestingApi extends Api {
 
-    public void giveTheCup(Subassembly subassembly, Ingredient ingredient) {
-    }
-
-    public void log(String message) {
-    }
-
-    public void logError(Exception e) {
+    @Override
+    public void execute(Subassembly subassembly, Ingredient ingredient) {
     }
 
     public static ApiMethod mockApiMethod() {
-	try {
-	    return new ApiMethod(new TestingApi(), TestingApi.class.getMethod("giveTheCup",
-		    Subassembly.class, Ingredient.class));
-	} catch (NoSuchMethodException | SecurityException e) {
-	    e.printStackTrace();
+	for (Method each : TestingApi.class.getMethods()) {
+	    if (each.getName().equals("execute")) {
+		return new ApiMethod(new TestingApi(), each);
+	    }
 	}
-	return null;
+
+	return new ApiMethod(new TestingApi(), TestingApi.class.getMethods()[0]);
     }
 }

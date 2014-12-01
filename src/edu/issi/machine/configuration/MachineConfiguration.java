@@ -26,10 +26,10 @@ public class MachineConfiguration {
      */
     public MachineConfiguration(List<Subassembly> subassemblies, List<Product> products)
 	    throws IllegalStateException {
-	ensureValidity();
-	
 	this.subassemblies = subassemblies;
 	this.products = products;
+
+	ensureValidity();
     }
 
     /**

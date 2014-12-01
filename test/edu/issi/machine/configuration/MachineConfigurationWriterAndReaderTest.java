@@ -14,10 +14,8 @@ import javax.naming.directory.InvalidAttributesException;
 import org.junit.Test;
 
 import edu.issi.machine.TestingApi;
-import edu.issi.machine.api.Api;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.PropertyIdentity;
-import edu.issi.machine.operation.ApiMethod;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Ingredient;

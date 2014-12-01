@@ -32,6 +32,8 @@ public class ApiMethod {
 	if (!api.contains(method)) {
 	    throw new IllegalArgumentException("Wybrane API nie zawiera podanej funkcji!");
 	}
+	
+	this.api = api;
 	this.method = method;
     }
 
@@ -52,4 +54,5 @@ public class ApiMethod {
 
 	return new OperationState(Status.OK);
     }
+
 }
