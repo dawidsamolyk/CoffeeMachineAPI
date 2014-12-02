@@ -15,8 +15,6 @@ public class ConfigurationFile extends File {
      */
     private static final long serialVersionUID = 2324343097316631855L;
 
-    private final File file;
-
     /**
      * @param file
      *            Plik konfiguracyjny.
@@ -28,19 +26,18 @@ public class ConfigurationFile extends File {
      */
     public ConfigurationFile(File file) throws InvalidAttributesException, FileNotFoundException {
 	super(file.getPath());
-	this.file = file;
 
 	ensureValidity();
     }
 
     private void ensureValidity() throws InvalidAttributesException, FileNotFoundException {
-	if (!file.exists()) {
+	if (!this.exists()) {
 	    throw new FileNotFoundException("Podany plik konfiguracyjny nie istnieje!");
 	}
-	if (!file.isFile() || !file.canRead()) {
+	if (!this.isFile() || !this.canRead()) {
 	    throw new InvalidAttributesException("Podany plik jest niepoprawny lub niemo¿liwy do odczytu!");
 	}
-	if (!file.getName().endsWith(".json")) {
+	if (!this.getName().endsWith(".json")) {
 	    throw new InvalidAttributesException("Niepoprawny format pliku konfiguracyjnego!");
 	}
     }
