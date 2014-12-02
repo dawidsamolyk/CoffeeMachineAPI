@@ -36,7 +36,7 @@ public abstract class Handler implements Serializable {
      * @return Status wykonanej operacji (bêdzie dostêpny dopiero po jej
      *         zakoñczeniu).
      */
-    public OperationState doOperation(Operation operation) {
+    public synchronized OperationState doOperation(Operation operation) {
 	if (operation == null) {
 	    return new OperationState(Status.ERROR, "Nie mo¿na wykonaæ pustej operacji!");
 	}

@@ -57,7 +57,7 @@ public class Operation extends ObjectWithIdentity implements Serializable {
     /**
      * @return Stan operacji.
      */
-    public OperationState execute() {
+    public synchronized OperationState execute() {
 	if (!isRequiredElementsProvided()) {
 	    return new OperationState(Status.ERROR, "Nie podano podzespolu lub skladnika dla tej operacji!");
 	}
