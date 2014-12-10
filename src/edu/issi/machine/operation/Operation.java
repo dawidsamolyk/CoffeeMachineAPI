@@ -17,7 +17,9 @@ public abstract class Operation extends ObjectWithIdentity implements
      * 
      */
 	private static final long serialVersionUID = -8742139834110667380L;
-
+	
+	private boolean isDone = false;
+	
 	protected Subassembly subassembly;
 	protected Ingredient ingredient;
 
@@ -62,6 +64,18 @@ public abstract class Operation extends ObjectWithIdentity implements
 
 	protected boolean isRequiredElementsProvided() {
 		return subassembly != null && ingredient != null;
+	}
+	
+	protected synchronized void setDone() {
+		isDone = true;
+	}
+	
+	protected synchronized void setNotDone() {
+		isDone = false;
+	}
+	
+	public synchronized boolean isDone() {
+		return isDone;
 	}
 
 }
