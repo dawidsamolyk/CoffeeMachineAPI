@@ -12,106 +12,110 @@ import java.util.NoSuchElementException;
  * 
  */
 public class OrderedElementsList<Type> implements Iterable<Type> {
-    private final List<Type> elements;
+	private final List<Type> elements;
 
-    /**
+	/**
      * 
      */
-    public OrderedElementsList() {
-	elements = new LinkedList<Type>();
-    }
-
-    /**
-     * @param object
-     *            Obiekt, który zostanie dodany na koñcu listy.
-     */
-    public void add(Type object) {
-	elements.add(object);
-    }
-
-    /**
-     * @param index
-     *            Indeks, pod który ma zostaæ wstawiony nowy obiekt.
-     * @param object
-     *            Obiekt, który zostanie dodany do listy, pod wskazanym
-     *            indeksem.
-     * @throws UnsupportedOperationException
-     *             Wyst¹pi, jeœli podano nieprawid³owy indeks.
-     */
-    public void addAt(int index, Type object) throws UnsupportedOperationException {
-	if (index >= elements.size() || index < 0) {
-	    throw new UnsupportedOperationException("Nie mozna dodac elementu pod indeksem " + index + "!");
+	public OrderedElementsList() {
+		elements = new LinkedList<Type>();
 	}
-	elements.add(index, object);
-    }
 
-    /**
-     * @param index
-     *            Indeks, spod którego ma zostaæ pobrany obiekt.
-     * @return Skladnik na podanym indeksie.
-     * @throws NoSuchElementException
-     *             Wyst¹pi, jeœli nie ma obiektu pod podanym indeksem.
-     */
-    public Type getElement(int index) throws NoSuchElementException {
-	checkIsThereSuchElementAt(index);
-	return elements.get(index);
-    }
-
-    /**
-     * @param index
-     *            Indeks, spod którego ma zostaæ usuniêty obiekt.
-     * @throws NoSuchElementException
-     *             Wyst¹pi, jeœli nie ma obiektu pod podanym indeksem.
-     */
-    public void remove(int index) throws NoSuchElementException {
-	checkIsThereSuchElementAt(index);
-	elements.remove(index);
-    }
-
-    /**
-     * @return Iterator po elementach.
-     */
-    @Override
-    public Iterator<Type> iterator() {
-	return elements.iterator();
-    }
-
-    /**
-     * @return Liczba elementow.
-     */
-    public int numberOfElements() {
-	return elements.size();
-    }
-
-    private void checkIsThereSuchElementAt(int index) {
-	if (index >= elements.size() || index < 0) {
-	    throw new NoSuchElementException("Produkt nie zawiera elementu pod podanym indeksem!");
+	/**
+	 * @param object
+	 *            Obiekt, który zostanie dodany na koñcu listy.
+	 */
+	public void add(Type object) {
+		elements.add(object);
 	}
-    }
 
-    @Override
-    public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((elements == null) ? 0 : elements.hashCode());
-	return result;
-    }
+	/**
+	 * @param index
+	 *            Indeks, pod który ma zostaæ wstawiony nowy obiekt.
+	 * @param object
+	 *            Obiekt, który zostanie dodany do listy, pod wskazanym
+	 *            indeksem.
+	 * @throws UnsupportedOperationException
+	 *             Wyst¹pi, jeœli podano nieprawid³owy indeks.
+	 */
+	public void addAt(int index, Type object)
+			throws UnsupportedOperationException {
+		if (index >= elements.size() || index < 0) {
+			throw new UnsupportedOperationException(
+					"Nie mozna dodac elementu pod indeksem " + index + "!");
+		}
+		elements.add(index, object);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (!getClass().equals(obj.getClass()))
-	    return false;
-	final OrderedElementsList<?> other = (OrderedElementsList<?>) obj;
-	if (elements == null) {
-	    if (other.elements != null)
-		return false;
-	} else if (!elements.equals(other.elements))
-	    return false;
-	return true;
-    }
+	/**
+	 * @param index
+	 *            Indeks, spod którego ma zostaæ pobrany obiekt.
+	 * @return Skladnik na podanym indeksie.
+	 * @throws NoSuchElementException
+	 *             Wyst¹pi, jeœli nie ma obiektu pod podanym indeksem.
+	 */
+	public Type getElement(int index) throws NoSuchElementException {
+		checkIsThereSuchElementAt(index);
+		return elements.get(index);
+	}
+
+	/**
+	 * @param index
+	 *            Indeks, spod którego ma zostaæ usuniêty obiekt.
+	 * @throws NoSuchElementException
+	 *             Wyst¹pi, jeœli nie ma obiektu pod podanym indeksem.
+	 */
+	public void remove(int index) throws NoSuchElementException {
+		checkIsThereSuchElementAt(index);
+		elements.remove(index);
+	}
+
+	/**
+	 * @return Iterator po elementach.
+	 */
+	@Override
+	public Iterator<Type> iterator() {
+		return elements.iterator();
+	}
+
+	/**
+	 * @return Liczba elementow.
+	 */
+	public int numberOfElements() {
+		return elements.size();
+	}
+
+	private void checkIsThereSuchElementAt(int index) {
+		if (index >= elements.size() || index < 0) {
+			throw new NoSuchElementException(
+					"Produkt nie zawiera elementu pod podanym indeksem!");
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((elements == null) ? 0 : elements.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!getClass().equals(obj.getClass()))
+			return false;
+		final OrderedElementsList<?> other = (OrderedElementsList<?>) obj;
+		if (elements == null) {
+			if (other.elements != null)
+				return false;
+		} else if (!elements.equals(other.elements))
+			return false;
+		return true;
+	}
 
 }

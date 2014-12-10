@@ -1,13 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="CofeeMachine" default="test.report" basedir=".">
-	<target name="test">
-		<mkdir dir="report" />
+<project name="CofeeMachine" default="Run tests and generate report" basedir=".">
+	<property name="src" location="src" />
+	<property name="test" location="test" />
+	<property name="build" location="build" />
+	<property name="reports" location="reports" />
+	<property name="product" location="product" />
+
+	<target name="Compile project">
+		<mkdir dir="${build}" />
+		<javac includeantruntime="false" srcdir="${src}" destdir="${build}">
+			<classpath>
+				<pathelement path="lib/gson-2.2.4.jar" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="Generate product" depends="Compile project">
+		<mkdir dir="${product}" />
+		<jar jarfile="${product}/CoffeeMachineAPI.jar" basedir="${build}">
+			<zipgroupfileset dir="lib" includes="gson-2.2.4.jar" />
+		</jar>
+	</target>
+
+	<target name="Clean after project compilation">
+		<delete dir="${build}" />
+	</target>
+
+	<target name="Clean after product generation" depends="Clean after project compilation">
+		<delete dir="${product}" />
+	</target>
+
+	<target name="Run tests">
+		<mkdir dir="${reports}" />
 
 		<junit printsummary="yes" haltonerror="yes" haltonfailure="yes">
 			<formatter type="plain" usefile="false" />
 			<formatter type="xml" />
 			<batchtest todir="report">
-				<fileset dir="test">
+				<fileset dir="${test}">
 					<include name="**/*Test.java" />
 					<exclude name="**/Test*All.java" />
 				</fileset>
@@ -19,17 +49,18 @@
 		</junit>
 	</target>
 
-	<target name="test.report" depends="test">
-		<mkdir dir="report/html" />
-		<junitreport todir="report">
-			<fileset dir="report">
+	<target name="Run tests and generate report" depends="Run tests">
+		<mkdir dir="${reports}/html" />
+		<junitreport todir="${reports}">
+			<fileset dir="${reports}">
 				<include name="TEST-*.xml" />
 			</fileset>
-			<report format="frames" todir="report/html" />
+			<report format="frames" todir="${reports}/html" />
 		</junitreport>
 	</target>
 
-	<target name="delete_reports" description="Delete JUnit tests reports">
+	<target name="Delete reports" description="Delete JUnit tests reports">
 		<delete dir="${reports}" />
 	</target>
+
 </project>

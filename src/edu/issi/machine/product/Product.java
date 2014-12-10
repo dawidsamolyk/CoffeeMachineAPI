@@ -13,104 +13,106 @@ import edu.issi.machine.product.ingredient.Ingredient;
  * @author Dawid
  *
  */
-public class Product extends ObjectWithIdentity implements Iterable<Ingredient>, Serializable {
-    /**
+public class Product extends ObjectWithIdentity implements
+		Iterable<Ingredient>, Serializable {
+	/**
      * 
      */
-    private static final long serialVersionUID = 3905169041940315445L;
+	private static final long serialVersionUID = 3905169041940315445L;
 
-    private final OrderedElementsList<Ingredient> ingredients;
+	private final OrderedElementsList<Ingredient> ingredients;
 
-    /**
-     * @param id
-     *            Numer ID.
-     */
-    public Product(final Identity id) {
-	super(id);
-	ingredients = new OrderedElementsList<Ingredient>();
-    }
+	/**
+	 * @param id
+	 *            Numer ID.
+	 */
+	public Product(final Identity id) {
+		super(id);
+		ingredients = new OrderedElementsList<Ingredient>();
+	}
 
-    /**
-     * @param ingredient
-     *            Sk³adnik, który zostanie dodany na koñcu listy.
-     * @see edu.issi.machine.OrderedElementsList#add(Object)
-     */
-    public void add(Ingredient ingredient) {
-	ingredients.add(ingredient);
-    }
+	/**
+	 * @param ingredient
+	 *            Sk³adnik, który zostanie dodany na koñcu listy.
+	 * @see edu.issi.machine.OrderedElementsList#add(Object)
+	 */
+	public void add(Ingredient ingredient) {
+		ingredients.add(ingredient);
+	}
 
-    /**
-     * @param index
-     *            Indeks, spod którego ma zostaæ pobrany sk³adnik.
-     * @return Skladnik umieszczony na podanym indeksie.
-     * @throws NoSuchElementException
-     *             Wyst¹pi, jeœli pod podanym indeksem nie ma ¿adnego sk³adnika.
-     * @see edu.issi.machine.OrderedElementsList#getElement(int)
-     */
-    public Ingredient getIngredientAt(int index) throws NoSuchElementException {
-	return ingredients.getElement(index);
-    }
+	/**
+	 * @param index
+	 *            Indeks, spod którego ma zostaæ pobrany sk³adnik.
+	 * @return Skladnik umieszczony na podanym indeksie.
+	 * @throws NoSuchElementException
+	 *             Wyst¹pi, jeœli pod podanym indeksem nie ma ¿adnego sk³adnika.
+	 * @see edu.issi.machine.OrderedElementsList#getElement(int)
+	 */
+	public Ingredient getIngredientAt(int index) throws NoSuchElementException {
+		return ingredients.getElement(index);
+	}
 
-    /**
-     * @return Liczba skladnikow.
-     * @see edu.issi.machine.OrderedElementsList#numberOfElements()
-     */
-    public int numberOfElements() {
-	return ingredients.numberOfElements();
-    }
+	/**
+	 * @return Liczba skladnikow.
+	 * @see edu.issi.machine.OrderedElementsList#numberOfElements()
+	 */
+	public int numberOfElements() {
+		return ingredients.numberOfElements();
+	}
 
-    /**
-     * @param index
-     *            Indeks, pod który ma zostaæ dodany sk³adnik.
-     * @param ingredient
-     *            Sk³adnik.
-     * @see edu.issi.machine.OrderedElementsList#addAt(int, Object)
-     */
-    public void addAt(int index, Ingredient ingredient) {
-	ingredients.addAt(index, ingredient);
-    }
+	/**
+	 * @param index
+	 *            Indeks, pod który ma zostaæ dodany sk³adnik.
+	 * @param ingredient
+	 *            Sk³adnik.
+	 * @see edu.issi.machine.OrderedElementsList#addAt(int, Object)
+	 */
+	public void addAt(int index, Ingredient ingredient) {
+		ingredients.addAt(index, ingredient);
+	}
 
-    /**
-     * @param index
-     *            Indeks, spod którego ma zostaæ usuniêty sk³adnik.
-     * @see edu.issi.machine.OrderedElementsList#remove(int)
-     */
-    public void remove(int index) {
-	ingredients.remove(index);
-    }
+	/**
+	 * @param index
+	 *            Indeks, spod którego ma zostaæ usuniêty sk³adnik.
+	 * @see edu.issi.machine.OrderedElementsList#remove(int)
+	 */
+	public void remove(int index) {
+		ingredients.remove(index);
+	}
 
-    /**
-     * @return Iterator po skladnikach.
-     * @see edu.issi.machine.OrderedElementsList#iterator()
-     */
-    @Override
-    public Iterator<Ingredient> iterator() {
-	return ingredients.iterator();
-    }
+	/**
+	 * @return Iterator po skladnikach.
+	 * @see edu.issi.machine.OrderedElementsList#iterator()
+	 */
+	@Override
+	public Iterator<Ingredient> iterator() {
+		return ingredients.iterator();
+	}
 
-    @Override
-    public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((ingredients == null) ? 0 : ingredients.hashCode());
-	return result;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((ingredients == null) ? 0 : ingredients.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (!getClass().equals(obj.getClass()))
-	    return false;
-	final Product other = (Product) obj;
-	if (ingredients == null) {
-	    if (other.ingredients != null)
-		return false;
-	} else if (!ingredients.equals(other.ingredients))
-	    return false;
-	return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!getClass().equals(obj.getClass()))
+			return false;
+		final Product other = (Product) obj;
+		if (ingredients == null) {
+			if (other.ingredients != null)
+				return false;
+		} else if (!ingredients.equals(other.ingredients))
+			return false;
+		return true;
+	}
 
 }
