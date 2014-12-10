@@ -12,9 +12,10 @@ import edu.issi.machine.product.OrderedElementsContainerTest;
 import edu.issi.machine.subassembly.SubassemblyTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ MachineConfigurationTest.class, MachineConfigurationWriterAndReaderTest.class,
-	OperationTest.class, OperationStateTest.class, OrderedElementsContainerTest.class,
-	SubassemblyTest.class })
+@SuiteClasses({ MachineConfigurationTest.class,
+		MachineConfigurationWriterAndReaderTest.class, OperationTest.class,
+		OperationStateTest.class, OrderedElementsContainerTest.class,
+		SubassemblyTest.class })
 @SuppressWarnings("javadoc")
 public class AllTests {
 
