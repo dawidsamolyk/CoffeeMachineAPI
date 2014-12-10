@@ -2,7 +2,6 @@ package edu.issi.machine.operation;
 
 import java.io.Serializable;
 
-import edu.issi.machine.Validator;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.product.ingredient.Ingredient;
@@ -12,15 +11,15 @@ import edu.issi.machine.subassembly.Subassembly;
  * @author Dawid
  * 
  */
-public class Operation extends ObjectWithIdentity implements Serializable {
+public abstract class Operation extends ObjectWithIdentity implements
+		Serializable {
 	/**
      * 
      */
 	private static final long serialVersionUID = -8742139834110667380L;
 
-	private Subassembly subassembly;
-	private Ingredient ingredient;
-	private ApiMethod[] methods;
+	protected Subassembly subassembly;
+	protected Ingredient ingredient;
 
 	/**
 	 * @param id
@@ -28,11 +27,8 @@ public class Operation extends ObjectWithIdentity implements Serializable {
 	 * @param methods
 	 *            Funkcje do wykonania.
 	 */
-	public Operation(Identity id, ApiMethod... methods) {
+	public Operation(Identity id) {
 		super(id);
-		Validator.throwExceptionWhenEmpty(methods,
-				"Funkcje dla wybranej operacji nie mog¹ byæ puste!");
-		this.methods = methods;
 	}
 
 	/**
@@ -58,39 +54,13 @@ public class Operation extends ObjectWithIdentity implements Serializable {
 	/**
 	 * @return Stan operacji.
 	 */
-	public synchronized OperationState execute() {
-		if (!isRequiredElementsProvided()) {
-			return new OperationState(Status.ERROR,
-					"Nie podano podzespolu lub skladnika dla tej operacji!");
-		}
+	public abstract OperationState execute();
 
-		if (!canDoThisOperation(subassembly)) {
-			return new OperationState(Status.ERROR,
-					"Podzespol nie moze wykonac tej operacji!");
-		}
-
-		return executeAllApiMethods();
-	}
-
-	protected OperationState executeAllApiMethods() {
-		OperationState eachOperationState;
-
-		for (ApiMethod eachApiMethod : methods) {
-			eachOperationState = eachApiMethod.execute(subassembly, ingredient);
-
-			if (eachOperationState.getStatus().requiresAttention()) {
-				return eachOperationState;
-			}
-		}
-
-		return new OperationState(Status.OK);
-	}
-
-	private boolean canDoThisOperation(Subassembly subassembly) {
+	protected boolean canDoThisOperation(Subassembly subassembly) {
 		return subassembly.supports(this);
 	}
 
-	private boolean isRequiredElementsProvided() {
+	protected boolean isRequiredElementsProvided() {
 		return subassembly != null && ingredient != null;
 	}
 

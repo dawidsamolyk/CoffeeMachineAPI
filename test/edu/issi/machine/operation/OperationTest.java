@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import edu.issi.machine.TestingApi;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.product.ingredient.IngredientTest;
 import edu.issi.machine.subassembly.Subassembly;
@@ -67,8 +66,7 @@ public class OperationTest {
     @Test
     public void shouldGiveErrorResponseWhenSettedSubassemblyCanNotDoSpecifiedOperation() {
 	Operation operation = mockOperation();
-	Subassembly subassembly = new Subassembly(new Identity(10), new Operation(new Identity(1),
-		TestingApi.mockApiMethod()));
+	Subassembly subassembly = new Subassembly(new Identity(10), new EmptyOperation(new Identity(1)));
 
 	OperationState state = operation.setSubassembly(subassembly).execute();
 
@@ -76,6 +74,6 @@ public class OperationTest {
     }
 
     public static Operation mockOperation() {
-	return new Operation(new Identity(111), TestingApi.mockApiMethod());
+	return new EmptyOperation(new Identity(111));
     }
 }

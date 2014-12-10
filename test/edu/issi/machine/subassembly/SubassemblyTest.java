@@ -8,8 +8,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import edu.issi.machine.TestingApi;
 import edu.issi.machine.id.Identity;
+import edu.issi.machine.operation.EmptyOperation;
 import edu.issi.machine.operation.Operation;
 
 @SuppressWarnings("javadoc")
@@ -19,8 +19,7 @@ public class SubassemblyTest {
 
     @Test
     public void shouldCreatesWithNotEmptyOperations() {
-	Subassembly subassembly = new Subassembly(new Identity(0), new Operation(new Identity(1),
-		TestingApi.mockApiMethod()));
+	Subassembly subassembly = new Subassembly(new Identity(0), new EmptyOperation(new Identity(1)));
 
 	assertNotNull(subassembly);
     }
@@ -41,18 +40,17 @@ public class SubassemblyTest {
 
     @Test
     public void shouldCorrectRecognizeSupportedOperations() {
-	Operation testOperation = new Operation(new Identity(0), TestingApi.mockApiMethod());
-	Subassembly subassembly = new Subassembly(new Identity(0), testOperation, new Operation(new Identity(
-		11), TestingApi.mockApiMethod()));
+	Operation testOperation = new EmptyOperation(new Identity(0));
+	Subassembly subassembly = new Subassembly(new Identity(0), testOperation, new EmptyOperation(new Identity(
+		11)));
 
 	assertTrue(subassembly.supports(testOperation));
     }
 
     @Test
     public void shouldCorrectRecognizeNotSupportedOperations() {
-	Operation testOperation = new Operation(new Identity(0), TestingApi.mockApiMethod());
-	Subassembly subassembly = new Subassembly(new Identity(1), new Operation(new Identity(1),
-		TestingApi.mockApiMethod()));
+	Operation testOperation = new EmptyOperation(new Identity(0));
+	Subassembly subassembly = new Subassembly(new Identity(1), new EmptyOperation(new Identity(1)));
 
 	assertFalse(subassembly.supports(testOperation));
     }
