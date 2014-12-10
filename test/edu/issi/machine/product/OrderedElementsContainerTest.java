@@ -14,139 +14,139 @@ import edu.issi.machine.OrderedElementsList;
 
 @SuppressWarnings("javadoc")
 public class OrderedElementsContainerTest {
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 
-    @Test
-    public void shouldAgregateOrderedObjectsIndexedFromZero() {
-	OrderedElementsList<Object> product = new OrderedElementsList<Object>();
-	Object firstObject = new Object();
-	Object secondObject = new Object();
-	Object thirdObject = new Object();
+	@Test
+	public void shouldAgregateOrderedObjectsIndexedFromZero() {
+		OrderedElementsList<Object> product = new OrderedElementsList<Object>();
+		Object firstObject = new Object();
+		Object secondObject = new Object();
+		Object thirdObject = new Object();
 
-	product.add(firstObject);
-	product.add(secondObject);
-	product.add(thirdObject);
+		product.add(firstObject);
+		product.add(secondObject);
+		product.add(thirdObject);
 
-	assertEquals(firstObject, product.getElement(0));
-	assertEquals(secondObject, product.getElement(1));
-	assertEquals(thirdObject, product.getElement(2));
-    }
-
-    @Test
-    public void shouldProvideInformationAboutNumberOfAggegatedObjects() {
-	int numberOfObjects = new Random().nextInt(1000);
-	OrderedElementsList<Object> product = new OrderedElementsList<Object>();
-
-	for (int x = 0; x < numberOfObjects; x++) {
-	    product.add(new Object());
+		assertEquals(firstObject, product.getElement(0));
+		assertEquals(secondObject, product.getElement(1));
+		assertEquals(thirdObject, product.getElement(2));
 	}
 
-	assertEquals(numberOfObjects, product.numberOfElements());
-    }
+	@Test
+	public void shouldProvideInformationAboutNumberOfAggegatedObjects() {
+		int numberOfObjects = new Random().nextInt(1000);
+		OrderedElementsList<Object> product = new OrderedElementsList<Object>();
 
-    @Test
-    public void shouldBeAbleToAddObjectAtExistingIndexWithoutLossOfOtherObjects() {
-	OrderedElementsList<Object> product = productWithThreeExampleObjects();
-	int originalNumberOfObjects = product.numberOfElements();
+		for (int x = 0; x < numberOfObjects; x++) {
+			product.add(new Object());
+		}
 
-	Object ingredient = new Object();
-	product.addAt(1, ingredient);
+		assertEquals(numberOfObjects, product.numberOfElements());
+	}
 
-	assertEquals(originalNumberOfObjects + 1, product.numberOfElements());
-	assertEquals(ingredient, product.getElement(1));
-    }
+	@Test
+	public void shouldBeAbleToAddObjectAtExistingIndexWithoutLossOfOtherObjects() {
+		OrderedElementsList<Object> product = productWithThreeExampleObjects();
+		int originalNumberOfObjects = product.numberOfElements();
 
-    @Test
-    public void shouldBeAbleToAddObjectAtBeginningOfList() {
-	OrderedElementsList<Object> product = productWithThreeExampleObjects();
-	Object ingredient = new Object();
-	product.addAt(0, ingredient);
+		Object ingredient = new Object();
+		product.addAt(1, ingredient);
 
-	assertEquals(4, product.numberOfElements());
-	assertEquals(ingredient, product.getElement(0));
-    }
+		assertEquals(originalNumberOfObjects + 1, product.numberOfElements());
+		assertEquals(ingredient, product.getElement(1));
+	}
 
-    @Test
-    public void shouldBeAbleToRemoveAnyExistingObject() {
-	OrderedElementsList<Object> product = new OrderedElementsList<Object>();
-	Object firstObject = new Object();
-	Object secondObject = new Object();
-	Object thirdObject = new Object();
+	@Test
+	public void shouldBeAbleToAddObjectAtBeginningOfList() {
+		OrderedElementsList<Object> product = productWithThreeExampleObjects();
+		Object ingredient = new Object();
+		product.addAt(0, ingredient);
 
-	product.add(firstObject);
-	product.add(secondObject);
-	product.add(thirdObject);
+		assertEquals(4, product.numberOfElements());
+		assertEquals(ingredient, product.getElement(0));
+	}
 
-	product.remove(1);
+	@Test
+	public void shouldBeAbleToRemoveAnyExistingObject() {
+		OrderedElementsList<Object> product = new OrderedElementsList<Object>();
+		Object firstObject = new Object();
+		Object secondObject = new Object();
+		Object thirdObject = new Object();
 
-	assertEquals(firstObject, product.getElement(0));
-	assertEquals(thirdObject, product.getElement(1));
+		product.add(firstObject);
+		product.add(secondObject);
+		product.add(thirdObject);
 
-	exception.expect(NoSuchElementException.class);
-	product.getElement(2);
-    }
+		product.remove(1);
 
-    @Test
-    public void shouldProvideSeparatedIterators() {
-	OrderedElementsList<Object> product = productWithThreeExampleObjects();
+		assertEquals(firstObject, product.getElement(0));
+		assertEquals(thirdObject, product.getElement(1));
 
-	Iterator<Object> firstIterator = product.iterator();
-	Object firstIteratorObject = firstIterator.next();
+		exception.expect(NoSuchElementException.class);
+		product.getElement(2);
+	}
 
-	Iterator<Object> secondIterator = product.iterator();
-	secondIterator.next();
-	Object secondIteratorObject = secondIterator.next();
+	@Test
+	public void shouldProvideSeparatedIterators() {
+		OrderedElementsList<Object> product = productWithThreeExampleObjects();
 
-	assertFalse(firstIteratorObject == secondIteratorObject);
-    }
+		Iterator<Object> firstIterator = product.iterator();
+		Object firstIteratorObject = firstIterator.next();
 
-    @Test
-    public void shouldProvideIteratorForOrderedObjects() {
-	OrderedElementsList<Object> product = new OrderedElementsList<Object>();
-	Object firstObject = new Object();
-	Object secondObject = new Object();
-	Object thirdObject = new Object();
+		Iterator<Object> secondIterator = product.iterator();
+		secondIterator.next();
+		Object secondIteratorObject = secondIterator.next();
 
-	product.add(firstObject);
-	product.add(secondObject);
-	product.add(thirdObject);
+		assertFalse(firstIteratorObject == secondIteratorObject);
+	}
 
-	Iterator<Object> iterator = product.iterator();
-	assertEquals(firstObject, iterator.next());
-	assertEquals(secondObject, iterator.next());
-	assertEquals(thirdObject, iterator.next());
-    }
+	@Test
+	public void shouldProvideIteratorForOrderedObjects() {
+		OrderedElementsList<Object> product = new OrderedElementsList<Object>();
+		Object firstObject = new Object();
+		Object secondObject = new Object();
+		Object thirdObject = new Object();
 
-    public void shouldNotBeAbleToAddObjectAtNonexistentIndex() {
-	OrderedElementsList<Object> product = productWithThreeExampleObjects();
-	
-	exception.expect(UnsupportedOperationException.class);
-	product.addAt(100, new Object());
-    }
+		product.add(firstObject);
+		product.add(secondObject);
+		product.add(thirdObject);
 
-    @Test
-    public void shouldNotBeAbleToRemoveObjectAtNonexistentIndex() {
-	OrderedElementsList<Object> product = productWithThreeExampleObjects();
-	
-	exception.expect(NoSuchElementException.class);
-	product.remove(100);
-    }
+		Iterator<Object> iterator = product.iterator();
+		assertEquals(firstObject, iterator.next());
+		assertEquals(secondObject, iterator.next());
+		assertEquals(thirdObject, iterator.next());
+	}
 
-    @Test
-    public void shouldNotBeAbleToGetObjectAtNonexistentIndex() {
-	OrderedElementsList<Object> product = productWithThreeExampleObjects();
-	
-	exception.expect(NoSuchElementException.class);
-	product.getElement(100);
-    }
+	public void shouldNotBeAbleToAddObjectAtNonexistentIndex() {
+		OrderedElementsList<Object> product = productWithThreeExampleObjects();
 
-    private OrderedElementsList<Object> productWithThreeExampleObjects() {
-	OrderedElementsList<Object> product = new OrderedElementsList<Object>();
-	product.add(new Object());
-	product.add(new Object());
-	product.add(new Object());
-	return product;
-    }
+		exception.expect(UnsupportedOperationException.class);
+		product.addAt(100, new Object());
+	}
+
+	@Test
+	public void shouldNotBeAbleToRemoveObjectAtNonexistentIndex() {
+		OrderedElementsList<Object> product = productWithThreeExampleObjects();
+
+		exception.expect(NoSuchElementException.class);
+		product.remove(100);
+	}
+
+	@Test
+	public void shouldNotBeAbleToGetObjectAtNonexistentIndex() {
+		OrderedElementsList<Object> product = productWithThreeExampleObjects();
+
+		exception.expect(NoSuchElementException.class);
+		product.getElement(100);
+	}
+
+	private OrderedElementsList<Object> productWithThreeExampleObjects() {
+		OrderedElementsList<Object> product = new OrderedElementsList<Object>();
+		product.add(new Object());
+		product.add(new Object());
+		product.add(new Object());
+		return product;
+	}
 
 }

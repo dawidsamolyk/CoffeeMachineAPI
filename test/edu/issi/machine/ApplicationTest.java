@@ -12,60 +12,64 @@ import com.google.gson.JsonSyntaxException;
 
 @SuppressWarnings("javadoc")
 public class ApplicationTest {
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 
-    @Test
-    public void shouldNotExecuteWithValidArguments() throws InvalidAttributesException, IOException {
-	exception.expect(IllegalStateException.class);
-	Application.main(null);
+	@Test
+	public void shouldNotExecuteWithValidArguments()
+			throws InvalidAttributesException, IOException {
+		exception.expect(IllegalStateException.class);
+		Application.main(null);
 
-	exception.expect(IllegalStateException.class);
-	Application.main(new String[] {});
+		exception.expect(IllegalStateException.class);
+		Application.main(new String[] {});
 
-	exception.expect(IllegalStateException.class);
-	Application.main(new String[] { "", "" });
-    }
+		exception.expect(IllegalStateException.class);
+		Application.main(new String[] { "", "" });
+	}
 
-    @Test
-    public void shouldNotExecuteWithInvalidConfigurationFile() throws InvalidAttributesException, IOException {
-	String[] args = new String[] { "./bin/.gitignore" };
+	@Test
+	public void shouldNotExecuteWithInvalidConfigurationFile()
+			throws InvalidAttributesException, IOException {
+		String[] args = new String[] { "./bin/.gitignore" };
 
-	exception.expect(InvalidAttributesException.class);
-	Application.main(args);
-    }
+		exception.expect(InvalidAttributesException.class);
+		Application.main(args);
+	}
 
-    @Test
-    public void shouldNotExecuteWithNotExistendConfigurationFile() throws InvalidAttributesException,
-	    IOException {
-	String[] args = new String[] { "./bin/nonExistenFile" };
+	@Test
+	public void shouldNotExecuteWithNotExistendConfigurationFile()
+			throws InvalidAttributesException, IOException {
+		String[] args = new String[] { "./bin/nonExistenFile" };
 
-	exception.expect(IOException.class);
-	Application.main(args);
-    }
+		exception.expect(IOException.class);
+		Application.main(args);
+	}
 
-    @Test
-    public void shouldNotExecuteWithBrokenConfigurationFile() throws InvalidAttributesException, IOException {
-	String[] args = new String[] { "./bin/testData/brokenConf.json" };
+	@Test
+	public void shouldNotExecuteWithBrokenConfigurationFile()
+			throws InvalidAttributesException, IOException {
+		String[] args = new String[] { "./bin/testData/brokenConf.json" };
 
-	exception.expect(JsonSyntaxException.class);
-	Application.main(args);
-    }
+		exception.expect(JsonSyntaxException.class);
+		Application.main(args);
+	}
 
-    @Test
-    public void shouldNotExecuteWithEmptyConfigurationFile() throws InvalidAttributesException, IOException {
-	String[] args = new String[] { "./bin/testData/emptyConf.json" };
+	@Test
+	public void shouldNotExecuteWithEmptyConfigurationFile()
+			throws InvalidAttributesException, IOException {
+		String[] args = new String[] { "./bin/testData/emptyConf.json" };
 
-	exception.expect(IllegalStateException.class);
-	Application.main(args);
-    }
+		exception.expect(IllegalStateException.class);
+		Application.main(args);
+	}
 
-    @Test
-    public void shouldExecuteProperlyWithValidConfigurationFile() throws InvalidAttributesException,
-	    IOException {
-	String[] args = new String[] { "./bin/testData/validConf.json" };
+	@Test
+	public void shouldExecuteProperlyWithValidConfigurationFile()
+			throws InvalidAttributesException, IOException {
+		String[] args = new String[] { "./bin/testData/validConf.json" };
 
-	Application.main(args);
-    }
+		Application.main(args);
+	}
 
 }
