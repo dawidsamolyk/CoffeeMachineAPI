@@ -13,38 +13,38 @@ import com.google.gson.GsonBuilder;
  *
  */
 public class MachineConfigurationWriter {
-    private final ConfigurationFile configurationFile;
+	private final ConfigurationFile configurationFile;
 
-    /**
-     * @param file
-     *            Plik, do którego zostanie zapisana konfiguracja.
-     */
-    public MachineConfigurationWriter(ConfigurationFile file) {
-	configurationFile = file;
-    }
+	/**
+	 * @param file
+	 *            Plik, do którego zostanie zapisana konfiguracja.
+	 */
+	public MachineConfigurationWriter(ConfigurationFile file) {
+		configurationFile = file;
+	}
 
-    private String getAsJson(Object object) {
-	return jsonCreator().toJson(object);
-    }
+	private String getAsJson(Object object) {
+		return jsonCreator().toJson(object);
+	}
 
-    private Gson jsonCreator() {
-	return new GsonBuilder().setPrettyPrinting().create();
-    }
+	private Gson jsonCreator() {
+		return new GsonBuilder().setPrettyPrinting().create();
+	}
 
-    /**
-     * @param configuration
-     *            Konfiguracja maszyny, która ma zostaæ zapisana.
-     * @throws IOException
-     *             Wyst¹pi w przypadku b³êdu zapisu pliku.
-     */
-    public void write(MachineConfiguration configuration) throws IOException {
-	final String json = getAsJson(configuration);
-	write(json, configurationFile);
-    }
+	/**
+	 * @param configuration
+	 *            Konfiguracja maszyny, która ma zostaæ zapisana.
+	 * @throws IOException
+	 *             Wyst¹pi w przypadku b³êdu zapisu pliku.
+	 */
+	public void write(MachineConfiguration configuration) throws IOException {
+		final String json = getAsJson(configuration);
+		write(json, configurationFile);
+	}
 
-    private void write(String json, File file) throws IOException {
-	final BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-	writer.write(json);
-	writer.close();
-    }
+	private void write(String json, File file) throws IOException {
+		final BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		writer.write(json);
+		writer.close();
+	}
 }

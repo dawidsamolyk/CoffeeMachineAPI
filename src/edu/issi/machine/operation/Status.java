@@ -7,26 +7,26 @@ import java.io.Serializable;
  *
  */
 public enum Status implements Serializable {
-    /**
+	/**
      * 
      */
-    OK,
-    /**
+	OK,
+	/**
      * 
      */
-    WARNING,
-    /**
+	WARNING,
+	/**
      * 
      */
-    ERROR;
+	ERROR;
 
-    /**
-     * @param status
-     *            Status.
-     * @return Czy dany status wymaga uwagi.
-     */
-    public boolean requiresAttention() {
-	return this == ERROR || this == WARNING;
-    }
+	/**
+	 * @param status
+	 *            Status.
+	 * @return Czy dany status wymaga uwagi.
+	 */
+	public boolean requiresAttention() {
+		return this == ERROR || this == WARNING;
+	}
 
 }

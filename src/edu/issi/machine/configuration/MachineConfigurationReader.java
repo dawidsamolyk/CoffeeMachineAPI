@@ -11,41 +11,45 @@ import com.google.gson.Gson;
  *
  */
 public class MachineConfigurationReader {
-    private final MachineConfiguration confifuration;
+	private final MachineConfiguration confifuration;
 
-    /**
-     * @param file
-     *            Katalog, z którego zostanie odczytana konfiguracja i API.
-     * @throws IOException
-     *             Wyst¹pi w przypadku b³êdów odczytu z pliku.
-     */
-    public MachineConfigurationReader(ConfigurationFile file) throws IOException {
-	confifuration = readMachineConfigurationFromFile(file);
-    }
+	/**
+	 * @param file
+	 *            Katalog, z którego zostanie odczytana konfiguracja i API.
+	 * @throws IOException
+	 *             Wyst¹pi w przypadku b³êdów odczytu z pliku.
+	 */
+	public MachineConfigurationReader(ConfigurationFile file)
+			throws IOException {
+		confifuration = readMachineConfigurationFromFile(file);
+	}
 
-    private MachineConfiguration readMachineConfigurationFromFile(ConfigurationFile file) throws IOException {
-	final BufferedReader configurationReader = new BufferedReader(new FileReader(file));
+	private MachineConfiguration readMachineConfigurationFromFile(
+			ConfigurationFile file) throws IOException {
+		final BufferedReader configurationReader = new BufferedReader(
+				new FileReader(file));
 
-	final MachineConfiguration result = readMachineConfiguration(configurationReader);
+		final MachineConfiguration result = readMachineConfiguration(configurationReader);
 
-	configurationReader.close();
+		configurationReader.close();
 
-	return result;
-    }
+		return result;
+	}
 
-    private MachineConfiguration readMachineConfiguration(BufferedReader configurationReader) {
-	final MachineConfiguration result = new Gson().fromJson(configurationReader,
-		MachineConfiguration.class);
+	private MachineConfiguration readMachineConfiguration(
+			BufferedReader configurationReader) {
+		final MachineConfiguration result = new Gson().fromJson(
+				configurationReader, MachineConfiguration.class);
 
-	result.ensureValidity();
+		result.ensureValidity();
 
-	return result;
-    }
+		return result;
+	}
 
-    /**
-     * @return Obiekt reprezentuj¹cy konfiguracjê maszyny.
-     */
-    public MachineConfiguration getMachineConfiguration() {
-	return confifuration;
-    }
+	/**
+	 * @return Obiekt reprezentuj¹cy konfiguracjê maszyny.
+	 */
+	public MachineConfiguration getMachineConfiguration() {
+		return confifuration;
+	}
 }
