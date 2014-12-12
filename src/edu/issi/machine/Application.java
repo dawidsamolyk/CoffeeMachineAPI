@@ -20,21 +20,21 @@ public class Application {
 			throws InvalidAttributesException {
 		if (args == null || args.length != 1) {
 			throw new InvalidAttributesException(
-					"Nieprawid³owe wywo³anie! Jako argument podaj œcie¿kê do katalogu z plikami konfiguracyjnymi.");
+					"NieprawidÅ‚owe wywoÅ‚anie! Jako argument podaj ÂœcieÅ¼kÄ™ do katalogu z plikami konfiguracyjnymi.");
 		}
 	}
 
 	/**
-	 * Spodziewany jest tylko jeden argument wejœciowy - pe³na œcie¿ka do pliku
+	 * Spodziewany jest tylko jeden argument wejÂœciowy - peÅ‚na ÂœcieÅ¼ka do pliku
 	 * konfiguracyjnego, zapisanego w formacie (i z rozszrzeniem) JSON.
 	 * 
-	 * @param args
+	 * @param arg
 	 *            Argumenty uruchomieniowe.
 	 * @throws IOException
-	 *             Wyst¹pi w przypadku b³êdów odczytu/zapisu przy operacjach na
+	 *             WystÅ¡pi w przypadku bÅ‚Ä™dÃ³w odczytu/zapisu przy operacjach na
 	 *             plikach.
 	 * @throws InvalidAttributesException
-	 *             Wyst¹pi w przypadku b³êdnego pliku konfiguracyjnego.
+	 *             WystÅ¡pi w przypadku bÅ‚Ä™dnego pliku konfiguracyjnego.
 	 */
 	public static void main(String[] args) throws InvalidAttributesException,
 			IOException {
