@@ -1,0 +1,52 @@
+package edu.issi.machine.configuration;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+import com.google.gson.Gson;
+
+/**
+ * @author Dawid
+ *
+ */
+public class MachineConfigurationReader {
+    private final MachineConfiguration confifuration;
+
+    /**
+     * @param file
+     *            Katalog, z którego zostanie odczytana konfiguracja i API.
+     * @throws IOException
+     *             Wyst¹pi w przypadku b³êdów odczytu z pliku.
+     */
+    public MachineConfigurationReader(ConfigurationFile file) throws IOException {
+	confifuration = readMachineConfigurationFromFile(file);
+    }
+
+    protected MachineConfiguration readMachineConfigurationFromFile(ConfigurationFile file)
+	    throws IOException {
+	final BufferedReader configurationReader = new BufferedReader(new FileReader(file));
+
+	final MachineConfiguration result = readMachineConfiguration(configurationReader);
+
+	configurationReader.close();
+
+	return result;
+    }
+
+    protected MachineConfiguration readMachineConfiguration(BufferedReader configurationReader) {
+	final MachineConfiguration result = new Gson().fromJson(configurationReader,
+		MachineConfiguration.class);
+
+	result.ensureValidity();
+
+	return result;
+    }
+
+    /**
+     * @return Obiekt reprezentuj¹cy konfiguracjê maszyny.
+     */
+    public MachineConfiguration getMachineConfiguration() {
+	return confifuration;
+    }
+}
