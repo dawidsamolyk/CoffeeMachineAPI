@@ -2,13 +2,13 @@
 <project name="CofeeMachine" default="Run tests and generate report" basedir=".">
 	<property name="src" location="src" />
 	<property name="test" location="test" />
-	<property name="build" location="build" />
+	<property name="bin" location="bin" />
 	<property name="reports" location="reports" />
 	<property name="product" location="product" />
 
 	<target name="Compile project">
-		<mkdir dir="${build}" />
-		<javac includeantruntime="false" srcdir="${src}" destdir="${build}">
+		<mkdir dir="${bin}" />
+		<javac includeantruntime="false" srcdir="${src}" destdir="${bin}">
 			<classpath>
 				<pathelement path="lib/gson-2.2.4.jar" />
 			</classpath>
@@ -17,13 +17,13 @@
 
 	<target name="Generate product" depends="Compile project">
 		<mkdir dir="${product}" />
-		<jar jarfile="${product}/CoffeeMachineAPI.jar" basedir="${build}">
+		<jar jarfile="${product}/CoffeeMachineAPI.jar" basedir="${bin}">
 			<zipgroupfileset dir="lib" includes="gson-2.2.4.jar" />
 		</jar>
 	</target>
 
 	<target name="Clean after project compilation">
-		<delete dir="${build}" />
+		<delete dir="${bin}" />
 	</target>
 
 	<target name="Clean after product generation" depends="Clean after project compilation">
@@ -36,7 +36,7 @@
 		<junit printsummary="yes" haltonerror="yes" haltonfailure="yes">
 			<formatter type="plain" usefile="false" />
 			<formatter type="xml" />
-			<batchtest todir="report">
+			<batchtest todir="${reports}">
 				<fileset dir="${test}">
 					<include name="**/*Test.java" />
 					<exclude name="**/Test*All.java" />
