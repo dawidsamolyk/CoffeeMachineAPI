@@ -17,7 +17,7 @@ import edu.issi.machine.subassembly.Subassembly;
  * @author Dawid
  *
  */
-public class TestingUserInterfaceSubassembly extends Subassembly implements Runnable {
+public class DemoUserInterfaceSubassembly extends Subassembly implements Runnable {
     public boolean working = true;
 
     /**
@@ -26,7 +26,7 @@ public class TestingUserInterfaceSubassembly extends Subassembly implements Runn
      * @param products
      * @throws IllegalArgumentException
      */
-    public TestingUserInterfaceSubassembly(Identity id, List<Operation> operations)
+    public DemoUserInterfaceSubassembly(Identity id, List<Operation> operations)
 	    throws IllegalArgumentException {
 	super(id, operations);
     }
@@ -40,8 +40,8 @@ public class TestingUserInterfaceSubassembly extends Subassembly implements Runn
 		if(state.getStatus().requiresAttention()) {
 		    System.err.println(state.getDescription());
 		}
-		else if(each instanceof FakeGuiProductChooser) {
-		    Product product = ((FakeGuiProductChooser) each).getSelected();
+		else if(each instanceof DemoGuiProductChooser) {
+		    Product product = ((DemoGuiProductChooser) each).getSelected();
 		    
 		    Iterator<Ingredient> iterator = product.iterator();
 		    

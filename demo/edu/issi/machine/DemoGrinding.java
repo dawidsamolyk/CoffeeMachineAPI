@@ -4,9 +4,9 @@ import edu.issi.machine.id.Identity;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationState;
 
-public class FakeGrinding extends Operation {
+public class DemoGrinding extends Operation {
 
-    public FakeGrinding(Identity identity) {
+    public DemoGrinding(Identity identity) {
 	super(identity);
     }
 

@@ -5,10 +5,6 @@ import java.util.List;
 
 import javax.naming.directory.InvalidAttributeIdentifierException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import edu.issi.machine.configuration.MachineConfiguration;
 import edu.issi.machine.controller.MachineController;
 import edu.issi.machine.id.UniqueIdentityBuilder;
@@ -21,11 +17,10 @@ import edu.issi.machine.subassembly.Subassembly;
 import edu.issi.machine.subassembly.TestingSubassembly;
 import edu.issi.machine.subassembly.handler.DefaultHandler;
 
-public class ExampleAppTest {
-    private MachineController controller;
+public class DemoApplication {
+    private static MachineController controller;
 
-    @Before
-    public void setUp() throws Exception {
+    protected static void setUp() throws InvalidAttributeIdentifierException {
 	UniqueIdentityBuilder idBuilder = new UniqueIdentityBuilder();
 
 	List<Product> products = getTestingProducts(idBuilder);
@@ -37,27 +32,27 @@ public class ExampleAppTest {
 	controller.setUpUsing(config);
     }
 
-    protected List<Subassembly> getTestingSubassemblies(UniqueIdentityBuilder idBuilder,
+    protected static List<Subassembly> getTestingSubassemblies(UniqueIdentityBuilder idBuilder,
 	    List<Product> products) throws InvalidAttributeIdentifierException {
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
 	List<Operation> grinderOperations = new ArrayList<Operation>();
-	grinderOperations.add(new FakeGrinding(idBuilder.newIdentity()));
+	grinderOperations.add(new DemoGrinding(idBuilder.newIdentity()));
 	Subassembly grinder = new TestingSubassembly(idBuilder.newIdentityWithName("Mielarka"),
 		grinderOperations);
 	grinder.addHandler(new DefaultHandler());
 	subassemblies.add(grinder);
 
 	List<Operation> guiOperations = new ArrayList<Operation>();
-	guiOperations.add(new FakeGuiProductsList(idBuilder.newIdentity(), products));
-	guiOperations.add(new FakeGuiProductChooser(idBuilder.newIdentity(), products));
-	TestingUserInterfaceSubassembly gui = new TestingUserInterfaceSubassembly(idBuilder.newIdentity(),
+	guiOperations.add(new DemoGuiProductsList(idBuilder.newIdentity(), products));
+	guiOperations.add(new DemoGuiProductChooser(idBuilder.newIdentity(), products));
+	DemoUserInterfaceSubassembly gui = new DemoUserInterfaceSubassembly(idBuilder.newIdentity(),
 		guiOperations);
 
 	subassemblies.add(gui);
 	return subassemblies;
     }
 
-    protected List<Product> getTestingProducts(UniqueIdentityBuilder idBuilder)
+    protected static List<Product> getTestingProducts(UniqueIdentityBuilder idBuilder)
 	    throws InvalidAttributeIdentifierException {
 
 	List<Product> products = new ArrayList<Product>();
@@ -70,7 +65,7 @@ public class ExampleAppTest {
 	return products;
     }
 
-    protected Ingredient getCoffeeIngredient(UniqueIdentityBuilder idBuilder)
+    protected static Ingredient getCoffeeIngredient(UniqueIdentityBuilder idBuilder)
 	    throws InvalidAttributeIdentifierException {
 	Ingredient ingredient = new Ingredient(idBuilder.newIdentityWithName("Ziarna kawy"));
 
@@ -79,30 +74,30 @@ public class ExampleAppTest {
 	ingredient.add(idBuilder.newProperty("Rozmiar porcji", Unit.G), 10.0);
 
 	OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
-	operations.add(new TestingOperation(idBuilder.newIdentityWithName("Wybranie porcji"))
+	operations.add(new DemoOperation(idBuilder.newIdentityWithName("Wybranie porcji"))
 		.setIngredient(ingredient));
-	operations.add(new TestingOperation(idBuilder.newIdentityWithName("Mielenie"))
+	operations.add(new DemoOperation(idBuilder.newIdentityWithName("Mielenie"))
 		.setIngredient(ingredient));
-	operations.add(new TestingOperation(idBuilder.newIdentityWithName("Podgrzewanie"))
+	operations.add(new DemoOperation(idBuilder.newIdentityWithName("Podgrzewanie"))
 		.setIngredient(ingredient));
-	operations.add(new TestingOperation(idBuilder.newIdentityWithName("Wsypywanie"))
+	operations.add(new DemoOperation(idBuilder.newIdentityWithName("Wsypywanie"))
 		.setIngredient(ingredient));
 
 	ingredient.addOperations(operations);
-	
+
 	return ingredient;
     }
 
-    @After
-    public void tearDown() throws Exception {
+    protected static void tearDown() throws Exception {
 	controller.start();
 	controller.stop();
 	controller.tearDown();
     }
 
-    @Test
-    public void test() {
+    public static void main(String[] args) throws Exception {
+	setUp();
 	controller.start();
+	tearDown();
     }
 
 }

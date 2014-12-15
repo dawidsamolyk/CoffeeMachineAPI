@@ -11,12 +11,12 @@ import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationState;
 import edu.issi.machine.product.Product;
 
-public class FakeGuiProductChooser extends Operation {
+public class DemoGuiProductChooser extends Operation {
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private List<Product> products;
     private Product selectedProduct;
 
-    public FakeGuiProductChooser(Identity identity, List<Product> products) {
+    public DemoGuiProductChooser(Identity identity, List<Product> products) {
 	super(identity);
 	this.products = products;
     }

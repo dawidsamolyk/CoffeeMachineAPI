@@ -8,10 +8,10 @@ import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationState;
 import edu.issi.machine.product.Product;
 
-public class FakeGuiProductsList extends Operation {
+public class DemoGuiProductsList extends Operation {
     private List<Product> products;
 
-    public FakeGuiProductsList(Identity identity, List<Product> products) {
+    public DemoGuiProductsList(Identity identity, List<Product> products) {
 	super(identity);
 	this.products = products;
     }

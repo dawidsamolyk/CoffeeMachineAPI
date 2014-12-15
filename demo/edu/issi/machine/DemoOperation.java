@@ -4,10 +4,10 @@ import edu.issi.machine.id.Identity;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationState;
 
-public class TestingOperation extends Operation {
+public class DemoOperation extends Operation {
     private Identity identity;
 
-    public TestingOperation(Identity identity) {
+    public DemoOperation(Identity identity) {
 	super(identity);
 	this.identity = identity;
     }
