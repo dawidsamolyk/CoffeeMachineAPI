@@ -5,7 +5,7 @@ import java.util.List;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.operation.Operation;
-import edu.issi.machine.operation.OperationState;
+import edu.issi.machine.operation.OperationStatus;
 import edu.issi.machine.product.Product;
 
 @SuppressWarnings("javadoc")
@@ -18,7 +18,7 @@ public class DemoGuiProductsList extends Operation {
     }
 
     @Override
-    public OperationState execute() {
+    public OperationStatus execute() {
 	System.out.println("---------------------");
 	System.out.println("Lista dostêpnych produktów:");
 
@@ -29,7 +29,7 @@ public class DemoGuiProductsList extends Operation {
 
 	System.out.println("---------------------");
 
-	return new OperationState.Factory().createValidState();
+	return new OperationStatus.Factory().createValidState();
     }
 
 }

@@ -30,9 +30,9 @@ public class ObjectWithIdentityTest {
 
     @Test
     public void testIdentifiesBy() throws Exception {
-	ObjectWithIdentity fixture = new ObjectWithIdentity(new Identity(1));
-
-	assertTrue(fixture.identifiesBy(new Identity(1)));
+	ObjectWithIdentity fixture = new ObjectWithIdentity(Identity.Factory.newIdentity("Test"));
+	
+	assertTrue(fixture.identifiesBy(fixture.hashCode()));
     }
 
     public static void main(String[] args) {

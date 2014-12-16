@@ -4,6 +4,8 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 
+import javax.naming.directory.InvalidAttributeIdentifierException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -49,14 +51,14 @@ public class MachineControllerTest {
     }
 
     @Test
-    public void shouldRestart() {
+    public void shouldRestart() throws InvalidAttributeIdentifierException {
 	MachineController fixture = new MachineController();
 
 	ArrayList<Subassembly> subassemblies = new ArrayList<Subassembly>();
 	subassemblies.add(SubassemblyTest.getFixture());
 
 	ArrayList<Product> products = new ArrayList<Product>();
-	products.add(new Product(new Identity(0)));
+	products.add(new Product(Identity.Factory.newIdentity("Test")));
 
 	fixture.setUpUsing(new MachineConfiguration(subassemblies, products));
 	fixture.start();
@@ -73,14 +75,14 @@ public class MachineControllerTest {
     }
 
     @Test
-    public void shouldNotDeinitializeWhenMachineIsWorking() {
+    public void shouldNotDeinitializeWhenMachineIsWorking() throws InvalidAttributeIdentifierException {
 	MachineController fixture = new MachineController();
 
 	ArrayList<Subassembly> subassemblies = new ArrayList<Subassembly>();
 	subassemblies.add(SubassemblyTest.getFixture());
 
 	ArrayList<Product> products = new ArrayList<Product>();
-	products.add(new Product(new Identity(0)));
+	products.add(new Product(Identity.Factory.newIdentity("Test")));
 
 	fixture.setUpUsing(new MachineConfiguration(subassemblies, products));
 	fixture.start();
@@ -90,14 +92,14 @@ public class MachineControllerTest {
     }
 
     @Test
-    public void shouldNotInitializeWhenMachineIsWorking() {
+    public void shouldNotInitializeWhenMachineIsWorking() throws InvalidAttributeIdentifierException {
 	MachineController fixture = new MachineController();
 
 	ArrayList<Subassembly> subassemblies = new ArrayList<Subassembly>();
 	subassemblies.add(SubassemblyTest.getFixture());
 
 	ArrayList<Product> products = new ArrayList<Product>();
-	products.add(new Product(new Identity(0)));
+	products.add(new Product(Identity.Factory.newIdentity("Test")));
 
 	fixture.setUpUsing(new MachineConfiguration(subassemblies, products));
 	fixture.start();

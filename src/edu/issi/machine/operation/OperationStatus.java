@@ -4,7 +4,7 @@ package edu.issi.machine.operation;
  * @author Dawid
  * 
  */
-public class OperationState {
+public class OperationStatus {
     private final Status status;
     private String description;
 
@@ -15,7 +15,7 @@ public class OperationState {
      *             Wyst¹pi, gdy status bêdzie wyamga³ uwagi (b³¹d lub
      *             ostrze¿enie), poniewa¿ nie zosta³ ustawiony dla niego opis.
      */
-    public OperationState(Status status) throws IllegalStateException {
+    private OperationStatus(Status status) throws IllegalStateException {
 	ensureIsNotEmpty(status);
 
 	if (status.requiresAttention()) {
@@ -34,7 +34,7 @@ public class OperationState {
      *             Wyst¹pi, gdy status bêdzie wyamga³ uwagi (b³¹d lub
      *             ostrze¿enie) i nie zostanie ustawiony dla niego opis.
      */
-    public OperationState(Status status, String description) throws IllegalStateException {
+    private OperationStatus(Status status, String description) throws IllegalStateException {
 	ensureIsNotEmpty(status);
 
 	if (status.requiresAttention() && isEmpty(description)) {
@@ -55,7 +55,7 @@ public class OperationState {
      *             ostrze¿enie) i nie zostanie ustawiony dla niego opis lub kod
      *             operacji.
      */
-    public OperationState(Status status, int stateCodeNumber) throws IllegalStateException {
+    public OperationStatus(Status status, int stateCodeNumber) throws IllegalStateException {
 	ensureIsNotEmpty(status);
 
 	if (status.requiresAttention()) {
@@ -118,7 +118,7 @@ public class OperationState {
 	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
-	OperationState other = (OperationState) obj;
+	OperationStatus other = (OperationStatus) obj;
 	if (description == null) {
 	    if (other.description != null)
 		return false;
@@ -138,31 +138,31 @@ public class OperationState {
 	 * @param description
 	 * @return Status operacji dla b³êdu.
 	 */
-	public OperationState createErrorWithDescription(String description) {
-	    return new OperationState(Status.ERROR, description);
+	public static OperationStatus createErrorWithDescription(String description) {
+	    return new OperationStatus(Status.ERROR, description);
 	}
 
 	/**
 	 * @param description
 	 * @return Status operacji dla ostrze¿enia.
 	 */
-	public OperationState createWarningWithDescription(String description) {
-	    return new OperationState(Status.WARNING, description);
+	public static OperationStatus createWarningWithDescription(String description) {
+	    return new OperationStatus(Status.WARNING, description);
 	}
 
 	/**
 	 * @param description
 	 * @return Poprawny status operacji, z opisem.
 	 */
-	public OperationState createValidWithDescription(String description) {
-	    return new OperationState(Status.OK, description);
+	public static OperationStatus createValidWithDescription(String description) {
+	    return new OperationStatus(Status.OK, description);
 	}
 
 	/**
 	 * @return Poprawny status operacji.
 	 */
-	public OperationState createValidState() {
-	    return new OperationState(Status.OK);
+	public static OperationStatus createValidState() {
+	    return new OperationStatus(Status.OK);
 	}
     }
 

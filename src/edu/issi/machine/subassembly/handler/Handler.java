@@ -1,8 +1,7 @@
 package edu.issi.machine.subassembly.handler;
 
 import edu.issi.machine.operation.Operation;
-import edu.issi.machine.operation.OperationState;
-import edu.issi.machine.operation.Status;
+import edu.issi.machine.operation.OperationStatus;
 
 /**
  * @author Dawid
@@ -10,8 +9,8 @@ import edu.issi.machine.operation.Status;
  */
 public abstract class Handler {
     private boolean isOperationDone = false;
-    private OperationState noSuchHandlersState = new OperationState(Status.WARNING,
-	    "Nie ustawiono kolejnej operacji do wykonania!");
+    private OperationStatus noSuchHandlersState = OperationStatus.Factory
+	    .createErrorWithDescription("Nie ustawiono kolejnej operacji do wykonania!");
     private Handler nextHandler;
 
     protected Operation operation;
@@ -33,14 +32,14 @@ public abstract class Handler {
      * @return Status wykonanej operacji (bêdzie dostêpny dopiero po jej
      *         zakoñczeniu).
      */
-    public synchronized OperationState doOperation(Operation operation) {
+    public synchronized OperationStatus doOperation(Operation operation) {
 	if (operation == null) {
-	    return new OperationState(Status.ERROR, "Nie mo¿na wykonaæ pustej operacji!");
+	    return OperationStatus.Factory.createErrorWithDescription("Nie mo¿na wykonaæ pustej operacji!");
 	}
 
 	this.operation = operation;
 
-	OperationState operationState = runOperation();
+	OperationStatus operationState = runOperation();
 
 	isOperationDone = true;
 
@@ -55,7 +54,7 @@ public abstract class Handler {
 	return nextHandler == null;
     }
 
-    protected OperationState executeAtNextHandler(Operation operation) {
+    protected OperationStatus executeAtNextHandler(Operation operation) {
 	if (isLastHandler()) {
 	    return noSuchHandlersState;
 	}
@@ -72,6 +71,6 @@ public abstract class Handler {
     /**
      * Wykonanie operacji.
      */
-    abstract protected OperationState runOperation();
+    abstract protected OperationStatus runOperation();
 
 }

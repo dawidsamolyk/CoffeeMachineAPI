@@ -1,5 +1,6 @@
 package edu.issi.machine.operation;
 
+import edu.issi.machine.Validator;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.product.ingredient.Ingredient;
@@ -31,6 +32,8 @@ public abstract class Operation extends ObjectWithIdentity {
      * @return Zwraca referencje do siebie - wzorzec Fluent Interface.
      */
     public Operation setSubassembly(Subassembly subassembly) {
+	Validator.throwExceptionWhenObjectIsNotCreated(subassembly, "Nie mo¿na ustawiæ pustego podzespo³u do wykonania operacji!");
+	
 	this.subassembly = subassembly;
 	return this;
     }
@@ -41,6 +44,8 @@ public abstract class Operation extends ObjectWithIdentity {
      * @return Zwraca referencje do siebie - wzorzec Fluent Interface.
      */
     public Operation setIngredient(Ingredient ingredient) {
+	Validator.throwExceptionWhenObjectIsNotCreated(ingredient, "Nie mo¿na ustawiæ pustego sk³adnika do wykonania na nim operacji!");
+
 	this.ingredient = ingredient;
 	return this;
     }
@@ -48,7 +53,7 @@ public abstract class Operation extends ObjectWithIdentity {
     /**
      * @return Stan operacji.
      */
-    public abstract OperationState execute();
+    public abstract OperationStatus execute();
 
     protected boolean canDoThisOperation(Subassembly subassembly) {
 	return subassembly.supports(this);

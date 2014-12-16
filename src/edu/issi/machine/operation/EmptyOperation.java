@@ -23,16 +23,16 @@ public class EmptyOperation extends Operation {
      * @see edu.issi.machine.operation.Operation#execute()
      */
     @Override
-    public synchronized OperationState execute() {
+    public synchronized OperationStatus execute() {
 	if (!isRequiredElementsProvided()) {
-	    return new OperationState(Status.ERROR, "Nie ustawiono wymaganych parametrów!");
+	    return OperationStatus.Factory.createErrorWithDescription("Nie ustawiono wymaganych parametrów!");
 	} else if (!canDoThisOperation(subassembly)) {
-	    return new OperationState(Status.ERROR, "Wybrany podzespó³ nie jest w stanie wykonaæ tej operacji!");
+	    return OperationStatus.Factory.createErrorWithDescription("Wybrany podzespó³ nie jest w stanie wykonaæ tej operacji!");
 	}
 
 	setDone();
 
-	return new OperationState.Factory().createValidState();
+	return OperationStatus.Factory.createValidState();
     }
 
 }

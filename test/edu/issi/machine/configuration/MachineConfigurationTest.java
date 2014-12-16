@@ -3,6 +3,8 @@ package edu.issi.machine.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.directory.InvalidAttributeIdentifierException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -18,7 +20,7 @@ public class MachineConfigurationTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void shouldNotCreatesWhenSubassembliesAreNotSetted() {
+    public void shouldNotCreatesWhenSubassembliesAreNotSetted() throws InvalidAttributeIdentifierException {
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
 	List<Product> products = new ArrayList<Product>();
 	products.add(mockProduct());
@@ -45,8 +47,8 @@ public class MachineConfigurationTest {
 	new MachineConfiguration(null, products);
     }
 
-    public static Product mockProduct() {
-	return new Product(new Identity(0));
+    public static Product mockProduct() throws InvalidAttributeIdentifierException {
+	return new Product(Identity.Factory.newIdentity("Testowy"));
     }
 
     public static MachineConfiguration mockMachineConfiguration() throws Exception {

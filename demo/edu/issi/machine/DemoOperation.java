@@ -5,7 +5,7 @@ import java.util.Map;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.PropertyIdentity;
 import edu.issi.machine.operation.Operation;
-import edu.issi.machine.operation.OperationState;
+import edu.issi.machine.operation.OperationStatus;
 
 @SuppressWarnings("javadoc")
 public class DemoOperation extends Operation {
@@ -17,7 +17,7 @@ public class DemoOperation extends Operation {
     }
 
     @Override
-    public OperationState execute() {
+    public OperationStatus execute() {
 	System.out.println("Operacja na sk³adniku: " + ingredient);
 	System.out.println(identity.toString());
 	System.out.println("\tW³aœciwoœci sk³adnika: ");
@@ -29,7 +29,7 @@ public class DemoOperation extends Operation {
 	    System.out.println("\t\t" + each.getName() + " : " + value + each.getUnit());
 	}
 	
-	return new OperationState.Factory().createValidState();
+	return new OperationStatus.Factory().createValidState();
     }
 
 }

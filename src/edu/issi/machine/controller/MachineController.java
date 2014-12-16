@@ -11,7 +11,7 @@ import edu.issi.machine.subassembly.Subassembly;
  */
 public class MachineController {
     protected MachineConfiguration configuration;
-    protected boolean working = false;
+    protected boolean running = false;
 
     /**
      * @param configuration
@@ -20,7 +20,7 @@ public class MachineController {
      * 
      */
     public void setUpUsing(MachineConfiguration configuration) throws IllegalStateException {
-	if (working) {
+	if (running) {
 	    throw new UnsupportedOperationException("Nie mo¿na zmieniæ konfiguracji maszyny, gdy jest ona w³¹czona!");
 	} 
 	else if (configuration != null) {
@@ -38,7 +38,7 @@ public class MachineController {
      * 
      */
     public void tearDown() {
-	if (working) {
+	if (running) {
 	    throw new UnsupportedOperationException("Nie mo¿na deinicjalizowaæ maszyny, gdy jest ona w³¹czona!");
 	} 
 	else if (configuration == null) {
@@ -59,7 +59,7 @@ public class MachineController {
 	else {
 	    startAllSubassemblies();
 
-	    working = true;
+	    running = true;
 	}
     }
 
@@ -76,7 +76,7 @@ public class MachineController {
      * 
      */
     public void stop() {
-	working = false;
+	running = false;
     }
 
     /**

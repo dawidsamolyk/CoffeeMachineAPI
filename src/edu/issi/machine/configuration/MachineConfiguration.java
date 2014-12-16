@@ -61,6 +61,8 @@ public class MachineConfiguration {
      * @param product
      */
     public void addProduct(Product product) {
+	Validator.throwExceptionWhenObjectIsNotCreated(product, "Nie mo¿na dodaæ pustego produktu do konfiguracji maszyny!");
+	
 	products.add(product);
     }
 
@@ -68,6 +70,8 @@ public class MachineConfiguration {
      * @param subassembly
      */
     public void addSubassembly(Subassembly subassembly) {
+	Validator.throwExceptionWhenObjectIsNotCreated(subassembly, "Nie mo¿na dodaæ pustego podzespo³u do konfiguracji maszyny!");
+
 	subassemblies.add(subassembly);
     }
 }

@@ -1,5 +1,9 @@
 package edu.issi.machine.id;
 
+import javax.naming.directory.InvalidAttributeIdentifierException;
+
+import edu.issi.machine.Validator;
+
 /**
  * @author Dawid
  * 
@@ -11,20 +15,13 @@ public class Identity {
     /**
      * @param id
      *            Numer identyfikacyjny.
-     */
-    public Identity(int id) {
-	this.id = id;
-	name = Integer.toString(id);
-    }
-
-    /**
-     * @param id
-     *            Numer identyfikacyjny.
      * @param name
      *            Nazwa.
      */
-    public Identity(int id, String name) {
-	this(id);
+    protected Identity(int id, String name) {
+	Validator.throwExceptionWhenTextIsEmpty(name, "Nazwa obiektu nie mo¿e byæ pusta!");
+
+	this.id = id;
 	this.name = name;
     }
 
@@ -55,11 +52,7 @@ public class Identity {
 
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + id;
-	result = prime * result + ((name == null) ? 0 : name.hashCode());
-	return result;
+	return id;
     }
 
     @Override
@@ -74,6 +67,35 @@ public class Identity {
 	if (id != other.id)
 	    return false;
 	return true;
+    }
+
+    /**
+     * 
+     *
+     */
+    public static class Factory {
+	protected static int counter = 0;
+
+	/**
+	 * @param name
+	 *            Nazwa.
+	 * @return Identyfikator.
+	 * @throws InvalidAttributeIdentifierException
+	 *             Wyst¹pi, jeœli identyfikator nie jest unikalny (ju¿
+	 *             istnieje).
+	 */
+	public static synchronized Identity newIdentity(String name) throws InvalidAttributeIdentifierException {
+	    return new Identity(counter++, name);
+	}
+
+    }
+
+    /**
+     * @param productID
+     * @return Czy obiekt jest identyfikowany podanym numerem.
+     */
+    public boolean identifiesBy(int productID) {
+	return id == productID;
     }
 
 }

@@ -19,7 +19,7 @@ public class PropertyIdentity extends Identity {
      *            Jednostka miary w³aœciwoœci.
      * @throws IllegalArgumentException 
      */
-    public PropertyIdentity(int id, String name, Unit unit) throws IllegalArgumentException {
+    protected PropertyIdentity(int id, String name, Unit unit) throws IllegalArgumentException {
 	super(id, name);
 	
 	Validator.throwExceptionWhenObjectIsNotCreated(unit, "Nie podano jednostki w³aœciwoœci!");
@@ -33,4 +33,20 @@ public class PropertyIdentity extends Identity {
 	return unit;
     }
 
+    /**
+     * 
+     *
+     */
+    public static class Factory extends Identity.Factory {
+
+	/**
+	 * @param name
+	 * @param unit
+	 * @return Identyfikator w³aœciwoœci.
+	 */
+	public static synchronized PropertyIdentity newProperty(String name, Unit unit) {
+	    return new PropertyIdentity(counter++, name, unit);
+	}
+
+    }
 }

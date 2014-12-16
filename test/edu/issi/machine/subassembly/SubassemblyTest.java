@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.directory.InvalidAttributeIdentifierException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -23,29 +25,29 @@ public class SubassemblyTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void shouldCreatesWithNotEmptyOperations() {
+    public void shouldCreatesWithNotEmptyOperations() throws InvalidAttributeIdentifierException {
 	Subassembly subassembly = getFixture();
 
 	assertNotNull(subassembly);
     }
 
     @Test
-    public void shouldNotCreatesWhenOperationsAreNotSetted() {
+    public void shouldNotCreatesWhenOperationsAreNotSetted() throws IllegalArgumentException, InvalidAttributeIdentifierException {
 	exception.expect(IllegalArgumentException.class);
-	new TestingSubassembly(new Identity(0), null);
+	new TestingSubassembly(Identity.Factory.newIdentity("Test"), null);
     }
 
     @Test
-    public void shouldNotCreatesWhenOperationsListIsEmpty() {
+    public void shouldNotCreatesWhenOperationsListIsEmpty() throws IllegalArgumentException, InvalidAttributeIdentifierException {
 	exception.expect(IllegalArgumentException.class);
 	List<Operation> operations = new ArrayList<Operation>();
-	new TestingSubassembly(new Identity(0), operations);
+	new TestingSubassembly(Identity.Factory.newIdentity("Test"), operations);
     }
 
     @Test
-    public void shouldCreates() {
-	Identity id = new Identity(0, "");
-	Operation operation = new EmptyOperation(new Identity(0));
+    public void shouldCreates() throws InvalidAttributeIdentifierException {
+	Identity id = Identity.Factory.newIdentity("Test");
+	Operation operation = new EmptyOperation(Identity.Factory.newIdentity("Test"));
 
 	List<Operation> operations = new ArrayList<Operation>();
 	operations.add(operation);
@@ -54,7 +56,7 @@ public class SubassemblyTest {
     }
 
     @Test
-    public void shouldBeEnabledToAddOneHandler() {
+    public void shouldBeEnabledToAddOneHandler() throws InvalidAttributeIdentifierException {
 	TestingSubassembly fixture = getFixture();
 	Handler handler = new DefaultHandler();
 
@@ -64,7 +66,7 @@ public class SubassemblyTest {
     }
 
     @Test
-    public void shouldBeEnabledToAddManyHandlers() {
+    public void shouldBeEnabledToAddManyHandlers() throws InvalidAttributeIdentifierException {
 	TestingSubassembly fixture = getFixture();
 	fixture.addHandler(new DefaultHandler());
 	fixture.addHandler(new DefaultHandler());
@@ -76,7 +78,7 @@ public class SubassemblyTest {
     }
 
     @Test
-    public void shouldBeEnabledToAddManyHandlersExcludingEmptyHandlers() {
+    public void shouldBeEnabledToAddManyHandlersExcludingEmptyHandlers() throws InvalidAttributeIdentifierException {
 	TestingSubassembly fixture = getFixture();
 
 	fixture.addHandler(new DefaultHandler());
@@ -88,13 +90,13 @@ public class SubassemblyTest {
     }
 
     @Test
-    public void shouldCorrectRecognizeSupportedOperation() {
-	Operation operation = new EmptyOperation(new Identity(111));
+    public void shouldCorrectRecognizeSupportedOperation() throws InvalidAttributeIdentifierException {
+	Operation operation = new EmptyOperation(Identity.Factory.newIdentity("Test"));
 
 	List<Operation> operations = new ArrayList<Operation>();
 	operations.add(operation);
 
-	TestingSubassembly fixture = new TestingSubassembly(new Identity(0, ""), operations);
+	TestingSubassembly fixture = new TestingSubassembly(Identity.Factory.newIdentity("Test"), operations);
 
 	boolean result = fixture.supports(operation);
 
@@ -102,25 +104,25 @@ public class SubassemblyTest {
     }
 
     @Test
-    public void shouldCorrectRecognizeNotSupportedOperation() {
-	Operation unsupportedOperation = new EmptyOperation(new Identity(333));
-	Operation supportedOperation = new EmptyOperation(new Identity(111));
+    public void shouldCorrectRecognizeNotSupportedOperation() throws InvalidAttributeIdentifierException {
+	Operation unsupportedOperation = new EmptyOperation(Identity.Factory.newIdentity("Test"));
+	Operation supportedOperation = new EmptyOperation(Identity.Factory.newIdentity("Test"));
 
 	List<Operation> operations = new ArrayList<Operation>();
 	operations.add(supportedOperation);
 
-	TestingSubassembly fixture = new TestingSubassembly(new Identity(0, ""), operations);
+	TestingSubassembly fixture = new TestingSubassembly(Identity.Factory.newIdentity("Test"), operations);
 
 	boolean result = fixture.supports(unsupportedOperation);
 
 	assertEquals(false, result);
     }
 
-    public static TestingSubassembly getFixture() {
+    public static TestingSubassembly getFixture() throws InvalidAttributeIdentifierException {
 	List<Operation> operations = new ArrayList<Operation>();
-	operations.add(new EmptyOperation(new Identity(1)));
+	operations.add(new EmptyOperation(Identity.Factory.newIdentity("Test")));
 
-	return new TestingSubassembly(new Identity(0), operations);
+	return new TestingSubassembly(Identity.Factory.newIdentity("Test"), operations);
     }
 
     public static void main(String[] args) {

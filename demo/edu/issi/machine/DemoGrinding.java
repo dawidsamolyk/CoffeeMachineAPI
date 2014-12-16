@@ -2,7 +2,7 @@ package edu.issi.machine;
 
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.operation.Operation;
-import edu.issi.machine.operation.OperationState;
+import edu.issi.machine.operation.OperationStatus;
 
 @SuppressWarnings("javadoc")
 public class DemoGrinding extends Operation {
@@ -12,10 +12,10 @@ public class DemoGrinding extends Operation {
     }
 
     @Override
-    public OperationState execute() {
+    public OperationStatus execute() {
 	System.out.println("Mielenie kawy...");
 
-	return new OperationState.Factory().createValidState();
+	return new OperationStatus.Factory().createValidState();
     }
 
 }

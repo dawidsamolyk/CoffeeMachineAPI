@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.operation.Operation;
-import edu.issi.machine.operation.OperationState;
+import edu.issi.machine.operation.OperationStatus;
 import edu.issi.machine.product.Product;
 
 @SuppressWarnings("javadoc")
@@ -23,7 +23,7 @@ public class DemoGuiProductChooser extends Operation {
     }
 
     @Override
-    public OperationState execute() {
+    public OperationStatus execute() {
 	System.out.print("Wpisz ID produktu, który chcesz otrzymaæ (wpisz END, aby zakoñczyæ): ");
 
 	int productID = 0;
@@ -36,18 +36,18 @@ public class DemoGuiProductChooser extends Operation {
 	    selectProductByID(productID);
 	} 
 	catch (NumberFormatException e) {
-	    return new OperationState.Factory().createErrorWithDescription("Podano nieprawid³owy ID!");
+	    return new OperationStatus.Factory().createErrorWithDescription("Podano nieprawid³owy ID!");
 	} 
 	catch (NoSuchElementException e) {
-	    return new OperationState.Factory().createErrorWithDescription(e.getMessage());
+	    return new OperationStatus.Factory().createErrorWithDescription(e.getMessage());
 	} 
 	catch (IOException e) {
-	    return new OperationState.Factory().createErrorWithDescription("Podano nieprawid³owy ID!");
+	    return new OperationStatus.Factory().createErrorWithDescription("Podano nieprawid³owy ID!");
 	}
 
 	System.out.println(">>> Wybrano " + selectedProduct);
 
-	return new OperationState.Factory().createValidState();
+	return new OperationStatus.Factory().createValidState();
     }
 
     private void checkAppEnd(String readedLine) {
@@ -60,7 +60,7 @@ public class DemoGuiProductChooser extends Operation {
 	selectedProduct = null;
 
 	for (Product each : products) {
-	    if (each.identifiesBy(new Identity(productID))) {
+	    if (each.identifiesBy(productID)) {
 		selectedProduct = each;
 	    }
 	}

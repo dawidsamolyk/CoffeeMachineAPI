@@ -5,7 +5,7 @@ import java.util.List;
 
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.operation.Operation;
-import edu.issi.machine.operation.OperationState;
+import edu.issi.machine.operation.OperationStatus;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.subassembly.Subassembly;
@@ -22,7 +22,7 @@ public class DemoUserInterfaceSubassembly extends Subassembly implements Runnabl
     public void run() {
 	while (working) {
 	    for (Operation each : operations) {
-		OperationState state = each.execute();
+		OperationStatus state = each.execute();
 
 		if (state.getStatus().requiresAttention()) {
 		    System.err.println(state.getDescription());

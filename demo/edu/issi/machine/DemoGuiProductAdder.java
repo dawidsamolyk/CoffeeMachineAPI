@@ -8,9 +8,9 @@ import java.util.List;
 import javax.naming.directory.InvalidAttributeIdentifierException;
 
 import edu.issi.machine.id.Identity;
-import edu.issi.machine.id.UniqueIdentityBuilder;
+import edu.issi.machine.id.PropertyIdentity;
 import edu.issi.machine.operation.Operation;
-import edu.issi.machine.operation.OperationState;
+import edu.issi.machine.operation.OperationStatus;
 import edu.issi.machine.product.OrderedElementsList;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Ingredient;
@@ -20,45 +20,43 @@ import edu.issi.machine.product.ingredient.Unit;
 public class DemoGuiProductAdder extends Operation {
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private List<Product> products;
-    private UniqueIdentityBuilder idBuilder;
 
-    public DemoGuiProductAdder(Identity identity, List<Product> products, UniqueIdentityBuilder idBuilder) {
+    public DemoGuiProductAdder(Identity identity, List<Product> products) {
 	super(identity);
 	this.products = products;
-	this.idBuilder = idBuilder;
     }
 
     @Override
-    public OperationState execute() {
+    public OperationStatus execute() {
 	String readedLine;
 	
 	try {
 	    readedLine = readLineAfterComunicate("Chcesz dodaæ nowy produkt? [T/N]:");
 	} catch (IOException e) {
-	    return new OperationState.Factory().createErrorWithDescription("Niedostêpny interfejs u¿ytkownika!");
+	    return new OperationStatus.Factory().createErrorWithDescription("Niedostêpny interfejs u¿ytkownika!");
 	}
 
 	if (!readedLine.equals("T")) {
-	    return new OperationState.Factory().createValidState();
+	    return new OperationStatus.Factory().createValidState();
 	}
 
 	try {
 	    products.add(newProduct());
 	} 
 	catch (InvalidAttributeIdentifierException e) {
-	    return new OperationState.Factory().createErrorWithDescription("Problem z generowaniem nowego ID!");
+	    return new OperationStatus.Factory().createErrorWithDescription("Problem z generowaniem nowego ID!");
 	} 
 	catch (IOException e) {
-	    return new OperationState.Factory().createErrorWithDescription("Niedostêpny interfejs u¿ytkownika!");
+	    return new OperationStatus.Factory().createErrorWithDescription("Niedostêpny interfejs u¿ytkownika!");
 	}
 
-	return new OperationState.Factory().createValidState();
+	return new OperationStatus.Factory().createValidState();
     }
 
     private Product newProduct() throws InvalidAttributeIdentifierException, IOException {
 	String readedLine = readLineAfterComunicate("Wpisz nazwê produktu: ");
 	
-	Product newProduct = new Product(idBuilder.newIdentityWithName(readedLine));
+	Product newProduct = new Product(Identity.Factory.newIdentity(readedLine));
 
 	Ingredient ingredient;
 
@@ -69,15 +67,15 @@ public class DemoGuiProductAdder extends Operation {
 		break;
 	    }
 
-	    ingredient = new Ingredient(idBuilder.newIdentityWithName(readedLine));
+	    ingredient = new Ingredient(Identity.Factory.newIdentity(readedLine));
 
-	    ingredient.add(idBuilder.newProperty("Temperatura", Unit.C), 100.0);
-	    ingredient.add(idBuilder.newProperty("Ciœnienie", Unit.BAR), 2.0);
-	    ingredient.add(idBuilder.newProperty("Rozmiar porcji", Unit.ML), 200.0);
+	    ingredient.add(PropertyIdentity.Factory.newProperty("Temperatura", Unit.C), 100.0);
+	    ingredient.add(PropertyIdentity.Factory.newProperty("Ciœnienie", Unit.BAR), 2.0);
+	    ingredient.add(PropertyIdentity.Factory.newProperty("Rozmiar porcji", Unit.ML), 200.0);
 
 	    OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
-	    operations.add(new DemoOperation(idBuilder.newIdentityWithName("Podgrzewanie")).setIngredient(ingredient));
-	    operations.add(new DemoOperation(idBuilder.newIdentityWithName("Wlewanie")).setIngredient(ingredient));
+	    operations.add(new DemoOperation(Identity.Factory.newIdentity("Podgrzewanie")).setIngredient(ingredient));
+	    operations.add(new DemoOperation(Identity.Factory.newIdentity("Wlewanie")).setIngredient(ingredient));
 	    ingredient.addOperations(operations);
 
 	    newProduct.add(ingredient);

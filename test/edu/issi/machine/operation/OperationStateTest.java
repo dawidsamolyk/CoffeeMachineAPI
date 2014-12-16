@@ -14,7 +14,7 @@ public class OperationStateTest {
 
     @Test
     public void shouldProvideState() {
-	OperationState state = new OperationState(Status.OK);
+	OperationStatus state = OperationStatus.Factory.createValidState();
 
 	assertNotNull(state.getStatus());
     }
@@ -22,46 +22,31 @@ public class OperationStateTest {
     @Test
     public void shouldNotCreatesWhenStatusIsNotProvided() {
 	exception.expect(IllegalStateException.class);
-	new OperationState(null);
+	OperationStatus.Factory.createErrorWithDescription(null);
     }
 
     @Test
     public void shouldProvideDescriptionWhenItIsSetted() {
 	String description = "Pompa dziala prawidlowo.";
-	OperationState state = new OperationState(Status.OK, description);
+	OperationStatus state = OperationStatus.Factory.createValidWithDescription(description);
 
 	assertEquals(description, state.getDescription());
 
 	description = "Pompa dziala niepoprawnie z powodu przegrzania!";
-	state = new OperationState(Status.ERROR, description);
+	state = OperationStatus.Factory.createErrorWithDescription(description);
 
 	assertEquals(description, state.getDescription());
 
 	description = "Pompa dziala, ale rozwaz jej wymiane, poniewaz lekko sie przegrzewa.";
-	state = new OperationState(Status.WARNING, description);
+	state = OperationStatus.Factory.createWarningWithDescription(description);
 
 	assertEquals(description, state.getDescription());
-    }
-
-    @Test
-    public void IllegalStateException() {
-	exception.expect(IllegalStateException.class);
-	new OperationState(Status.ERROR, null);
-
-	exception.expect(IllegalStateException.class);
-	new OperationState(Status.WARNING, "");
-
-	exception.expect(IllegalStateException.class);
-	new OperationState(Status.ERROR);
-
-	exception.expect(IllegalStateException.class);
-	new OperationState(Status.WARNING);
     }
 
     @Test
     public void shouldProvideCompensatedStatusAsText() {
 	String compensatedStatus = "[ERROR] Przegrzana pompa!";
-	OperationState state = new OperationState(Status.ERROR, "Przegrzana pompa!");
+	OperationStatus state = OperationStatus.Factory.createErrorWithDescription("Przegrzana pompa!");
 
 	assertEquals(compensatedStatus, state.getCompensatedStatus());
     }

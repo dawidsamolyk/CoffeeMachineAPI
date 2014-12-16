@@ -1,6 +1,6 @@
 package edu.issi.machine.subassembly.handler;
 
-import edu.issi.machine.operation.OperationState;
+import edu.issi.machine.operation.OperationStatus;
 
 /**
  * @author Dawid
@@ -9,7 +9,7 @@ import edu.issi.machine.operation.OperationState;
 public class DefaultHandler extends Handler {
 
     @Override
-    protected synchronized OperationState runOperation() {
+    protected synchronized OperationStatus runOperation() {
 	return operation.execute();
     }
 

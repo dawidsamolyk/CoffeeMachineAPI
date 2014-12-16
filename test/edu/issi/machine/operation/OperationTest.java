@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.directory.InvalidAttributeIdentifierException;
+
 import org.junit.Test;
 
 import edu.issi.machine.id.Identity;
@@ -19,89 +21,95 @@ import edu.issi.machine.subassembly.TestingSubassembly;
 public class OperationTest {
 
     @Test
-    public void shouldGiveResponseAfterExecution() {
+    public void shouldGiveResponseAfterExecution() throws InvalidAttributeIdentifierException {
 	Operation operation = mockOperation();
 	Subassembly subassembly = SubassemblyTest.getFixture();
 
-	OperationState state = operation.setIngredient(new Ingredient(new Identity(0))).setSubassembly(subassembly).execute();
+	OperationStatus state = operation.setIngredient(new Ingredient(Identity.Factory.newIdentity("Test")))
+		.setSubassembly(subassembly).execute();
 
 	assertNotNull(state);
     }
 
     @Test
-    public void shouldGiveErrorResponseWhenOnlySubassemblySetted() {
-	Operation operation = new EmptyOperation(new Identity(1));
+    public void shouldGiveErrorResponseWhenOnlySubassemblySetted() throws InvalidAttributeIdentifierException {
+	Operation operation = new EmptyOperation(Identity.Factory.newIdentity("Test"));
 
 	List<Operation> operations = new ArrayList<Operation>();
 	operations.add(operation);
 
-	Subassembly subassembly = new TestingSubassembly(new Identity(10), operations);
+	Subassembly subassembly = new TestingSubassembly(Identity.Factory.newIdentity("Test"), operations);
 
-	OperationState state = operation.setSubassembly(subassembly).execute();
+	OperationStatus state = operation.setSubassembly(subassembly).execute();
 
 	assertEquals(Status.ERROR, state.getStatus());
     }
 
     @Test
-    public void shouldGiveErrorResponseWhenOnlyIngredientSetted() {
+    public void shouldGiveErrorResponseWhenOnlyIngredientSetted() throws InvalidAttributeIdentifierException {
 	Operation operation = mockOperation();
-	OperationState state = operation.setIngredient(new Ingredient(new Identity(0))).execute();
+	OperationStatus state = operation.setIngredient(new Ingredient(Identity.Factory.newIdentity("Test"))).execute();
 
 	assertEquals(Status.ERROR, state.getStatus());
     }
 
     @Test
-    public void shouldExecuteValidlyWhenIngredientAndSubassemblySetted() {
-	Operation operation = new EmptyOperation(new Identity(0));
+    public void shouldExecuteValidlyWhenIngredientAndSubassemblySetted() throws IllegalArgumentException,
+	    InvalidAttributeIdentifierException {
+	Operation operation = new EmptyOperation(Identity.Factory.newIdentity("Test"));
 
 	List<Operation> operations = new ArrayList<Operation>();
 	operations.add(operation);
 
-	Subassembly subassembly = new TestingSubassembly(new Identity(10), operations);
+	Subassembly subassembly = new TestingSubassembly(Identity.Factory.newIdentity("Test"), operations);
 
-	OperationState state = operation.setIngredient(new Ingredient(new Identity(0))).setSubassembly(subassembly).execute();
+	OperationStatus state = operation.setIngredient(new Ingredient(Identity.Factory.newIdentity("Test")))
+		.setSubassembly(subassembly).execute();
 
 	assertEquals(Status.OK, state.getStatus());
     }
 
     @Test
-    public void shouldSetSubassemblyOnlyWhenItCanDoSpecifiedOperation() {
+    public void shouldSetSubassemblyOnlyWhenItCanDoSpecifiedOperation() throws IllegalArgumentException,
+	    InvalidAttributeIdentifierException {
 	Operation operation = mockOperation();
 
 	List<Operation> operations = new ArrayList<Operation>();
 	operations.add(operation);
 
-	Subassembly subassembly = new TestingSubassembly(new Identity(10), operations);
+	Subassembly subassembly = new TestingSubassembly(Identity.Factory.newIdentity("Test"), operations);
 
-	OperationState state = operation.setSubassembly(subassembly).setIngredient(new Ingredient(new Identity(0))).execute();
+	OperationStatus state = operation.setSubassembly(subassembly)
+		.setIngredient(new Ingredient(Identity.Factory.newIdentity("Test"))).execute();
 
 	assertEquals(Status.OK, state.getStatus());
     }
 
     @Test
-    public void shouldGiveErrorResponseWhenSettedSubassemblyCanNotDoSpecifiedOperation() {
-	Operation operation = new EmptyOperation(new Identity(0));
+    public void shouldGiveErrorResponseWhenSettedSubassemblyCanNotDoSpecifiedOperation()
+	    throws InvalidAttributeIdentifierException {
+	Operation operation = new EmptyOperation(Identity.Factory.newIdentity("Test"));
 
 	List<Operation> operations = new ArrayList<Operation>();
 	operations.add(operation);
 
-	Subassembly subassembly = new TestingSubassembly(new Identity(10), operations);
+	Subassembly subassembly = new TestingSubassembly(Identity.Factory.newIdentity("Test"), operations);
 
-	Operation anotherOperation = new EmptyOperation(new Identity(1));
+	Operation anotherOperation = new EmptyOperation(Identity.Factory.newIdentity("Test"));
 
-	OperationState state = anotherOperation.setSubassembly(subassembly).execute();
+	OperationStatus state = anotherOperation.setSubassembly(subassembly).execute();
 
 	assertEquals(Status.ERROR, state.getStatus());
     }
 
-    public static Iterable<Operation> getFixtureOperations() {
+    public static Iterable<Operation> getFixtureOperations() throws InvalidAttributeIdentifierException {
 	OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
-	operations.add(new EmptyOperation(new Identity(10)));
+	operations.add(new EmptyOperation(Identity.Factory.newIdentity("Test")));
 
 	return operations;
     }
 
-    public static Operation mockOperation() {
-	return new EmptyOperation(new Identity(111));
+    public static Operation mockOperation() throws InvalidAttributeIdentifierException {
+	return new EmptyOperation(Identity.Factory.newIdentity("Test"));
     }
 }

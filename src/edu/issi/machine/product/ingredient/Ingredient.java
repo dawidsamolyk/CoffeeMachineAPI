@@ -12,7 +12,7 @@ import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.id.PropertyIdentity;
 import edu.issi.machine.operation.Operation;
-import edu.issi.machine.operation.OperationState;
+import edu.issi.machine.operation.OperationStatus;
 
 /**
  * @author Dawid
@@ -97,16 +97,16 @@ public class Ingredient extends ObjectWithIdentity {
      * @return Statusy wszystkich wykonanych operacji.
      * @throws IllegalArgumentException
      */
-    public List<OperationState> doOperations() throws IllegalArgumentException {
+    public List<OperationStatus> doOperations() throws IllegalArgumentException {
 	Validator.throwExceptionWhenContainsNullOrEmpty(operations,
 		"Zbiór operacji na sk³adniku nie mo¿e byæ pusty lub niepe³ny!");
 
-	List<OperationState> result = new ArrayList<OperationState>();
+	List<OperationStatus> result = new ArrayList<OperationStatus>();
 
 	Iterator<Operation> itearator = operations.iterator();
 
 	while (itearator.hasNext()) {
-	    OperationState state = itearator.next().execute();
+	    OperationStatus state = itearator.next().execute();
 	    result.add(state);
 	}
 
