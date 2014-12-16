@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+@SuppressWarnings("javadoc")
 public class UnitTest {
     @Test
     public void testToString_1() {

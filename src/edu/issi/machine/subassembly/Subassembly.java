@@ -37,9 +37,13 @@ public abstract class Subassembly extends ObjectWithIdentity {
 	this.handlers = new ArrayList<Handler>();
     }
 
-    public Subassembly(Identity id, List<Operation> operations, List<Handler> handlers)
-	    throws IllegalArgumentException {
-
+    /**
+     * @param id
+     * @param operations
+     * @param handlers
+     * @throws IllegalArgumentException
+     */
+    public Subassembly(Identity id, List<Operation> operations, List<Handler> handlers) throws IllegalArgumentException {
 	this(id, operations);
 	this.handlers = handlers;
     }
@@ -63,6 +67,9 @@ public abstract class Subassembly extends ObjectWithIdentity {
 	}
     }
 
+    /**
+     * 
+     */
     public abstract void run();
 
 }

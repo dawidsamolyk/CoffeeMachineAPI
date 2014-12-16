@@ -47,6 +47,11 @@ public class Ingredient extends ObjectWithIdentity {
 	return result;
     }
 
+    /**
+     * @param name
+     * @return Wartoœæ.
+     * @throws NoSuchElementException
+     */
     public Double getValueForPropertyWithName(String name) throws NoSuchElementException {
 	for (PropertyIdentity each : properties.keySet()) {
 	    if (each.getName().equals(name)) {
@@ -74,10 +79,24 @@ public class Ingredient extends ObjectWithIdentity {
 	properties.remove(property);
     }
 
+    /**
+     * @param operations
+     */
     public void addOperations(Iterable<Operation> operations) {
 	this.operations = operations;
     }
 
+    /**
+     * @return W³aœciwoœci sk³adnika.
+     */
+    public Map<PropertyIdentity, Double> getProperties() {
+	return properties;
+    }
+
+    /**
+     * @return Statusy wszystkich wykonanych operacji.
+     * @throws IllegalArgumentException
+     */
     public List<OperationState> doOperations() throws IllegalArgumentException {
 	Validator.throwExceptionWhenContainsNullOrEmpty(operations,
 		"Zbiór operacji na sk³adniku nie mo¿e byæ pusty lub niepe³ny!");

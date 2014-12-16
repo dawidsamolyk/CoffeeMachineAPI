@@ -14,6 +14,7 @@ import edu.issi.machine.product.Product;
 import edu.issi.machine.subassembly.Subassembly;
 import edu.issi.machine.subassembly.SubassemblyTest;
 
+@SuppressWarnings("javadoc")
 public class MachineControllerTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();

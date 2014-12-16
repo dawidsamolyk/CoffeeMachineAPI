@@ -36,8 +36,7 @@ public class Validator {
      * @throws IllegalArgumentException
      *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenTextIsEmpty(String text, String exceptionMessage)
-	    throws IllegalArgumentException {
+    public static void throwExceptionWhenTextIsEmpty(String text, String exceptionMessage) throws IllegalArgumentException {
 	if (text == null || text.length() == 0) {
 	    throw new IllegalArgumentException(exceptionMessage);
 	}
@@ -113,9 +112,10 @@ public class Validator {
      *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
      * @throws NoSuchElementException
      *             Wygenerowany b³¹d.
+     * @throws IllegalArgumentException
      */
-    public static void throwExceptionWhenThereIsNotSuchElementAtSpecifiedIndex(List<?> list, int index,
-	    String exceptionMessage) throws NoSuchElementException, IllegalArgumentException {
+    public static void throwExceptionWhenThereIsNotSuchElementAtSpecifiedIndex(List<?> list, int index, String exceptionMessage)
+	    throws NoSuchElementException, IllegalArgumentException {
 
 	throwExceptionWhenEmptyOrContainsNullObjects(list, "Na podanej liœcie nie ma obiektów!");
 
@@ -124,16 +124,25 @@ public class Validator {
 	}
     }
 
+    /**
+     * @param itearable
+     * @param exceptionMessage
+     * @throws IllegalArgumentException
+     */
     public static void throwExceptionWhenContainsNullOrEmpty(Iterable<?> itearable, String exceptionMessage)
 	    throws IllegalArgumentException {
-	if (itearable.iterator().hasNext() == false || containsNullObjects(itearable)) {
+	if (containsNullObjects(itearable) || !itearable.iterator().hasNext()) {
 	    throw new IllegalArgumentException(exceptionMessage);
 	}
     }
 
+    /**
+     * @param itearable
+     * @return Czy zawiera nulle.
+     */
     public static boolean containsNullObjects(Iterable<?> itearable) {
 	Iterator<?> iterator = itearable.iterator();
-
+	
 	while (iterator.hasNext()) {
 	    if (iterator.next() != null) {
 		return false;
@@ -143,6 +152,10 @@ public class Validator {
 	return true;
     }
 
+    /**
+     * @param table
+     * @return Czy zawiera nulle.
+     */
     public static boolean containsNullObjects(Object[] table) {
 	for (int index = 0; index < table.length; index++) {
 	    if (table[index] == null) {

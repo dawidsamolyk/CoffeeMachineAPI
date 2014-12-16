@@ -16,17 +16,17 @@ public class MachineController {
     /**
      * @param configuration
      *            Konfiguracja maszyny.
+     * @throws IllegalStateException 
      * 
      */
     public void setUpUsing(MachineConfiguration configuration) throws IllegalStateException {
 	if (working) {
-	    throw new UnsupportedOperationException(
-		    "Nie mo¿na zmieniæ konfiguracji maszyny, gdy jest ona w³¹czona!");
-	}
+	    throw new UnsupportedOperationException("Nie mo¿na zmieniæ konfiguracji maszyny, gdy jest ona w³¹czona!");
+	} 
 	else if (configuration != null) {
 	    configuration.ensureValidity();
 	    this.configuration = configuration;
-	}
+	} 
 	else {
 	    throw new UnsupportedOperationException("Brak konfiguracji do ustawienia!");
 	}
@@ -39,23 +39,23 @@ public class MachineController {
      */
     public void tearDown() {
 	if (working) {
-	    throw new UnsupportedOperationException(
-		    "Nie mo¿na deinicjalizowaæ maszyny, gdy jest ona w³¹czona!");
-	}
+	    throw new UnsupportedOperationException("Nie mo¿na deinicjalizowaæ maszyny, gdy jest ona w³¹czona!");
+	} 
 	else if (configuration == null) {
-	    throw new UnsupportedOperationException(
-		    "Nie mo¿na deinicjalizowaæ maszyny, poniewa¿ nie zosta³a ona w³¹czona!");
-	}
+	    throw new UnsupportedOperationException("Nie mo¿na deinicjalizowaæ maszyny, poniewa¿ nie zosta³a ona w³¹czona!");
+	} 
 	else {
 	    configuration = null;
 	}
     }
 
+    /**
+     * 
+     */
     public void start() {
 	if (configuration == null) {
-	    throw new UnsupportedOperationException(
-		    "Nie mo¿na uruchomiæ maszyny bez ustawionej konfiguracji!");
-	}
+	    throw new UnsupportedOperationException("Nie mo¿na uruchomiæ maszyny bez ustawionej konfiguracji!");
+	} 
 	else {
 	    startAllSubassemblies();
 

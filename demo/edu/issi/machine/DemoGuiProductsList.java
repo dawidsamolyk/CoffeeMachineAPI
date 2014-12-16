@@ -8,6 +8,7 @@ import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationState;
 import edu.issi.machine.product.Product;
 
+@SuppressWarnings("javadoc")
 public class DemoGuiProductsList extends Operation {
     private List<Product> products;
 
@@ -25,7 +26,7 @@ public class DemoGuiProductsList extends Operation {
 	    System.out.print("\t* ");
 	    System.out.println(each);
 	}
-	
+
 	System.out.println("---------------------");
 
 	return new OperationState.Factory().createValidState();

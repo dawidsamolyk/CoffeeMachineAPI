@@ -23,8 +23,7 @@ public class OperationTest {
 	Operation operation = mockOperation();
 	Subassembly subassembly = SubassemblyTest.getFixture();
 
-	OperationState state = operation.setIngredient(new Ingredient(new Identity(0)))
-		.setSubassembly(subassembly).execute();
+	OperationState state = operation.setIngredient(new Ingredient(new Identity(0))).setSubassembly(subassembly).execute();
 
 	assertNotNull(state);
     }
@@ -60,8 +59,7 @@ public class OperationTest {
 
 	Subassembly subassembly = new TestingSubassembly(new Identity(10), operations);
 
-	OperationState state = operation.setIngredient(new Ingredient(new Identity(0)))
-		.setSubassembly(subassembly).execute();
+	OperationState state = operation.setIngredient(new Ingredient(new Identity(0))).setSubassembly(subassembly).execute();
 
 	assertEquals(Status.OK, state.getStatus());
     }
@@ -75,8 +73,7 @@ public class OperationTest {
 
 	Subassembly subassembly = new TestingSubassembly(new Identity(10), operations);
 
-	OperationState state = operation.setSubassembly(subassembly)
-		.setIngredient(new Ingredient(new Identity(0))).execute();
+	OperationState state = operation.setSubassembly(subassembly).setIngredient(new Ingredient(new Identity(0))).execute();
 
 	assertEquals(Status.OK, state.getStatus());
     }
@@ -96,11 +93,11 @@ public class OperationTest {
 
 	assertEquals(Status.ERROR, state.getStatus());
     }
-    
+
     public static Iterable<Operation> getFixtureOperations() {
 	OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
 	operations.add(new EmptyOperation(new Identity(10)));
-	
+
 	return operations;
     }
 

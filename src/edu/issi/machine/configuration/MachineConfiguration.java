@@ -24,8 +24,7 @@ public class MachineConfiguration {
      *             Wyst¹pi w momencie próby stworzenia maszyny z pust¹ list¹
      *             podzespo³ów lub produktów.
      */
-    public MachineConfiguration(List<Subassembly> subassemblies, List<Product> products)
-	    throws IllegalStateException {
+    public MachineConfiguration(List<Subassembly> subassemblies, List<Product> products) throws IllegalStateException {
 	this.subassemblies = subassemblies;
 	this.products = products;
 
@@ -56,5 +55,19 @@ public class MachineConfiguration {
      */
     public Iterator<Subassembly> subassemblies() {
 	return subassemblies.iterator();
+    }
+
+    /**
+     * @param product
+     */
+    public void addProduct(Product product) {
+	products.add(product);
+    }
+
+    /**
+     * @param subassembly
+     */
+    public void addSubassembly(Subassembly subassembly) {
+	subassemblies.add(subassembly);
     }
 }

@@ -66,6 +66,9 @@ public abstract class Operation extends ObjectWithIdentity {
 	isDone = false;
     }
 
+    /**
+     * @return Czy operacja zosta³a zakoñczona.
+     */
     public synchronized boolean isDone() {
 	return isDone;
     }

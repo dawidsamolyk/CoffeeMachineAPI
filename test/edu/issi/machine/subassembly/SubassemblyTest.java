@@ -46,7 +46,7 @@ public class SubassemblyTest {
     public void shouldCreates() {
 	Identity id = new Identity(0, "");
 	Operation operation = new EmptyOperation(new Identity(0));
-	
+
 	List<Operation> operations = new ArrayList<Operation>();
 	operations.add(operation);
 
@@ -90,7 +90,7 @@ public class SubassemblyTest {
     @Test
     public void shouldCorrectRecognizeSupportedOperation() {
 	Operation operation = new EmptyOperation(new Identity(111));
-	
+
 	List<Operation> operations = new ArrayList<Operation>();
 	operations.add(operation);
 
@@ -108,7 +108,7 @@ public class SubassemblyTest {
 
 	List<Operation> operations = new ArrayList<Operation>();
 	operations.add(supportedOperation);
-	
+
 	TestingSubassembly fixture = new TestingSubassembly(new Identity(0, ""), operations);
 
 	boolean result = fixture.supports(unsupportedOperation);

@@ -7,7 +7,7 @@ import edu.issi.machine.operation.OperationState;
  *
  */
 public class DefaultHandler extends Handler {
-    
+
     @Override
     protected synchronized OperationState runOperation() {
 	return operation.execute();

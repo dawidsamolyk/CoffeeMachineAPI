@@ -122,27 +122,45 @@ public class OperationState {
 	if (description == null) {
 	    if (other.description != null)
 		return false;
-	}
-	else if (!description.equals(other.description))
+	} else if (!description.equals(other.description))
 	    return false;
 	if (status != other.status)
 	    return false;
 	return true;
     }
-    
+
+    /**
+     * Fabryka statusów operacji.
+     *
+     */
     public static class Factory {
+	/**
+	 * @param description
+	 * @return Status operacji dla b³êdu.
+	 */
 	public OperationState createErrorWithDescription(String description) {
 	    return new OperationState(Status.ERROR, description);
 	}
-	
+
+	/**
+	 * @param description
+	 * @return Status operacji dla ostrze¿enia.
+	 */
 	public OperationState createWarningWithDescription(String description) {
 	    return new OperationState(Status.WARNING, description);
 	}
-	
+
+	/**
+	 * @param description
+	 * @return Poprawny status operacji, z opisem.
+	 */
 	public OperationState createValidWithDescription(String description) {
 	    return new OperationState(Status.OK, description);
 	}
-	
+
+	/**
+	 * @return Poprawny status operacji.
+	 */
 	public OperationState createValidState() {
 	    return new OperationState(Status.OK);
 	}

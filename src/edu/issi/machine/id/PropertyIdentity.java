@@ -1,5 +1,6 @@
 package edu.issi.machine.id;
 
+import edu.issi.machine.Validator;
 import edu.issi.machine.product.ingredient.Unit;
 
 /**
@@ -16,9 +17,12 @@ public class PropertyIdentity extends Identity {
      *            Nazwa w³aœciwoœci.
      * @param unit
      *            Jednostka miary w³aœciwoœci.
+     * @throws IllegalArgumentException 
      */
-    public PropertyIdentity(int id, String name, Unit unit) {
+    public PropertyIdentity(int id, String name, Unit unit) throws IllegalArgumentException {
 	super(id, name);
+	
+	Validator.throwExceptionWhenObjectIsNotCreated(unit, "Nie podano jednostki w³aœciwoœci!");
 	this.unit = unit;
     }
 

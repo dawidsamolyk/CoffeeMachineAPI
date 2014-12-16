@@ -1,9 +1,13 @@
 package edu.issi.machine;
 
+import java.util.Map;
+
 import edu.issi.machine.id.Identity;
+import edu.issi.machine.id.PropertyIdentity;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationState;
 
+@SuppressWarnings("javadoc")
 public class DemoOperation extends Operation {
     private Identity identity;
 
@@ -17,9 +21,13 @@ public class DemoOperation extends Operation {
 	System.out.println("Operacja na sk³adniku: " + ingredient);
 	System.out.println(identity.toString());
 	System.out.println("\tW³aœciwoœci sk³adnika: ");
-	System.out.println("\t\tIloœæ: " + ingredient.getValueForPropertyWithName("Iloœæ"));
-	System.out.println("\t\tTemperatura: " + ingredient.getValueForPropertyWithName("Temperatura"));
-	System.out.println("\t\tRozmiar porcji: " + ingredient.getValueForPropertyWithName("Rozmiar porcji"));
+	
+	Map<PropertyIdentity, Double> properties = ingredient.getProperties();
+	
+	for(PropertyIdentity each : properties.keySet()) {
+	    Double value = properties.get(each);
+	    System.out.println("\t\t" + each.getName() + " : " + value + each.getUnit());
+	}
 	
 	return new OperationState.Factory().createValidState();
     }

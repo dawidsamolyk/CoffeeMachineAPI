@@ -40,15 +40,17 @@ public class Identity {
 
 	return actualName;
     }
-    
+
+    /**
+     * @return Nazwa.
+     */
     public String getName() {
 	return name;
     }
 
     @Override
     public String toString() {
-	return "ID: " + id + 
-		", Nazwa: " + name;
+	return "ID: " + id + ", Nazwa: " + name;
     }
 
     @Override

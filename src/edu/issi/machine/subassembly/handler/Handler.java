@@ -62,6 +62,9 @@ public abstract class Handler {
 	return nextHandler.doOperation(operation);
     }
 
+    /**
+     * @return Czy operacja zosta³a wykonana.
+     */
     public synchronized boolean isOperationDone() {
 	return isOperationDone;
     }

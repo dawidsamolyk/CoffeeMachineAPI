@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import edu.issi.machine.product.ingredient.Unit;
 
+@SuppressWarnings("javadoc")
 public class PropertyIdentityTest {
     @Test
     public void testPropertyIdentity_1() throws Exception {

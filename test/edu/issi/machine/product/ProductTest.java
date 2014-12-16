@@ -17,6 +17,7 @@ import edu.issi.machine.operation.Operation;
 import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.product.ingredient.Unit;
 
+@SuppressWarnings("javadoc")
 public class ProductTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -40,7 +41,7 @@ public class ProductTest {
 
 	OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
 	operations.add(new EmptyOperation(new Identity(10)));
-	
+
 	Ingredient ingredient = new Ingredient(new Identity(0, ""));
 
 	fixture.add(ingredient);
@@ -81,7 +82,7 @@ public class ProductTest {
 	Ingredient ingredient = new Ingredient(new Identity(1));
 	ingredient.addOperations(operations);
 	ingredient.add(new PropertyIdentity(0, "", Unit.BAR), new Double(-1.0));
-	
+
 	return ingredient;
     }
 

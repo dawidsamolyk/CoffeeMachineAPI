@@ -56,7 +56,7 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     public Type getElement(int index) throws NoSuchElementException {
 	Validator.throwExceptionWhenThereIsNotSuchElementAtSpecifiedIndex(elements, index,
 		"Nie istnieje ¿aden element pod wskazanym indeksem!");
-	
+
 	return elements.get(index);
     }
 
@@ -69,7 +69,7 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     public void remove(int index) throws NoSuchElementException {
 	Validator.throwExceptionWhenThereIsNotSuchElementAtSpecifiedIndex(elements, index,
 		"Nie istnieje ¿aden element pod wskazanym indeksem!");
-	
+
 	elements.remove(index);
     }
 
@@ -108,8 +108,7 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
 	if (elements == null) {
 	    if (other.elements != null)
 		return false;
-	}
-	else if (!elements.equals(other.elements))
+	} else if (!elements.equals(other.elements))
 	    return false;
 	return true;
     }

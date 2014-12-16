@@ -1,6 +1,3 @@
-/**
- * 
- */
 package edu.issi.machine.subassembly;
 
 import java.util.List;
@@ -9,16 +6,9 @@ import edu.issi.machine.id.Identity;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.subassembly.handler.Handler;
 
-/**
- * @author Dawid
- *
- */
+@SuppressWarnings("javadoc")
 public class TestingSubassembly extends Subassembly {
-    /**
-     * @param id
-     * @param operations
-     * @throws IllegalArgumentException
-     */
+   
     public TestingSubassembly(Identity id, List<Operation> operations) throws IllegalArgumentException {
 	super(id, operations);
     }
@@ -42,7 +32,7 @@ public class TestingSubassembly extends Subassembly {
 
     @Override
     public void run() {
-	
+
     }
 
 }

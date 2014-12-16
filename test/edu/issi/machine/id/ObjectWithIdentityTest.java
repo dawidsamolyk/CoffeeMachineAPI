@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+@SuppressWarnings("javadoc")
 public class ObjectWithIdentityTest {
     @Test
     public void testObjectWithIdentity_1() throws Exception {
@@ -26,7 +27,7 @@ public class ObjectWithIdentityTest {
 
 	assertEquals(false, result);
     }
-    
+
     @Test
     public void testIdentifiesBy() throws Exception {
 	ObjectWithIdentity fixture = new ObjectWithIdentity(new Identity(1));

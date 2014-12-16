@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+@SuppressWarnings("javadoc")
 public class IdentityTest {
     @Test
     public void testIdentity_1() throws Exception {
