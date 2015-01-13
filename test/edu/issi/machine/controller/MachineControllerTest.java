@@ -115,8 +115,4 @@ public class MachineControllerTest {
 	exception.expect(java.lang.UnsupportedOperationException.class);
 	fixture.setUpUsing(null);
     }
-
-    public static void main(String[] args) {
-	new org.junit.runner.JUnitCore().run(MachineControllerTest.class);
-    }
 }

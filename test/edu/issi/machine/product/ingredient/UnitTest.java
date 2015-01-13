@@ -7,7 +7,7 @@ import org.junit.Test;
 @SuppressWarnings("javadoc")
 public class UnitTest {
     @Test
-    public void testToString_1() {
+    public void shouldProvideBarUnitAsText() {
 	Unit fixture = Unit.BAR;
 
 	String result = fixture.toString();
@@ -16,7 +16,7 @@ public class UnitTest {
     }
 
     @Test
-    public void testToString_2() {
+    public void shouldProvideCelsjusUnitAsText() {
 	Unit fixture = Unit.C;
 
 	String result = fixture.toString();
@@ -25,7 +25,7 @@ public class UnitTest {
     }
 
     @Test
-    public void testToString_3() {
+    public void shouldProvideGramUnitAsText() {
 	Unit fixture = Unit.G;
 
 	String result = fixture.toString();
@@ -34,7 +34,7 @@ public class UnitTest {
     }
 
     @Test
-    public void testToString_4() {
+    public void shouldProvideKilogramUnitAsText() {
 	Unit fixture = Unit.KG;
 
 	String result = fixture.toString();
@@ -43,7 +43,7 @@ public class UnitTest {
     }
 
     @Test
-    public void testToString_5() {
+    public void shouldProvideLitreUnitAsText() {
 	Unit fixture = Unit.L;
 
 	String result = fixture.toString();
@@ -52,15 +52,11 @@ public class UnitTest {
     }
 
     @Test
-    public void testToString_6() {
+    public void shouldProvideMililitreUnitAsText() {
 	Unit fixture = Unit.ML;
 
 	String result = fixture.toString();
 
 	assertEquals("ml", result);
-    }
-
-    public static void main(String[] args) {
-	new org.junit.runner.JUnitCore().run(UnitTest.class);
     }
 }

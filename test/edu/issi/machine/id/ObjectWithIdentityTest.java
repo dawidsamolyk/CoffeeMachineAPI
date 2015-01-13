@@ -12,20 +12,16 @@ public class ObjectWithIdentityTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testNullInitialization() throws Exception {
+    public void shouldNotCreatesWhenIdentityIsEmpty() throws Exception {
 	exception.expect(IllegalArgumentException.class);
 	
 	new ObjectWithIdentity((Identity) null);
     }
 
     @Test
-    public void testIdentifiesBy() throws Exception {
+    public void shouldIdentifiesByHashCode() throws Exception {
 	ObjectWithIdentity fixture = new ObjectWithIdentity(Identity.Factory.newIdentity("Test"));
 	
 	assertTrue(fixture.identifiesBy(fixture.hashCode()));
-    }
-
-    public static void main(String[] args) {
-	new org.junit.runner.JUnitCore().run(ObjectWithIdentityTest.class);
     }
 }
