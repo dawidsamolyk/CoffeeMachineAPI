@@ -15,7 +15,7 @@ public class DemoGrinding extends Operation {
     public OperationStatus execute() {
 	System.out.println("Mielenie kawy...");
 
-	return new OperationStatus.Factory().createValidState();
+	return OperationStatus.Factory.createValidState();
     }
 
 }

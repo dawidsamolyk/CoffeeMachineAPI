@@ -36,18 +36,18 @@ public class DemoGuiProductChooser extends Operation {
 	    selectProductByID(productID);
 	} 
 	catch (NumberFormatException e) {
-	    return new OperationStatus.Factory().createErrorWithDescription("Podano nieprawid這wy ID!");
+	    return OperationStatus.Factory.createErrorWithDescription("Podano nieprawid這wy ID!");
 	} 
 	catch (NoSuchElementException e) {
-	    return new OperationStatus.Factory().createErrorWithDescription(e.getMessage());
+	    return OperationStatus.Factory.createErrorWithDescription(e.getMessage());
 	} 
 	catch (IOException e) {
-	    return new OperationStatus.Factory().createErrorWithDescription("Podano nieprawid這wy ID!");
+	    return OperationStatus.Factory.createErrorWithDescription("Podano nieprawid這wy ID!");
 	}
 
 	System.out.println(">>> Wybrano " + selectedProduct);
 
-	return new OperationStatus.Factory().createValidState();
+	return OperationStatus.Factory.createValidState();
     }
 
     private void checkAppEnd(String readedLine) {

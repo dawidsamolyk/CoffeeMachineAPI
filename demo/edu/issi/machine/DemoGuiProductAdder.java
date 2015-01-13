@@ -33,24 +33,24 @@ public class DemoGuiProductAdder extends Operation {
 	try {
 	    readedLine = readLineAfterComunicate("Chcesz dodaæ nowy produkt? [T/N]:");
 	} catch (IOException e) {
-	    return new OperationStatus.Factory().createErrorWithDescription("Niedostêpny interfejs u¿ytkownika!");
+	    return OperationStatus.Factory.createErrorWithDescription("Niedostêpny interfejs u¿ytkownika!");
 	}
 
 	if (!readedLine.equals("T")) {
-	    return new OperationStatus.Factory().createValidState();
+	    return OperationStatus.Factory.createValidState();
 	}
 
 	try {
 	    products.add(newProduct());
 	} 
 	catch (InvalidAttributeIdentifierException e) {
-	    return new OperationStatus.Factory().createErrorWithDescription("Problem z generowaniem nowego ID!");
+	    return OperationStatus.Factory.createErrorWithDescription("Problem z generowaniem nowego ID!");
 	} 
 	catch (IOException e) {
-	    return new OperationStatus.Factory().createErrorWithDescription("Niedostêpny interfejs u¿ytkownika!");
+	    return OperationStatus.Factory.createErrorWithDescription("Niedostêpny interfejs u¿ytkownika!");
 	}
 
-	return new OperationStatus.Factory().createValidState();
+	return OperationStatus.Factory.createValidState();
     }
 
     private Product newProduct() throws InvalidAttributeIdentifierException, IOException {
