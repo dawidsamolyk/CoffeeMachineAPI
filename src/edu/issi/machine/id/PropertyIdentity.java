@@ -17,11 +17,11 @@ public class PropertyIdentity extends Identity {
      *            Nazwa w³aœciwoœci.
      * @param unit
      *            Jednostka miary w³aœciwoœci.
-     * @throws IllegalArgumentException 
+     * @throws IllegalArgumentException
      */
     protected PropertyIdentity(int id, String name, Unit unit) throws IllegalArgumentException {
 	super(id, name);
-	
+
 	Validator.throwExceptionWhenObjectIsNotCreated(unit, "Nie podano jednostki w³aœciwoœci!");
 	this.unit = unit;
     }
@@ -43,8 +43,9 @@ public class PropertyIdentity extends Identity {
 	 * @param name
 	 * @param unit
 	 * @return Identyfikator w³aœciwoœci.
+	 * @throws IllegalArgumentException
 	 */
-	public static synchronized PropertyIdentity newProperty(String name, Unit unit) {
+	public static synchronized PropertyIdentity newProperty(String name, Unit unit) throws IllegalArgumentException {
 	    return new PropertyIdentity(counter++, name, unit);
 	}
 

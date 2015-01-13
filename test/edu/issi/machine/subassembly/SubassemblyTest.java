@@ -82,8 +82,13 @@ public class SubassemblyTest {
 	TestingSubassembly fixture = getFixture();
 
 	fixture.addHandler(new DefaultHandler());
+	
+	exception.expect(IllegalArgumentException.class);
 	fixture.addHandler((Handler) null);
+	
 	fixture.addHandler(new DefaultHandler());
+	
+	exception.expect(IllegalArgumentException.class);
 	fixture.addHandler((Handler) null);
 
 	assertTrue(fixture.getHandlersQuantity() == 2);

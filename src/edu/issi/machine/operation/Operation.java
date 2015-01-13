@@ -55,7 +55,9 @@ public abstract class Operation extends ObjectWithIdentity {
      */
     public abstract OperationStatus execute();
 
-    protected boolean canDoThisOperation(Subassembly subassembly) {
+    protected boolean canDoThisOperation(Subassembly subassembly) throws IllegalArgumentException {
+	Validator.throwExceptionWhenObjectIsNotCreated(subassembly, "Nie mo¿na sprawdziæ wykonywalnoœci operacji dla pustego podzespo³u!");
+	
 	return subassembly.supports(this);
     }
 

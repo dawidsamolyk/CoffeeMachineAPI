@@ -25,8 +25,11 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     /**
      * @param object
      *            Obiekt, który zostanie dodany na koñcu listy.
+     * @throws IllegalArgumentException 
      */
-    public void add(Type object) {
+    public void add(Type object) throws IllegalArgumentException {
+	Validator.throwExceptionWhenObjectIsNotCreated(object, "Obiekt dodawany do listy elementów nie mo¿e byæ pusty!");
+	
 	elements.add(object);
     }
 
@@ -38,8 +41,11 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
      *            indeksem.
      * @throws UnsupportedOperationException
      *             Wyst¹pi, jeœli podano nieprawid³owy indeks.
+     * @throws IllegalArgumentException 
      */
-    public void addAt(int index, Type object) throws UnsupportedOperationException {
+    public void addAt(int index, Type object) throws UnsupportedOperationException, IllegalArgumentException {
+	Validator.throwExceptionWhenObjectIsNotCreated(object, "Obiekt dodawany do listy elementów nie mo¿e byæ pusty!");
+	
 	if (index >= elements.size() || index < 0) {
 	    throw new UnsupportedOperationException("Nie mozna dodac elementu pod indeksem " + index + "!");
 	}

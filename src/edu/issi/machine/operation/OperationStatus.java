@@ -1,5 +1,7 @@
 package edu.issi.machine.operation;
 
+import edu.issi.machine.Validator;
+
 /**
  * @author Dawid
  * 
@@ -16,7 +18,7 @@ public class OperationStatus {
      *             ostrze¿enie), poniewa¿ nie zosta³ ustawiony dla niego opis.
      */
     private OperationStatus(Status status) throws IllegalStateException {
-	ensureIsNotEmpty(status);
+	Validator.throwExceptionWhenObjectIsNotCreated(status, "Wybrany status wymaga opisu!");
 
 	if (status.requiresAttention()) {
 	    throw new IllegalStateException("Wybrany status wymaga opisu!");
@@ -35,10 +37,10 @@ public class OperationStatus {
      *             ostrze¿enie) i nie zostanie ustawiony dla niego opis.
      */
     private OperationStatus(Status status, String description) throws IllegalStateException {
-	ensureIsNotEmpty(status);
+	Validator.throwExceptionWhenObjectIsNotCreated(status, "Wybrany status wymaga opisu!");
 
 	if (status.requiresAttention() && isEmpty(description)) {
-	    throw new IllegalStateException("Nie podano prawidlowego opisu statusu!");
+	    throw new IllegalStateException("Nie podano prawidlowego opisu statusu, a jest on wymagany!");
 	}
 
 	this.status = status;
@@ -56,7 +58,7 @@ public class OperationStatus {
      *             operacji.
      */
     public OperationStatus(Status status, int stateCodeNumber) throws IllegalStateException {
-	ensureIsNotEmpty(status);
+	Validator.throwExceptionWhenObjectIsNotCreated(status, "Wybrany status wymaga opisu!");
 
 	if (status.requiresAttention()) {
 	    description = "Blad numer: " + stateCodeNumber;
@@ -67,12 +69,6 @@ public class OperationStatus {
 
     private boolean isEmpty(String description) {
 	return description == null || description.length() == 0;
-    }
-
-    private void ensureIsNotEmpty(Status status) {
-	if (status == null) {
-	    throw new IllegalStateException("Wybrany status wymaga opisu!");
-	}
     }
 
     /**

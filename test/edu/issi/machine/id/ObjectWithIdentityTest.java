@@ -2,30 +2,20 @@ package edu.issi.machine.id;
 
 import static org.junit.Assert.*;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 @SuppressWarnings("javadoc")
 public class ObjectWithIdentityTest {
-    @Test
-    public void testObjectWithIdentity_1() throws Exception {
-	assertNotNull(new ObjectWithIdentity(null));
-    }
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testEquals_1() throws Exception {
-	ObjectWithIdentity fixture = new ObjectWithIdentity((Identity) null);
-
-	assertFalse(fixture.equals("1"));
-    }
-
-    @Test
-    public void testEquals_2() throws Exception {
-	ObjectWithIdentity fixture = new ObjectWithIdentity((Identity) null);
-	Object obj = null;
-
-	boolean result = fixture.equals(obj);
-
-	assertEquals(false, result);
+    public void testNullInitialization() throws Exception {
+	exception.expect(IllegalArgumentException.class);
+	
+	new ObjectWithIdentity((Identity) null);
     }
 
     @Test

@@ -18,7 +18,7 @@ public class Identity {
      * @param name
      *            Nazwa.
      */
-    protected Identity(int id, String name) {
+    protected Identity(int id, String name) throws IllegalArgumentException {
 	Validator.throwExceptionWhenTextIsEmpty(name, "Nazwa obiektu nie mo¿e byæ pusta!");
 
 	this.id = id;
@@ -29,8 +29,11 @@ public class Identity {
      * @param newName
      *            Nowa nazwa.
      * @return Poprzednia nazwa.
+     * @throws IllegalArgumentException 
      */
-    public String changeName(String newName) {
+    public String changeName(String newName) throws IllegalArgumentException {
+	Validator.throwExceptionWhenObjectIsNotCreated(newName, "Nazwa obiektu nie mo¿e byæ pusta!");
+	
 	String actualName = name;
 
 	name = newName;

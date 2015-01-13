@@ -45,6 +45,10 @@ public abstract class Subassembly extends ObjectWithIdentity {
      */
     public Subassembly(Identity id, List<Operation> operations, List<Handler> handlers) throws IllegalArgumentException {
 	this(id, operations);
+
+	Validator.throwExceptionWhenEmptyOrContainsNullObjects(handlers,
+		"Lista handlerów nie mo¿e byæ pusta oraz nie mo¿e zawieraæ pustych operacji!");
+
 	this.handlers = handlers;
     }
 
@@ -52,19 +56,23 @@ public abstract class Subassembly extends ObjectWithIdentity {
      * @param operation
      *            Operacja.
      * @return Czy podzespol wspiera podana operacje.
+     * @throws IllegalArgumentException
      */
-    public boolean supports(Operation operation) {
+    public boolean supports(Operation operation) throws IllegalArgumentException {
+	Validator.throwExceptionWhenObjectIsNotCreated(operation, "Nie jest mo¿liwe sprawdzanie zgodnoœci z pust¹ operacj¹!");
+
 	return operations.contains(operation);
     }
 
     /**
      * @param handler
      *            Wykonawca operacji.
+     * @throws IllegalArgumentException 
      */
-    public void addHandler(Handler handler) {
-	if (handler != null) {
-	    handlers.add(handler);
-	}
+    public void addHandler(Handler handler) throws IllegalArgumentException {
+	Validator.throwExceptionWhenObjectIsNotCreated(handler, "Nie jest mo¿liwe dodanie pustego handlera!");
+
+	handlers.add(handler);
     }
 
     /**

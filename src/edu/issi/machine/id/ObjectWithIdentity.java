@@ -1,5 +1,7 @@
 package edu.issi.machine.id;
 
+import edu.issi.machine.Validator;
+
 /**
  * @author Dawid
  *
@@ -10,8 +12,11 @@ public class ObjectWithIdentity {
     /**
      * @param id
      *            Numer ID.
+     * @throws IllegalArgumentException 
      */
-    public ObjectWithIdentity(final Identity id) {
+    public ObjectWithIdentity(final Identity id) throws IllegalArgumentException {
+	Validator.throwExceptionWhenObjectIsNotCreated(id, "Nie podano ID!");
+	
 	this.id = id;
     }
 

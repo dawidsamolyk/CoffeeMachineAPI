@@ -36,8 +36,11 @@ public class Ingredient extends ObjectWithIdentity {
      * @param property
      *            W³asnoœæ sk³adnika, któr¹ chcemy pobraæ.
      * @return Zwraca wartoœæ przypisan¹ do wybranej w³aœciwoœci sk³adnika.
+     * @throws IllegalArgumentException 
      */
-    public Double get(PropertyIdentity property) {
+    public Double get(PropertyIdentity property) throws IllegalArgumentException {
+	Validator.throwExceptionWhenObjectIsNotCreated(property, "Nie mo¿na pobraæ pustej w³aœciwoœci");
+	
 	final Double result = properties.get(property);
 
 	if (result == null) {
@@ -51,8 +54,11 @@ public class Ingredient extends ObjectWithIdentity {
      * @param name
      * @return Wartoœæ.
      * @throws NoSuchElementException
+     * @throws IllegalArgumentException 
      */
-    public Double getValueForPropertyWithName(String name) throws NoSuchElementException {
+    public Double getValueForPropertyWithName(String name) throws NoSuchElementException, IllegalArgumentException {
+	Validator.throwExceptionWhenTextIsEmpty(name, "Nazwa pobieranej w³aœciwoœci sk³anika nie mo¿e byæ pusta!");
+	
 	for (PropertyIdentity each : properties.keySet()) {
 	    if (each.getName().equals(name)) {
 		return properties.get(each);
@@ -68,6 +74,9 @@ public class Ingredient extends ObjectWithIdentity {
      *            Wartoœæ przypisana do w³asnoœci.
      */
     public void add(PropertyIdentity property, Double value) {
+	Validator.throwExceptionWhenObjectIsNotCreated(property, "Nie mo¿na w³aœciwoœci z pustym identifikatorem!");
+	Validator.throwExceptionWhenObjectIsNotCreated(value, "Nie mo¿na dodaæ w³aœciwoœci z pust¹ wartoœci¹!");
+	
 	properties.put(property, value);
     }
 
@@ -76,6 +85,8 @@ public class Ingredient extends ObjectWithIdentity {
      *            W³asnoœæ sk³adnika.
      */
     public void remove(PropertyIdentity property) {
+	Validator.throwExceptionWhenObjectIsNotCreated(property, "Nie mo¿na usun¹æ w³aœciwoœci z pustym identifikatorem!");
+	
 	properties.remove(property);
     }
 
@@ -83,6 +94,8 @@ public class Ingredient extends ObjectWithIdentity {
      * @param operations
      */
     public void addOperations(Iterable<Operation> operations) {
+	Validator.throwExceptionWhenContainsNullOrEmpty(operations, "Nie mo¿na dodawaæ pustych operacji do sk³adnika!");
+	
 	this.operations = operations;
     }
 

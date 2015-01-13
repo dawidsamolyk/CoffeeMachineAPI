@@ -20,15 +20,17 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
      */
     public Product(final Identity id) {
 	super(id);
+	
 	ingredients = new OrderedElementsList<Ingredient>();
     }
 
     /**
      * @param ingredient
      *            Sk³adnik, który zostanie dodany na koñcu listy.
+     * @throws IllegalArgumentException 
      * @see edu.issi.machine.product.OrderedElementsList#add(Object)
      */
-    public void add(Ingredient ingredient) {
+    public void add(Ingredient ingredient) throws IllegalArgumentException {
 	ingredients.add(ingredient);
     }
 

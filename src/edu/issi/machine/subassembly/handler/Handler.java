@@ -1,5 +1,6 @@
 package edu.issi.machine.subassembly.handler;
 
+import edu.issi.machine.Validator;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationStatus;
 
@@ -20,8 +21,11 @@ public abstract class Handler {
      *            Zadanie, które powinno byæ wykonane jako nastêpne w
      *            kolejnoœci.
      * @return Kolejny wykonawca zadañ, który zosta³ ustawiony za aktualnym.
+     * @throws IllegalArgumentException 
      */
-    public synchronized Handler next(Handler handler) {
+    public synchronized Handler next(Handler handler) throws IllegalArgumentException {
+	Validator.throwExceptionWhenObjectIsNotCreated(handler, "Nie jest mo¿liwe ustawienie jako nastêpnego pustego handlera!");
+	
 	nextHandler = handler;
 	return handler;
     }
@@ -55,6 +59,10 @@ public abstract class Handler {
     }
 
     protected OperationStatus executeAtNextHandler(Operation operation) {
+	if (operation == null) {
+	    return OperationStatus.Factory.createErrorWithDescription("Nie mo¿na wykonaæ pustej operacji!");
+	}
+	
 	if (isLastHandler()) {
 	    return noSuchHandlersState;
 	}
