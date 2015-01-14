@@ -48,10 +48,10 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
 
     /**
      * @return Liczba skladnikow.
-     * @see edu.issi.machine.product.OrderedElementsList#numberOfElements()
+     * @see edu.issi.machine.product.OrderedElementsList#getNumberOfElements()
      */
     public int numberOfElements() {
-	return ingredients.numberOfElements();
+	return ingredients.getNumberOfElements();
     }
 
     /**

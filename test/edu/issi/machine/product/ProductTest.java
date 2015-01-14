@@ -16,8 +16,6 @@ import org.junit.rules.ExpectedException;
 
 import edu.issi.machine.id.IdentityTest;
 import edu.issi.machine.id.PropertyIdentity;
-import edu.issi.machine.operation.Operation;
-import edu.issi.machine.operation.OperationTest;
 import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.product.ingredient.IngredientTest;
 import edu.issi.machine.product.ingredient.Unit;
@@ -43,9 +41,6 @@ public class ProductTest {
 	ingredientProperties.put(PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR), new Double(1.0));
 	ingredientProperties.put(PropertyIdentity.Factory.newProperty("Temperature", Unit.C), new Double(100.0));
 	ingredientProperties.put(PropertyIdentity.Factory.newProperty("Quantity", Unit.G), new Double(500.0));
-
-	OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
-	operations.add(OperationTest.getFixture());
 
 	Ingredient ingredient = IngredientTest.getSimpleFixture();
 

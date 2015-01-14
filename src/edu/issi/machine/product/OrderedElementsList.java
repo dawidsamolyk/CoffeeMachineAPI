@@ -90,7 +90,7 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     /**
      * @return Liczba elementow.
      */
-    public int numberOfElements() {
+    public int getNumberOfElements() {
 	return elements.size();
     }
 
