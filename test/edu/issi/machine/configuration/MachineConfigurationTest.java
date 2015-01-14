@@ -9,10 +9,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import edu.issi.machine.id.Identity;
+import edu.issi.machine.id.IdentityTest;
+import edu.issi.machine.operation.EmptyOperation;
+import edu.issi.machine.operation.Operation;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.subassembly.Subassembly;
-import edu.issi.machine.subassembly.SubassemblyTest;
+import edu.issi.machine.subassembly.TestingSubassembly;
 
 @SuppressWarnings("javadoc")
 public class MachineConfigurationTest {
@@ -20,41 +22,61 @@ public class MachineConfigurationTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void shouldNotCreatesWhenSubassembliesAreNotSetted() throws InvalidAttributeIdentifierException {
-	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
+    public void subassembliesShouldBeSetted() throws InvalidAttributeIdentifierException {
 	List<Product> products = new ArrayList<Product>();
 	products.add(mockProduct());
-
-	exception.expect(IllegalArgumentException.class);
-	new MachineConfiguration(subassemblies, products);
 
 	exception.expect(IllegalArgumentException.class);
 	new MachineConfiguration(null, products);
     }
 
     @Test
-    public void shouldNotCreatesWhenProductsAreNotSetted() throws Exception {
+    public void subassembliesListShouldNotBeEmpty() throws InvalidAttributeIdentifierException {
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
+	
+	List<Product> products = new ArrayList<Product>();
+	products.add(MachineConfigurationTest.mockProduct());
 
-	subassemblies.add(SubassemblyTest.getFixture());
+	exception.expect(IllegalArgumentException.class);
+	new MachineConfiguration(subassemblies, products);
+    }
+
+    @Test
+    public void productsShouldBeSetted() throws Exception {
+	Operation operation = new EmptyOperation(IdentityTest.getIdentityFixture());
+	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
+
+	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
+	subassemblies.add(subassembly);
+
+	exception.expect(IllegalArgumentException.class);
+	new MachineConfiguration(subassemblies, null);
+    }
+
+    @Test
+    public void productsListShouldNotBeEmpty() throws InvalidAttributeIdentifierException {
+	Operation operation = new EmptyOperation(IdentityTest.getIdentityFixture());
+	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
+
+	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
+	subassemblies.add(subassembly);
 
 	List<Product> products = new ArrayList<Product>();
 
 	exception.expect(IllegalArgumentException.class);
 	new MachineConfiguration(subassemblies, products);
-
-	exception.expect(IllegalArgumentException.class);
-	new MachineConfiguration(null, products);
     }
 
     public static Product mockProduct() throws InvalidAttributeIdentifierException {
-	return new Product(Identity.Factory.newIdentity("Testowy"));
+	return new Product(IdentityTest.getIdentityFixture());
     }
 
     public static MachineConfiguration mockMachineConfiguration() throws Exception {
-	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
+	Operation operation = new EmptyOperation(IdentityTest.getIdentityFixture());
+	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
 
-	subassemblies.add(SubassemblyTest.getFixture());
+	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
+	subassemblies.add(subassembly);
 
 	List<Product> products = new ArrayList<Product>();
 	products.add(mockProduct());

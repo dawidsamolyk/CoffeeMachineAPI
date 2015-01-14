@@ -1,6 +1,8 @@
 package edu.issi.machine.controller;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -11,10 +13,12 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import edu.issi.machine.configuration.MachineConfiguration;
-import edu.issi.machine.id.Identity;
+import edu.issi.machine.id.IdentityTest;
+import edu.issi.machine.operation.EmptyOperation;
+import edu.issi.machine.operation.Operation;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.subassembly.Subassembly;
-import edu.issi.machine.subassembly.SubassemblyTest;
+import edu.issi.machine.subassembly.TestingSubassembly;
 
 @SuppressWarnings("javadoc")
 public class MachineControllerTest {
@@ -48,26 +52,29 @@ public class MachineControllerTest {
 	MachineController fixture = new MachineController();
 
 	fixture.stop();
+	assertFalse(fixture.running);
     }
 
     @Test
     public void shouldRestart() throws InvalidAttributeIdentifierException {
 	MachineController fixture = new MachineController();
+	Operation operation = new EmptyOperation(IdentityTest.getIdentityFixture());
+	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
 
 	ArrayList<Subassembly> subassemblies = new ArrayList<Subassembly>();
-	subassemblies.add(SubassemblyTest.getFixture());
+	subassemblies.add(subassembly);
 
 	ArrayList<Product> products = new ArrayList<Product>();
-	products.add(new Product(Identity.Factory.newIdentity("Test")));
+	products.add(new Product(IdentityTest.getIdentityFixture()));
 
 	fixture.setUpUsing(new MachineConfiguration(subassemblies, products));
-	fixture.start();
 
 	fixture.restart();
+	assertTrue(fixture.running);
     }
 
     @Test
-    public void shouldDeinitializes() {
+    public void tearingDownMachineShouldBeExecutedWhenTheresAnyConfigurationSetted() {
 	MachineController fixture = new MachineController();
 
 	exception.expect(java.lang.UnsupportedOperationException.class);
@@ -75,14 +82,16 @@ public class MachineControllerTest {
     }
 
     @Test
-    public void shouldNotDeinitializeWhenMachineIsWorking() throws InvalidAttributeIdentifierException {
+    public void tearingDownMachineShouldNotBeDoneWhenMachineIsWorking() throws InvalidAttributeIdentifierException {
 	MachineController fixture = new MachineController();
+	Operation operation = new EmptyOperation(IdentityTest.getIdentityFixture());
+	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
 
 	ArrayList<Subassembly> subassemblies = new ArrayList<Subassembly>();
-	subassemblies.add(SubassemblyTest.getFixture());
+	subassemblies.add(subassembly);
 
 	ArrayList<Product> products = new ArrayList<Product>();
-	products.add(new Product(Identity.Factory.newIdentity("Test")));
+	products.add(new Product(IdentityTest.getIdentityFixture()));
 
 	fixture.setUpUsing(new MachineConfiguration(subassemblies, products));
 	fixture.start();
@@ -94,12 +103,14 @@ public class MachineControllerTest {
     @Test
     public void shouldNotInitializeWhenMachineIsWorking() throws InvalidAttributeIdentifierException {
 	MachineController fixture = new MachineController();
+	Operation operation = new EmptyOperation(IdentityTest.getIdentityFixture());
+	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
 
 	ArrayList<Subassembly> subassemblies = new ArrayList<Subassembly>();
-	subassemblies.add(SubassemblyTest.getFixture());
+	subassemblies.add(subassembly);
 
 	ArrayList<Product> products = new ArrayList<Product>();
-	products.add(new Product(Identity.Factory.newIdentity("Test")));
+	products.add(new Product(IdentityTest.getIdentityFixture()));
 
 	fixture.setUpUsing(new MachineConfiguration(subassemblies, products));
 	fixture.start();

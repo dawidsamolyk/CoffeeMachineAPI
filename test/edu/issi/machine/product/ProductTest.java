@@ -12,11 +12,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import edu.issi.machine.id.Identity;
+import edu.issi.machine.id.IdentityTest;
 import edu.issi.machine.id.PropertyIdentity;
 import edu.issi.machine.operation.EmptyOperation;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.product.ingredient.Ingredient;
+import edu.issi.machine.product.ingredient.IngredientTest;
 import edu.issi.machine.product.ingredient.Unit;
 
 @SuppressWarnings("javadoc")
@@ -26,7 +27,7 @@ public class ProductTest {
 
     @Test
     public void shouldCreateEmptyProduct() throws InvalidAttributeIdentifierException {
-	Product result = new Product(Identity.Factory.newIdentity("Test"));
+	Product result = new Product(IdentityTest.getIdentityFixture());
 
 	assertNotNull(result);
 	assertEquals(0, result.numberOfElements());
@@ -34,7 +35,7 @@ public class ProductTest {
 
     @Test
     public void shouldAddNewIngredientsCorrectly() throws InvalidAttributeIdentifierException {
-	Product fixture = new Product(Identity.Factory.newIdentity("Test"));
+	Product fixture = new Product(IdentityTest.getIdentityFixture());
 
 	HashMap<PropertyIdentity, Double> ingredientProperties = new HashMap<PropertyIdentity, Double>();
 	ingredientProperties.put(PropertyIdentity.Factory.newProperty("..", Unit.BAR), new Double(-1.0));
@@ -42,9 +43,9 @@ public class ProductTest {
 	ingredientProperties.put(PropertyIdentity.Factory.newProperty("An??t-1.0.txt", Unit.G), new Double(1.0));
 
 	OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
-	operations.add(new EmptyOperation(Identity.Factory.newIdentity("Test")));
+	operations.add(new EmptyOperation(IdentityTest.getIdentityFixture()));
 
-	Ingredient ingredient = new Ingredient(Identity.Factory.newIdentity("Test"));
+	Ingredient ingredient = IngredientTest.getFixture();
 
 	fixture.add(ingredient);
 	fixture.add(ingredient);
@@ -56,7 +57,7 @@ public class ProductTest {
     @Test
     public void shouldNotAddNewElementAtZeroIndexWhenTheresNoElementsOnIngredienstList()
 	    throws InvalidAttributeIdentifierException {
-	Product fixture = new Product(Identity.Factory.newIdentity("Test"));
+	Product fixture = new Product(IdentityTest.getIdentityFixture());
 
 	exception.expect(java.lang.UnsupportedOperationException.class);
 	fixture.addAt(0, ingredientFixture());
@@ -65,7 +66,7 @@ public class ProductTest {
     @Test
     public void shouldNotAddNewElementAtFirstPlaceWhenTheresNoElementsOnIngredienstList()
 	    throws InvalidAttributeIdentifierException {
-	Product fixture = new Product(Identity.Factory.newIdentity("Test"));
+	Product fixture = new Product(IdentityTest.getIdentityFixture());
 
 	exception.expect(java.lang.UnsupportedOperationException.class);
 	fixture.addAt(1, ingredientFixture());
@@ -73,7 +74,7 @@ public class ProductTest {
 
     @Test
     public void shouldNotAddNewElementAtUnreachableIngredientsListIndex() throws InvalidAttributeIdentifierException {
-	Product fixture = new Product(Identity.Factory.newIdentity("Test"));
+	Product fixture = new Product(IdentityTest.getIdentityFixture());
 
 	exception.expect(java.lang.UnsupportedOperationException.class);
 	fixture.addAt(7, ingredientFixture());
@@ -81,11 +82,13 @@ public class ProductTest {
 
     protected Ingredient ingredientFixture() throws InvalidAttributeIdentifierException {
 	OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
-	operations.add(new EmptyOperation(Identity.Factory.newIdentity("Test")));
+	operations.add(new EmptyOperation(IdentityTest.getIdentityFixture()));
 
-	Ingredient ingredient = new Ingredient(Identity.Factory.newIdentity("Test"));
+	Ingredient ingredient = IngredientTest.getFixture();
 	ingredient.addOperations(operations);
-	ingredient.add(PropertyIdentity.Factory.newProperty("Test", Unit.BAR), new Double(-1.0));
+	
+	PropertyIdentity property = PropertyIdentity.Factory.newProperty("Test", Unit.BAR);
+	ingredient.add(property, new Double(-1.0));
 
 	return ingredient;
     }

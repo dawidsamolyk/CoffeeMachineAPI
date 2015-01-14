@@ -14,13 +14,12 @@ public class ObjectWithIdentityTest {
     @Test
     public void shouldNotCreatesWhenIdentityIsEmpty() throws Exception {
 	exception.expect(IllegalArgumentException.class);
-	
 	new ObjectWithIdentity((Identity) null);
     }
 
     @Test
-    public void shouldIdentifiesByHashCode() throws Exception {
-	ObjectWithIdentity fixture = new ObjectWithIdentity(Identity.Factory.newIdentity("Test"));
+    public void shouldBeIdentifiedByObjectHashCode() throws Exception {
+	ObjectWithIdentity fixture = new ObjectWithIdentity(IdentityTest.getIdentityFixture());
 	
 	assertTrue(fixture.identifiesBy(fixture.hashCode()));
     }

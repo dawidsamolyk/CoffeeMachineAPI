@@ -13,7 +13,7 @@ public class OperationStateTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void shouldProvideState() {
+    public void shouldProvideStatus() {
 	OperationStatus state = OperationStatus.Factory.createValidState();
 
 	assertNotNull(state.getStatus());
@@ -27,24 +27,14 @@ public class OperationStateTest {
 
     @Test
     public void shouldProvideDescriptionWhenItIsSetted() {
-	String description = "Pompa dziala prawidlowo.";
-	OperationStatus state = OperationStatus.Factory.createValidWithDescription(description);
-
-	assertEquals(description, state.getDescription());
-
-	description = "Pompa dziala niepoprawnie z powodu przegrzania!";
-	state = OperationStatus.Factory.createErrorWithDescription(description);
-
-	assertEquals(description, state.getDescription());
-
-	description = "Pompa dziala, ale rozwaz jej wymiane, poniewaz lekko sie przegrzewa.";
-	state = OperationStatus.Factory.createWarningWithDescription(description);
+	String description = "Pompa dziala niepoprawnie z powodu przegrzania!";
+	OperationStatus state = OperationStatus.Factory.createErrorWithDescription(description);
 
 	assertEquals(description, state.getDescription());
     }
 
     @Test
-    public void shouldProvideCompensatedStatusAsText() {
+    public void shouldProvidesStatusAsText() {
 	String compensatedStatus = "[ERROR] Przegrzana pompa!";
 	OperationStatus state = OperationStatus.Factory.createErrorWithDescription("Przegrzana pompa!");
 
