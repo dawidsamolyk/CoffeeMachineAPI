@@ -93,7 +93,7 @@ public class Ingredient extends ObjectWithIdentity {
     /**
      * @param operations
      */
-    public void addOperations(Iterable<Operation> operations) {
+    public void setOperations(Iterable<Operation> operations) {
 	Validator.throwExceptionWhenContainsNullOrEmpty(operations, "Nie mo¿na dodawaæ pustych operacji do sk³adnika!");
 	
 	this.operations = operations;

@@ -80,7 +80,7 @@ public class DemoApplication {
 	operations.add(new DemoOperation(Identity.Factory.newIdentity("Podgrzewanie")).setIngredient(ingredient));
 	operations.add(new DemoOperation(Identity.Factory.newIdentity("Wlewanie")).setIngredient(ingredient));
 
-	ingredient.addOperations(operations);
+	ingredient.setOperations(operations);
 
 	return ingredient;
     }
@@ -98,7 +98,7 @@ public class DemoApplication {
 	operations.add(new DemoOperation(Identity.Factory.newIdentity("Podgrzewanie")).setIngredient(ingredient));
 	operations.add(new DemoOperation(Identity.Factory.newIdentity("Wsypywanie")).setIngredient(ingredient));
 
-	ingredient.addOperations(operations);
+	ingredient.setOperations(operations);
 
 	return ingredient;
     }

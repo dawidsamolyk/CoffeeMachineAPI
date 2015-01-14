@@ -76,7 +76,7 @@ public class DemoGuiProductAdder extends Operation {
 	    OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
 	    operations.add(new DemoOperation(Identity.Factory.newIdentity("Podgrzewanie")).setIngredient(ingredient));
 	    operations.add(new DemoOperation(Identity.Factory.newIdentity("Wlewanie")).setIngredient(ingredient));
-	    ingredient.addOperations(operations);
+	    ingredient.setOperations(operations);
 
 	    newProduct.add(ingredient);
 	}

@@ -13,10 +13,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.IdentityTest;
-import edu.issi.machine.operation.EmptyOperation;
 import edu.issi.machine.operation.Operation;
+import edu.issi.machine.operation.OperationTest;
 import edu.issi.machine.subassembly.handler.DefaultHandler;
 import edu.issi.machine.subassembly.handler.Handler;
 
@@ -26,15 +25,13 @@ public class SubassemblyTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void shouldNotCreatesWhenOperationsAreNotSetted() throws IllegalArgumentException,
-	    InvalidAttributeIdentifierException {
+    public void shouldNotCreatesWhenOperationsAreNotSetted() throws Exception {
 	exception.expect(IllegalArgumentException.class);
 	new TestingSubassembly(IdentityTest.getIdentityFixture(), null);
     }
 
     @Test
-    public void shouldNotCreatesWhenOperationsListIsEmpty() throws IllegalArgumentException,
-	    InvalidAttributeIdentifierException {
+    public void shouldNotCreatesWhenOperationsListIsEmpty() throws Exception {
 	List<Operation> operations = new ArrayList<Operation>();
 
 	exception.expect(IllegalArgumentException.class);
@@ -43,19 +40,12 @@ public class SubassemblyTest {
 
     @Test
     public void shouldCreates() throws InvalidAttributeIdentifierException {
-	Identity id = IdentityTest.getIdentityFixture();
-	Operation operation = new EmptyOperation(IdentityTest.getIdentityFixture());
-
-	List<Operation> operations = new ArrayList<Operation>();
-	operations.add(operation);
-
-	assertNotNull(new TestingSubassembly(id, operations));
+	assertNotNull(TestingSubassembly.getFixtureWith(OperationTest.getFixture()));
     }
 
     @Test
     public void shouldBeEnabledToAddOneHandler() throws InvalidAttributeIdentifierException {
-	Operation operation = new EmptyOperation(IdentityTest.getIdentityFixture());
-	TestingSubassembly fixture = TestingSubassembly.getFixtureWith(operation);
+	TestingSubassembly fixture = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
 
 	fixture.addHandler(new DefaultHandler());
 
@@ -64,8 +54,7 @@ public class SubassemblyTest {
 
     @Test
     public void shouldBeEnabledToAddManyHandlers() throws InvalidAttributeIdentifierException {
-	Operation operation = new EmptyOperation(IdentityTest.getIdentityFixture());
-	TestingSubassembly fixture = TestingSubassembly.getFixtureWith(operation);
+	TestingSubassembly fixture = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
 	
 	fixture.addHandler(new DefaultHandler());
 	fixture.addHandler(new DefaultHandler());
@@ -76,8 +65,7 @@ public class SubassemblyTest {
 
     @Test
     public void shouldBeEnabledToAddManyHandlersExcludingEmptyHandlers() throws InvalidAttributeIdentifierException {
-	EmptyOperation operation = new EmptyOperation(IdentityTest.getIdentityFixture());
-	TestingSubassembly fixture = TestingSubassembly.getFixtureWith(operation);
+	TestingSubassembly fixture = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
 	fixture.addHandler(new DefaultHandler());
 
 	exception.expect(IllegalArgumentException.class);
@@ -93,7 +81,7 @@ public class SubassemblyTest {
 
     @Test
     public void shouldCorrectRecognizeSupportedOperation() throws InvalidAttributeIdentifierException {
-	Operation operation = new EmptyOperation(IdentityTest.getIdentityFixture());
+	Operation operation = OperationTest.getFixture();
 	TestingSubassembly fixture = TestingSubassembly.getFixtureWith(operation);
 
 	boolean result = fixture.supports(operation);
@@ -103,8 +91,8 @@ public class SubassemblyTest {
 
     @Test
     public void shouldCorrectRecognizeNotSupportedOperation() throws InvalidAttributeIdentifierException {
-	Operation unsupportedOperation = new EmptyOperation(IdentityTest.getIdentityFixture());
-	Operation supportedOperation = new EmptyOperation(IdentityTest.getIdentityFixture());
+	Operation unsupportedOperation = OperationTest.getFixture();
+	Operation supportedOperation = OperationTest.getFixture();
 
 	TestingSubassembly fixture = TestingSubassembly.getFixtureWith(supportedOperation);
 

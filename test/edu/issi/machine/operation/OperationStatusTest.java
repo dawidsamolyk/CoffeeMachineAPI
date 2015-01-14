@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 @SuppressWarnings("javadoc")
-public class OperationStateTest {
+public class OperationStatusTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 

@@ -5,58 +5,46 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 @SuppressWarnings("javadoc")
-public class UnitTest {
+public class UnitsTest {
     @Test
     public void shouldProvideBarUnitAsText() {
 	Unit fixture = Unit.BAR;
 
-	String result = fixture.toString();
-
-	assertEquals("bar", result);
+	assertEquals("bar", fixture.toString());
     }
 
     @Test
     public void shouldProvideCelsjusUnitAsText() {
 	Unit fixture = Unit.C;
 
-	String result = fixture.toString();
-
-	assertEquals("*C", result);
+	assertEquals("*C", fixture.toString());
     }
 
     @Test
     public void shouldProvideGramUnitAsText() {
 	Unit fixture = Unit.G;
 
-	String result = fixture.toString();
-
-	assertEquals("g", result);
+	assertEquals("g", fixture.toString());
     }
 
     @Test
     public void shouldProvideKilogramUnitAsText() {
 	Unit fixture = Unit.KG;
 
-	String result = fixture.toString();
-
-	assertEquals("kg", result);
+	assertEquals("kg", fixture.toString());
     }
 
     @Test
     public void shouldProvideLitreUnitAsText() {
 	Unit fixture = Unit.L;
 
-	String result = fixture.toString();
-
-	assertEquals("l", result);
+	assertEquals("l", fixture.toString());
     }
 
     @Test
     public void shouldProvideMililitreUnitAsText() {
 	Unit fixture = Unit.ML;
 
-	String result = fixture.toString();
-
-	assertEquals("ml", result);
+	assertEquals("ml", fixture.toString());
     }
 }

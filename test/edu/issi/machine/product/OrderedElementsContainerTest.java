@@ -45,7 +45,7 @@ public class OrderedElementsContainerTest {
 
     @Test
     public void shouldBeAbleToAddObjectAtExistingIndexWithoutLossOfOtherObjects() {
-	OrderedElementsList<Object> product = productWithThreeExampleObjects();
+	OrderedElementsList<Object> product = getFixture();
 	int originalNumberOfObjects = product.numberOfElements();
 
 	Object ingredient = new Object();
@@ -57,7 +57,7 @@ public class OrderedElementsContainerTest {
 
     @Test
     public void shouldBeAbleToAddObjectAtBeginningOfList() {
-	OrderedElementsList<Object> product = productWithThreeExampleObjects();
+	OrderedElementsList<Object> product = getFixture();
 	Object ingredient = new Object();
 	product.addAt(0, ingredient);
 
@@ -87,7 +87,7 @@ public class OrderedElementsContainerTest {
 
     @Test
     public void shouldProvideSeparatedIterators() {
-	OrderedElementsList<Object> product = productWithThreeExampleObjects();
+	OrderedElementsList<Object> product = getFixture();
 
 	Iterator<Object> firstIterator = product.iterator();
 	Object firstIteratorObject = firstIterator.next();
@@ -117,7 +117,7 @@ public class OrderedElementsContainerTest {
     }
 
     public void shouldNotBeAbleToAddObjectAtNonexistentIndex() {
-	OrderedElementsList<Object> product = productWithThreeExampleObjects();
+	OrderedElementsList<Object> product = getFixture();
 
 	exception.expect(UnsupportedOperationException.class);
 	product.addAt(100, new Object());
@@ -125,7 +125,7 @@ public class OrderedElementsContainerTest {
 
     @Test
     public void shouldNotBeAbleToRemoveObjectAtNonexistentIndex() {
-	OrderedElementsList<Object> product = productWithThreeExampleObjects();
+	OrderedElementsList<Object> product = getFixture();
 
 	exception.expect(NoSuchElementException.class);
 	product.remove(100);
@@ -133,17 +133,19 @@ public class OrderedElementsContainerTest {
 
     @Test
     public void shouldNotBeAbleToGetObjectAtNonexistentIndex() {
-	OrderedElementsList<Object> product = productWithThreeExampleObjects();
+	OrderedElementsList<Object> product = getFixture();
 
 	exception.expect(NoSuchElementException.class);
 	product.getElement(100);
     }
 
-    private OrderedElementsList<Object> productWithThreeExampleObjects() {
+    public static OrderedElementsList<Object> getFixture() {
 	OrderedElementsList<Object> product = new OrderedElementsList<Object>();
+	
 	product.add(new Object());
 	product.add(new Object());
 	product.add(new Object());
+	
 	return product;
     }
 

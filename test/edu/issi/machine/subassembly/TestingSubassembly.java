@@ -41,10 +41,9 @@ public class TestingSubassembly extends Subassembly {
 
     public static TestingSubassembly getFixtureWith(Operation ... testingOperations) throws IllegalArgumentException,
 	    InvalidAttributeIdentifierException {
-	Identity id = IdentityTest.getIdentityFixture();
 	List<Operation> operations = Arrays.asList(testingOperations);
 	
-	return new TestingSubassembly(id, operations);
+	return new TestingSubassembly(IdentityTest.getIdentityFixture(), operations);
     }
 
 }
