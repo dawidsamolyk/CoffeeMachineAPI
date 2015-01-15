@@ -1,12 +1,10 @@
 package edu.issi.machine.product;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import javax.naming.directory.InvalidAttributeIdentifierException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,12 +49,10 @@ public class OrderedElementsContainerTest {
     @Test
     public void shouldBeAbleToAddObjectAtExistingIndexWithoutLossOfOtherObjects() throws Exception {
 	OrderedElementsList<Operation> fixture = getFixture();
-	int originalNumberOfObjects = fixture.getNumberOfElements();
 
 	Operation element = OperationTest.getFixture();
 	fixture.addAt(1, element);
 
-	assertEquals(originalNumberOfObjects + 1, fixture.getNumberOfElements());
 	assertEquals(element, fixture.getElement(1));
     }
 
@@ -64,9 +60,9 @@ public class OrderedElementsContainerTest {
     public void shouldBeAbleToAddObjectAtBeginningOfList() throws Exception {
 	OrderedElementsList<Operation> fixture = getFixture();
 	Operation element = OperationTest.getFixture();
+	
 	fixture.addAt(0, element);
 
-	assertEquals(4, fixture.getNumberOfElements());
 	assertEquals(element, fixture.getElement(0));
     }
 
@@ -91,7 +87,7 @@ public class OrderedElementsContainerTest {
     }
 
     @Test
-    public void shouldProvideSeparatedIterators() throws IllegalArgumentException, InvalidAttributeIdentifierException {
+    public void shouldProvideSeparatedIterators() throws Exception {
 	OrderedElementsList<Operation> fixture = getFixture();
 
 	Iterator<Operation> firstIterator = fixture.iterator();
@@ -101,7 +97,7 @@ public class OrderedElementsContainerTest {
 	secondIterator.next();
 	Object secondIteratorObject = secondIterator.next();
 
-	assertFalse(firstIteratorObject == secondIteratorObject);
+	assertTrue(firstIteratorObject != secondIteratorObject);
     }
 
     @Test
@@ -116,13 +112,13 @@ public class OrderedElementsContainerTest {
 	fixture.add(thirdObject);
 
 	Iterator<Object> iterator = fixture.iterator();
+
 	assertEquals(firstObject, iterator.next());
 	assertEquals(secondObject, iterator.next());
 	assertEquals(thirdObject, iterator.next());
     }
 
-    public void shouldNotBeAbleToAddObjectAtNonexistentIndex() throws IllegalArgumentException,
-	    InvalidAttributeIdentifierException {
+    public void shouldNotBeAbleToAddObjectAtNonexistentIndex() throws Exception {
 	OrderedElementsList<Operation> fixture = getFixture();
 
 	exception.expect(UnsupportedOperationException.class);
@@ -130,16 +126,14 @@ public class OrderedElementsContainerTest {
     }
 
     @Test
-    public void shouldNotBeAbleToRemoveObjectAtNonexistentIndex() throws IllegalArgumentException,
-	    InvalidAttributeIdentifierException {
+    public void shouldNotBeAbleToRemoveObjectAtNonexistentIndex() throws Exception {
 	OrderedElementsList<Operation> fixture = getFixture();
 
 	exception.expect(NoSuchElementException.class);
 	fixture.remove(100);
     }
 
-    public static OrderedElementsList<Operation> getFixture() throws IllegalArgumentException,
-	    InvalidAttributeIdentifierException {
+    public static OrderedElementsList<Operation> getFixture() throws Exception {
 	OrderedElementsList<Operation> result = new OrderedElementsList<Operation>();
 
 	result.add(OperationTest.getFixture());
