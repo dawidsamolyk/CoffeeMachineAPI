@@ -29,7 +29,7 @@ public class DemoGuiProductsList extends Operation {
 
 	System.out.println("---------------------");
 
-	return OperationStatus.Factory.createValidState();
+	return OperationStatus.Factory.createValid();
     }
 
 }

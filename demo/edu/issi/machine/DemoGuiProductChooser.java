@@ -47,7 +47,7 @@ public class DemoGuiProductChooser extends Operation {
 
 	System.out.println(">>> Wybrano " + selectedProduct);
 
-	return OperationStatus.Factory.createValidState();
+	return OperationStatus.Factory.createValid();
     }
 
     private void checkAppEnd(String readedLine) {

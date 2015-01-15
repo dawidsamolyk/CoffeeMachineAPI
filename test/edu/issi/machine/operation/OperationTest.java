@@ -1,7 +1,6 @@
 package edu.issi.machine.operation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import javax.naming.directory.InvalidAttributeIdentifierException;
 
@@ -82,6 +81,29 @@ public class OperationTest {
 
 	OperationStatus status = anotherOperation.setSubassembly(subassembly).execute();
 
+	assertEquals(Status.ERROR, status.getStatus());
+    }
+    
+    @Test
+    public void operationShouldGivesInformationAboutHisStatus() throws InvalidAttributeIdentifierException {
+	Operation operation = OperationTest.getFixture();
+	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
+	Ingredient ingredient = IngredientTest.getSimpleFixture();
+
+	operation.setSubassembly(subassembly).setIngredient(ingredient).execute();
+	
+	assertTrue(operation.isDone());
+    }
+    
+    @Test
+    public void shouldGiveErrorWhenSpecifiedSubassemblyCannotDoThisOperation() throws InvalidAttributeIdentifierException {
+	Operation operation = OperationTest.getFixture();
+	Operation anotherOperation = OperationTest.getFixture();
+	Subassembly subassembly = TestingSubassembly.getFixtureWith(anotherOperation);
+	Ingredient ingredient = IngredientTest.getSimpleFixture();
+
+	OperationStatus status = operation.setSubassembly(subassembly).setIngredient(ingredient).execute();
+	
 	assertEquals(Status.ERROR, status.getStatus());
     }
 

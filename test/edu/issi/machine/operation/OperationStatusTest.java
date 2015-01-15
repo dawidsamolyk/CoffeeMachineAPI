@@ -14,30 +14,37 @@ public class OperationStatusTest {
 
     @Test
     public void shouldProvideStatus() {
-	OperationStatus state = OperationStatus.Factory.createValidState();
+	OperationStatus state = OperationStatus.Factory.createValid();
 
 	assertNotNull(state.getStatus());
     }
 
     @Test
     public void shouldNotCreatesWhenStatusIsNotProvided() {
-	exception.expect(IllegalStateException.class);
+	exception.expect(IllegalArgumentException.class);
 	OperationStatus.Factory.createErrorWithDescription(null);
     }
 
     @Test
     public void shouldProvideDescriptionWhenItIsSetted() {
-	String description = "Pompa dziala niepoprawnie z powodu przegrzania!";
-	OperationStatus state = OperationStatus.Factory.createErrorWithDescription(description);
+	String description = "Pompa dziala poprawnie!";
+	OperationStatus state = OperationStatus.Factory.createValidWithDescription(description);
 
 	assertEquals(description, state.getDescription());
     }
 
     @Test
-    public void shouldProvidesStatusAsText() {
-	String compensatedStatus = "[ERROR] Przegrzana pompa!";
-	OperationStatus state = OperationStatus.Factory.createErrorWithDescription("Przegrzana pompa!");
+    public void shouldProvidesStatusWithDescriptionAsText() {
+	String compensatedStatus = "[WARNING] Przegrzana pompa!";
+	OperationStatus state = OperationStatus.Factory.createWarningWithDescription("Przegrzana pompa!");
 
 	assertEquals(compensatedStatus, state.getCompensatedStatus());
+    }
+    
+    @Test
+    public void compesatedStatusShouldBeProvidedEvenWhenDescriptionIsNotSetted() {
+	OperationStatus state = OperationStatus.Factory.createValid();
+
+	assertEquals("[OK]", state.getCompensatedStatus());
     }
 }

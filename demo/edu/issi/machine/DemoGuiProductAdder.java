@@ -37,7 +37,7 @@ public class DemoGuiProductAdder extends Operation {
 	}
 
 	if (!readedLine.equals("T")) {
-	    return OperationStatus.Factory.createValidState();
+	    return OperationStatus.Factory.createValid();
 	}
 
 	try {
@@ -50,7 +50,7 @@ public class DemoGuiProductAdder extends Operation {
 	    return OperationStatus.Factory.createErrorWithDescription("Niedostêpny interfejs u¿ytkownika!");
 	}
 
-	return OperationStatus.Factory.createValidState();
+	return OperationStatus.Factory.createValid();
     }
 
     private Product newProduct() throws InvalidAttributeIdentifierException, IOException {

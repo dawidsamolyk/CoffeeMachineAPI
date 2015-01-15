@@ -29,7 +29,7 @@ public class DemoOperation extends Operation {
 	    System.out.println("\t\t" + each.getName() + " : " + value + each.getUnit());
 	}
 	
-	return OperationStatus.Factory.createValidState();
+	return OperationStatus.Factory.createValid();
     }
 
 }

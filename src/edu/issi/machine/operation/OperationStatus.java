@@ -18,11 +18,7 @@ public class OperationStatus {
      *             ostrze¿enie), poniewa¿ nie zosta³ ustawiony dla niego opis.
      */
     private OperationStatus(Status status) throws IllegalStateException {
-	Validator.throwExceptionWhenObjectIsNotCreated(status, "Wybrany status wymaga opisu!");
-
-	if (status.requiresAttention()) {
-	    throw new IllegalStateException("Wybrany status wymaga opisu!");
-	}
+	Validator.throwExceptionWhenObjectIsNotCreated(status, "Nie podano statusu operacji!");
 
 	this.status = status;
     }
@@ -37,38 +33,11 @@ public class OperationStatus {
      *             ostrze¿enie) i nie zostanie ustawiony dla niego opis.
      */
     private OperationStatus(Status status, String description) throws IllegalStateException {
-	Validator.throwExceptionWhenObjectIsNotCreated(status, "Wybrany status wymaga opisu!");
-
-	if (status.requiresAttention() && isEmpty(description)) {
-	    throw new IllegalStateException("Nie podano prawidlowego opisu statusu, a jest on wymagany!");
-	}
+	Validator.throwExceptionWhenObjectIsNotCreated(status, "Nie podano statusu operacji!");
+	Validator.throwExceptionWhenTextIsEmpty(description, "Opis statusu operacji nie mo¿e byæ pusty!");
 
 	this.status = status;
 	this.description = description;
-    }
-
-    /**
-     * @param status
-     *            Status operacji (@see {@link Status}).
-     * @param stateCodeNumber
-     *            Kod operacji.
-     * @throws IllegalStateException
-     *             Wyst¹pi, gdy status bêdzie wyamga³ uwagi (b³¹d lub
-     *             ostrze¿enie) i nie zostanie ustawiony dla niego opis lub kod
-     *             operacji.
-     */
-    public OperationStatus(Status status, int stateCodeNumber) throws IllegalStateException {
-	Validator.throwExceptionWhenObjectIsNotCreated(status, "Wybrany status wymaga opisu!");
-
-	if (status.requiresAttention()) {
-	    description = "Blad numer: " + stateCodeNumber;
-	}
-
-	this.status = status;
-    }
-
-    private boolean isEmpty(String description) {
-	return description == null || description.length() == 0;
     }
 
     /**
@@ -89,11 +58,12 @@ public class OperationStatus {
      * @return Status operacji i opis w jednym tekscie.
      */
     public String getCompensatedStatus() {
-	final String statusInBrackets = "[" + status.name() + "] ";
+	final String statusInBrackets = "[" + status.name() + "]";
 
 	if (description != null) {
-	    return statusInBrackets + description;
+	    return statusInBrackets + " " + description;
 	}
+	
 	return statusInBrackets;
     }
 
@@ -157,7 +127,7 @@ public class OperationStatus {
 	/**
 	 * @return Poprawny status operacji.
 	 */
-	public static OperationStatus createValidState() {
+	public static OperationStatus createValid() {
 	    return new OperationStatus(Status.OK);
 	}
     }

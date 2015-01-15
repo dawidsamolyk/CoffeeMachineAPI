@@ -39,7 +39,7 @@ public class Ingredient extends ObjectWithIdentity {
      * @throws IllegalArgumentException 
      */
     public Double get(PropertyIdentity property) throws IllegalArgumentException {
-	Validator.throwExceptionWhenObjectIsNotCreated(property, "Nie mo¿na pobraæ pustej w³aœciwoœci");
+	Validator.throwExceptionWhenObjectIsNotCreated(property, "Nie mo¿na pobraæ pustej w³aœciwoœci!");
 	
 	final Double result = properties.get(property);
 

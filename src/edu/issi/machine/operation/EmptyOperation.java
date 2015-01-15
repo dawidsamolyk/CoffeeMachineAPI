@@ -25,15 +25,17 @@ public class EmptyOperation extends Operation {
     @Override
     public synchronized OperationStatus execute() {
 	if (!isRequiredElementsProvided()) {
+	    setNotDone();
 	    return OperationStatus.Factory.createErrorWithDescription("Nie ustawiono wymaganych parametrów!");
 	} 
 	else if (!canDoThisOperation(subassembly)) {
+	    setNotDone();
 	    return OperationStatus.Factory.createErrorWithDescription("Wybrany podzespó³ nie jest w stanie wykonaæ tej operacji!");
 	}
 
 	setDone();
 
-	return OperationStatus.Factory.createValidState();
+	return OperationStatus.Factory.createValid();
     }
 
 }
