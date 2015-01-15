@@ -2,7 +2,6 @@ package edu.issi.machine.subassembly;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +15,6 @@ import org.junit.rules.ExpectedException;
 import edu.issi.machine.id.IdentityTest;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationTest;
-import edu.issi.machine.subassembly.handler.DefaultHandler;
-import edu.issi.machine.subassembly.handler.Handler;
 
 @SuppressWarnings("javadoc")
 public class SubassemblyTest {
@@ -41,42 +38,6 @@ public class SubassemblyTest {
     @Test
     public void shouldCreates() throws InvalidAttributeIdentifierException {
 	assertNotNull(TestingSubassembly.getFixtureWith(OperationTest.getFixture()));
-    }
-
-    @Test
-    public void shouldBeEnabledToAddOneHandler() throws InvalidAttributeIdentifierException {
-	TestingSubassembly fixture = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
-
-	fixture.addHandler(new DefaultHandler());
-
-	assertTrue(fixture.getHandlersQuantity() == 1);
-    }
-
-    @Test
-    public void shouldBeEnabledToAddManyHandlers() throws InvalidAttributeIdentifierException {
-	TestingSubassembly fixture = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
-	
-	fixture.addHandler(new DefaultHandler());
-	fixture.addHandler(new DefaultHandler());
-	fixture.addHandler(new DefaultHandler());
-
-	assertTrue(fixture.getHandlersQuantity() == 3);
-    }
-
-    @Test
-    public void shouldBeEnabledToAddManyHandlersExcludingEmptyHandlers() throws InvalidAttributeIdentifierException {
-	TestingSubassembly fixture = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
-	fixture.addHandler(new DefaultHandler());
-
-	exception.expect(IllegalArgumentException.class);
-	fixture.addHandler((Handler) null);
-
-	fixture.addHandler(new DefaultHandler());
-
-	exception.expect(IllegalArgumentException.class);
-	fixture.addHandler((Handler) null);
-
-	assertTrue(fixture.getHandlersQuantity() == 2);
     }
 
     @Test

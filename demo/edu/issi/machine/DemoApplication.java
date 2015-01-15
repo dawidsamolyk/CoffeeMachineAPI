@@ -16,7 +16,6 @@ import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.product.ingredient.Unit;
 import edu.issi.machine.subassembly.Subassembly;
 import edu.issi.machine.subassembly.TestingSubassembly;
-import edu.issi.machine.subassembly.handler.DefaultHandler;
 
 @SuppressWarnings("javadoc")
 public class DemoApplication {
@@ -40,7 +39,6 @@ public class DemoApplication {
 	List<Operation> grinderOperations = new ArrayList<Operation>();
 	grinderOperations.add(new DemoGrinding(Identity.Factory.newIdentity("Operacja mielenia")));
 	Subassembly grinder = new TestingSubassembly(Identity.Factory.newIdentity("Mielarka"), grinderOperations);
-	grinder.addHandler(new DefaultHandler());
 	subassemblies.add(grinder);
 
 	List<Operation> guiOperations = new ArrayList<Operation>();
