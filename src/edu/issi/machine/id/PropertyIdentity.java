@@ -4,8 +4,9 @@ import edu.issi.machine.Validator;
 import edu.issi.machine.product.ingredient.Unit;
 
 /**
- * @author Dawid
+ * @author Dawid Samo³yk
  *
+ *         Identyfikator w³aœciwoœci.
  */
 public class PropertyIdentity extends Identity {
     private Unit unit;
@@ -18,6 +19,7 @@ public class PropertyIdentity extends Identity {
      * @param unit
      *            Jednostka miary w³aœciwoœci.
      * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli jednostka miary nie zostanie podana.
      */
     protected PropertyIdentity(int id, String name, Unit unit) throws IllegalArgumentException {
 	super(id, name);
@@ -34,16 +36,19 @@ public class PropertyIdentity extends Identity {
     }
 
     /**
-     * 
+     * Fabryka dostarczaj¹ca unikalne identyfikatory w³aœciwoœci.
      *
      */
     public static class Factory extends Identity.Factory {
 
 	/**
 	 * @param name
+	 *            Nazwa w³aœciwoœci.
 	 * @param unit
+	 *            Jednostka miary w³aœciwoœci.
 	 * @return Identyfikator w³aœciwoœci.
 	 * @throws IllegalArgumentException
+	 *             Wyst¹pi, jeœli jednostka miary nie zostanie podana.
 	 */
 	public static synchronized PropertyIdentity newProperty(String name, Unit unit) throws IllegalArgumentException {
 	    return new PropertyIdentity(counter++, name, unit);

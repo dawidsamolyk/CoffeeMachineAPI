@@ -3,8 +3,9 @@ package edu.issi.machine.operation;
 import edu.issi.machine.Validator;
 
 /**
- * @author Dawid
+ * @author Dawid Samo³yk
  * 
+ *         Status operacji.
  */
 public class OperationStatus {
     private final Status status;
@@ -63,7 +64,7 @@ public class OperationStatus {
 	if (description != null) {
 	    return statusInBrackets + " " + description;
 	}
-	
+
 	return statusInBrackets;
     }
 
@@ -78,20 +79,15 @@ public class OperationStatus {
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (getClass() != obj.getClass())
-	    return false;
+	if (this == obj) return true;
+	if (obj == null) return false;
+	if (getClass() != obj.getClass()) return false;
 	OperationStatus other = (OperationStatus) obj;
 	if (description == null) {
-	    if (other.description != null)
-		return false;
-	} else if (!description.equals(other.description))
-	    return false;
-	if (status != other.status)
-	    return false;
+	    if (other.description != null) return false;
+	}
+	else if (!description.equals(other.description)) return false;
+	if (status != other.status) return false;
 	return true;
     }
 
@@ -101,7 +97,7 @@ public class OperationStatus {
      */
     public static class Factory {
 	/**
-	 * @param description
+	 * @param description Opis.
 	 * @return Status operacji dla b³êdu.
 	 */
 	public static OperationStatus createErrorWithDescription(String description) {
@@ -109,7 +105,7 @@ public class OperationStatus {
 	}
 
 	/**
-	 * @param description
+	 * @param description Opis.
 	 * @return Status operacji dla ostrze¿enia.
 	 */
 	public static OperationStatus createWarningWithDescription(String description) {
@@ -117,7 +113,7 @@ public class OperationStatus {
 	}
 
 	/**
-	 * @param description
+	 * @param description Opis.
 	 * @return Poprawny status operacji, z opisem.
 	 */
 	public static OperationStatus createValidWithDescription(String description) {

@@ -1,8 +1,9 @@
 package edu.issi.machine.operation;
 
 /**
- * @author Dawid
+ * @author Dawid Samołyk
  *
+ * Status.
  */
 public enum Status {
     /**
@@ -19,8 +20,6 @@ public enum Status {
     ERROR;
 
     /**
-     * @param status
-     *            Status.
      * @return Czy dany status wymaga uwagi.
      */
     public boolean requiresAttention() {

@@ -7,8 +7,9 @@ import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.subassembly.Subassembly;
 
 /**
- * @author Dawid
+ * @author Dawid Samo³yk
  * 
+ *         Operacja.
  */
 public abstract class Operation extends ObjectWithIdentity {
     private boolean isDone = false;
@@ -19,10 +20,10 @@ public abstract class Operation extends ObjectWithIdentity {
     /**
      * @param identity
      *            Identyfikator.
-     * @param methods
-     *            Funkcje do wykonania.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli identyfikator bêdzie pusty.
      */
-    public Operation(Identity identity) {
+    public Operation(Identity identity) throws IllegalArgumentException {
 	super(identity);
     }
 
@@ -30,10 +31,13 @@ public abstract class Operation extends ObjectWithIdentity {
      * @param subassembly
      *            Podzespó³, na którym ma zostaæ wykonana operacja.
      * @return Zwraca referencje do siebie - wzorzec Fluent Interface.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli spodany podzespó³ nie zosta³ utworzony.
      */
-    public Operation setSubassembly(Subassembly subassembly) {
-	Validator.throwExceptionWhenObjectIsNotCreated(subassembly, "Nie mo¿na ustawiæ pustego podzespo³u do wykonania operacji!");
-	
+    public Operation setSubassembly(Subassembly subassembly) throws IllegalArgumentException {
+	Validator.throwExceptionWhenObjectIsNotCreated(subassembly,
+		"Nie mo¿na ustawiæ pustego podzespo³u do wykonania operacji!");
+
 	this.subassembly = subassembly;
 	return this;
     }
@@ -42,26 +46,31 @@ public abstract class Operation extends ObjectWithIdentity {
      * @param ingredient
      *            Sk³adnik, na którym ma zostaæ wykonana operacja.
      * @return Zwraca referencje do siebie - wzorzec Fluent Interface.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli spodany sk³adnik nie zosta³ utworzony.
      */
-    public Operation setIngredient(Ingredient ingredient) {
-	Validator.throwExceptionWhenObjectIsNotCreated(ingredient, "Nie mo¿na ustawiæ pustego sk³adnika do wykonania na nim operacji!");
+    public Operation setIngredient(Ingredient ingredient) throws IllegalArgumentException {
+	Validator.throwExceptionWhenObjectIsNotCreated(ingredient,
+		"Nie mo¿na ustawiæ pustego sk³adnika do wykonania na nim operacji!");
 
 	this.ingredient = ingredient;
 	return this;
     }
 
     /**
+     * Wykonanie operacji.
      * @return Stan operacji.
      */
     public abstract OperationStatus execute();
 
     protected boolean canDoThisOperation(Subassembly subassembly) throws IllegalArgumentException {
-	Validator.throwExceptionWhenObjectIsNotCreated(subassembly, "Nie mo¿na sprawdziæ wykonywalnoœci operacji dla pustego podzespo³u!");
-	
+	Validator.throwExceptionWhenObjectIsNotCreated(subassembly,
+		"Nie mo¿na sprawdziæ wykonywalnoœci operacji dla pustego podzespo³u!");
+
 	return subassembly.supports(this);
     }
 
-    protected boolean isRequiredElementsProvided() {
+    protected boolean areRequiredElementsProvided() {
 	return subassembly != null && ingredient != null;
     }
 

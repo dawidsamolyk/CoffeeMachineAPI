@@ -8,27 +8,30 @@ import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.product.ingredient.Ingredient;
 
 /**
- * @author Dawid
+ * @author Dawid Samo³yk
  *
+ *         Produkt.
  */
 public class Product extends ObjectWithIdentity implements Iterable<Ingredient> {
     private final OrderedElementsList<Ingredient> ingredients;
 
     /**
      * @param id
-     *            Numer ID.
+     *            Identyfikator.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli identyfikator bêdzie pusty.
      */
-    public Product(final Identity id) {
+    public Product(final Identity id) throws IllegalArgumentException {
 	super(id);
-	
+
 	ingredients = new OrderedElementsList<Ingredient>();
     }
 
     /**
      * @param ingredient
      *            Sk³adnik, który zostanie dodany na koñcu listy.
-     * @throws IllegalArgumentException 
-     * @see edu.issi.machine.product.OrderedElementsList#add(Object)
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli sk³adnik bêdzie pusty.
      */
     public void add(Ingredient ingredient) throws IllegalArgumentException {
 	ingredients.add(ingredient);
@@ -47,7 +50,7 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
     }
 
     /**
-     * @return Liczba skladnikow.
+     * @return Liczba skladnikósw.
      * @see edu.issi.machine.product.OrderedElementsList#getNumberOfElements()
      */
     public int numberOfElements() {
@@ -93,18 +96,14 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (!getClass().equals(obj.getClass()))
-	    return false;
+	if (this == obj) return true;
+	if (obj == null) return false;
+	if (!getClass().equals(obj.getClass())) return false;
 	final Product other = (Product) obj;
 	if (ingredients == null) {
-	    if (other.ingredients != null)
-		return false;
-	} else if (!ingredients.equals(other.ingredients))
-	    return false;
+	    if (other.ingredients != null) return false;
+	}
+	else if (!ingredients.equals(other.ingredients)) return false;
 	return true;
     }
 

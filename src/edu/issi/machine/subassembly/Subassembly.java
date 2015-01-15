@@ -8,19 +8,18 @@ import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.operation.Operation;
 
 /**
- * @author Dawid
+ * @author Dawid Samo³yk
  * 
+ *         Podzespó³.
  */
 public abstract class Subassembly extends ObjectWithIdentity {
     protected List<Operation> operations;
 
     /**
      * @param id
-     *            Numer ID.
+     *            Identyfikator.
      * @param operations
      *            Operacje, które mo¿e wykonaæ wybrany podzespó³.
-     * @param properties
-     *            Dodatkowe w³aœciwoœci podzespo³u.
      * @throws IllegalArgumentException
      *             Wyst¹pi, jeœli lista operacji bêdzie pusta lub niepoprawna.
      */
@@ -38,6 +37,7 @@ public abstract class Subassembly extends ObjectWithIdentity {
      *            Operacja.
      * @return Czy podzespol wspiera podana operacje.
      * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli operacja nie zosta³a utworzona.
      */
     public boolean supports(Operation operation) throws IllegalArgumentException {
 	Validator.throwExceptionWhenObjectIsNotCreated(operation,
@@ -47,12 +47,12 @@ public abstract class Subassembly extends ObjectWithIdentity {
     }
 
     /**
-     * 
+     * Uruchomia podzespó³.
      */
     public abstract void run();
 
     /**
-     * 
+     * Zatrzymuje podzespó³.
      */
     public abstract void stop();
 

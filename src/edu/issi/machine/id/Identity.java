@@ -5,8 +5,9 @@ import javax.naming.directory.InvalidAttributeIdentifierException;
 import edu.issi.machine.Validator;
 
 /**
- * @author Dawid
+ * @author Dawid Samo³yk
  * 
+ *         Identyfikator.
  */
 public class Identity {
     private final int id;
@@ -17,6 +18,8 @@ public class Identity {
      *            Numer identyfikacyjny.
      * @param name
      *            Nazwa.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli nazwa obiektu bêdzie pusta.
      */
     protected Identity(int id, String name) throws IllegalArgumentException {
 	Validator.throwExceptionWhenTextIsEmpty(name, "Nazwa obiektu nie mo¿e byæ pusta!");
@@ -29,11 +32,12 @@ public class Identity {
      * @param newName
      *            Nowa nazwa.
      * @return Poprzednia nazwa.
-     * @throws IllegalArgumentException 
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli nazwa obiektu bêdzie pusta
      */
     public String changeName(String newName) throws IllegalArgumentException {
 	Validator.throwExceptionWhenObjectIsNotCreated(newName, "Nazwa obiektu nie mo¿e byæ pusta!");
-	
+
 	String actualName = name;
 
 	name = newName;
@@ -48,6 +52,15 @@ public class Identity {
 	return name;
     }
 
+    /**
+     * @param productID
+     *            Numer identyfikacyjny.
+     * @return Czy obiekt jest identyfikowany podanym numerem.
+     */
+    public boolean identifiesBy(int productID) {
+	return id == productID;
+    }
+
     @Override
     public String toString() {
 	return "ID: " + id + ", Nazwa: " + name;
@@ -60,21 +73,16 @@ public class Identity {
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (!getClass().equals(obj.getClass()))
-	    return false;
+	if (this == obj) return true;
+	if (obj == null) return false;
+	if (!getClass().equals(obj.getClass())) return false;
 	final Identity other = (Identity) obj;
-	if (id != other.id)
-	    return false;
+	if (id != other.id) return false;
 	return true;
     }
 
     /**
-     * 
-     *
+     * Fabryka dostarczaj¹ca unikalne identyfikatory.
      */
     public static class Factory {
 	protected static int counter = 0;
@@ -91,14 +99,6 @@ public class Identity {
 	    return new Identity(counter++, name);
 	}
 
-    }
-
-    /**
-     * @param productID
-     * @return Czy obiekt jest identyfikowany podanym numerem.
-     */
-    public boolean identifiesBy(int productID) {
-	return id == productID;
     }
 
 }

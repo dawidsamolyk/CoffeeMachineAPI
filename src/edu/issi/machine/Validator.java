@@ -6,10 +6,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
- * Sytuacja wyj¹tkowa podczas walidacji
+ * @author Dawid Samo³yk
  * 
- * @author Dawid
- * 
+ *         Walidator parametrów.
  */
 public class Validator {
 
@@ -36,7 +35,8 @@ public class Validator {
      * @throws IllegalArgumentException
      *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenTextIsEmpty(String text, String exceptionMessage) throws IllegalArgumentException {
+    public static void throwExceptionWhenTextIsEmpty(String text, String exceptionMessage)
+	    throws IllegalArgumentException {
 	if (text == null || text.length() == 0) {
 	    throw new IllegalArgumentException(exceptionMessage);
 	}
@@ -113,9 +113,10 @@ public class Validator {
      * @throws NoSuchElementException
      *             Wygenerowany b³¹d.
      * @throws IllegalArgumentException
+     *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenThereIsNotSuchElementAtSpecifiedIndex(List<?> list, int index, String exceptionMessage)
-	    throws NoSuchElementException, IllegalArgumentException {
+    public static void throwExceptionWhenThereIsNotSuchElementAtSpecifiedIndex(List<?> list, int index,
+	    String exceptionMessage) throws NoSuchElementException, IllegalArgumentException {
 
 	throwExceptionWhenEmptyOrContainsNullObjects(list, "Na podanej liœcie nie ma obiektów!");
 
@@ -126,8 +127,11 @@ public class Validator {
 
     /**
      * @param itearable
+     *            Zbiór obiektów do sprawdzenia.
      * @param exceptionMessage
+     *            Opis b³êdu. Zostanie ustawiony, jeœli b³¹d wyst¹pi.
      * @throws IllegalArgumentException
+     *             Wygenerowany b³¹d.
      */
     public static void throwExceptionWhenContainsNullOrEmpty(Iterable<?> itearable, String exceptionMessage)
 	    throws IllegalArgumentException {
@@ -138,11 +142,12 @@ public class Validator {
 
     /**
      * @param itearable
-     * @return Czy zawiera nulle.
+     *            Zbiór obiektów do sprawdzenia.
+     * @return Czy zawiera puste referencje.
      */
     public static boolean containsNullObjects(Iterable<?> itearable) {
 	Iterator<?> iterator = itearable.iterator();
-	
+
 	while (iterator.hasNext()) {
 	    if (iterator.next() != null) {
 		return false;
@@ -154,7 +159,8 @@ public class Validator {
 
     /**
      * @param table
-     * @return Czy zawiera nulle.
+     *            Tablica do sprawdzenia.
+     * @return Czy zawiera puste referencje.
      */
     public static boolean containsNullObjects(Object[] table) {
 	for (int index = 0; index < table.length; index++) {

@@ -1,8 +1,9 @@
 package edu.issi.machine.product.ingredient;
 
 /**
- * @author Dawid
+ * @author Dawid Samołyk
  *
+ * Jednostki miary.
  */
 public enum Unit {
 

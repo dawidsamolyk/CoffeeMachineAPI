@@ -8,9 +8,11 @@ import java.util.NoSuchElementException;
 import edu.issi.machine.Validator;
 
 /**
- * @author Dawid
+ * @author Dawid Samo³yk
+ * 
+ *         Lista uporz¹dkowanych elementów.
  * @param <Type>
- *            Typ obiektów, które bêd¹ przechowywane w tej liœcie.F
+ *            Typ obiektów, które bêd¹ przechowywane w tej liœcie.
  */
 public class OrderedElementsList<Type> implements Iterable<Type> {
     private final List<Type> elements;
@@ -25,11 +27,13 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     /**
      * @param object
      *            Obiekt, który zostanie dodany na koñcu listy.
-     * @throws IllegalArgumentException 
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli obiekt wejœciowy nie zosta³ utworzony.
      */
     public void add(Type object) throws IllegalArgumentException {
-	Validator.throwExceptionWhenObjectIsNotCreated(object, "Obiekt dodawany do listy elementów nie mo¿e byæ pusty!");
-	
+	Validator
+		.throwExceptionWhenObjectIsNotCreated(object, "Obiekt dodawany do listy elementów nie mo¿e byæ pusty!");
+
 	elements.add(object);
     }
 
@@ -41,11 +45,13 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
      *            indeksem.
      * @throws UnsupportedOperationException
      *             Wyst¹pi, jeœli podano nieprawid³owy indeks.
-     * @throws IllegalArgumentException 
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli obiekt wejœciowy nie zosta³ utworzony.
      */
     public void addAt(int index, Type object) throws UnsupportedOperationException, IllegalArgumentException {
-	Validator.throwExceptionWhenObjectIsNotCreated(object, "Obiekt dodawany do listy elementów nie mo¿e byæ pusty!");
-	
+	Validator
+		.throwExceptionWhenObjectIsNotCreated(object, "Obiekt dodawany do listy elementów nie mo¿e byæ pusty!");
+
 	if (index >= elements.size() || index < 0) {
 	    throw new UnsupportedOperationException("Nie mozna dodac elementu pod indeksem " + index + "!");
 	}
@@ -104,18 +110,14 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (!getClass().equals(obj.getClass()))
-	    return false;
+	if (this == obj) return true;
+	if (obj == null) return false;
+	if (!getClass().equals(obj.getClass())) return false;
 	final OrderedElementsList<?> other = (OrderedElementsList<?>) obj;
 	if (elements == null) {
-	    if (other.elements != null)
-		return false;
-	} else if (!elements.equals(other.elements))
-	    return false;
+	    if (other.elements != null) return false;
+	}
+	else if (!elements.equals(other.elements)) return false;
 	return true;
     }
 

@@ -8,8 +8,9 @@ import edu.issi.machine.product.Product;
 import edu.issi.machine.subassembly.Subassembly;
 
 /**
- * @author Dawid
+ * @author Dawid Samo³yk
  * 
+ *         Konfiguracja maszyny.
  */
 public class MachineConfiguration {
     private final List<Subassembly> subassemblies;
@@ -26,14 +27,16 @@ public class MachineConfiguration {
      */
     public MachineConfiguration(List<Subassembly> subassemblies, List<Product> products) throws IllegalStateException {
 	ensureValidity(subassemblies, products);
-	
+
 	this.subassemblies = subassemblies;
 	this.products = products;
     }
 
     /**
-     * @param products 
-     * @param subassemblies 
+     * @param products
+     *            Produkty, które mo¿e stworzyæ maszyna.
+     * @param subassemblies
+     *            Podzespo³y maszyny.
      * @throws IllegalStateException
      *             Wyst¹pi w przypadku niepoprawnych parametrów konfiguracji
      *             (pusta lista podzespo³ów lub produktów).
@@ -61,18 +64,22 @@ public class MachineConfiguration {
 
     /**
      * @param product
+     *            Produkt.
      */
     public void addProduct(Product product) {
-	Validator.throwExceptionWhenObjectIsNotCreated(product, "Nie mo¿na dodaæ pustego produktu do konfiguracji maszyny!");
-	
+	Validator.throwExceptionWhenObjectIsNotCreated(product,
+		"Nie mo¿na dodaæ pustego produktu do konfiguracji maszyny!");
+
 	products.add(product);
     }
 
     /**
      * @param subassembly
+     *            Podzespó³.
      */
     public void addSubassembly(Subassembly subassembly) {
-	Validator.throwExceptionWhenObjectIsNotCreated(subassembly, "Nie mo¿na dodaæ pustego podzespo³u do konfiguracji maszyny!");
+	Validator.throwExceptionWhenObjectIsNotCreated(subassembly,
+		"Nie mo¿na dodaæ pustego podzespo³u do konfiguracji maszyny!");
 
 	subassemblies.add(subassembly);
     }

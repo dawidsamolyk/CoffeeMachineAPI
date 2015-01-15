@@ -15,8 +15,9 @@ import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationStatus;
 
 /**
- * @author Dawid
+ * @author Dawid Samo³yk
  * 
+ *         Sk³adnik.
  */
 public class Ingredient extends ObjectWithIdentity {
     private final Map<PropertyIdentity, Double> properties;
@@ -36,11 +37,12 @@ public class Ingredient extends ObjectWithIdentity {
      * @param property
      *            W³asnoœæ sk³adnika, któr¹ chcemy pobraæ.
      * @return Zwraca wartoœæ przypisan¹ do wybranej w³aœciwoœci sk³adnika.
-     * @throws IllegalArgumentException 
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli identyfikator bêdzie pusty.
      */
     public Double get(PropertyIdentity property) throws IllegalArgumentException {
 	Validator.throwExceptionWhenObjectIsNotCreated(property, "Nie mo¿na pobraæ pustej w³aœciwoœci!");
-	
+
 	final Double result = properties.get(property);
 
 	if (result == null) {
@@ -52,13 +54,16 @@ public class Ingredient extends ObjectWithIdentity {
 
     /**
      * @param name
+     *            Nazwa.
      * @return Wartoœæ.
      * @throws NoSuchElementException
-     * @throws IllegalArgumentException 
+     *             Wyst¹pi, jeœli nie ma obiektu o podanej nazwie.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli nazwa jest pusta.
      */
     public Double getValueForPropertyWithName(String name) throws NoSuchElementException, IllegalArgumentException {
 	Validator.throwExceptionWhenTextIsEmpty(name, "Nazwa pobieranej w³aœciwoœci sk³anika nie mo¿e byæ pusta!");
-	
+
 	for (PropertyIdentity each : properties.keySet()) {
 	    if (each.getName().equals(name)) {
 		return properties.get(each);
@@ -76,7 +81,7 @@ public class Ingredient extends ObjectWithIdentity {
     public void add(PropertyIdentity property, Double value) {
 	Validator.throwExceptionWhenObjectIsNotCreated(property, "Nie mo¿na w³aœciwoœci z pustym identifikatorem!");
 	Validator.throwExceptionWhenObjectIsNotCreated(value, "Nie mo¿na dodaæ w³aœciwoœci z pust¹ wartoœci¹!");
-	
+
 	properties.put(property, value);
     }
 
@@ -85,17 +90,19 @@ public class Ingredient extends ObjectWithIdentity {
      *            W³asnoœæ sk³adnika.
      */
     public void remove(PropertyIdentity property) {
-	Validator.throwExceptionWhenObjectIsNotCreated(property, "Nie mo¿na usun¹æ w³aœciwoœci z pustym identifikatorem!");
-	
+	Validator.throwExceptionWhenObjectIsNotCreated(property,
+		"Nie mo¿na usun¹æ w³aœciwoœci z pustym identifikatorem!");
+
 	properties.remove(property);
     }
 
     /**
      * @param operations
+     *            Operacje.
      */
     public void setOperations(Iterable<Operation> operations) {
 	Validator.throwExceptionWhenContainsNullOrEmpty(operations, "Nie mo¿na dodawaæ pustych operacji do sk³adnika!");
-	
+
 	this.operations = operations;
     }
 
@@ -109,6 +116,8 @@ public class Ingredient extends ObjectWithIdentity {
     /**
      * @return Statusy wszystkich wykonanych operacji.
      * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli nie ustawiono poprawnych operacji
+     *             (niepustych).
      */
     public List<OperationStatus> doOperations() throws IllegalArgumentException {
 	Validator.throwExceptionWhenContainsNullOrEmpty(operations,
