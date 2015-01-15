@@ -20,12 +20,14 @@ public class MachineConfigurationTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
+    @SuppressWarnings("unused")
     @Test
     public void subassembliesShouldBeSetted() throws InvalidAttributeIdentifierException {
 	exception.expect(IllegalArgumentException.class);
 	new MachineConfiguration(null, ProductTest.getManyFixtures());
     }
 
+    @SuppressWarnings("unused")
     @Test
     public void subassembliesListShouldNotBeEmpty() throws InvalidAttributeIdentifierException {
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
@@ -34,6 +36,7 @@ public class MachineConfigurationTest {
 	new MachineConfiguration(subassemblies, ProductTest.getManyFixtures());
     }
 
+    @SuppressWarnings("unused")
     @Test
     public void productsShouldBeSetted() throws Exception {
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
@@ -45,6 +48,7 @@ public class MachineConfigurationTest {
 	new MachineConfiguration(subassemblies, null);
     }
 
+    @SuppressWarnings("unused")
     @Test
     public void productsListShouldNotBeEmpty() throws InvalidAttributeIdentifierException {
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(OperationTest.getFixture());

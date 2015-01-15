@@ -39,4 +39,9 @@ public class DemoUserInterfaceSubassembly extends Subassembly implements Runnabl
 	    }
 	}
     }
+
+    @Override
+    public void stop() {
+	working = false;
+    }
 }

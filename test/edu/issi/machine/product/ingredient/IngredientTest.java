@@ -12,6 +12,7 @@ import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationTest;
 import edu.issi.machine.product.OrderedElementsList;
 
+@SuppressWarnings("javadoc")
 public class IngredientTest {
     
     @Test

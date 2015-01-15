@@ -11,6 +11,7 @@ public class ObjectWithIdentityTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
+    @SuppressWarnings("unused")
     @Test
     public void shouldNotCreatesWhenIdentityIsEmpty() throws Exception {
 	exception.expect(IllegalArgumentException.class);

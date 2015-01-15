@@ -1,7 +1,6 @@
 package edu.issi.machine.controller;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import javax.naming.directory.InvalidAttributeIdentifierException;
@@ -17,81 +16,36 @@ public class MachineControllerTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
+    @SuppressWarnings("unused")
     @Test
-    public void shouldCreateMachineController() {
-	MachineController result = new MachineController();
-	assertNotNull(result);
+    public void configurationShouldBeProvided() throws IllegalArgumentException {
+	exception.expect(IllegalArgumentException.class);
+	new MachineController(null);
     }
 
     @Test
-    public void shouldNotRestartWithoutInitialization() {
-	MachineController fixture = new MachineController();
-
-	exception.expect(java.lang.UnsupportedOperationException.class);
-	fixture.restart();
-    }
-
-    @Test
-    public void shouldNotStartWithoutInitialization() {
-	MachineController fixture = new MachineController();
-
-	exception.expect(java.lang.UnsupportedOperationException.class);
-	fixture.start();
-    }
-
-    @Test
-    public void shouldStops() {
-	MachineController fixture = new MachineController();
+    public void shouldStops() throws IllegalArgumentException, InvalidAttributeIdentifierException {
+	MachineController fixture = new MachineController(MachineConfigurationTest.getFixture());
 
 	fixture.stop();
-	assertFalse(fixture.running);
+	assertFalse(fixture.working);
     }
-
+    
     @Test
-    public void shouldRestart() throws InvalidAttributeIdentifierException {
-	MachineController fixture = new MachineController();
-
-	fixture.setUpUsing(MachineConfigurationTest.getFixture());
+    public void machineShouldRestarts() throws Exception {
+	MachineController fixture = new MachineController(MachineConfigurationTest.getFixture());
+	
+	fixture.start();
 
 	fixture.restart();
-	assertTrue(fixture.running);
+	assertTrue(fixture.working);
     }
 
     @Test
-    public void tearingDownMachineShouldBeExecutedWhenTheresAnyConfigurationSetted() {
-	MachineController fixture = new MachineController();
+    public void machineShouldRestartsEvenWhenAlreadyIsNotWorking() throws Exception {
+	MachineController fixture = new MachineController(MachineConfigurationTest.getFixture());
 
-	exception.expect(java.lang.UnsupportedOperationException.class);
-	fixture.tearDown();
-    }
-
-    @Test
-    public void tearingDownMachineShouldNotBeDoneWhenMachineIsWorking() throws IllegalStateException, IllegalArgumentException, InvalidAttributeIdentifierException {
-	MachineController fixture = new MachineController();
-
-	fixture.setUpUsing(MachineConfigurationTest.getFixture());
-	fixture.start();
-
-	exception.expect(java.lang.UnsupportedOperationException.class);
-	fixture.tearDown();
-    }
-
-    @Test
-    public void shouldNotInitializeWhenMachineIsWorking() throws IllegalStateException, IllegalArgumentException, InvalidAttributeIdentifierException {
-	MachineController fixture = new MachineController();
-
-	fixture.setUpUsing(MachineConfigurationTest.getFixture());
-	fixture.start();
-
-	exception.expect(java.lang.UnsupportedOperationException.class);
-	fixture.setUpUsing(MachineConfigurationTest.getFixture());
-    }
-
-    @Test
-    public void shouldNotInitializeWhenConfigurationIsEmpty() {
-	MachineController fixture = new MachineController();
-
-	exception.expect(java.lang.UnsupportedOperationException.class);
-	fixture.setUpUsing(null);
+	fixture.restart();
+	assertTrue(fixture.working);
     }
 }

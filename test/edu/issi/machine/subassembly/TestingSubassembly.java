@@ -22,7 +22,12 @@ public class TestingSubassembly extends Subassembly {
     
     @Override
     public void run() {
-
+	
+    }
+    
+    @Override
+    public void stop() {
+	
     }
 
     public static TestingSubassembly getFixtureWith(Operation ... testingOperations) throws IllegalArgumentException,

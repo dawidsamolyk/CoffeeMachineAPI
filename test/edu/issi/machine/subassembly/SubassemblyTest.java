@@ -21,12 +21,14 @@ public class SubassemblyTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
+    @SuppressWarnings("unused")
     @Test
     public void shouldNotCreatesWhenOperationsAreNotSetted() throws Exception {
 	exception.expect(IllegalArgumentException.class);
 	new TestingSubassembly(IdentityTest.getIdentityFixture(), null);
     }
 
+    @SuppressWarnings("unused")
     @Test
     public void shouldNotCreatesWhenOperationsListIsEmpty() throws Exception {
 	List<Operation> operations = new ArrayList<Operation>();

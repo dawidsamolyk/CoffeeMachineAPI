@@ -40,15 +40,20 @@ public abstract class Subassembly extends ObjectWithIdentity {
      * @throws IllegalArgumentException
      */
     public boolean supports(Operation operation) throws IllegalArgumentException {
-	Validator.throwExceptionWhenObjectIsNotCreated(operation, "Nie jest mo¿liwe sprawdzanie zgodnoœci z pust¹ operacj¹!");
+	Validator.throwExceptionWhenObjectIsNotCreated(operation,
+		"Nie jest mo¿liwe sprawdzanie zgodnoœci z pust¹ operacj¹!");
 
 	return operations.contains(operation);
     }
-
 
     /**
      * 
      */
     public abstract void run();
+
+    /**
+     * 
+     */
+    public abstract void stop();
 
 }
