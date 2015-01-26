@@ -102,8 +102,8 @@ public class MachineConfigurationTest {
 
 	// Pobieram ostatni podzespó³, poniewa¿ nowo dodany bêdzie na
 	// koñcu listy
-	Iterator<Product> iterator = fixture.products();
-	Product subassemblyToCheck = null;
+	Iterator<Subassembly> iterator = fixture.subassemblies();
+	Subassembly subassemblyToCheck = null;
 	while (iterator.hasNext()) {
 	    subassemblyToCheck = iterator.next();
 	}
