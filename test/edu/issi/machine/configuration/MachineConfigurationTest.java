@@ -1,6 +1,10 @@
 package edu.issi.machine.configuration;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.naming.directory.InvalidAttributeIdentifierException;
@@ -62,7 +66,69 @@ public class MachineConfigurationTest {
 	new MachineConfiguration(subassemblies, products);
     }
 
-    public static MachineConfiguration getFixture() throws IllegalArgumentException, InvalidAttributeIdentifierException {
+    @Test
+    public void shouldProvidesIteratorForProducts() throws InvalidAttributeIdentifierException {
+	MachineConfiguration fixture = MachineConfigurationTest.getFixture();
+
+	assertNotNull(fixture.products());
+    }
+
+    @Test
+    public void shouldAddNewProduct() throws InvalidAttributeIdentifierException {
+	// Tutaj dostarczone s¹ ju¿ przyk³adowe produkty
+	MachineConfiguration fixture = MachineConfigurationTest.getFixture();
+
+	Product product = ProductTest.getFixture();
+	fixture.addProduct(product);
+
+	// Pobieram ostatni produkt, poniewa¿ nowo dodany produkt bêdzie na
+	// koñcu listy
+	Iterator<Product> iterator = fixture.products();
+	Product productToCheck = null;
+	while (iterator.hasNext()) {
+	    productToCheck = iterator.next();
+	}
+
+	assertEquals(product, productToCheck);
+    }
+
+    @Test
+    public void shouldAddNewSubassembly() throws InvalidAttributeIdentifierException {
+	// Tutaj dostarczone s¹ ju¿ przyk³adowe podzespo³y
+	MachineConfiguration fixture = MachineConfigurationTest.getFixture();
+
+	Subassembly subassembly = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
+	fixture.addSubassembly(subassembly);
+
+	// Pobieram ostatni podzespó³, poniewa¿ nowo dodany bêdzie na
+	// koñcu listy
+	Iterator<Product> iterator = fixture.products();
+	Product subassemblyToCheck = null;
+	while (iterator.hasNext()) {
+	    subassemblyToCheck = iterator.next();
+	}
+
+	assertEquals(subassembly, subassemblyToCheck);
+    }
+
+    @Test
+    public void shouldNotAddEmptyProduct() throws InvalidAttributeIdentifierException {
+	MachineConfiguration fixture = MachineConfigurationTest.getFixture();
+
+	exception.expect(IllegalArgumentException.class);
+	fixture.addProduct(null);
+    }
+
+    @Test
+    public void shouldNotAddEmptySubassembly() throws InvalidAttributeIdentifierException {
+	MachineConfiguration fixture = MachineConfigurationTest.getFixture();
+
+	exception.expect(IllegalArgumentException.class);
+	fixture.addSubassembly(null);
+    }
+
+    public static MachineConfiguration getFixture() throws IllegalArgumentException,
+	    InvalidAttributeIdentifierException {
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
 
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
