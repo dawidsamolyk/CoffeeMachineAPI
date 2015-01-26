@@ -97,7 +97,8 @@ public class OperationStatus {
      */
     public static class Factory {
 	/**
-	 * @param description Opis.
+	 * @param description
+	 *            Opis.
 	 * @return Status operacji dla b³êdu.
 	 */
 	public static OperationStatus createErrorWithDescription(String description) {
@@ -105,7 +106,8 @@ public class OperationStatus {
 	}
 
 	/**
-	 * @param description Opis.
+	 * @param description
+	 *            Opis.
 	 * @return Status operacji dla ostrze¿enia.
 	 */
 	public static OperationStatus createWarningWithDescription(String description) {
@@ -113,7 +115,8 @@ public class OperationStatus {
 	}
 
 	/**
-	 * @param description Opis.
+	 * @param description
+	 *            Opis.
 	 * @return Poprawny status operacji, z opisem.
 	 */
 	public static OperationStatus createValidWithDescription(String description) {

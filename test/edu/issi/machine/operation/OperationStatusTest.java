@@ -1,7 +1,6 @@
 package edu.issi.machine.operation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,11 +39,67 @@ public class OperationStatusTest {
 
 	assertEquals(compensatedStatus, state.getCompensatedStatus());
     }
-    
+
     @Test
     public void compesatedStatusShouldBeProvidedEvenWhenDescriptionIsNotSetted() {
 	OperationStatus state = OperationStatus.Factory.createValid();
 
 	assertEquals("[OK]", state.getCompensatedStatus());
+    }
+
+    @Test
+    public void equalErroneousOperationStatusShouldBeKnown() {
+	String description = "Test";
+	OperationStatus status1 = OperationStatus.Factory.createErrorWithDescription(description);
+	OperationStatus status2 = OperationStatus.Factory.createErrorWithDescription(description);
+
+	assertTrue(status1.equals(status2));
+    }
+
+    @Test
+    public void equalValidOperationStatusWithoutDescriptionShouldBeKnown() {
+	OperationStatus status1 = OperationStatus.Factory.createValid();
+	OperationStatus status2 = OperationStatus.Factory.createValid();
+
+	assertTrue(status1.equals(status2));
+    }
+
+    @Test
+    public void NotEqualOperationStatusShouldNotBeKnown() {
+	OperationStatus status1 = OperationStatus.Factory.createValid();
+	OperationStatus status2 = OperationStatus.Factory.createErrorWithDescription("Test");
+
+	assertFalse(status1.equals(status2));
+    }
+
+    @Test
+    public void AnotherTypeOfObjectShouldNotBeEqual() {
+	OperationStatus status1 = OperationStatus.Factory.createValid();
+
+	assertFalse(status1.equals(new Object()));
+    }
+
+    @Test
+    public void EmptyObjectShouldNotBeKnown() {
+	OperationStatus status1 = OperationStatus.Factory.createValid();
+
+	assertFalse(status1.equals(null));
+    }
+    
+    @Test
+    public void operationStatusesWithAnotherDescriptionsShouldNotBeKnownAsEqual() {
+	OperationStatus status1 = OperationStatus.Factory.createErrorWithDescription("Test");
+	OperationStatus status2 = OperationStatus.Factory.createErrorWithDescription("Real");
+	
+	assertFalse(status1.equals(status2));
+    }
+    
+    @Test
+    public void operationStatusesWithTheSameDescriptionsAndAnotherStatusShouldNotBeKnownAsEqual() {
+	String description = "Test";
+	OperationStatus status1 = OperationStatus.Factory.createErrorWithDescription(description);
+	OperationStatus status2 = OperationStatus.Factory.createWarningWithDescription(description);
+	
+	assertFalse(status1.equals(status2));
     }
 }
