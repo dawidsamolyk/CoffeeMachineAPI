@@ -135,7 +135,7 @@ public class Validator {
      */
     public static void throwExceptionWhenContainsNullOrEmpty(Iterable<?> itearable, String exceptionMessage)
 	    throws IllegalArgumentException {
-	if (containsNullObjects(itearable) || !itearable.iterator().hasNext()) {
+	if (itearable == null || containsNullObjects(itearable) || !itearable.iterator().hasNext()) {
 	    throw new IllegalArgumentException(exceptionMessage);
 	}
     }

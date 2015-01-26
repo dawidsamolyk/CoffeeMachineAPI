@@ -39,8 +39,10 @@ public class Ingredient extends ObjectWithIdentity {
      * @return Zwraca wartoœæ przypisan¹ do wybranej w³aœciwoœci sk³adnika.
      * @throws IllegalArgumentException
      *             Wyst¹pi, jeœli identyfikator bêdzie pusty.
+     * @throws NoSuchElementException
+     *             Wyst¹pi, gdy sk³adnik nie posiada podanej w³aœciwoœci.
      */
-    public Double get(PropertyIdentity property) throws IllegalArgumentException {
+    public Double get(PropertyIdentity property) throws IllegalArgumentException, NoSuchElementException {
 	Validator.throwExceptionWhenObjectIsNotCreated(property, "Nie mo¿na pobraæ pustej w³aœciwoœci!");
 
 	final Double result = properties.get(property);
@@ -50,26 +52,6 @@ public class Ingredient extends ObjectWithIdentity {
 	}
 
 	return result;
-    }
-
-    /**
-     * @param name
-     *            Nazwa.
-     * @return Wartoœæ.
-     * @throws NoSuchElementException
-     *             Wyst¹pi, jeœli nie ma obiektu o podanej nazwie.
-     * @throws IllegalArgumentException
-     *             Wyst¹pi, jeœli nazwa jest pusta.
-     */
-    public Double getValueForPropertyWithName(String name) throws NoSuchElementException, IllegalArgumentException {
-	Validator.throwExceptionWhenTextIsEmpty(name, "Nazwa pobieranej w³aœciwoœci sk³anika nie mo¿e byæ pusta!");
-
-	for (PropertyIdentity each : properties.keySet()) {
-	    if (each.getName().equals(name)) {
-		return properties.get(each);
-	    }
-	}
-	throw new NoSuchElementException();
     }
 
     /**
@@ -88,10 +70,21 @@ public class Ingredient extends ObjectWithIdentity {
     /**
      * @param property
      *            W³asnoœæ sk³adnika.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, gdy zajdzie próba usuniêcia w³aœciwoœci z pustym
+     *             identyfikatorem.
+     * @throws NoSuchElementException
+     *             Wyst¹pi, gdy zajdzie próba usuniêcia w³aœciwoœci, której ten
+     *             sk³adnik nie posiada.
      */
-    public void remove(PropertyIdentity property) {
+    public void remove(PropertyIdentity property) throws IllegalArgumentException, NoSuchElementException {
 	Validator.throwExceptionWhenObjectIsNotCreated(property,
 		"Nie mo¿na usun¹æ w³aœciwoœci z pustym identifikatorem!");
+
+	if (!properties.containsKey(property)) {
+	    throw new NoSuchElementException(
+		    "Wybrany sk³adnik nie posiada podanej w³aœciwoœci, wiêc nie mo¿na jej usun¹æ!");
+	}
 
 	properties.remove(property);
     }

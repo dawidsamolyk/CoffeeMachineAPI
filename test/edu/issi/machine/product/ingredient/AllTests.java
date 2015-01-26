@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @SuppressWarnings("javadoc")
 @RunWith(Suite.class)
-@SuiteClasses({ UnitsTest.class })
+@SuiteClasses({ UnitsTest.class, IngredientTest.class })
 public class AllTests {
 
 }
