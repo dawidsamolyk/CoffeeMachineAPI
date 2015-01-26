@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @SuppressWarnings("javadoc")
 @RunWith(Suite.class)
-@SuiteClasses({ ObjectWithIdentityTest.class })
+@SuiteClasses({ ObjectWithIdentityTest.class, IdentityTest.class })
 public class AllTests {
 
 }

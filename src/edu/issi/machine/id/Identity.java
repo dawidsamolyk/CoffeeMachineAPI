@@ -61,6 +61,13 @@ public class Identity {
 	return id == productID;
     }
 
+    /**
+     * @return Unikalny numer identyfikuj¹cy obiekt.
+     */
+    public int getIdNumber() {
+	return hashCode();
+    }
+
     @Override
     public String toString() {
 	return "ID: " + id + ", Nazwa: " + name;
