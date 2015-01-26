@@ -85,21 +85,21 @@ public class OperationStatusTest {
 
 	assertFalse(status1.equals(null));
     }
-    
+
     @Test
     public void operationStatusesWithAnotherDescriptionsShouldNotBeKnownAsEqual() {
 	OperationStatus status1 = OperationStatus.Factory.createErrorWithDescription("Test");
 	OperationStatus status2 = OperationStatus.Factory.createErrorWithDescription("Real");
-	
+
 	assertFalse(status1.equals(status2));
     }
-    
+
     @Test
     public void operationStatusesWithTheSameDescriptionsAndAnotherStatusShouldNotBeKnownAsEqual() {
 	String description = "Test";
 	OperationStatus status1 = OperationStatus.Factory.createErrorWithDescription(description);
 	OperationStatus status2 = OperationStatus.Factory.createWarningWithDescription(description);
-	
+
 	assertFalse(status1.equals(status2));
     }
 }
