@@ -65,7 +65,7 @@ public class Identity {
      * @return Unikalny numer identyfikuj¹cy obiekt.
      */
     public int getIdNumber() {
-	return hashCode();
+	return id;
     }
 
     @Override
@@ -80,12 +80,10 @@ public class Identity {
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj) return true;
-	if (obj == null) return false;
-	if (!getClass().equals(obj.getClass())) return false;
-	final Identity other = (Identity) obj;
-	if (id != other.id) return false;
-	return true;
+	if (this == obj) {
+	    return true;
+	}
+	return false;
     }
 
     /**

@@ -49,6 +49,15 @@ public class IdentityTest {
 	assertFalse(fixture.identifiesBy(unknownIdNumber));
     }
     
+    @Test
+    public void shouldBeEqualOnlyToSelf() throws Exception {
+	Identity fixture = new Identity(999, "Test");
+	Identity fixture2 = new Identity(999, "Test");
+	
+	assertTrue(fixture.equals(fixture));
+	assertFalse(fixture.equals(fixture2));
+    }
+    
     public static Identity getIdentityFixture() throws InvalidAttributeIdentifierException {
         return Identity.Factory.newIdentity("Test");
     }
