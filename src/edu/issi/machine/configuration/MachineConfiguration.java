@@ -44,8 +44,8 @@ public class MachineConfiguration {
     private void ensureValidity(List<Subassembly> subassemblies, List<Product> products) throws IllegalStateException {
 	final String message = "Nie mozna utworzyc konfiguracji maszyny bez zadnych ";
 
-	Validator.throwExceptionWhenEmptyOrContainsNullObjects(subassemblies, message + "podzespo³ów!");
-	Validator.throwExceptionWhenEmptyOrContainsNullObjects(products, message + "produktów!");
+	Validator.throwExceptionWhenContainsNullOrEmpty(subassemblies, message + "podzespo³ów!");
+	Validator.throwExceptionWhenContainsNullOrEmpty(products, message + "produktów!");
     }
 
     /**
