@@ -70,7 +70,7 @@ public class MachineConfigurationTest {
     public void shouldProvidesIteratorForProducts() throws InvalidAttributeIdentifierException {
 	MachineConfiguration fixture = MachineConfigurationTest.getFixture();
 
-	assertNotNull(fixture.products());
+	assertNotNull(fixture.getProductsIterator());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class MachineConfigurationTest {
 
 	// Pobieram ostatni produkt, poniewa¿ nowo dodany produkt bêdzie na
 	// koñcu listy
-	Iterator<Product> iterator = fixture.products();
+	Iterator<Product> iterator = fixture.getProductsIterator();
 	Product productToCheck = null;
 	while (iterator.hasNext()) {
 	    productToCheck = iterator.next();
@@ -93,38 +93,11 @@ public class MachineConfigurationTest {
     }
 
     @Test
-    public void shouldAddNewSubassembly() throws InvalidAttributeIdentifierException {
-	// Tutaj dostarczone s¹ ju¿ przyk³adowe podzespo³y
-	MachineConfiguration fixture = MachineConfigurationTest.getFixture();
-
-	Subassembly subassembly = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
-	fixture.addSubassembly(subassembly);
-
-	// Pobieram ostatni podzespó³, poniewa¿ nowo dodany bêdzie na
-	// koñcu listy
-	Iterator<Subassembly> iterator = fixture.subassemblies();
-	Subassembly subassemblyToCheck = null;
-	while (iterator.hasNext()) {
-	    subassemblyToCheck = iterator.next();
-	}
-
-	assertEquals(subassembly, subassemblyToCheck);
-    }
-
-    @Test
     public void shouldNotAddEmptyProduct() throws InvalidAttributeIdentifierException {
 	MachineConfiguration fixture = MachineConfigurationTest.getFixture();
 
 	exception.expect(IllegalArgumentException.class);
 	fixture.addProduct(null);
-    }
-
-    @Test
-    public void shouldNotAddEmptySubassembly() throws InvalidAttributeIdentifierException {
-	MachineConfiguration fixture = MachineConfigurationTest.getFixture();
-
-	exception.expect(IllegalArgumentException.class);
-	fixture.addSubassembly(null);
     }
 
     public static MachineConfiguration getFixture() throws IllegalArgumentException,

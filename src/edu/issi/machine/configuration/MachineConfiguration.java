@@ -32,15 +32,6 @@ public class MachineConfiguration {
 	this.products = products;
     }
 
-    /**
-     * @param products
-     *            Produkty, które mo¿e stworzyæ maszyna.
-     * @param subassemblies
-     *            Podzespo³y maszyny.
-     * @throws IllegalStateException
-     *             Wyst¹pi w przypadku niepoprawnych parametrów konfiguracji
-     *             (pusta lista podzespo³ów lub produktów).
-     */
     private void ensureValidity(List<Subassembly> subassemblies, List<Product> products) throws IllegalStateException {
 	final String message = "Nie mozna utworzyc konfiguracji maszyny bez zadnych ";
 
@@ -49,16 +40,16 @@ public class MachineConfiguration {
     }
 
     /**
-     * @return Iterator po produktach, które mo¿e wytworzyæ maszyna.
+     * @return Iterator po produktach, które mo¿e wydaæ maszyna.
      */
-    public Iterator<Product> products() {
+    public Iterator<Product> getProductsIterator() {
 	return products.iterator();
     }
 
     /**
      * @return Iterator po podzespo³ach maszyny.
      */
-    public Iterator<Subassembly> subassemblies() {
+    public Iterator<Subassembly> getSubassembliesIterator() {
 	return subassemblies.iterator();
     }
 
@@ -71,16 +62,5 @@ public class MachineConfiguration {
 		"Nie mo¿na dodaæ pustego produktu do konfiguracji maszyny!");
 
 	products.add(product);
-    }
-
-    /**
-     * @param subassembly
-     *            Podzespó³.
-     */
-    public void addSubassembly(Subassembly subassembly) {
-	Validator.throwExceptionWhenObjectIsNotCreated(subassembly,
-		"Nie mo¿na dodaæ pustego podzespo³u do konfiguracji maszyny!");
-
-	subassemblies.add(subassembly);
     }
 }

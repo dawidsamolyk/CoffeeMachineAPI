@@ -59,7 +59,7 @@ public class Model {
     public Map<Integer, String> getProducts() {
 	Map<Integer, String> products = new HashMap<Integer, String>();
 
-	Iterator<Product> productsIterator = configuration.products();
+	Iterator<Product> productsIterator = configuration.getProductsIterator();
 	
 	while (productsIterator.hasNext()) {
 	    Product eachProduct = productsIterator.next();

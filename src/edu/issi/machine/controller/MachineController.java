@@ -38,7 +38,7 @@ public class MachineController {
     }
 
     protected void startAllSubassemblies() {
-	Iterator<Subassembly> subassemblies = configuration.subassemblies();
+	Iterator<Subassembly> subassemblies = configuration.getSubassembliesIterator();
 
 	while (subassemblies.hasNext()) {
 	    Subassembly subassembly = subassemblies.next();
@@ -56,7 +56,7 @@ public class MachineController {
     }
 
     protected void stopAllSubassemblies() {
-	Iterator<Subassembly> subassemblies = configuration.subassemblies();
+	Iterator<Subassembly> subassemblies = configuration.getSubassembliesIterator();
 
 	while (subassemblies.hasNext()) {
 	    Subassembly subassembly = subassemblies.next();
