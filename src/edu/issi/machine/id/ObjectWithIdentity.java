@@ -48,15 +48,10 @@ public class ObjectWithIdentity {
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj) return true;
-	if (obj == null) return false;
-	if (!getClass().equals(obj.getClass())) return false;
-	final ObjectWithIdentity other = (ObjectWithIdentity) obj;
-	if (id == null) {
-	    if (other.id != null) return false;
+	if (this == obj) {
+	    return true;
 	}
-	else if (!id.equals(other.id)) return false;
-	return true;
+	return false;
     }
 
     /**
