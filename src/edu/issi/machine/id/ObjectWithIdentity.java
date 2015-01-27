@@ -5,7 +5,7 @@ import edu.issi.machine.Validator;
 /**
  * @author Dawid Samo³yk
  *
- * Reprezentacja obiektu posiadaj¹cego identyfikator.
+ *         Reprezentacja obiektu posiadaj¹cego identyfikator.
  */
 public class ObjectWithIdentity {
     private final Identity id;
@@ -30,6 +30,20 @@ public class ObjectWithIdentity {
     @Override
     public int hashCode() {
 	return id.hashCode();
+    }
+
+    /**
+     * @return Numer ID.
+     */
+    public int getIdNumber() {
+	return id.getIdNumber();
+    }
+
+    /**
+     * @return Nazwa obiektu.
+     */
+    public String getName() {
+	return id.getName();
     }
 
     @Override
