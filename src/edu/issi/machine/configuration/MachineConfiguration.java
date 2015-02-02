@@ -56,8 +56,11 @@ public class MachineConfiguration {
     /**
      * @param product
      *            Produkt.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli produkt, który jest argumentem wejœciowym
+     *             funkcji, nie zosta³ stworzony.
      */
-    public void addProduct(Product product) {
+    public void addProduct(Product product) throws IllegalArgumentException {
 	Validator.throwExceptionWhenObjectIsNotCreated(product,
 		"Nie mo¿na dodaæ pustego produktu do konfiguracji maszyny!");
 

@@ -1,10 +1,11 @@
 package edu.issi.machine.mvc;
 
 import java.util.HashMap;
-import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
+import edu.issi.machine.mvc.Controller.IngredientsListener;
 import edu.issi.machine.mvc.Controller.ProductsListener;
 import edu.issi.machine.operation.Status;
 import edu.issi.machine.product.ingredient.Unit;
@@ -20,34 +21,30 @@ public class ConsoleView implements View {
 	System.out.println(text);
     }
 
-    private void show(Throwable throwable) {
-	System.err.println(throwable);
-    }
-
     @Override
-    public void showProducts(Map<Integer, String> products) {
-	for (Integer eachProductId : products.keySet()) {
-	    show("PRODUKT [" + eachProductId + "] " + products.get(eachProductId));
+    public void showProducts(Set<String> products) {
+	for (String eachProductName : products) {
+	    show("PRODUKT [" + eachProductName + "] ");
 	}
     }
 
     @Override
-    public void showProductIngredients(int productID, String productName, Map<Integer, String> ingredients) {
-	show("PRODUKT [" + productID + "] " + productName);
+    public void showProductIngredients(String productName, Set<String> ingredients) {
+	show("PRODUKT [" + productName + "] ");
 
 	showIngredients(ingredients);
     }
 
     @Override
-    public void showIngredients(Map<Integer, String> ingredients) {
-	for (Integer eachIngredientId : ingredients.keySet()) {
-	    show("SK£ADNIK [" + eachIngredientId + "] " + ingredients.get(eachIngredientId));
+    public void showIngredients(Set<String> ingredients) {
+	for (String eachIngredientName : ingredients) {
+	    show("SK£ADNIK [" + eachIngredientName + "] ");
 	}
     }
 
     @Override
-    public void showIngredientProperties(int ingredientIdNumber, String ingredientName, Map<String, Unit> properties) {
-	show("SK£ADNIK [" + ingredientIdNumber + "] " + ingredientName);
+    public void showIngredientProperties(String ingredientName, Map<String, Unit> properties) {
+	show("SK£ADNIK [" + ingredientName + "] ");
 
 	for (String eachPropertyName : properties.keySet()) {
 	    show("W£AŒCIWOŒÆ: " + eachPropertyName + " [" + properties.get(eachPropertyName) + "]");
@@ -55,37 +52,24 @@ public class ConsoleView implements View {
     }
 
     @Override
-    public int getSelectedForPreparationProductIdNumber() {
-	try {
-	    return scanner.nextInt();
-	}
-	catch (InputMismatchException e) {
-	    show(e);
-	}
-
-	return View.INVALID_ID;
+    public String getSelectedForPreparationProductName() {
+	return scanner.next();
     }
 
     @Override
-    // TODO zmieñ nazwê funkcji na krótsz¹
-    public Map<String, Float> getSelectedPropertiesForIngredientFromChoseProduct(int ingredientIdNumber,
-	    String ingredientName) {
-
+    public Map<String, Float> getPropertiesForIngredient(String ingredientName, Map<String, Unit> availableProperties) {
 	Map<String, Float> result = new HashMap<String, Float>();
 
-	// TODO Lista w³aœciwoœci powinna byæ parametrem wejœciowym fukcji
-	// TODO Na wyjœciu powinna byæ stworzona mapa zgodna z map¹ wejœciow¹ -
-	// nie powinny byæ dodane ¿adne dodatkowe w³aœciwoœci
+	show("Podaj w³aœciwoœci dla SK£ADNIK [" + ingredientName + "]");
 
-	show("Podaj w³aœciwoœci dla SK£ADNIK [" + ingredientIdNumber + "] " + ingredientName);
-	show("Komenda END zakoñczy dodawanie w³aœciwoœci.");
-
-	String readLine = "";
-
-	while (!readLine.equals("END")) {
-
-	    readLine = scanner.next();
-
+	for (String propertyName : availableProperties.keySet()) {
+	    Unit propertyUnit = availableProperties.get(propertyName);
+	    show("W£AŒCIWOŒÆ [" + propertyName + "] , JEDNOSTKA [" + propertyUnit.name() + "]");
+	    show("Podaj wartoœæ: ");
+	    
+	    Float value = scanner.nextFloat();
+	    
+	    result.put(propertyName, value);
 	}
 
 	return result;
@@ -102,23 +86,19 @@ public class ConsoleView implements View {
     }
 
     @Override
-    public Map<Integer, String> getNewProductIngredients() {
-	// TODO Na wejœciu powinny byæ podane dostêpne sk³adniki, które mo¿na
-	// wybraæ
+    public Set<String> getNewProductIngredients(Set<String> availableIngredients) {
+	// TODO zaimplementuj
 	return null;
     }
 
     @Override
-    public Map<String, Float> getPropertiesForNewProductIngredient(int ingredientIdNumber, String ingredientName) {
-	// TODO Na wejœciu powinny byæ podane dostêpne w³aœciwoœci dla danego
-	// sk³adnika
-	return null;
+    public void addProductsListener(ProductsListener productsListListener) {
+	productsListListener.actionPerformed();
     }
 
     @Override
-    public void addProductsListListener(ProductsListener productsListListener) {
-	// TODO Ustaw ten listener dla klasy wewnêtrznej, która bêdzie
-	// obs³ugiwa³a ca³e GUI @console
+    public void addIngredientsListener(IngredientsListener ingredientsListener) {
+	ingredientsListener.actionPerformed();
     }
 
 }

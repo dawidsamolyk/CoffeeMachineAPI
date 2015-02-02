@@ -1,7 +1,9 @@
 package edu.issi.machine.mvc;
 
 import java.util.Map;
+import java.util.Set;
 
+import edu.issi.machine.mvc.Controller.IngredientsListener;
 import edu.issi.machine.mvc.Controller.ProductsListener;
 import edu.issi.machine.operation.Status;
 import edu.issi.machine.product.ingredient.Unit;
@@ -15,34 +17,28 @@ public interface View {
      * 
      */
     public final static int INVALID_ID = -1;
-    
-    /**
-     * @param products
-     *            Produkty. Kluczem mapy jest numer ID produktu, a drugim
-     *            parametrem jest jego nazwa.
-     */
-    void showProducts(Map<Integer, String> products);
 
     /**
-     * @param productID
-     *            Numer ID produktu.
+     * @param products
+     *            Produkty.
+     */
+    void showProducts(Set<String> products);
+
+    /**
      * @param productName
      *            Nazwa produktu.
      * @param ingredients
      *            Sk³adniki produktu.
      */
-    void showProductIngredients(int productID, String productName, Map<Integer, String> ingredients);
+    void showProductIngredients(String productName, Set<String> ingredients);
 
     /**
      * @param ingredients
-     *            Sk³adniki. Kluczem mapy jest numer ID sk³adnika, a drugim
-     *            parametrem jest jego nazwa.
+     *            Sk³adniki.
      */
-    void showIngredients(Map<Integer, String> ingredients);
+    void showIngredients(Set<String> ingredients);
 
     /**
-     * @param ingredientIdNumber
-     *            Numer ID sk³adnika.
      * @param ingredientName
      *            Nazwa sk³adnika.
      * @param properties
@@ -50,23 +46,24 @@ public interface View {
      *            wartoœci¹ jednostka miary tej w³aœciwoœci.
      * 
      */
-    void showIngredientProperties(int ingredientIdNumber, String ingredientName, Map<String, Unit> properties);
+    void showIngredientProperties(String ingredientName, Map<String, Unit> properties);
 
     /**
-     * @return Numer ID produktu, który ma zostaæ wydany.
+     * @return Nazwa produktu, który ma zostaæ wydany.
      */
-    int getSelectedForPreparationProductIdNumber();
+    String getSelectedForPreparationProductName();
 
     /**
-     * @param ingredientIdNumber
-     *            Numer ID sk³adnika produktu, który ma zostaæ wydany.
      * @param ingredientName
      *            Nazwa sk³adnika produktu, który ma zostaæ wydany.
+     * @param availableProperties
+     *            Dostêpne w³aœciwoœci dla podanego sk³adnika. Kluczem jest
+     *            nazwa w³aœciwoœci, a wartoœci¹ jednostka miary.
      * @return W³aœciwoœci sk³adnika. Kluczem mapy jest nazwa w³aœciwoœci, a
      *         drugim parametrem jest wartoœæ dla wybranej w³aœciwoœci (wartoœæ
      *         ta jest wyra¿ana w jednostkach ustawionych we w³aœciwoœci).
      */
-    Map<String, Float> getSelectedPropertiesForIngredientFromChoseProduct(int ingredientIdNumber, String ingredientName);
+    Map<String, Float> getPropertiesForIngredient(String ingredientName, Map<String, Unit> availableProperties);
 
     /**
      * @param status
@@ -82,26 +79,21 @@ public interface View {
     String getNewProductName();
 
     /**
-     * @return Sk³adniki nowego produktu. Kluczem mapy s¹ numery ID sk³adników,
-     *         a wartoœciami nazwy.
+     * @param availableIngredients
+     *            Dostêpne sk³adniki.
+     * @return Sk³adniki nowego produktu.
      */
-    Map<Integer, String> getNewProductIngredients();
-
-    /**
-     * @param ingredientIdNumber
-     *            Numer ID sk³adnika nowego produktu.
-     * @param ingredientName
-     *            Nazwa sk³adnika nowego produktu.
-     * @return W³aœciowœci wybranego sk³adnika nowego produktu. Kluczem jest
-     *         nazwa w³aœciwoœci, a drugim parametrem jest wartoœæ danej
-     *         w³aœciwoœci (wartoœæ ta jest wyra¿ana w jednostkach ustawionych
-     *         we w³aœciwoœci).
-     */
-    Map<String, Float> getPropertiesForNewProductIngredient(int ingredientIdNumber, String ingredientName);
+    Set<String> getNewProductIngredients(Set<String> availableIngredients);
 
     /**
      * @param productsListListener
      *            Obiekt nas³uchuj¹cy zmian listy produktów.
      */
-    void addProductsListListener(ProductsListener productsListListener);
+    void addProductsListener(ProductsListener productsListListener);
+
+    /**
+     * @param ingredientsListener
+     *            Obiekt nas³uchuj¹cy zmian listy sk³adników.
+     */
+    void addIngredientsListener(IngredientsListener ingredientsListener);
 }

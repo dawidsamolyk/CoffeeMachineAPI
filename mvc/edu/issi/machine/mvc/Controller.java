@@ -13,7 +13,10 @@ public class Controller {
     private Model model;
     private List<View> views = new ArrayList<View>();
 
-    Controller(Model model) {
+    /**
+     * @param model Model.
+     */
+    public Controller(Model model) {
 	this.model = model;
     }
 
@@ -28,7 +31,8 @@ public class Controller {
 
 	views.add(view);
 	
-	view.addProductsListListener(new ProductsListener());
+	view.addProductsListener(new ProductsListener());
+	view.addIngredientsListener(new IngredientsListener());
     }
     
     /**
@@ -39,7 +43,7 @@ public class Controller {
 	@Override
 	public void actionPerformed() {
 	    for(View eachView : views) {
-		eachView.showProducts(model.getProducts());
+		eachView.showProducts(model.getProductsNames());
 	    }
 	}
     }
@@ -48,11 +52,11 @@ public class Controller {
      * @author DawidSamolyk
      *
      */
-    public class ProductsIngredientsListener implements EventListener {
+    public class IngredientsListener implements EventListener {
 	@Override
 	public void actionPerformed() {
 	    for(View eachView : views) {
-		eachView.showProducts(model.getProducts());
+		eachView.showIngredients(model.getIngredientsNames());
 	    }
 	}
     }

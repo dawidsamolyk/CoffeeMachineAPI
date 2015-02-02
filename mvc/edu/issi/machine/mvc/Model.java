@@ -1,13 +1,14 @@
 package edu.issi.machine.mvc;
 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.Set;
 
 import edu.issi.machine.Validator;
 import edu.issi.machine.configuration.MachineConfiguration;
 import edu.issi.machine.controller.MachineController;
 import edu.issi.machine.product.Product;
+import edu.issi.machine.product.ingredient.Ingredient;
 
 /**
  * @author DawidSamolyk
@@ -54,19 +55,36 @@ public class Model {
     }
 
     /**
-     * @return Iterator po produktach dostêpnych w konfiguracji maszyny.
+     * @return Nazwy dostêpnych produktów.
      */
-    public Map<Integer, String> getProducts() {
-	Map<Integer, String> products = new HashMap<Integer, String>();
-
+    public Set<String> getProductsNames() {
+	Set<String> result = new HashSet<String>();
 	Iterator<Product> productsIterator = configuration.getProductsIterator();
-	
+
 	while (productsIterator.hasNext()) {
-	    Product eachProduct = productsIterator.next();
-	    
-	    products.put(eachProduct.getIdNumber(), eachProduct.getName());
+	    String productName = productsIterator.next().getName();
+	    result.add(productName);
 	}
 
-	return products;
+	return result;
+    }
+
+    /**
+     * @return Nazwy dostêpnych sk³adników.
+     */
+    public Set<String> getIngredientsNames() {
+	Set<String> result = new HashSet<String>();
+	Iterator<Product> productsIterator = configuration.getProductsIterator();
+
+	while (productsIterator.hasNext()) {
+	    Iterator<Ingredient> ingredientsIterator = productsIterator.next().iterator();
+
+	    while (ingredientsIterator.hasNext()) {
+		String ingredientName = ingredientsIterator.next().getName();
+		result.add(ingredientName);
+	    }
+	}
+
+	return result;
     }
 }
