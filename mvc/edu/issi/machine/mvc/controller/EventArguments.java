@@ -1,20 +1,33 @@
 package edu.issi.machine.mvc.controller;
 
-import java.util.Iterator;
-import java.util.List;
+import edu.issi.machine.mvc.view.View;
 
 /**
  * @author DawidSamolyk
  *
  */
 public class EventArguments {
-    private List<String> names;
+    private View caller;
+    private String selectedElementName;
 
-    public EventArguments(List<String> names) throws IllegalArgumentException {
-	this.names = names;
+    public EventArguments(View caller) {
+	this.caller = caller;
+    }
+    
+    public EventArguments(View caller, String selectedElementName) {
+	this(caller);
+	this.selectedElementName = selectedElementName;
     }
 
-    public Iterator<String> iterator() {
-	return names.iterator();
+    public boolean isCalledBy(View view) {
+	return view.equals(caller);
+    }
+    
+    public String getSelectedElementName() {
+	return selectedElementName;
+    }
+    
+    public boolean hasSelectedElementName() {
+	return selectedElementName != null;
     }
 }

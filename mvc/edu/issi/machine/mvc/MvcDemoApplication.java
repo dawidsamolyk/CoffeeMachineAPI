@@ -11,7 +11,7 @@ import edu.issi.machine.configuration.MachineConfiguration;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.mvc.controller.Controller;
 import edu.issi.machine.mvc.model.Model;
-import edu.issi.machine.mvc.view.ConsoleView;
+import edu.issi.machine.mvc.view.GraphicalView;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Ingredient;
@@ -32,10 +32,7 @@ public class MvcDemoApplication {
      *             poprawna.
      */
     public static void main(String[] args) throws InvalidAttributeIdentifierException {
-	List<Ingredient> ingredients = new ArrayList<Ingredient>();
-	ingredients.add(DemoApplication.getDemoCoffee());
-	ingredients.add(DemoApplication.getDemoWater());
-
+	List<Ingredient> ingredients = DemoApplication.getDemoIngredients();
 	List<Product> products = DemoApplication.getDemoProducts(ingredients);
 	List<Subassembly> subassemblies = MvcDemoApplication.getDemoSubassemblies();
 
@@ -44,7 +41,8 @@ public class MvcDemoApplication {
 	Model model = new Model(config);
 
 	Controller controller = new Controller(model);
-	controller.addAndInitializeView(new ConsoleView());
+	//controller.addAndInitializeView(new ConsoleView());
+	controller.addAndInitializeView(new GraphicalView());
 
 	controller.startMachine();
     }

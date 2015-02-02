@@ -4,7 +4,9 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.issi.machine.mvc.controller.Controller.IngredientsListener;
+import edu.issi.machine.mvc.controller.Controller.OrderListener;
 import edu.issi.machine.mvc.controller.Controller.ProductsListener;
+import edu.issi.machine.mvc.controller.Controller.PropertiesListener;
 import edu.issi.machine.operation.Status;
 import edu.issi.machine.product.ingredient.Unit;
 
@@ -13,6 +15,11 @@ import edu.issi.machine.product.ingredient.Unit;
  *
  */
 public interface View {
+    
+    /**
+     * 
+     */
+    void start();
 
     /**
      * @param products
@@ -92,4 +99,8 @@ public interface View {
      *            Obiekt nas³uchuj¹cy zmian listy sk³adników.
      */
     void addIngredientsListener(IngredientsListener ingredientsListener);
+
+    void addOrderListener(OrderListener orderListener);
+
+    void addPropertiesListener(PropertiesListener propertiesListener);
 }

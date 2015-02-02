@@ -2,10 +2,13 @@ package edu.issi.machine.mvc.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import edu.issi.machine.Validator;
 import edu.issi.machine.mvc.model.Model;
 import edu.issi.machine.mvc.view.View;
+import edu.issi.machine.product.ingredient.Unit;
 
 /**
  * @author DawidSamolyk
@@ -50,6 +53,9 @@ public class Controller {
 
 	view.addProductsListener(new ProductsListener());
 	view.addIngredientsListener(new IngredientsListener());
+	view.addPropertiesListener(new PropertiesListener());
+	view.addOrderListener(new OrderListener());
+	view.start();
     }
 
     /**
@@ -72,8 +78,57 @@ public class Controller {
     public class IngredientsListener implements EventListener {
 	@Override
 	public void actionPerformed(EventArguments arguments) {
+	    if (arguments.hasSelectedElementName()) {
+		String selectedElementName = arguments.getSelectedElementName();
+
+		for (View eachView : views) {
+		    Set<String> ingredients = model.getIngredientsNamesForProductNamed(selectedElementName);
+		    eachView.showProductIngredients(selectedElementName, ingredients);
+		}
+	    }
+	    else {
+		for (View eachView : views) {
+		    eachView.showIngredients(model.getAllIngredientsNames());
+		}
+	    }
+	}
+    }
+    
+    /**
+     * @author DawidSamolyk
+     *
+     */
+    public class PropertiesListener implements EventListener {
+	@Override
+	public void actionPerformed(EventArguments arguments) {
+	    if (arguments.hasSelectedElementName()) {
+		String selectedElementName = arguments.getSelectedElementName();
+
+		for (View eachView : views) {
+		    Map<String, Unit> properties = model.getPropertiesForIngredientNamed(selectedElementName);
+		    eachView.showIngredientProperties(selectedElementName, properties);
+		}
+	    }
+	}
+    }
+
+    /**
+     * @author DawidSamolyk
+     *
+     */
+    public class OrderListener implements EventListener {
+	@Override
+	public void actionPerformed(EventArguments arguments) {
 	    for (View eachView : views) {
-		eachView.showIngredients(model.getAllIngredientsNames());
+		String orderedProductName = eachView.getNewProductName();
+
+		Set<String> requestedProductIngredients = model.getIngredientsNamesForProductNamed(orderedProductName);
+		eachView.showProductIngredients(orderedProductName, requestedProductIngredients);
+
+		for (String eachIngredientName : requestedProductIngredients) {
+		    Map<String, Unit> properties = model.getPropertiesForIngredientNamed(eachIngredientName);
+		    eachView.showIngredientProperties(eachIngredientName, properties);
+		}
 	    }
 	}
     }

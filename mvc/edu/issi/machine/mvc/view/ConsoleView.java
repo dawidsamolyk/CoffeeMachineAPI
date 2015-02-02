@@ -7,7 +7,10 @@ import java.util.Scanner;
 import java.util.Set;
 
 import edu.issi.machine.mvc.controller.Controller.IngredientsListener;
+import edu.issi.machine.mvc.controller.Controller.OrderListener;
 import edu.issi.machine.mvc.controller.Controller.ProductsListener;
+import edu.issi.machine.mvc.controller.Controller.PropertiesListener;
+import edu.issi.machine.mvc.controller.EventArguments;
 import edu.issi.machine.operation.Status;
 import edu.issi.machine.product.ingredient.Unit;
 
@@ -16,6 +19,8 @@ import edu.issi.machine.product.ingredient.Unit;
  *
  */
 public class ConsoleView implements View {
+    private final EventArguments EVENT_ARGS = new EventArguments(this);
+    private ConsoleListener consoleListener = new ConsoleListener();
     private Scanner scanner = new Scanner(System.in);
 
     private void show(String text) {
@@ -39,16 +44,16 @@ public class ConsoleView implements View {
     @Override
     public void showIngredients(Set<String> ingredients) {
 	for (String eachIngredientName : ingredients) {
-	    show("SK£ADNIK [" + eachIngredientName + "] ");
+	    show("\tSK£ADNIK [" + eachIngredientName + "] ");
 	}
     }
 
     @Override
     public void showIngredientProperties(String ingredientName, Map<String, Unit> properties) {
-	show("SK£ADNIK [" + ingredientName + "] ");
+	show("\tSK£ADNIK [" + ingredientName + "] ");
 
 	for (String eachPropertyName : properties.keySet()) {
-	    show("W£AŒCIWOŒÆ: " + eachPropertyName + " [" + properties.get(eachPropertyName) + "]");
+	    show("\t\tW£AŒCIWOŒÆ: " + eachPropertyName + " [" + properties.get(eachPropertyName) + "]");
 	}
     }
 
@@ -65,7 +70,7 @@ public class ConsoleView implements View {
 
 	for (String propertyName : availableProperties.keySet()) {
 	    Unit propertyUnit = availableProperties.get(propertyName);
-	    show("W£AŒCIWOŒÆ [" + propertyName + "] , JEDNOSTKA [" + propertyUnit.name() + "]");
+	    show("\tW£AŒCIWOŒÆ [" + propertyName + "] , JEDNOSTKA [" + propertyUnit.name() + "]");
 	    show("Podaj wartoœæ: ");
 
 	    Float value = scanner.nextFloat();
@@ -83,7 +88,7 @@ public class ConsoleView implements View {
 
     @Override
     public String getNewProductName() {
-	return scanner.next();
+	return scanner.nextLine();
     }
 
     @Override
@@ -107,12 +112,42 @@ public class ConsoleView implements View {
 
     @Override
     public void addProductsListener(ProductsListener productsListListener) {
-	// TODO zaimplementuj
+	consoleListener.productsListListener = productsListListener;
     }
 
     @Override
     public void addIngredientsListener(IngredientsListener ingredientsListener) {
-	// TODO zaimplementuj
+	consoleListener.ingredientsListener = ingredientsListener;
+    }
+
+    @Override
+    public void addOrderListener(OrderListener orderListener) {
+	consoleListener.orderListener = orderListener;
+    }
+
+    @Override
+    public void start() {
+	consoleListener.run();
+    }
+
+    private class ConsoleListener {
+	private ProductsListener productsListListener;
+	private IngredientsListener ingredientsListener;
+	private OrderListener orderListener;
+
+	public void run() {
+	    show("Dostêpne produkty: ");
+	    productsListListener.actionPerformed(EVENT_ARGS);
+
+	    show("Wpisz nazwe produktu, ktory chcesz otrzymac: ");
+	    orderListener.actionPerformed(EVENT_ARGS);
+	}
+    }
+
+    @Override
+    public void addPropertiesListener(PropertiesListener propertiesListener) {
+	// TODO Auto-generated method stub
+	
     }
 
 }

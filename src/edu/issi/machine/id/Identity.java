@@ -103,7 +103,5 @@ public class Identity {
 	public static synchronized Identity newIdentity(String name) throws InvalidAttributeIdentifierException {
 	    return new Identity(counter++, name);
 	}
-
     }
-
 }
