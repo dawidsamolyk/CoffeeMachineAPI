@@ -28,15 +28,19 @@ public class DemoApplication {
     }
 
     private static void setUp() throws InvalidAttributeIdentifierException {
-	List<Product> products = getDemoProducts();
+	List<Ingredient> ingredients = new ArrayList<Ingredient>();
+	ingredients.add(getDemoCoffee());
+	ingredients.add(getDemoWater());
+	
+	List<Product> products = getDemoProducts(ingredients);
 	List<Subassembly> subassemblies = getDemoSubassemblies(products);
 
-	MachineConfiguration config = new MachineConfiguration(subassemblies, products);
+	MachineConfiguration config = new MachineConfiguration(subassemblies,ingredients, products);
 	
 	controller = new MachineController(config);
     }
 
-    private static List<Subassembly> getDemoSubassemblies(List<Product> products)
+    public static List<Subassembly> getDemoSubassemblies(List<Product> products)
 	    throws InvalidAttributeIdentifierException {
 	
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
@@ -56,15 +60,15 @@ public class DemoApplication {
 	return subassemblies;
     }
 
-    private static List<Product> getDemoProducts() throws InvalidAttributeIdentifierException {
+    public static List<Product> getDemoProducts(List<Ingredient> ingredients) throws InvalidAttributeIdentifierException {
 	List<Product> products = new ArrayList<Product>();
 
 	Product blackCoffee = new Product(Identity.Factory.newIdentity("Kawa czarna"));
 	
-	Ingredient coffee = getDemoCoffee();
+	Ingredient coffee = ingredients.get(0);
 	blackCoffee.add(coffee);
 	
-	Ingredient water = getDemoWater();
+	Ingredient water = ingredients.get(1);
 	blackCoffee.add(water);
 	
 	products.add(blackCoffee);
@@ -72,7 +76,7 @@ public class DemoApplication {
 	return products;
     }
 
-    private static Ingredient getDemoWater() throws InvalidAttributeIdentifierException {
+    public static Ingredient getDemoWater() throws InvalidAttributeIdentifierException {
 	Ingredient ingredient = new Ingredient(Identity.Factory.newIdentity("Woda"));
 
 	ingredient.add(PropertyIdentity.Factory.newProperty("Temperatura", Unit.C), 100.0);
@@ -88,7 +92,7 @@ public class DemoApplication {
 	return ingredient;
     }
 
-    private static Ingredient getDemoCoffee() throws InvalidAttributeIdentifierException {
+    public static Ingredient getDemoCoffee() throws InvalidAttributeIdentifierException {
 	Ingredient ingredient = new Ingredient(Identity.Factory.newIdentity("Ziarna kawy"));
 
 	ingredient.add(PropertyIdentity.Factory.newProperty("Iloœæ", Unit.G), 5000.0);

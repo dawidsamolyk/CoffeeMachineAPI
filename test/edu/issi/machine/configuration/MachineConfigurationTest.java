@@ -13,9 +13,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import edu.issi.machine.id.IdentityTest;
+import edu.issi.machine.id.PropertyIdentity;
+import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationTest;
+import edu.issi.machine.product.OrderedElementsList;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ProductTest;
+import edu.issi.machine.product.ingredient.Ingredient;
+import edu.issi.machine.product.ingredient.IngredientTest;
+import edu.issi.machine.product.ingredient.Unit;
 import edu.issi.machine.subassembly.Subassembly;
 import edu.issi.machine.subassembly.TestingSubassembly;
 
@@ -27,43 +34,45 @@ public class MachineConfigurationTest {
     @SuppressWarnings("unused")
     @Test
     public void subassembliesShouldBeSetted() throws InvalidAttributeIdentifierException {
+	List<Ingredient> fixtureIngredients = getFixtureIngredients();
+
 	exception.expect(IllegalArgumentException.class);
-	new MachineConfiguration(null, ProductTest.getManyFixtures());
+	new MachineConfiguration(null, fixtureIngredients, getFixtureProducts(fixtureIngredients));
     }
 
     @SuppressWarnings("unused")
     @Test
     public void subassembliesListShouldNotBeEmpty() throws InvalidAttributeIdentifierException {
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
+	List<Ingredient> fixtureIngredients = getFixtureIngredients();
 
 	exception.expect(IllegalArgumentException.class);
-	new MachineConfiguration(subassemblies, ProductTest.getManyFixtures());
+	new MachineConfiguration(subassemblies, fixtureIngredients, getFixtureProducts(fixtureIngredients));
     }
 
     @SuppressWarnings("unused")
     @Test
     public void productsShouldBeSetted() throws Exception {
-	Subassembly subassembly = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
+	exception.expect(IllegalArgumentException.class);
+	new MachineConfiguration(getFixtureSubassemlies(), getFixtureIngredients(), null);
+    }
 
-	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
-	subassemblies.add(subassembly);
+    @SuppressWarnings("unused")
+    @Test
+    public void ingredientsShouldBeSetted() throws Exception {
+	List<Ingredient> fixtureIngredients = getFixtureIngredients();
 
 	exception.expect(IllegalArgumentException.class);
-	new MachineConfiguration(subassemblies, null);
+	new MachineConfiguration(getFixtureSubassemlies(), null, getFixtureProducts(fixtureIngredients));
     }
 
     @SuppressWarnings("unused")
     @Test
     public void productsListShouldNotBeEmpty() throws InvalidAttributeIdentifierException {
-	Subassembly subassembly = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
-
-	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
-	subassemblies.add(subassembly);
-
 	List<Product> products = new ArrayList<Product>();
 
 	exception.expect(IllegalArgumentException.class);
-	new MachineConfiguration(subassemblies, products);
+	new MachineConfiguration(getFixtureSubassemlies(), getFixtureIngredients(), products);
     }
 
     @Test
@@ -102,12 +111,47 @@ public class MachineConfigurationTest {
 
     public static MachineConfiguration getFixture() throws IllegalArgumentException,
 	    InvalidAttributeIdentifierException {
-	Subassembly subassembly = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
+	List<Ingredient> fixtureIngredients = getFixtureIngredients();
+	return new MachineConfiguration(getFixtureSubassemlies(), fixtureIngredients, getFixtureProducts(fixtureIngredients));
+    }
 
+    private static List<Subassembly> getFixtureSubassemlies() throws InvalidAttributeIdentifierException {
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
+	TestingSubassembly subassembly = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
 	subassemblies.add(subassembly);
+	
+	return subassemblies;
+    }
 
-	return new MachineConfiguration(subassemblies, ProductTest.getManyFixtures());
+    private static List<Ingredient> getFixtureIngredients() throws IllegalArgumentException,
+	    InvalidAttributeIdentifierException {
+	List<Ingredient> result = new ArrayList<Ingredient>();
+
+	OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
+	operations.add(OperationTest.getFixture());
+
+	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	ingredient.setOperations(operations);
+
+	PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
+	ingredient.add(property, new Double(-1.0));
+	
+	result.add(ingredient);
+
+	return result;
+    }
+
+    private static List<Product> getFixtureProducts(List<Ingredient> fixtureIngredients) throws IllegalArgumentException,
+	    InvalidAttributeIdentifierException {
+	List<Product> result = new ArrayList<Product>();
+
+	for (Ingredient eachIngredient : fixtureIngredients) {
+	    Product product = new Product(IdentityTest.getIdentityFixture());
+	    product.add(eachIngredient);
+	    result.add(product);
+	}
+
+	return result;
     }
 
 }
