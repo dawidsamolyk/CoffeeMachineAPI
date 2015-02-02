@@ -90,17 +90,7 @@ public class Model {
      * @return Nazwy sk³adników wybranego produktu.
      */
     public Set<String> getIngredientsNamesForProductNamed(String productName) throws IllegalArgumentException {
-	Iterator<Product> iterator = configuration.getProductsIterator();
-
-	Product product = null;
-	while (iterator.hasNext()) {
-	    Product eachProduct = iterator.next();
-
-	    if (eachProduct.getName().equals(productName)) {
-		product = eachProduct;
-		break;
-	    }
-	}
+	Product product = getProductByName(productName);
 
 	if (product == null) {
 	    throw new IllegalArgumentException("Maszyna nie obs³uguje produktu o nazwie " + productName);
@@ -113,5 +103,20 @@ public class Model {
 	}
 
 	return result;
+    }
+
+    private Product getProductByName(String productName) {
+	Iterator<Product> iterator = configuration.getProductsIterator();
+
+	Product product = null;
+	while (iterator.hasNext()) {
+	    Product eachProduct = iterator.next();
+
+	    if (eachProduct.getName().equals(productName)) {
+		product = eachProduct;
+		break;
+	    }
+	}
+	return product;
     }
 }

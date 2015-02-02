@@ -15,6 +15,7 @@ import edu.issi.machine.subassembly.Subassembly;
  *         Konfiguracja maszyny.
  */
 public class MachineConfiguration {
+    // TODO zmieñ na mapê, aby mo¿na by³o ³atwo pobieraæ obiekt po nazwie
     private final List<Subassembly> subassemblies;
     private final List<Ingredient> ingredients;
     private final List<Product> products;
