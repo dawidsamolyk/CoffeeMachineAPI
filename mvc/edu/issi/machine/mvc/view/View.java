@@ -1,10 +1,10 @@
-package edu.issi.machine.mvc;
+package edu.issi.machine.mvc.view;
 
 import java.util.Map;
 import java.util.Set;
 
-import edu.issi.machine.mvc.Controller.IngredientsListener;
-import edu.issi.machine.mvc.Controller.ProductsListener;
+import edu.issi.machine.mvc.controller.Controller.IngredientsListener;
+import edu.issi.machine.mvc.controller.Controller.ProductsListener;
 import edu.issi.machine.operation.Status;
 import edu.issi.machine.product.ingredient.Unit;
 
@@ -13,10 +13,6 @@ import edu.issi.machine.product.ingredient.Unit;
  *
  */
 public interface View {
-    /**
-     * 
-     */
-    public final static int INVALID_ID = -1;
 
     /**
      * @param products

@@ -85,6 +85,13 @@ public class MachineConfiguration {
     }
 
     /**
+     * @return Iterator po sk³adnikach produktów, które mo¿e wydaæ maszyny.
+     */
+    public Iterator<Ingredient> getIngredientsIterator() {
+	return ingredients.iterator();
+    }
+
+    /**
      * @return Iterator po podzespo³ach maszyny.
      */
     public Iterator<Subassembly> getSubassembliesIterator() {
@@ -97,8 +104,7 @@ public class MachineConfiguration {
      * @throws IllegalArgumentException
      *             Wyst¹pi, jeœli produkt, który jest argumentem wejœciowym
      *             funkcji, nie zosta³ stworzony lub jeœli produkt zawiera
-     *             nieznane sk³adniki (czyli takie, których nie obs³uguje
-     *             maszyna).
+     *             nieznane sk³adniki (takie, których nie obs³uguje maszyna).
      */
     public void addProduct(Product product) throws IllegalArgumentException {
 	Validator.throwExceptionWhenObjectIsNotCreated(product,

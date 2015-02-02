@@ -1,4 +1,4 @@
-package edu.issi.machine.mvc;
+package edu.issi.machine.mvc.model;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -62,27 +62,54 @@ public class Model {
 	Iterator<Product> productsIterator = configuration.getProductsIterator();
 
 	while (productsIterator.hasNext()) {
-	    String productName = productsIterator.next().getName();
-	    result.add(productName);
+	    Product product = productsIterator.next();
+	    result.add(product.getName());
 	}
 
 	return result;
     }
 
     /**
-     * @return Nazwy dostêpnych sk³adników.
+     * @return Nazwy wszystkich dostêpnych sk³adników.
      */
-    public Set<String> getIngredientsNames() {
+    public Set<String> getAllIngredientsNames() {
 	Set<String> result = new HashSet<String>();
-	Iterator<Product> productsIterator = configuration.getProductsIterator();
+	Iterator<Ingredient> ingredientsIterator = configuration.getIngredientsIterator();
 
-	while (productsIterator.hasNext()) {
-	    Iterator<Ingredient> ingredientsIterator = productsIterator.next().iterator();
+	while (ingredientsIterator.hasNext()) {
+	    Ingredient ingredient = ingredientsIterator.next();
+	    result.add(ingredient.getName());
+	}
 
-	    while (ingredientsIterator.hasNext()) {
-		String ingredientName = ingredientsIterator.next().getName();
-		result.add(ingredientName);
+	return result;
+    }
+
+    /**
+     * @param productName
+     *            Nazwa produktu.
+     * @return Nazwy sk³adników wybranego produktu.
+     */
+    public Set<String> getIngredientsNamesForProductNamed(String productName) throws IllegalArgumentException {
+	Iterator<Product> iterator = configuration.getProductsIterator();
+
+	Product product = null;
+	while (iterator.hasNext()) {
+	    Product eachProduct = iterator.next();
+
+	    if (eachProduct.getName().equals(productName)) {
+		product = eachProduct;
+		break;
 	    }
+	}
+
+	if (product == null) {
+	    throw new IllegalArgumentException("Maszyna nie obs³uguje produktu o nazwie " + productName);
+	}
+
+	Set<String> result = new HashSet<String>();
+	
+	for(Ingredient eachIngredient : product) {
+	    result.add(eachIngredient.getName());
 	}
 
 	return result;

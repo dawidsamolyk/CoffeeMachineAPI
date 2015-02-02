@@ -1,12 +1,13 @@
-package edu.issi.machine.mvc;
+package edu.issi.machine.mvc.view;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import edu.issi.machine.mvc.Controller.IngredientsListener;
-import edu.issi.machine.mvc.Controller.ProductsListener;
+import edu.issi.machine.mvc.controller.Controller.IngredientsListener;
+import edu.issi.machine.mvc.controller.Controller.ProductsListener;
 import edu.issi.machine.operation.Status;
 import edu.issi.machine.product.ingredient.Unit;
 
@@ -66,9 +67,9 @@ public class ConsoleView implements View {
 	    Unit propertyUnit = availableProperties.get(propertyName);
 	    show("W£AŒCIWOŒÆ [" + propertyName + "] , JEDNOSTKA [" + propertyUnit.name() + "]");
 	    show("Podaj wartoœæ: ");
-	    
+
 	    Float value = scanner.nextFloat();
-	    
+
 	    result.put(propertyName, value);
 	}
 
@@ -87,18 +88,31 @@ public class ConsoleView implements View {
 
     @Override
     public Set<String> getNewProductIngredients(Set<String> availableIngredients) {
-	// TODO zaimplementuj
-	return null;
+	Set<String> result = new HashSet<String>();
+
+	show("Wybierz sk³adniki dla przygotowywanego napoju");
+
+	for (String eachIngredient : availableIngredients) {
+	    show("SK£ADNIK [" + eachIngredient + "]");
+	    show("Wpisz T i potwierdŸ (Enter), jeœli ten sk³adnik ma zostaæ dodany do przygotowywanego napoju");
+
+	    String userAnswer = scanner.next();
+	    if (userAnswer.equals("T")) {
+		result.add(eachIngredient);
+	    }
+	}
+
+	return result;
     }
 
     @Override
     public void addProductsListener(ProductsListener productsListListener) {
-	productsListListener.actionPerformed();
+	// TODO zaimplementuj
     }
 
     @Override
     public void addIngredientsListener(IngredientsListener ingredientsListener) {
-	ingredientsListener.actionPerformed();
+	// TODO zaimplementuj
     }
 
 }

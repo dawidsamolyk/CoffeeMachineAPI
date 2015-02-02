@@ -9,6 +9,9 @@ import edu.issi.machine.DemoApplication;
 import edu.issi.machine.DemoGrinding;
 import edu.issi.machine.configuration.MachineConfiguration;
 import edu.issi.machine.id.Identity;
+import edu.issi.machine.mvc.controller.Controller;
+import edu.issi.machine.mvc.model.Model;
+import edu.issi.machine.mvc.view.ConsoleView;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Ingredient;
@@ -19,7 +22,7 @@ import edu.issi.machine.subassembly.TestingSubassembly;
  * @author DawidSamolyk
  *
  */
-public class Application {
+public class MvcDemoApplication {
 
     /**
      * @param args
@@ -34,7 +37,7 @@ public class Application {
 	ingredients.add(DemoApplication.getDemoWater());
 
 	List<Product> products = DemoApplication.getDemoProducts(ingredients);
-	List<Subassembly> subassemblies = getDemoSubassemblies();
+	List<Subassembly> subassemblies = MvcDemoApplication.getDemoSubassemblies();
 
 	MachineConfiguration config = new MachineConfiguration(subassemblies, ingredients, products);
 
@@ -43,7 +46,7 @@ public class Application {
 	Controller controller = new Controller(model);
 	controller.addAndInitializeView(new ConsoleView());
 
-	model.startMachine();
+	controller.startMachine();
     }
 
     private static List<Subassembly> getDemoSubassemblies() throws InvalidAttributeIdentifierException {
