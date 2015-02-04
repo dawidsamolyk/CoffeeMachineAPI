@@ -23,6 +23,10 @@ public class ConsoleView implements View {
     private ConsoleListener consoleListener = new ConsoleListener();
     private Scanner scanner = new Scanner(System.in);
 
+    public ConsoleView() {
+	consoleListener.run();
+    }
+    
     private void show(String text) {
 	System.out.println(text);
     }
@@ -123,11 +127,6 @@ public class ConsoleView implements View {
     @Override
     public void addOrderListener(OrderListener orderListener) {
 	consoleListener.orderListener = orderListener;
-    }
-
-    @Override
-    public void start() {
-	consoleListener.run();
     }
 
     private class ConsoleListener {

@@ -15,11 +15,6 @@ import edu.issi.machine.product.ingredient.Unit;
  *
  */
 public interface View {
-    
-    /**
-     * 
-     */
-    void start();
 
     /**
      * @param products

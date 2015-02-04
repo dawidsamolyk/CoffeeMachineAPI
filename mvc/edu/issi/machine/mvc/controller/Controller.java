@@ -55,7 +55,6 @@ public class Controller {
 	view.addIngredientsListener(new IngredientsListener());
 	view.addPropertiesListener(new PropertiesListener());
 	view.addOrderListener(new OrderListener());
-	view.start();
     }
 
     /**

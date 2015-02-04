@@ -30,6 +30,7 @@ import edu.issi.machine.product.ingredient.Unit;
 public class GraphicalView implements View {
     private PropertiesListener propertiesListener;
     private IngredientsListener ingredientsListener;
+    private OrderListener orderListener;
     private JFrame frame;
     private JLabel statusLabel;
     private DefaultListModel<String> productsListModel = new DefaultListModel<String>();
@@ -103,7 +104,6 @@ public class GraphicalView implements View {
 	gbc_list_1.gridx = 1;
 	gbc_list_1.gridy = 1;
 	ingredientsList.addMouseListener(new MouseAdapter() {
-
 	    @Override
 	    public void mousePressed(MouseEvent e) {
 		EventArguments arguments = new EventArguments(GraphicalView.this, ingredientsList.getSelectedValue());
@@ -130,25 +130,47 @@ public class GraphicalView implements View {
 
 	statusLabel = new JLabel("Status...");
 	GridBagConstraints gbc_status = new GridBagConstraints();
-	gbc_status.insets = new Insets(0, 0, 5, 5);
+	gbc_status.insets = new Insets(0, 0, 0, 5);
 	gbc_status.gridx = 0;
 	gbc_status.gridy = 2;
 	frame.getContentPane().add(statusLabel, gbc_status);
 
+	JButton btnWasnyProdukt = new JButton("W\u0142asny produkt");
+	GridBagConstraints gbc_btnWasnyProdukt = new GridBagConstraints();
+	gbc_btnWasnyProdukt.insets = new Insets(0, 0, 0, 5);
+	gbc_btnWasnyProdukt.gridx = 1;
+	gbc_btnWasnyProdukt.gridy = 2;
+	frame.getContentPane().add(btnWasnyProdukt, gbc_btnWasnyProdukt);
+
+	JButton btnZakocz = new JButton("Zako\u0144cz");
+	GridBagConstraints gbc_btnZakocz = new GridBagConstraints();
+	gbc_btnZakocz.gridx = 3;
+	gbc_btnZakocz.gridy = 2;
+	btnZakocz.addMouseListener(new MouseAdapter() {
+	    @Override
+	    public void mouseClicked(MouseEvent e) {
+		frame.dispose();
+	    }
+	});
+	frame.getContentPane().add(btnZakocz, gbc_btnZakocz);
+
+	frame.setVisible(true);
     }
 
-    @Override
-    public void start() {
-	frame.setVisible(true);
+    private void refresh(DefaultListModel<String> listModel) {
+	listModel.clear();
+    }
+
+    private void showOn(Set<String> content, DefaultListModel<String> listModel) {
+	for (String each : content) {
+	    listModel.addElement(each);
+	}
     }
 
     @Override
     public void showProducts(Set<String> products) {
-	productsListModel.clear();
-
-	for (String each : products) {
-	    productsListModel.addElement(each);
-	}
+	refresh(productsListModel);
+	showOn(products, productsListModel);
     }
 
     @Override
@@ -158,12 +180,9 @@ public class GraphicalView implements View {
 
     @Override
     public void showIngredients(Set<String> ingredients) {
-	ingredientsListModel.clear();
-	propertiesListModel.clear();
-
-	for (String each : ingredients) {
-	    ingredientsListModel.addElement(each);
-	}
+	refresh(ingredientsListModel);
+	refresh(propertiesListModel);
+	showOn(ingredients, ingredientsListModel);
     }
 
     @Override
@@ -217,8 +236,7 @@ public class GraphicalView implements View {
 
     @Override
     public void addOrderListener(OrderListener orderListener) {
-	// TODO Auto-generated method stub
-
+	this.orderListener = orderListener;
     }
 
     @Override
