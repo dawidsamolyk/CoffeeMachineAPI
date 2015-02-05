@@ -23,7 +23,7 @@ public class ProductTest {
 
     @Test
     public void shouldCreateEmptyProduct() throws InvalidAttributeIdentifierException {
-	Product result = Fixtures.getFixture();
+	Product result = Fixtures.getFixtureWithoutIngredients();
 
 	assertNotNull(result);
 	assertEquals(0, result.numberOfElements());
@@ -31,7 +31,7 @@ public class ProductTest {
 
     @Test
     public void shouldAddNewIngredientsCorrectly() throws InvalidAttributeIdentifierException {
-	Product fixture = Fixtures.getFixture();
+	Product fixture = Fixtures.getFixtureWithoutIngredients();
 
 	fixture.add(edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getSimpleFixture());
 	fixture.add(edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getSimpleFixture());
@@ -43,7 +43,7 @@ public class ProductTest {
     @Test
     public void shouldNotAddNewElementAtZeroIndexWhenTheresNoElementsOnIngredienstList()
 	    throws InvalidAttributeIdentifierException {
-	Product fixture = Fixtures.getFixture();
+	Product fixture = Fixtures.getFixtureWithoutIngredients();
 
 	exception.expect(java.lang.UnsupportedOperationException.class);
 	fixture.addAt(0, edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getComplexFixture());
@@ -52,7 +52,7 @@ public class ProductTest {
     @Test
     public void shouldNotAddNewElementAtSecondPlaceWhenTheresNoElementsOnIngredienstList()
 	    throws InvalidAttributeIdentifierException {
-	Product fixture = Fixtures.getFixture();
+	Product fixture = Fixtures.getFixtureWithoutIngredients();
 
 	exception.expect(java.lang.UnsupportedOperationException.class);
 	fixture.addAt(1, edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getComplexFixture());
@@ -60,7 +60,7 @@ public class ProductTest {
 
     @Test
     public void shouldNotAddNewElementAtUnreachableIngredientsListIndex() throws InvalidAttributeIdentifierException {
-	Product fixture = Fixtures.getFixture();
+	Product fixture = Fixtures.getFixtureWithoutIngredients();
 
 	exception.expect(java.lang.UnsupportedOperationException.class);
 	fixture.addAt(7, edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getComplexFixture());
@@ -68,7 +68,7 @@ public class ProductTest {
 
     @Test
     public void shouldProvidesIngredientFromSpecifiedIndex() throws InvalidAttributeIdentifierException {
-	Product fixture = Fixtures.getFixture();
+	Product fixture = Fixtures.getFixtureWithoutIngredients();
 
 	fixture.add(edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getSimpleFixture());
 	fixture.add(edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getSimpleFixture());
@@ -79,7 +79,7 @@ public class ProductTest {
 
     @Test
     public void shouldProvidesIngredientFromInvalidIndex() throws InvalidAttributeIdentifierException {
-	Product fixture = Fixtures.getFixture();
+	Product fixture = Fixtures.getFixtureWithoutIngredients();
 
 	fixture.add(edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getSimpleFixture());
 
@@ -89,7 +89,7 @@ public class ProductTest {
 
     @Test
     public void shouldPutNewIngredientAtSpecifiedIndex() throws InvalidAttributeIdentifierException {
-	Product fixture = Fixtures.getFixture();
+	Product fixture = Fixtures.getFixtureWithoutIngredients();
 
 	fixture.add(edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getComplexFixture());
 
@@ -101,7 +101,7 @@ public class ProductTest {
 
     @Test
     public void shouldRemovesIngredientFromSpecifiedIndex() throws InvalidAttributeIdentifierException {
-	Product fixture = Fixtures.getFixture();
+	Product fixture = Fixtures.getFixtureWithoutIngredients();
 
 	fixture.add(edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getSimpleFixture());
 	fixture.add(edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getSimpleFixture());
@@ -114,7 +114,7 @@ public class ProductTest {
 
     @Test
     public void shouldNotRemovesIngredientFromInvalidIndex() throws InvalidAttributeIdentifierException {
-	Product fixture = Fixtures.getFixture();
+	Product fixture = Fixtures.getFixtureWithoutIngredients();
 
 	fixture.add(edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getSimpleFixture());
 
@@ -124,15 +124,15 @@ public class ProductTest {
 
     @Test
     public void shouldProvidesIteratorForIngredients() throws InvalidAttributeIdentifierException {
-	Product fixture = Fixtures.getFixture();
+	Product fixture = Fixtures.getFixtureWithoutIngredients();
 
 	assertNotNull(fixture.iterator());
     }
 
     @Test
     public void productsWithTheSameIngredientsShouldNotBeEquals() throws InvalidAttributeIdentifierException {
-	Product fixture = Fixtures.getFixture();
-	Product fixture2 = Fixtures.getFixture();
+	Product fixture = Fixtures.getFixtureWithoutIngredients();
+	Product fixture2 = Fixtures.getFixtureWithoutIngredients();
 
 	Ingredient ingredient = edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getComplexFixture();
 	fixture.add(ingredient);
@@ -143,17 +143,28 @@ public class ProductTest {
 
     public static class Fixtures {
 
-	public static Product getFixture() throws InvalidAttributeIdentifierException {
+	public static Product getFixtureWithoutIngredients() throws InvalidAttributeIdentifierException {
 	    return new Product(IdentityTest.getIdentityFixture());
 	}
 
 	public static List<Product> getManyFixtures() throws InvalidAttributeIdentifierException {
 	    List<Product> products = new ArrayList<Product>();
 
-	    products.add(ProductTest.Fixtures.getFixture());
-	    products.add(ProductTest.Fixtures.getFixture());
+	    products.add(ProductTest.Fixtures.getFixtureWithoutIngredients());
+	    products.add(ProductTest.Fixtures.getFixtureWithoutIngredients());
 
 	    return products;
+	}
+
+	public static Product getFixtureWith(List<Ingredient> ingredients, String name)
+		throws IllegalArgumentException, InvalidAttributeIdentifierException {
+	    Product product = new Product(Identity.Factory.newIdentity(name));
+
+	    for (Ingredient eachIngredient : ingredients) {
+		product.add(eachIngredient);
+	    }
+
+	    return product;
 	}
 
 	public static List<Product> getManyNamedFixturesWithIngredients(List<Ingredient> ingredients, String... names)
@@ -161,14 +172,7 @@ public class ProductTest {
 	    List<Product> products = new ArrayList<Product>();
 
 	    for (int p = 0; p < names.length; p++) {
-		Identity identity = Identity.Factory.newIdentity(names[p]);
-		Product product = new Product(identity);
-
-		for (Ingredient eachIngredient : ingredients) {
-		    product.add(eachIngredient);
-		}
-
-		products.add(product);
+		products.add(getFixtureWith(ingredients, names[p]));
 	    }
 
 	    return products;

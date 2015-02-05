@@ -36,6 +36,8 @@ public class MachineConfiguration {
 	    throws IllegalStateException {
 	ensureValidity(subassemblies, ingredients, products);
 	ensureIngredientsValidity(ingredients, products);
+	
+	// TODO zablokuj mo¿liwoœæ dodania takiego samego produktu lub produktu o tej samej nazwie
 
 	this.subassemblies = subassemblies;
 	this.ingredients = ingredients;
@@ -55,7 +57,7 @@ public class MachineConfiguration {
 	List<String> invalidProductsNames = new ArrayList<String>();
 
 	for (Product eachProduct : products) {
-	    if (hasOnlyAvailableIngredients(eachProduct, ingredients) == false) {
+	    if (hasInvalidIngredients(eachProduct, ingredients)) {
 		invalidProductsNames.add(eachProduct.getName());
 	    }
 	}
@@ -63,6 +65,14 @@ public class MachineConfiguration {
 	if (!invalidProductsNames.isEmpty()) {
 	    throw new IllegalStateException("Produkty " + invalidProductsNames + " zawieraj¹ nieznane sk³adniki!");
 	}
+    }
+
+    private boolean hasInvalidIngredients(Product product, List<Ingredient> ingredients) {
+	return !hasAnyIngredients(product) || !hasOnlyAvailableIngredients(product, ingredients);
+    }
+
+    private boolean hasAnyIngredients(Product eachProduct) {
+	return eachProduct.numberOfElements() > 0;
     }
 
     private boolean hasOnlyAvailableIngredients(Product product, List<Ingredient> ingredients) {
@@ -111,7 +121,9 @@ public class MachineConfiguration {
 	Validator.throwExceptionWhenObjectIsNotCreated(product,
 		"Nie mo¿na dodaæ pustego produktu do konfiguracji maszyny!");
 
-	if (hasOnlyAvailableIngredients(product, this.ingredients) == false) {
+	// TODO zablokuj mo¿liwoœæ dodania takiego samego produktu lub produktu o tej samej nazwie
+	
+	if (hasInvalidIngredients(product, ingredients)) {
 	    throw new IllegalArgumentException("Produkt " + product.getName() + " zawiera nieznane sk³adniki!");
 	}
 

@@ -1,6 +1,8 @@
 package edu.issi.machine.mvc.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +15,7 @@ import org.junit.rules.ExpectedException;
 import edu.issi.machine.configuration.MachineConfiguration;
 import edu.issi.machine.configuration.MachineConfigurationTest.Fixtures;
 import edu.issi.machine.product.Product;
+import edu.issi.machine.product.ProductTest;
 import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.subassembly.Subassembly;
 import edu.issi.machine.subassembly.TestingSubassembly;
@@ -39,10 +42,13 @@ public class ModelTest {
 
     @Test
     public void modelShouldBeAbleToAddNewProductToMachineConfiguration() throws Exception {
-	MachineConfiguration configuration = Fixtures.getFixture();
+	List<Ingredient> ingredients = Fixtures.getFixtureIngredients();
+	List<Subassembly> subassemlies = Fixtures.getFixtureSubassemlies();
+	List<Product> products = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients, "Kawa");
+	MachineConfiguration configuration = new MachineConfiguration(subassemlies, ingredients, products);
 	Model model = new Model(configuration);
-	Product newProduct = edu.issi.machine.product.ProductTest.Fixtures.getFixture();
 
+	Product newProduct = ProductTest.Fixtures.getFixtureWith(ingredients, "Czekolada");
 	model.addProduct(newProduct);
 
 	boolean hasNewProduct = false;
@@ -93,7 +99,7 @@ public class ModelTest {
 	List<Subassembly> subassemblies = Fixtures.getFixtureSubassemlies();
 	List<Ingredient> ingredients = Fixtures.getFixtureIngredients();
 	String[] fixtureProductsNames = { "Kawa", "Herbata", "Czekolada" };
-	List<Product> products = edu.issi.machine.product.ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients, fixtureProductsNames);
+	List<Product> products = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients, fixtureProductsNames);
 	MachineConfiguration configuration = new MachineConfiguration(subassemblies, ingredients, products);
 	Model model = new Model(configuration);
 	

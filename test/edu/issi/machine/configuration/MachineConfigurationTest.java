@@ -1,7 +1,6 @@
 package edu.issi.machine.configuration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,6 +18,7 @@ import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationTest;
 import edu.issi.machine.product.OrderedElementsList;
 import edu.issi.machine.product.Product;
+import edu.issi.machine.product.ProductTest;
 import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.product.ingredient.Unit;
 import edu.issi.machine.subassembly.Subassembly;
@@ -83,10 +83,12 @@ public class MachineConfigurationTest {
 
     @Test
     public void shouldAddNewProduct() throws InvalidAttributeIdentifierException {
-	// Tutaj dostarczone s¹ ju¿ przyk³adowe produkty
-	MachineConfiguration fixture = Fixtures.getFixture();
+	List<Ingredient> ingredients = Fixtures.getFixtureIngredients();
+	List<Subassembly> subassemlies = Fixtures.getFixtureSubassemlies();
+	List<Product> products = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients, "Kawa");
+	MachineConfiguration fixture = new MachineConfiguration(subassemlies, ingredients, products);
 
-	Product product = edu.issi.machine.product.ProductTest.Fixtures.getFixture();
+	Product product = ProductTest.Fixtures.getFixtureWith(ingredients, "Czekolada");
 	fixture.addProduct(product);
 
 	// Pobieram ostatni produkt, poniewa¿ nowo dodany produkt bêdzie na
@@ -106,6 +108,53 @@ public class MachineConfigurationTest {
 
 	exception.expect(IllegalArgumentException.class);
 	fixture.addProduct(null);
+    }
+
+    @Test
+    public void shouldNotAddProductWhichHasUnavailableIngredients() throws IllegalArgumentException,
+	    InvalidAttributeIdentifierException {
+	
+	List<Ingredient> ingredients = Fixtures.getFixtureIngredients();
+	List<Subassembly> subassemlies = Fixtures.getFixtureSubassemlies();
+	List<Product> products = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients, "Kawa");
+	MachineConfiguration fixture = new MachineConfiguration(subassemlies, ingredients, products);
+
+	Product newProduct = ProductTest.Fixtures.getFixtureWith(Fixtures.getFixtureIngredients(), "Czekolada");
+
+	exception.expect(IllegalArgumentException.class);
+	fixture.addProduct(newProduct);
+    }
+    
+    @Test
+    public void shouldNotAddProductWhichHasNotAnyIngredients() throws IllegalArgumentException,
+	    InvalidAttributeIdentifierException {
+	MachineConfiguration fixture = Fixtures.getFixture();
+	
+	exception.expect(IllegalArgumentException.class);
+	fixture.addProduct(ProductTest.Fixtures.getFixtureWithoutIngredients());
+    }
+
+    @SuppressWarnings("unused")
+    @Test
+    public void machineConfigurationShouldConsistsOfProductsWhichContainsOnlyAvailableIngredients() throws Exception {
+	List<Ingredient> fixtureIngredients = Fixtures.getFixtureIngredients();
+	List<Subassembly> fixtureSubassemlies = Fixtures.getFixtureSubassemlies();
+	List<Product> fixtureProducts = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(
+		Fixtures.getFixtureIngredients(), "Kawa", "Herbata");
+
+	exception.expect(IllegalStateException.class);
+	new MachineConfiguration(fixtureSubassemlies, fixtureIngredients, fixtureProducts);
+    }
+
+    @SuppressWarnings("unused")
+    @Test
+    public void machineConfigurationShouldConsistsOfProductsWhichContainsAnyIngredients() throws Exception {
+	List<Ingredient> fixtureIngredients = Fixtures.getFixtureIngredients();
+	List<Subassembly> fixtureSubassemlies = Fixtures.getFixtureSubassemlies();
+	List<Product> fixtureProducts = ProductTest.Fixtures.getManyFixtures();
+
+	exception.expect(IllegalStateException.class);
+	new MachineConfiguration(fixtureSubassemlies, fixtureIngredients, fixtureProducts);
     }
 
     public static class Fixtures {
