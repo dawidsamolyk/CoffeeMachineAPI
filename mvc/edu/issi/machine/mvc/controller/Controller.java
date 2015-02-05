@@ -23,6 +23,7 @@ public class Controller {
      *            Model.
      */
     public Controller(Model model) {
+	Validator.throwExceptionWhenObjectIsNotCreated(model, "Nie podano modelu aplikacji!");
 	this.model = model;
     }
 

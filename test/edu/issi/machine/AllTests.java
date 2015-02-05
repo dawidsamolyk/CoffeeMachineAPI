@@ -14,7 +14,9 @@ import org.junit.runners.Suite.SuiteClasses;
 	edu.issi.machine.operation.AllTests.class, 
 	edu.issi.machine.product.AllTests.class,
 	edu.issi.machine.product.ingredient.AllTests.class, 
-	edu.issi.machine.subassembly.AllTests.class })
+	edu.issi.machine.subassembly.AllTests.class,
+	edu.issi.machine.mvc.model.AllTests.class,
+	edu.issi.machine.mvc.controller.AllTests.class })
 
 @SuppressWarnings("javadoc")
 public class AllTests {
