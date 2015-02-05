@@ -112,18 +112,19 @@ public class MachineConfigurationTest {
     public static MachineConfiguration getFixture() throws IllegalArgumentException,
 	    InvalidAttributeIdentifierException {
 	List<Ingredient> fixtureIngredients = getFixtureIngredients();
-	return new MachineConfiguration(getFixtureSubassemlies(), fixtureIngredients, getFixtureProducts(fixtureIngredients));
+	return new MachineConfiguration(getFixtureSubassemlies(), fixtureIngredients,
+		getFixtureProducts(fixtureIngredients));
     }
 
-    private static List<Subassembly> getFixtureSubassemlies() throws InvalidAttributeIdentifierException {
+    public static List<Subassembly> getFixtureSubassemlies() throws InvalidAttributeIdentifierException {
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
 	TestingSubassembly subassembly = TestingSubassembly.getFixtureWith(OperationTest.getFixture());
 	subassemblies.add(subassembly);
-	
+
 	return subassemblies;
     }
 
-    private static List<Ingredient> getFixtureIngredients() throws IllegalArgumentException,
+    public static List<Ingredient> getFixtureIngredients() throws IllegalArgumentException,
 	    InvalidAttributeIdentifierException {
 	List<Ingredient> result = new ArrayList<Ingredient>();
 
@@ -135,14 +136,14 @@ public class MachineConfigurationTest {
 
 	PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
 	ingredient.add(property, new Double(-1.0));
-	
+
 	result.add(ingredient);
 
 	return result;
     }
 
-    private static List<Product> getFixtureProducts(List<Ingredient> fixtureIngredients) throws IllegalArgumentException,
-	    InvalidAttributeIdentifierException {
+    public static List<Product> getFixtureProducts(List<Ingredient> fixtureIngredients)
+	    throws IllegalArgumentException, InvalidAttributeIdentifierException {
 	List<Product> result = new ArrayList<Product>();
 
 	for (Ingredient eachIngredient : fixtureIngredients) {
