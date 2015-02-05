@@ -1,8 +1,8 @@
 package edu.issi.machine.id;
 
-import static org.junit.Assert.*;
-
-import javax.naming.directory.InvalidAttributeIdentifierException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class IdentityTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void identityShouldBeEnableToChangeName() throws InvalidAttributeIdentifierException {
+    public void identityShouldBeEnableToChangeName() {
 	String originalName = "Test";
 	String newName = "Real";
 	Identity fixture = Identity.Factory.newIdentity(originalName);
@@ -25,7 +25,7 @@ public class IdentityTest {
     }
     
     @Test
-    public void identityNotShouldBeEnableToChangeToEmptyName() throws InvalidAttributeIdentifierException {
+    public void identityNotShouldBeEnableToChangeToEmptyName() {
 	Identity fixture = IdentityTest.getIdentityFixture();
 	
 	exception.expect(IllegalArgumentException.class);
@@ -33,7 +33,7 @@ public class IdentityTest {
     }
     
     @Test
-    public void identityShouldBeKnownByIdNumber() throws InvalidAttributeIdentifierException {
+    public void identityShouldBeKnownByIdNumber() {
 	Identity fixture = IdentityTest.getIdentityFixture();
 	int idNumber = fixture.getIdNumber();
 	
@@ -41,7 +41,7 @@ public class IdentityTest {
     }
     
     @Test
-    public void identityShouldNotBeKnownByUnknownIdNumber() throws InvalidAttributeIdentifierException {
+    public void identityShouldNotBeKnownByUnknownIdNumber() {
 	Identity fixture = IdentityTest.getIdentityFixture();
 	int idNumber = fixture.getIdNumber();
 	int unknownIdNumber = idNumber + 1;
@@ -58,7 +58,7 @@ public class IdentityTest {
 	assertFalse(fixture.equals(fixture2));
     }
     
-    public static Identity getIdentityFixture() throws InvalidAttributeIdentifierException {
+    public static Identity getIdentityFixture() {
         return Identity.Factory.newIdentity("Test");
     }
 

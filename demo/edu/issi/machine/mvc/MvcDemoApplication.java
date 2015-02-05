@@ -47,7 +47,7 @@ public class MvcDemoApplication {
 	controller.startMachine();
     }
 
-    private static List<Subassembly> getDemoSubassemblies() throws InvalidAttributeIdentifierException {
+    private static List<Subassembly> getDemoSubassemblies() {
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
 
 	List<Operation> grinderOperations = new ArrayList<Operation>();

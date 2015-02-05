@@ -1,11 +1,11 @@
 package edu.issi.machine.product.ingredient;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import javax.naming.directory.InvalidAttributeIdentifierException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class IngredientTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void ingredientShouldHoldsProperties() throws InvalidAttributeIdentifierException {
+    public void ingredientShouldHoldsProperties() {
 	Ingredient ingredient = Fixtures.getSimpleFixture();
 	PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
 
@@ -34,7 +34,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void ingredientShouldProvidesSpecifiedProperty() throws InvalidAttributeIdentifierException {
+    public void ingredientShouldProvidesSpecifiedProperty() {
 	Ingredient ingredient = Fixtures.getComplexFixture();
 	PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
 	Double value = 10.0;
@@ -45,7 +45,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void ingredientShouldNotProvidesUnknownProperty() throws InvalidAttributeIdentifierException {
+    public void ingredientShouldNotProvidesUnknownProperty() {
 	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	exception.expect(NoSuchElementException.class);
@@ -53,7 +53,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void ingredientShouldNotProvidesEmptyProperty() throws InvalidAttributeIdentifierException {
+    public void ingredientShouldNotProvidesEmptyProperty() {
 	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	exception.expect(IllegalArgumentException.class);
@@ -61,7 +61,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void ingredientShouldRemovesSpecifiedProperty() throws InvalidAttributeIdentifierException {
+    public void ingredientShouldRemovesSpecifiedProperty() {
 	Ingredient ingredient = Fixtures.getSimpleFixture();
 	PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
 	ingredient.add(property, new Double(-1.0));
@@ -72,7 +72,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void ingredientShouldNotRemovesUnknownProperty() throws InvalidAttributeIdentifierException {
+    public void ingredientShouldNotRemovesUnknownProperty() {
 	Ingredient ingredient = Fixtures.getSimpleFixture();
 	PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
 
@@ -81,7 +81,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void ingredientShouldNotRemovesEmptyProperty() throws InvalidAttributeIdentifierException {
+    public void ingredientShouldNotRemovesEmptyProperty() {
 	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	exception.expect(IllegalArgumentException.class);
@@ -89,8 +89,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void ingredientShouldProvidesOperationStatesAfterAllOperationsExecuting()
-	    throws InvalidAttributeIdentifierException {
+    public void ingredientShouldProvidesOperationStatesAfterAllOperationsExecuting() {
 	Ingredient ingredient = Fixtures.getComplexFixture();
 
 	List<OperationStatus> operationsStates = ingredient.doOperations();
@@ -99,8 +98,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void ingredientShouldNotProvidesOperationStatesWhenThereIsntAnyOperationsToExecute()
-	    throws InvalidAttributeIdentifierException {
+    public void ingredientShouldNotProvidesOperationStatesWhenThereIsntAnyOperationsToExecute() {
 	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	exception.expect(IllegalArgumentException.class);
@@ -109,11 +107,11 @@ public class IngredientTest {
 
     public static class Fixtures {
 
-	public static Ingredient getSimpleFixture() throws InvalidAttributeIdentifierException {
+	public static Ingredient getSimpleFixture() {
 	    return new Ingredient(IdentityTest.getIdentityFixture());
 	}
 
-	public static Ingredient getComplexFixture() throws InvalidAttributeIdentifierException {
+	public static Ingredient getComplexFixture() {
 	    OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
 	    operations.add(OperationTest.getFixture());
 

@@ -116,11 +116,9 @@ public class Ingredient extends ObjectWithIdentity {
 	Validator.throwExceptionWhenContainsNullOrEmpty(operations,
 		"Zbiór operacji na sk³adniku nie mo¿e byæ pusty lub niepe³ny!");
 
-	List<OperationStatus> result = new ArrayList<OperationStatus>();
+	final List<OperationStatus> result = new ArrayList<OperationStatus>();
 
-	Iterator<Operation> itearator = operations.iterator();
-
-	while (itearator.hasNext()) {
+	for (Iterator<Operation> itearator = operations.iterator(); itearator.hasNext();) {
 	    OperationStatus state = itearator.next().execute();
 	    result.add(state);
 	}

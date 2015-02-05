@@ -3,8 +3,6 @@ package edu.issi.machine.subassembly;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.naming.directory.InvalidAttributeIdentifierException;
-
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.IdentityTest;
 import edu.issi.machine.operation.Operation;
@@ -30,13 +28,12 @@ public class TestingSubassembly extends Subassembly {
     public void stop() {
 	running = false;
     }
-    
+
     public boolean isRunning() {
 	return running;
     }
 
-    public static TestingSubassembly getFixtureWith(Operation... testingOperations) throws IllegalArgumentException,
-	    InvalidAttributeIdentifierException {
+    public static TestingSubassembly getFixtureWith(Operation... testingOperations) throws IllegalArgumentException {
 	List<Operation> operations = Arrays.asList(testingOperations);
 
 	return new TestingSubassembly(IdentityTest.getIdentityFixture(), operations);

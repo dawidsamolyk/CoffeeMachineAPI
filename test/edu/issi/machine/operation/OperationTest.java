@@ -1,8 +1,8 @@
 package edu.issi.machine.operation;
 
-import static org.junit.Assert.*;
-
-import javax.naming.directory.InvalidAttributeIdentifierException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ import edu.issi.machine.subassembly.TestingSubassembly;
 public class OperationTest {
 
     @Test
-    public void shouldGiveResponseAfterExecution() throws InvalidAttributeIdentifierException {
+    public void shouldGiveResponseAfterExecution() {
 	Operation operation = OperationTest.getFixture();
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
 	Ingredient ingredient = Fixtures.getSimpleFixture();
@@ -27,7 +27,7 @@ public class OperationTest {
     }
 
     @Test
-    public void shouldGiveErrorResponseWhenOnlySubassemblySetted() throws InvalidAttributeIdentifierException {
+    public void shouldGiveErrorResponseWhenOnlySubassemblySetted() {
 	Operation operation = OperationTest.getFixture();
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
 
@@ -37,7 +37,7 @@ public class OperationTest {
     }
 
     @Test
-    public void shouldGiveErrorResponseWhenOnlyIngredientSetted() throws InvalidAttributeIdentifierException {
+    public void shouldGiveErrorResponseWhenOnlyIngredientSetted() {
 	Operation operation = OperationTest.getFixture();
 	Ingredient ingredient = Fixtures.getSimpleFixture();
 
@@ -47,8 +47,7 @@ public class OperationTest {
     }
 
     @Test
-    public void shouldExecuteValidlyWhenIngredientAndSubassemblySetted() throws IllegalArgumentException,
-	    InvalidAttributeIdentifierException {
+    public void shouldExecuteValidlyWhenIngredientAndSubassemblySetted() throws IllegalArgumentException {
 	Operation operation = OperationTest.getFixture();
 
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
@@ -60,8 +59,7 @@ public class OperationTest {
     }
 
     @Test
-    public void shouldSetSubassemblyOnlyWhenItCanDoSpecifiedOperation() throws IllegalArgumentException,
-	    InvalidAttributeIdentifierException {
+    public void shouldSetSubassemblyOnlyWhenItCanDoSpecifiedOperation() throws IllegalArgumentException {
 	Operation operation = OperationTest.getFixture();
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
 	Ingredient ingredient = Fixtures.getSimpleFixture();
@@ -72,42 +70,41 @@ public class OperationTest {
     }
 
     @Test
-    public void shouldGiveErrorResponseWhenSettedSubassemblyCanNotDoSpecifiedOperation()
-	    throws InvalidAttributeIdentifierException {
+    public void shouldGiveErrorResponseWhenSettedSubassemblyCanNotDoSpecifiedOperation() {
 	Operation operation = OperationTest.getFixture();
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
-	
+
 	Operation anotherOperation = OperationTest.getFixture();
 
 	OperationStatus status = anotherOperation.setSubassembly(subassembly).execute();
 
 	assertEquals(Status.ERROR, status.getStatus());
     }
-    
+
     @Test
-    public void operationShouldGivesInformationAboutHisStatus() throws InvalidAttributeIdentifierException {
+    public void operationShouldGivesInformationAboutHisStatus() {
 	Operation operation = OperationTest.getFixture();
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
 	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	operation.setSubassembly(subassembly).setIngredient(ingredient).execute();
-	
+
 	assertTrue(operation.isDone());
     }
-    
+
     @Test
-    public void shouldGiveErrorWhenSpecifiedSubassemblyCannotDoThisOperation() throws InvalidAttributeIdentifierException {
+    public void shouldGiveErrorWhenSpecifiedSubassemblyCannotDoThisOperation() {
 	Operation operation = OperationTest.getFixture();
 	Operation anotherOperation = OperationTest.getFixture();
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(anotherOperation);
 	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	OperationStatus status = operation.setSubassembly(subassembly).setIngredient(ingredient).execute();
-	
+
 	assertEquals(Status.ERROR, status.getStatus());
     }
 
-    public static Operation getFixture() throws InvalidAttributeIdentifierException {
+    public static Operation getFixture() {
 	return new EmptyOperation(IdentityTest.getIdentityFixture());
     }
 }

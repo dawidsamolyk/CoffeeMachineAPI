@@ -1,7 +1,5 @@
 package edu.issi.machine.id;
 
-import javax.naming.directory.InvalidAttributeIdentifierException;
-
 import edu.issi.machine.Validator;
 
 /**
@@ -38,8 +36,7 @@ public class Identity {
     public String changeName(String newName) throws IllegalArgumentException {
 	Validator.throwExceptionWhenObjectIsNotCreated(newName, "Nazwa obiektu nie mo¿e byæ pusta!");
 
-	String actualName = name;
-
+	final String actualName = name;
 	name = newName;
 
 	return actualName;
@@ -90,18 +87,17 @@ public class Identity {
      * Fabryka dostarczaj¹ca unikalne identyfikatory.
      */
     public static class Factory {
-	protected static int counter = 0;
+	private static int Counter = 0;
 
 	/**
 	 * @param name
 	 *            Nazwa.
 	 * @return Identyfikator.
-	 * @throws InvalidAttributeIdentifierException
-	 *             Wyst¹pi, jeœli identyfikator nie jest unikalny (ju¿
-	 *             istnieje).
+	 * @throws IllegalArgumentException
+	 *             Wyst¹pi, jeœli nazwa obiektu bêdzie pusta.
 	 */
-	public static synchronized Identity newIdentity(String name) throws InvalidAttributeIdentifierException {
-	    return new Identity(counter++, name);
+	public static synchronized Identity newIdentity(String name) throws IllegalArgumentException {
+	    return new Identity(Counter++, name);
 	}
     }
 }

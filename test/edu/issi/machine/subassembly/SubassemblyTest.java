@@ -6,8 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.directory.InvalidAttributeIdentifierException;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -38,12 +36,12 @@ public class SubassemblyTest {
     }
 
     @Test
-    public void shouldCreates() throws InvalidAttributeIdentifierException {
+    public void shouldCreates() {
 	assertNotNull(TestingSubassembly.getFixtureWith(OperationTest.getFixture()));
     }
 
     @Test
-    public void shouldCorrectRecognizeSupportedOperation() throws InvalidAttributeIdentifierException {
+    public void shouldCorrectRecognizeSupportedOperation() {
 	Operation operation = OperationTest.getFixture();
 	TestingSubassembly fixture = TestingSubassembly.getFixtureWith(operation);
 
@@ -53,7 +51,7 @@ public class SubassemblyTest {
     }
 
     @Test
-    public void shouldCorrectRecognizeNotSupportedOperation() throws InvalidAttributeIdentifierException {
+    public void shouldCorrectRecognizeNotSupportedOperation() {
 	Operation unsupportedOperation = OperationTest.getFixture();
 	Operation supportedOperation = OperationTest.getFixture();
 

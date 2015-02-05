@@ -40,7 +40,7 @@ public class ValidatorTest {
 	list.add(new Object());
 	
 	exception.expect(NoSuchElementException.class);
-	Validator.throwExceptionWhenThereIsNotSuchElementAtSpecifiedIndex(list, 10, TEST_EXCEPTION_MESSAGE);
+	Validator.throwExceptionWhenNoSuchElementAtIndex(list, 10, TEST_EXCEPTION_MESSAGE);
     }
     
     @Test
@@ -49,7 +49,7 @@ public class ValidatorTest {
 	list.add(new Object());
 	
 	exception.expect(NoSuchElementException.class);
-	Validator.throwExceptionWhenThereIsNotSuchElementAtSpecifiedIndex(list, -1, TEST_EXCEPTION_MESSAGE);
+	Validator.throwExceptionWhenNoSuchElementAtIndex(list, -1, TEST_EXCEPTION_MESSAGE);
     }
     
     @Test

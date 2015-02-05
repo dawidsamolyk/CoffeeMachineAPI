@@ -3,8 +3,6 @@ package edu.issi.machine;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.directory.InvalidAttributeIdentifierException;
-
 import edu.issi.machine.configuration.MachineConfiguration;
 import edu.issi.machine.controller.MachineController;
 import edu.issi.machine.id.Identity;
@@ -27,7 +25,7 @@ public class DemoApplication {
 	controller.stop();
     }
 
-    private static void setUp() throws InvalidAttributeIdentifierException {
+    private static void setUp() {
 	List<Ingredient> ingredients = getDemoIngredients();
 	List<Product> products = getDemoProducts(ingredients);
 	List<Subassembly> subassemblies = getDemoSubassemblies(products);
@@ -37,7 +35,7 @@ public class DemoApplication {
 	controller = new MachineController(config);
     }
 
-    public static List<Ingredient> getDemoIngredients() throws InvalidAttributeIdentifierException {
+    public static List<Ingredient> getDemoIngredients() {
 	List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
 	ingredients.add(getDemoCoffee());
@@ -47,8 +45,7 @@ public class DemoApplication {
 	return ingredients;
     }
 
-    public static List<Subassembly> getDemoSubassemblies(List<Product> products)
-	    throws InvalidAttributeIdentifierException {
+    public static List<Subassembly> getDemoSubassemblies(List<Product> products) {
 
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
 
@@ -68,8 +65,7 @@ public class DemoApplication {
 	return subassemblies;
     }
 
-    public static List<Product> getDemoProducts(List<Ingredient> ingredients)
-	    throws InvalidAttributeIdentifierException {
+    public static List<Product> getDemoProducts(List<Ingredient> ingredients) {
 	List<Product> products = new ArrayList<Product>();
 
 	Product blackCoffee = new Product(Identity.Factory.newIdentity("Kawa czarna"));
@@ -85,7 +81,7 @@ public class DemoApplication {
 	return products;
     }
 
-    public static Ingredient getDemoTee() throws InvalidAttributeIdentifierException {
+    public static Ingredient getDemoTee() {
 	Ingredient ingredient = new Ingredient(Identity.Factory.newIdentity("Herbata"));
 
 	ingredient.add(PropertyIdentity.Factory.newProperty("Temperatura", Unit.C), 100.0);
@@ -101,7 +97,7 @@ public class DemoApplication {
 	return ingredient;
     }
 
-    public static Ingredient getDemoWater() throws InvalidAttributeIdentifierException {
+    public static Ingredient getDemoWater() {
 	Ingredient ingredient = new Ingredient(Identity.Factory.newIdentity("Woda"));
 
 	ingredient.add(PropertyIdentity.Factory.newProperty("Temperatura", Unit.C), 100.0);
@@ -117,7 +113,7 @@ public class DemoApplication {
 	return ingredient;
     }
 
-    public static Ingredient getDemoCoffee() throws InvalidAttributeIdentifierException {
+    public static Ingredient getDemoCoffee() {
 	Ingredient ingredient = new Ingredient(Identity.Factory.newIdentity("Ziarna kawy"));
 
 	ingredient.add(PropertyIdentity.Factory.newProperty("Iloœæ", Unit.G), 5000.0);

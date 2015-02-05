@@ -13,7 +13,7 @@ import edu.issi.machine.operation.Operation;
  *         Podzespó³.
  */
 public abstract class Subassembly extends ObjectWithIdentity {
-    protected List<Operation> operations;
+    protected final List<Operation> operations;
 
     /**
      * @param id

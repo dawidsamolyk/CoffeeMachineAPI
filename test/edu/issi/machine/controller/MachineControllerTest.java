@@ -3,8 +3,6 @@ package edu.issi.machine.controller;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import javax.naming.directory.InvalidAttributeIdentifierException;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -24,11 +22,11 @@ public class MachineControllerTest {
     }
 
     @Test
-    public void shouldStops() throws IllegalArgumentException, InvalidAttributeIdentifierException {
+    public void shouldStops() throws IllegalArgumentException {
 	MachineController fixture = new MachineController(Fixtures.getFixture());
 
 	fixture.stop();
-	assertFalse(fixture.working);
+	assertFalse(fixture.isWorking());
     }
     
     @Test
@@ -38,7 +36,7 @@ public class MachineControllerTest {
 	fixture.start();
 
 	fixture.restart();
-	assertTrue(fixture.working);
+	assertTrue(fixture.isWorking());
     }
 
     @Test
@@ -46,6 +44,6 @@ public class MachineControllerTest {
 	MachineController fixture = new MachineController(Fixtures.getFixture());
 
 	fixture.restart();
-	assertTrue(fixture.working);
+	assertTrue(fixture.isWorking());
     }
 }

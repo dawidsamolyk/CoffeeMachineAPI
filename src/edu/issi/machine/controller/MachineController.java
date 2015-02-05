@@ -13,8 +13,8 @@ import edu.issi.machine.subassembly.Subassembly;
  *         predefiniowan¹ konfiguracj¹.
  */
 public class MachineController {
-    protected MachineConfiguration configuration;
-    protected boolean working = false;
+    private final MachineConfiguration configuration;
+    private boolean working = false;
 
     /**
      * @param configuration
@@ -38,9 +38,7 @@ public class MachineController {
     }
 
     protected void startAllSubassemblies() {
-	Iterator<Subassembly> subassemblies = configuration.getSubassembliesIterator();
-
-	while (subassemblies.hasNext()) {
+	for (Iterator<Subassembly> subassemblies = configuration.getSubassembliesIterator(); subassemblies.hasNext();) {
 	    Subassembly subassembly = subassemblies.next();
 	    subassembly.run();
 	}
@@ -56,9 +54,7 @@ public class MachineController {
     }
 
     protected void stopAllSubassemblies() {
-	Iterator<Subassembly> subassemblies = configuration.getSubassembliesIterator();
-
-	while (subassemblies.hasNext()) {
+	for (Iterator<Subassembly> subassemblies = configuration.getSubassembliesIterator(); subassemblies.hasNext();) {
 	    Subassembly subassembly = subassemblies.next();
 	    subassembly.stop();
 	}
@@ -75,6 +71,12 @@ public class MachineController {
 	else {
 	    start();
 	}
+    }
 
+    /**
+     * @return Wskazuje czy maszyna jest uruchomiona.
+     */
+    public boolean isWorking() {
+	return working;
     }
 }

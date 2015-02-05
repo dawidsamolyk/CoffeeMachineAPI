@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import javax.naming.directory.InvalidAttributeIdentifierException;
-
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.PropertyIdentity;
 import edu.issi.machine.operation.Operation;
@@ -43,9 +41,6 @@ public class DemoGuiProductAdder extends Operation {
 	try {
 	    products.add(newProduct());
 	} 
-	catch (InvalidAttributeIdentifierException e) {
-	    return OperationStatus.Factory.createErrorWithDescription("Problem z generowaniem nowego ID!");
-	} 
 	catch (IOException e) {
 	    return OperationStatus.Factory.createErrorWithDescription("Niedostêpny interfejs u¿ytkownika!");
 	}
@@ -53,7 +48,7 @@ public class DemoGuiProductAdder extends Operation {
 	return OperationStatus.Factory.createValid();
     }
 
-    private Product newProduct() throws InvalidAttributeIdentifierException, IOException {
+    private Product newProduct() throws IOException {
 	String readedLine = readLineAfterComunicate("Wpisz nazwê produktu: ");
 	
 	Product newProduct = new Product(Identity.Factory.newIdentity(readedLine));

@@ -52,8 +52,8 @@ public class Validator {
      * @throws IllegalArgumentException
      *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenThereIsNotSuchElementAtSpecifiedIndex(List<?> list, int index,
-	    String exceptionMessage) throws NoSuchElementException, IllegalArgumentException {
+    public static void throwExceptionWhenNoSuchElementAtIndex(List<?> list, int index, String exceptionMessage)
+	    throws NoSuchElementException, IllegalArgumentException {
 
 	throwExceptionWhenContainsNullOrEmpty(list, "Na podanej liœcie nie ma obiektów!");
 
@@ -83,7 +83,7 @@ public class Validator {
      * @return Czy zawiera puste referencje.
      */
     public static boolean containsNullObjects(Iterable<?> itearable) {
-	for(Object eachElement : itearable) {
+	for (Object eachElement : itearable) {
 	    if (eachElement == null) {
 		return true;
 	    }

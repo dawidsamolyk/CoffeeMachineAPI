@@ -9,7 +9,7 @@ import edu.issi.machine.product.ingredient.Unit;
  *         Identyfikator w³aœciwoœci.
  */
 public class PropertyIdentity extends Identity {
-    private Unit unit;
+    private final Unit unit;
 
     /**
      * @param id
@@ -40,7 +40,7 @@ public class PropertyIdentity extends Identity {
      *
      */
     public static class Factory {
-	protected static int counter = 0;
+	private static int Counter = 0;
 
 	/**
 	 * @param name
@@ -52,7 +52,7 @@ public class PropertyIdentity extends Identity {
 	 *             Wyst¹pi, jeœli jednostka miary nie zostanie podana.
 	 */
 	public static synchronized PropertyIdentity newProperty(String name, Unit unit) throws IllegalArgumentException {
-	    return new PropertyIdentity(counter++, name, unit);
+	    return new PropertyIdentity(Counter++, name, unit);
 	}
 
     }

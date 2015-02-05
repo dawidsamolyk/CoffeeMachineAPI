@@ -1,7 +1,5 @@
 package edu.issi.machine.mvc.controller;
 
-import javax.naming.directory.InvalidAttributeIdentifierException;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -22,7 +20,7 @@ public class ControllerTest {
     }
     
     @Test
-    public void controllerShouldNotAddAndInitializeNotCreatedView() throws IllegalArgumentException, InvalidAttributeIdentifierException {
+    public void controllerShouldNotAddAndInitializeNotCreatedView() throws IllegalArgumentException {
 	Controller controller = new Controller(new Model(Fixtures.getFixture()));
 	
 	exception.expect(IllegalArgumentException.class);
