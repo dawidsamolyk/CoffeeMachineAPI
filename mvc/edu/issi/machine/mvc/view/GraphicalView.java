@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 
 import edu.issi.machine.mvc.controller.Controller.IngredientsListener;
@@ -36,6 +37,7 @@ public class GraphicalView implements View {
     private DefaultListModel<String> productsListModel = new DefaultListModel<String>();
     private DefaultListModel<String> ingredientsListModel = new DefaultListModel<String>();
     private DefaultListModel<String> propertiesListModel = new DefaultListModel<String>();
+    private JList<String> productsList;
 
     /**
      * Create the application.
@@ -79,7 +81,7 @@ public class GraphicalView implements View {
 	gbc_lblWaciwoci.gridy = 0;
 	frame.getContentPane().add(lblWaciwoci, gbc_lblWaciwoci);
 
-	final JList<String> productsList = new JList<String>();
+	productsList = new JList<String>();
 	productsList.setModel(productsListModel);
 	productsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	GridBagConstraints gbc_list = new GridBagConstraints();
@@ -126,6 +128,13 @@ public class GraphicalView implements View {
 	gbc_makeOrderButton.insets = new Insets(0, 0, 5, 0);
 	gbc_makeOrderButton.gridx = 3;
 	gbc_makeOrderButton.gridy = 1;
+	makeOrderButton.addMouseListener(new MouseAdapter() {
+	    @Override
+	    public void mousePressed(MouseEvent e) {
+		EventArguments arguments = new EventArguments(GraphicalView.this);
+		orderListener.actionPerformed(arguments);
+	    }
+	});
 	frame.getContentPane().add(makeOrderButton, gbc_makeOrderButton);
 
 	statusLabel = new JLabel("Status...");
@@ -155,6 +164,11 @@ public class GraphicalView implements View {
 	frame.getContentPane().add(btnZakocz, gbc_btnZakocz);
 
 	frame.setVisible(true);
+    }
+
+    @Override
+    public void showError(String description) {
+	JOptionPane.showMessageDialog(frame, description);
     }
 
     private void refresh(DefaultListModel<String> listModel) {
@@ -197,8 +211,7 @@ public class GraphicalView implements View {
 
     @Override
     public String getSelectedForPreparationProductName() {
-	// TODO Auto-generated method stub
-	return null;
+	return productsList.getSelectedValue();
     }
 
     @Override

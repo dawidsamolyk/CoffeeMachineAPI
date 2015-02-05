@@ -93,7 +93,7 @@ public class Controller {
 	    }
 	}
     }
-    
+
     /**
      * @author DawidSamolyk
      *
@@ -120,15 +120,23 @@ public class Controller {
 	@Override
 	public void actionPerformed(EventArguments arguments) {
 	    for (View eachView : views) {
-		String orderedProductName = eachView.getNewProductName();
+		String orderedProductName = eachView.getSelectedForPreparationProductName();
 
-		Set<String> requestedProductIngredients = model.getIngredientsNamesForProductNamed(orderedProductName);
-		eachView.showProductIngredients(orderedProductName, requestedProductIngredients);
+		Set<String> requestedProductIngredients;
+		try {
+		    // TODO pouk³adaj w jedn¹ logiczn¹ ca³oœæ
+		    requestedProductIngredients = model.getIngredientsNamesForProductNamed(orderedProductName);
+		    eachView.showProductIngredients(orderedProductName, requestedProductIngredients);
 
-		for (String eachIngredientName : requestedProductIngredients) {
-		    Map<String, Unit> properties = model.getPropertiesForIngredientNamed(eachIngredientName);
-		    eachView.showIngredientProperties(eachIngredientName, properties);
+		    for (String eachIngredientName : requestedProductIngredients) {
+			Map<String, Unit> properties = model.getPropertiesForIngredientNamed(eachIngredientName);
+			eachView.showIngredientProperties(eachIngredientName, properties);
+		    }
 		}
+		catch (IllegalArgumentException e) {
+		    eachView.showError(e.getMessage());
+		}
+
 	    }
 	}
     }

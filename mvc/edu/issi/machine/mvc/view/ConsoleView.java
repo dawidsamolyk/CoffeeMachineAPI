@@ -150,4 +150,9 @@ public class ConsoleView implements View {
 	}
     }
 
+    @Override
+    public void showError(String description) {
+	System.err.println(description);
+    }
+
 }
