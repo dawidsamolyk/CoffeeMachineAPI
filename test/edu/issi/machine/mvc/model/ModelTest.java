@@ -11,9 +11,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import edu.issi.machine.configuration.MachineConfiguration;
-import edu.issi.machine.configuration.MachineConfigurationTest;
+import edu.issi.machine.configuration.MachineConfigurationTest.Fixtures;
 import edu.issi.machine.product.Product;
-import edu.issi.machine.product.ProductTest;
 import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.subassembly.Subassembly;
 import edu.issi.machine.subassembly.TestingSubassembly;
@@ -40,9 +39,9 @@ public class ModelTest {
 
     @Test
     public void modelShouldBeAbleToAddNewProductToMachineConfiguration() throws Exception {
-	MachineConfiguration configuration = MachineConfigurationTest.getFixture();
+	MachineConfiguration configuration = Fixtures.getFixture();
 	Model model = new Model(configuration);
-	Product newProduct = ProductTest.getFixture();
+	Product newProduct = edu.issi.machine.product.ProductTest.Fixtures.getFixture();
 
 	model.addProduct(newProduct);
 
@@ -62,7 +61,7 @@ public class ModelTest {
 
     @Test
     public void modelShouldBeAbleToStartMachine() throws Exception {
-	MachineConfiguration configuration = MachineConfigurationTest.getFixture();
+	MachineConfiguration configuration = Fixtures.getFixture();
 	Model model = new Model(configuration);
 
 	model.startMachine();
@@ -76,7 +75,7 @@ public class ModelTest {
 
     @Test
     public void modelShouldBeAbleToStopMachine() throws Exception {
-	MachineConfiguration configuration = MachineConfigurationTest.getFixture();
+	MachineConfiguration configuration = Fixtures.getFixture();
 	Model model = new Model(configuration);
 
 	model.startMachine();
@@ -91,10 +90,10 @@ public class ModelTest {
 
     @Test
     public void modelShouldProvidesProductsNames() throws Exception {
-	List<Subassembly> subassemblies = MachineConfigurationTest.getFixtureSubassemlies();
-	List<Ingredient> ingredients = MachineConfigurationTest.getFixtureIngredients();
+	List<Subassembly> subassemblies = Fixtures.getFixtureSubassemlies();
+	List<Ingredient> ingredients = Fixtures.getFixtureIngredients();
 	String[] fixtureProductsNames = { "Kawa", "Herbata", "Czekolada" };
-	List<Product> products = ProductTest.getManyNamedFixturesWithIngredients(ingredients, fixtureProductsNames);
+	List<Product> products = edu.issi.machine.product.ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients, fixtureProductsNames);
 	MachineConfiguration configuration = new MachineConfiguration(subassemblies, ingredients, products);
 	Model model = new Model(configuration);
 	
@@ -109,7 +108,7 @@ public class ModelTest {
     
     @Test
     public void modelShouldProvidesIngredientsNames() throws Exception {
-	MachineConfiguration configuration = MachineConfigurationTest.getFixture();
+	MachineConfiguration configuration = Fixtures.getFixture();
 	Model model = new Model(configuration);
 	
 	Set<String> ingredientsNames = model.getAllIngredientsNames();
@@ -127,6 +126,6 @@ public class ModelTest {
     }
 
     public static Model getFixture() throws Exception {
-	return new Model(MachineConfigurationTest.getFixture());
+	return new Model(Fixtures.getFixture());
     }
 }

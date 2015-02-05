@@ -25,7 +25,7 @@ public class IngredientTest {
 
     @Test
     public void ingredientShouldHoldsProperties() throws InvalidAttributeIdentifierException {
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	Ingredient ingredient = Fixtures.getSimpleFixture();
 	PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
 
 	ingredient.add(property, new Double(-1.0));
@@ -35,7 +35,7 @@ public class IngredientTest {
 
     @Test
     public void ingredientShouldProvidesSpecifiedProperty() throws InvalidAttributeIdentifierException {
-	Ingredient ingredient = IngredientTest.getComplexFixture();
+	Ingredient ingredient = Fixtures.getComplexFixture();
 	PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
 	Double value = 10.0;
 
@@ -46,7 +46,7 @@ public class IngredientTest {
 
     @Test
     public void ingredientShouldNotProvidesUnknownProperty() throws InvalidAttributeIdentifierException {
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	exception.expect(NoSuchElementException.class);
 	ingredient.get(PropertyIdentity.Factory.newProperty("Unknown", Unit.C));
@@ -54,7 +54,7 @@ public class IngredientTest {
 
     @Test
     public void ingredientShouldNotProvidesEmptyProperty() throws InvalidAttributeIdentifierException {
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	exception.expect(IllegalArgumentException.class);
 	ingredient.get(null);
@@ -62,7 +62,7 @@ public class IngredientTest {
 
     @Test
     public void ingredientShouldRemovesSpecifiedProperty() throws InvalidAttributeIdentifierException {
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	Ingredient ingredient = Fixtures.getSimpleFixture();
 	PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
 	ingredient.add(property, new Double(-1.0));
 
@@ -73,7 +73,7 @@ public class IngredientTest {
 
     @Test
     public void ingredientShouldNotRemovesUnknownProperty() throws InvalidAttributeIdentifierException {
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	Ingredient ingredient = Fixtures.getSimpleFixture();
 	PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
 
 	exception.expect(NoSuchElementException.class);
@@ -82,7 +82,7 @@ public class IngredientTest {
 
     @Test
     public void ingredientShouldNotRemovesEmptyProperty() throws InvalidAttributeIdentifierException {
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	exception.expect(IllegalArgumentException.class);
 	ingredient.remove(null);
@@ -91,36 +91,40 @@ public class IngredientTest {
     @Test
     public void ingredientShouldProvidesOperationStatesAfterAllOperationsExecuting()
 	    throws InvalidAttributeIdentifierException {
-	Ingredient ingredient = IngredientTest.getComplexFixture();
-	
+	Ingredient ingredient = Fixtures.getComplexFixture();
+
 	List<OperationStatus> operationsStates = ingredient.doOperations();
-	
+
 	assertFalse(operationsStates.isEmpty());
     }
-    
+
     @Test
     public void ingredientShouldNotProvidesOperationStatesWhenThereIsntAnyOperationsToExecute()
 	    throws InvalidAttributeIdentifierException {
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
-	
+	Ingredient ingredient = Fixtures.getSimpleFixture();
+
 	exception.expect(IllegalArgumentException.class);
 	ingredient.doOperations();
     }
 
-    public static Ingredient getSimpleFixture() throws InvalidAttributeIdentifierException {
-	return new Ingredient(IdentityTest.getIdentityFixture());
-    }
+    public static class Fixtures {
 
-    public static Ingredient getComplexFixture() throws InvalidAttributeIdentifierException {
-	OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
-	operations.add(OperationTest.getFixture());
+	public static Ingredient getSimpleFixture() throws InvalidAttributeIdentifierException {
+	    return new Ingredient(IdentityTest.getIdentityFixture());
+	}
 
-	Ingredient result = IngredientTest.getSimpleFixture();
-	result.setOperations(operations);
+	public static Ingredient getComplexFixture() throws InvalidAttributeIdentifierException {
+	    OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
+	    operations.add(OperationTest.getFixture());
 
-	PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
-	result.add(property, new Double(-1.0));
+	    Ingredient result = IngredientTest.Fixtures.getSimpleFixture();
+	    result.setOperations(operations);
 
-	return result;
+	    PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
+	    result.add(property, new Double(-1.0));
+
+	    return result;
+	}
+
     }
 }

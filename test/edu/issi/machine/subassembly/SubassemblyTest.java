@@ -64,8 +64,4 @@ public class SubassemblyTest {
 	assertEquals(false, result);
     }
 
-    public static void main(String[] args) {
-	new org.junit.runner.JUnitCore().run(SubassemblyTest.class);
-    }
-
 }

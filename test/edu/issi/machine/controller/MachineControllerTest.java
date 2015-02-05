@@ -9,7 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import edu.issi.machine.configuration.MachineConfigurationTest;
+import edu.issi.machine.configuration.MachineConfigurationTest.Fixtures;
 
 @SuppressWarnings("javadoc")
 public class MachineControllerTest {
@@ -25,7 +25,7 @@ public class MachineControllerTest {
 
     @Test
     public void shouldStops() throws IllegalArgumentException, InvalidAttributeIdentifierException {
-	MachineController fixture = new MachineController(MachineConfigurationTest.getFixture());
+	MachineController fixture = new MachineController(Fixtures.getFixture());
 
 	fixture.stop();
 	assertFalse(fixture.working);
@@ -33,7 +33,7 @@ public class MachineControllerTest {
     
     @Test
     public void machineShouldRestarts() throws Exception {
-	MachineController fixture = new MachineController(MachineConfigurationTest.getFixture());
+	MachineController fixture = new MachineController(Fixtures.getFixture());
 	
 	fixture.start();
 
@@ -43,7 +43,7 @@ public class MachineControllerTest {
 
     @Test
     public void machineShouldRestartsEvenWhenAlreadyIsNotWorking() throws Exception {
-	MachineController fixture = new MachineController(MachineConfigurationTest.getFixture());
+	MachineController fixture = new MachineController(Fixtures.getFixture());
 
 	fixture.restart();
 	assertTrue(fixture.working);

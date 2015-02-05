@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import edu.issi.machine.id.IdentityTest;
 import edu.issi.machine.product.ingredient.Ingredient;
-import edu.issi.machine.product.ingredient.IngredientTest;
+import edu.issi.machine.product.ingredient.IngredientTest.Fixtures;
 import edu.issi.machine.subassembly.Subassembly;
 import edu.issi.machine.subassembly.TestingSubassembly;
 
@@ -19,7 +19,7 @@ public class OperationTest {
     public void shouldGiveResponseAfterExecution() throws InvalidAttributeIdentifierException {
 	Operation operation = OperationTest.getFixture();
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	OperationStatus status = operation.setIngredient(ingredient).setSubassembly(subassembly).execute();
 
@@ -39,7 +39,7 @@ public class OperationTest {
     @Test
     public void shouldGiveErrorResponseWhenOnlyIngredientSetted() throws InvalidAttributeIdentifierException {
 	Operation operation = OperationTest.getFixture();
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	OperationStatus status = operation.setIngredient(ingredient).execute();
 
@@ -52,7 +52,7 @@ public class OperationTest {
 	Operation operation = OperationTest.getFixture();
 
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	OperationStatus status = operation.setIngredient(ingredient).setSubassembly(subassembly).execute();
 
@@ -64,7 +64,7 @@ public class OperationTest {
 	    InvalidAttributeIdentifierException {
 	Operation operation = OperationTest.getFixture();
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	OperationStatus status = operation.setSubassembly(subassembly).setIngredient(ingredient).execute();
 
@@ -88,7 +88,7 @@ public class OperationTest {
     public void operationShouldGivesInformationAboutHisStatus() throws InvalidAttributeIdentifierException {
 	Operation operation = OperationTest.getFixture();
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(operation);
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	operation.setSubassembly(subassembly).setIngredient(ingredient).execute();
 	
@@ -100,7 +100,7 @@ public class OperationTest {
 	Operation operation = OperationTest.getFixture();
 	Operation anotherOperation = OperationTest.getFixture();
 	Subassembly subassembly = TestingSubassembly.getFixtureWith(anotherOperation);
-	Ingredient ingredient = IngredientTest.getSimpleFixture();
+	Ingredient ingredient = Fixtures.getSimpleFixture();
 
 	OperationStatus status = operation.setSubassembly(subassembly).setIngredient(ingredient).execute();
 	
