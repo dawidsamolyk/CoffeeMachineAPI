@@ -95,7 +95,15 @@ public interface View {
      */
     void addIngredientsListener(IngredientsListener ingredientsListener);
 
+    /**
+     * @param orderListener
+     *            Obiekt nas³uchuj¹cy zdarzenia z³o¿enia zamówienia.
+     */
     void addOrderListener(OrderListener orderListener);
 
+    /**
+     * @param propertiesListener
+     *            Obiekt nas³uchuj¹cy zmian listy w³aœciwoœci sk³adników.
+     */
     void addPropertiesListener(PropertiesListener propertiesListener);
 }

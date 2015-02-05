@@ -11,6 +11,7 @@ import edu.issi.machine.operation.Operation;
 
 @SuppressWarnings("javadoc")
 public class TestingSubassembly extends Subassembly {
+    private boolean running = false;
 
     public TestingSubassembly(Identity id, List<Operation> operations) throws IllegalArgumentException {
 	super(id, operations);
@@ -19,21 +20,25 @@ public class TestingSubassembly extends Subassembly {
     public int getOperationsQuantity() {
 	return this.operations.size();
     }
-    
+
     @Override
     public void run() {
-	
-    }
-    
-    @Override
-    public void stop() {
-	
+	running = true;
     }
 
-    public static TestingSubassembly getFixtureWith(Operation ... testingOperations) throws IllegalArgumentException,
+    @Override
+    public void stop() {
+	running = false;
+    }
+    
+    public boolean isRunning() {
+	return running;
+    }
+
+    public static TestingSubassembly getFixtureWith(Operation... testingOperations) throws IllegalArgumentException,
 	    InvalidAttributeIdentifierException {
 	List<Operation> operations = Arrays.asList(testingOperations);
-	
+
 	return new TestingSubassembly(IdentityTest.getIdentityFixture(), operations);
     }
 

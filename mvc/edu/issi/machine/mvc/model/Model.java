@@ -55,6 +55,7 @@ public class Model {
      *            Produkt, który ma zostaæ dodany do konfiguracji maszyny.
      */
     public void addProduct(Product product) {
+	Validator.throwExceptionWhenObjectIsNotCreated(product, "Nie mo¿na dodaæ pustego produktu!");
 	configuration.addProduct(product);
     }
 

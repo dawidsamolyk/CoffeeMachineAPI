@@ -23,10 +23,13 @@ public class ConsoleView implements View {
     private ConsoleListener consoleListener = new ConsoleListener();
     private Scanner scanner = new Scanner(System.in);
 
+    /**
+     * 
+     */
     public ConsoleView() {
 	consoleListener.run();
     }
-    
+
     private void show(String text) {
 	System.out.println(text);
     }
@@ -121,7 +124,7 @@ public class ConsoleView implements View {
 
     @Override
     public void addIngredientsListener(IngredientsListener ingredientsListener) {
-	consoleListener.ingredientsListener = ingredientsListener;
+	// TODO Auto-generated method stub
     }
 
     @Override
@@ -129,9 +132,13 @@ public class ConsoleView implements View {
 	consoleListener.orderListener = orderListener;
     }
 
+    @Override
+    public void addPropertiesListener(PropertiesListener propertiesListener) {
+	// TODO Auto-generated method stub
+    }
+
     private class ConsoleListener {
 	private ProductsListener productsListListener;
-	private IngredientsListener ingredientsListener;
 	private OrderListener orderListener;
 
 	public void run() {
@@ -141,12 +148,6 @@ public class ConsoleView implements View {
 	    show("Wpisz nazwe produktu, ktory chcesz otrzymac: ");
 	    orderListener.actionPerformed(EVENT_ARGS);
 	}
-    }
-
-    @Override
-    public void addPropertiesListener(PropertiesListener propertiesListener) {
-	// TODO Auto-generated method stub
-	
     }
 
 }
