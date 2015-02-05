@@ -39,7 +39,8 @@ public class PropertyIdentity extends Identity {
      * Fabryka dostarczaj¹ca unikalne identyfikatory w³aœciwoœci.
      *
      */
-    public static class Factory extends Identity.Factory {
+    public static class Factory {
+	protected static int counter = 0;
 
 	/**
 	 * @param name
