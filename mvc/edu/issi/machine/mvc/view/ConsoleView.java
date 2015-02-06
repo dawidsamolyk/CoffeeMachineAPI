@@ -124,7 +124,7 @@ public class ConsoleView implements View {
 
     @Override
     public void addIngredientsListener(IngredientsListener ingredientsListener) {
-	// TODO Auto-generated method stub
+
     }
 
     @Override
@@ -134,7 +134,7 @@ public class ConsoleView implements View {
 
     @Override
     public void addPropertiesListener(PropertiesListener propertiesListener) {
-	// TODO Auto-generated method stub
+
     }
 
     private class ConsoleListener {

@@ -134,7 +134,7 @@ public class Controller {
 
 	private List<OperationStatus> makeOrderOn(View eachView) {
 	    String orderedProductName = eachView.getSelectedForPreparationProductName();
-
+	    
 	    List<OperationStatus> operationsStatuses = null;
 
 	    try {

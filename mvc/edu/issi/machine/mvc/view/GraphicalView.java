@@ -1,10 +1,15 @@
 package edu.issi.machine.mvc.view;
 
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Rectangle;
+import java.awt.Window.Type;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
 import edu.issi.machine.mvc.controller.Controller.IngredientsListener;
@@ -133,7 +139,7 @@ public class GraphicalView implements View {
 	makeOrderButton.addMouseListener(new MouseAdapter() {
 	    @Override
 	    public void mousePressed(MouseEvent e) {
-		EventArguments arguments = new EventArguments(GraphicalView.this);
+		EventArguments arguments = new EventArguments(GraphicalView.this, productsList.getSelectedValue());
 		orderListener.actionPerformed(arguments);
 	    }
 	});
@@ -218,7 +224,26 @@ public class GraphicalView implements View {
 
     @Override
     public Map<String, Float> getPropertiesForIngredient(String ingredientName, Map<String, Unit> availableProperties) {
-	// TODO Auto-generated method stub
+	JFrame frame = new JFrame("Ustaw w³aœciowoœci sk³adnika " + ingredientName);
+	frame.setType(Type.UTILITY);
+	frame.setBounds(new Rectangle(300, 300));
+	Container contentPane = frame.getContentPane();
+	contentPane.setLayout(new FlowLayout());
+
+	Map<String, JTextField> propertiesValuesFields = new HashMap<String, JTextField>(availableProperties.size());
+
+	for (String eachPropertyName : availableProperties.keySet()) {
+	    Unit propertyUnit = availableProperties.get(eachPropertyName);
+	    contentPane.add(new JLabel(eachPropertyName + " [" + propertyUnit + "]"));
+	    
+	    JTextField valueField = new JTextField();
+	    propertiesValuesFields.put(eachPropertyName, valueField);
+	}
+	
+	frame.setVisible(true);
+	
+	
+
 	return null;
     }
 
