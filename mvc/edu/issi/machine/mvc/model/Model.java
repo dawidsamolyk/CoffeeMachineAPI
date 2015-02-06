@@ -1,8 +1,10 @@
 package edu.issi.machine.mvc.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,6 +12,7 @@ import edu.issi.machine.Validator;
 import edu.issi.machine.configuration.MachineConfiguration;
 import edu.issi.machine.controller.MachineController;
 import edu.issi.machine.id.PropertyIdentity;
+import edu.issi.machine.operation.OperationStatus;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.product.ingredient.Unit;
@@ -170,5 +173,39 @@ public class Model {
 	    }
 	}
 	return ingredient;
+    }
+
+    /**
+     * @param orderedProductName
+     *            Nazwa zamawianago produktu.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli nie wybrano produktu lub produkt nie jest
+     *             wpisany w konfiguracji maszyny. Mo¿e równie¿ wyst¹piæ w
+     *             przypadku b³êdu wykonywania operacji na sk³adnikach produktu.
+     */
+    public void makeOrder(String orderedProductName) throws IllegalArgumentException {
+	Validator.throwExceptionWhenTextIsEmpty(orderedProductName, "Nie wybrano produktu!");
+
+	Product orderedProduct = getProductByName(orderedProductName);
+
+	if (orderedProduct == null) {
+	    throw new IllegalArgumentException("Wybrano nieznany produkt!");
+	}
+
+	List<OperationStatus> operationsStatuses = makeProduct(orderedProduct);
+	// TODO przeka¿ statusy operacji dalej do analizy
+    }
+
+    private List<OperationStatus> makeProduct(Product orderedProduct) throws IllegalArgumentException {
+	List<OperationStatus> allOperationStatuses = new ArrayList<OperationStatus>();
+
+	for (Iterator<Ingredient> iterator = orderedProduct.iterator(); iterator.hasNext();) {
+	    Ingredient ingredient = iterator.next();
+
+	    List<OperationStatus> ingredientOperationStatuses = ingredient.doOperations();
+	    allOperationStatuses.addAll(ingredientOperationStatuses);
+	}
+
+	return allOperationStatuses;
     }
 }

@@ -120,23 +120,16 @@ public class Controller {
 	@Override
 	public void actionPerformed(EventArguments arguments) {
 	    for (View eachView : views) {
-		String orderedProductName = eachView.getSelectedForPreparationProductName();
+		if (arguments.isCalledBy(eachView)) {
+		    String orderedProductName = eachView.getSelectedForPreparationProductName();
 
-		Set<String> requestedProductIngredients;
-		try {
-		    // TODO pouk³adaj w jedn¹ logiczn¹ ca³oœæ
-		    requestedProductIngredients = model.getIngredientsNamesForProductNamed(orderedProductName);
-		    eachView.showProductIngredients(orderedProductName, requestedProductIngredients);
-
-		    for (String eachIngredientName : requestedProductIngredients) {
-			Map<String, Unit> properties = model.getPropertiesForIngredientNamed(eachIngredientName);
-			eachView.showIngredientProperties(eachIngredientName, properties);
+		    try {
+			model.makeOrder(orderedProductName);
+		    }
+		    catch (IllegalArgumentException e) {
+			eachView.showError(e.getMessage());
 		    }
 		}
-		catch (IllegalArgumentException e) {
-		    eachView.showError(e.getMessage());
-		}
-
 	    }
 	}
     }

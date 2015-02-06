@@ -100,6 +100,7 @@ public class GraphicalView implements View {
 
 	final JList<String> ingredientsList = new JList<String>();
 	ingredientsList.setModel(ingredientsListModel);
+	ingredientsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	GridBagConstraints ingredientsListConstraints = new GridBagConstraints();
 	ingredientsListConstraints.insets = new Insets(0, 0, 5, 5);
 	ingredientsListConstraints.fill = GridBagConstraints.BOTH;
@@ -116,6 +117,7 @@ public class GraphicalView implements View {
 
 	final JList<String> propertiesList = new JList<String>();
 	propertiesList.setModel(propertiesListModel);
+	propertiesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	GridBagConstraints propertiesListConstraints = new GridBagConstraints();
 	propertiesListConstraints.insets = new Insets(0, 0, 5, 5);
 	propertiesListConstraints.fill = GridBagConstraints.BOTH;
