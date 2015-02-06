@@ -53,42 +53,42 @@ public class GraphicalView implements View {
 	frame = new JFrame();
 	frame.setBounds(100, 100, 450, 300);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	GridBagLayout gridBagLayout = new GridBagLayout();
-	gridBagLayout.columnWidths = new int[] { 10, 10, 10, 5 };
-	gridBagLayout.rowHeights = new int[] { 5, 20, 5 };
-	gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0, 0.0 };
-	gridBagLayout.rowWeights = new double[] { 1.0, 1.0, 0.0 };
-	frame.getContentPane().setLayout(gridBagLayout);
+	GridBagLayout frameGridBagLayout = new GridBagLayout();
+	frameGridBagLayout.columnWidths = new int[] { 10, 10, 10, 5 };
+	frameGridBagLayout.rowHeights = new int[] { 5, 20, 5 };
+	frameGridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0, 0.0 };
+	frameGridBagLayout.rowWeights = new double[] { 1.0, 1.0, 0.0 };
+	frame.getContentPane().setLayout(frameGridBagLayout);
 
-	JLabel lblProdukty = new JLabel("Produkty");
-	GridBagConstraints gbc_lblProdukty = new GridBagConstraints();
-	gbc_lblProdukty.insets = new Insets(0, 0, 5, 5);
-	gbc_lblProdukty.gridx = 0;
-	gbc_lblProdukty.gridy = 0;
-	frame.getContentPane().add(lblProdukty, gbc_lblProdukty);
+	JLabel productsLabel = new JLabel("Produkty");
+	GridBagConstraints produktyLabelConstraints = new GridBagConstraints();
+	produktyLabelConstraints.insets = new Insets(0, 0, 5, 5);
+	produktyLabelConstraints.gridx = 0;
+	produktyLabelConstraints.gridy = 0;
+	frame.getContentPane().add(productsLabel, produktyLabelConstraints);
 
-	JLabel lblSkadniki = new JLabel("Sk\u0142adniki");
-	GridBagConstraints gbc_lblSkadniki = new GridBagConstraints();
-	gbc_lblSkadniki.insets = new Insets(0, 0, 5, 5);
-	gbc_lblSkadniki.gridx = 1;
-	gbc_lblSkadniki.gridy = 0;
-	frame.getContentPane().add(lblSkadniki, gbc_lblSkadniki);
+	JLabel ingredientsLabel = new JLabel("Sk\u0142adniki");
+	GridBagConstraints ingredientsLabelConstraints = new GridBagConstraints();
+	ingredientsLabelConstraints.insets = new Insets(0, 0, 5, 5);
+	ingredientsLabelConstraints.gridx = 1;
+	ingredientsLabelConstraints.gridy = 0;
+	frame.getContentPane().add(ingredientsLabel, ingredientsLabelConstraints);
 
-	JLabel lblWaciwoci = new JLabel("W\u0142a\u015Bciwo\u015Bci");
-	GridBagConstraints gbc_lblWaciwoci = new GridBagConstraints();
-	gbc_lblWaciwoci.insets = new Insets(0, 0, 5, 5);
-	gbc_lblWaciwoci.gridx = 2;
-	gbc_lblWaciwoci.gridy = 0;
-	frame.getContentPane().add(lblWaciwoci, gbc_lblWaciwoci);
+	JLabel propertiesLabel = new JLabel("W\u0142a\u015Bciwo\u015Bci");
+	GridBagConstraints propertiesLabelConstraints = new GridBagConstraints();
+	propertiesLabelConstraints.insets = new Insets(0, 0, 5, 5);
+	propertiesLabelConstraints.gridx = 2;
+	propertiesLabelConstraints.gridy = 0;
+	frame.getContentPane().add(propertiesLabel, propertiesLabelConstraints);
 
 	productsList = new JList<String>();
 	productsList.setModel(productsListModel);
 	productsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	GridBagConstraints gbc_list = new GridBagConstraints();
-	gbc_list.insets = new Insets(0, 0, 5, 5);
-	gbc_list.fill = GridBagConstraints.BOTH;
-	gbc_list.gridx = 0;
-	gbc_list.gridy = 1;
+	GridBagConstraints productsListContraints = new GridBagConstraints();
+	productsListContraints.insets = new Insets(0, 0, 5, 5);
+	productsListContraints.fill = GridBagConstraints.BOTH;
+	productsListContraints.gridx = 0;
+	productsListContraints.gridy = 1;
 	productsList.addMouseListener(new MouseAdapter() {
 	    @Override
 	    public void mousePressed(MouseEvent e) {
@@ -96,15 +96,15 @@ public class GraphicalView implements View {
 		ingredientsListener.actionPerformed(arguments);
 	    }
 	});
-	frame.getContentPane().add(productsList, gbc_list);
+	frame.getContentPane().add(productsList, productsListContraints);
 
 	final JList<String> ingredientsList = new JList<String>();
 	ingredientsList.setModel(ingredientsListModel);
-	GridBagConstraints gbc_list_1 = new GridBagConstraints();
-	gbc_list_1.insets = new Insets(0, 0, 5, 5);
-	gbc_list_1.fill = GridBagConstraints.BOTH;
-	gbc_list_1.gridx = 1;
-	gbc_list_1.gridy = 1;
+	GridBagConstraints ingredientsListConstraints = new GridBagConstraints();
+	ingredientsListConstraints.insets = new Insets(0, 0, 5, 5);
+	ingredientsListConstraints.fill = GridBagConstraints.BOTH;
+	ingredientsListConstraints.gridx = 1;
+	ingredientsListConstraints.gridy = 1;
 	ingredientsList.addMouseListener(new MouseAdapter() {
 	    @Override
 	    public void mousePressed(MouseEvent e) {
@@ -112,22 +112,22 @@ public class GraphicalView implements View {
 		propertiesListener.actionPerformed(arguments);
 	    }
 	});
-	frame.getContentPane().add(ingredientsList, gbc_list_1);
+	frame.getContentPane().add(ingredientsList, ingredientsListConstraints);
 
 	final JList<String> propertiesList = new JList<String>();
 	propertiesList.setModel(propertiesListModel);
-	GridBagConstraints gbc_list_2 = new GridBagConstraints();
-	gbc_list_2.insets = new Insets(0, 0, 5, 5);
-	gbc_list_2.fill = GridBagConstraints.BOTH;
-	gbc_list_2.gridx = 2;
-	gbc_list_2.gridy = 1;
-	frame.getContentPane().add(propertiesList, gbc_list_2);
+	GridBagConstraints propertiesListConstraints = new GridBagConstraints();
+	propertiesListConstraints.insets = new Insets(0, 0, 5, 5);
+	propertiesListConstraints.fill = GridBagConstraints.BOTH;
+	propertiesListConstraints.gridx = 2;
+	propertiesListConstraints.gridy = 1;
+	frame.getContentPane().add(propertiesList, propertiesListConstraints);
 
 	JButton makeOrderButton = new JButton("Zamów!");
-	GridBagConstraints gbc_makeOrderButton = new GridBagConstraints();
-	gbc_makeOrderButton.insets = new Insets(0, 0, 5, 0);
-	gbc_makeOrderButton.gridx = 3;
-	gbc_makeOrderButton.gridy = 1;
+	GridBagConstraints makeOrderButtonConstraints = new GridBagConstraints();
+	makeOrderButtonConstraints.insets = new Insets(0, 0, 5, 0);
+	makeOrderButtonConstraints.gridx = 3;
+	makeOrderButtonConstraints.gridy = 1;
 	makeOrderButton.addMouseListener(new MouseAdapter() {
 	    @Override
 	    public void mousePressed(MouseEvent e) {
@@ -135,33 +135,33 @@ public class GraphicalView implements View {
 		orderListener.actionPerformed(arguments);
 	    }
 	});
-	frame.getContentPane().add(makeOrderButton, gbc_makeOrderButton);
+	frame.getContentPane().add(makeOrderButton, makeOrderButtonConstraints);
 
 	statusLabel = new JLabel("Status...");
-	GridBagConstraints gbc_status = new GridBagConstraints();
-	gbc_status.insets = new Insets(0, 0, 0, 5);
-	gbc_status.gridx = 0;
-	gbc_status.gridy = 2;
-	frame.getContentPane().add(statusLabel, gbc_status);
+	GridBagConstraints statusLabelConstraints = new GridBagConstraints();
+	statusLabelConstraints.insets = new Insets(0, 0, 0, 5);
+	statusLabelConstraints.gridx = 0;
+	statusLabelConstraints.gridy = 2;
+	frame.getContentPane().add(statusLabel, statusLabelConstraints);
 
-	JButton btnWasnyProdukt = new JButton("W\u0142asny produkt");
-	GridBagConstraints gbc_btnWasnyProdukt = new GridBagConstraints();
-	gbc_btnWasnyProdukt.insets = new Insets(0, 0, 0, 5);
-	gbc_btnWasnyProdukt.gridx = 1;
-	gbc_btnWasnyProdukt.gridy = 2;
-	frame.getContentPane().add(btnWasnyProdukt, gbc_btnWasnyProdukt);
+	JButton customProductButton = new JButton("W\u0142asny produkt");
+	GridBagConstraints customProductButtonConstraints = new GridBagConstraints();
+	customProductButtonConstraints.insets = new Insets(0, 0, 0, 5);
+	customProductButtonConstraints.gridx = 1;
+	customProductButtonConstraints.gridy = 2;
+	frame.getContentPane().add(customProductButton, customProductButtonConstraints);
 
-	JButton btnZakocz = new JButton("Zako\u0144cz");
-	GridBagConstraints gbc_btnZakocz = new GridBagConstraints();
-	gbc_btnZakocz.gridx = 3;
-	gbc_btnZakocz.gridy = 2;
-	btnZakocz.addMouseListener(new MouseAdapter() {
+	JButton endButton = new JButton("Zako\u0144cz");
+	GridBagConstraints endButtonConstraints = new GridBagConstraints();
+	endButtonConstraints.gridx = 3;
+	endButtonConstraints.gridy = 2;
+	endButton.addMouseListener(new MouseAdapter() {
 	    @Override
 	    public void mouseClicked(MouseEvent e) {
 		frame.dispose();
 	    }
 	});
-	frame.getContentPane().add(btnZakocz, gbc_btnZakocz);
+	frame.getContentPane().add(endButton, endButtonConstraints);
 
 	frame.setVisible(true);
     }
