@@ -27,7 +27,7 @@ public class OperationStatusTest {
     @Test
     public void shouldProvideDescriptionWhenItIsSetted() {
 	String description = "Pompa dziala poprawnie!";
-	OperationStatus state = OperationStatus.Factory.createValidWithDescription(description);
+	OperationStatus state = OperationStatus.Factory.createValid(description);
 
 	assertEquals(description, state.getDescription());
     }

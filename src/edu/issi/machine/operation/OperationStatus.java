@@ -1,5 +1,9 @@
 package edu.issi.machine.operation;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import edu.issi.machine.Validator;
 
 /**
@@ -119,7 +123,7 @@ public class OperationStatus {
 	 *            Opis.
 	 * @return Poprawny status operacji, z opisem.
 	 */
-	public static OperationStatus createValidWithDescription(String description) {
+	public static OperationStatus createValid(String description) {
 	    return new OperationStatus(Status.OK, description);
 	}
 
@@ -128,6 +132,35 @@ public class OperationStatus {
 	 */
 	public static OperationStatus createValid() {
 	    return new OperationStatus(Status.OK);
+	}
+
+	/**
+	 * @param operationsStatuses
+	 *            Statusy wielu operacji.
+	 * @return Jeden status operacji powsta³y w wyniku wielu statusów.
+	 */
+	public static OperationStatus getFrom(List<OperationStatus> operationsStatuses) {
+	    // TODO refaktoryzuj
+	    Map<Status, OperationStatus> invalidStatuses = new HashMap<Status, OperationStatus>();
+
+	    for (OperationStatus eachOperationStatus : operationsStatuses) {
+		Status eachStatus = eachOperationStatus.getStatus();
+
+		if (eachStatus.requiresAttention()) {
+		    invalidStatuses.put(eachStatus, eachOperationStatus);
+		}
+	    }
+
+	    if (invalidStatuses.isEmpty()) {
+		return createValid("Wszystkie operacje wykonano pomyœlnie!");
+	    }
+	    if (invalidStatuses.keySet().contains(Status.ERROR)) {
+		// TODO przeka¿ opisy tych b³êdów!
+		return createErrorWithDescription("Wyst¹pi³y b³êdy!");
+	    }
+
+	    // TODO przeka¿ opisy tych b³êdów!
+	    return createWarningWithDescription("Wyst¹pi³y ostrze¿enia!");
 	}
     }
 

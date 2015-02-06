@@ -178,12 +178,13 @@ public class Model {
     /**
      * @param orderedProductName
      *            Nazwa zamawianago produktu.
+     * @return Statusy operacji wykonanych na sk³adnikach produktu.
      * @throws IllegalArgumentException
      *             Wyst¹pi, jeœli nie wybrano produktu lub produkt nie jest
      *             wpisany w konfiguracji maszyny. Mo¿e równie¿ wyst¹piæ w
      *             przypadku b³êdu wykonywania operacji na sk³adnikach produktu.
      */
-    public void makeOrder(String orderedProductName) throws IllegalArgumentException {
+    public List<OperationStatus> makeOrder(String orderedProductName) throws IllegalArgumentException {
 	Validator.throwExceptionWhenTextIsEmpty(orderedProductName, "Nie wybrano produktu!");
 
 	Product orderedProduct = getProductByName(orderedProductName);
@@ -193,7 +194,7 @@ public class Model {
 	}
 
 	List<OperationStatus> operationsStatuses = makeProduct(orderedProduct);
-	// TODO przeka¿ statusy operacji dalej do analizy
+	return operationsStatuses;
     }
 
     private List<OperationStatus> makeProduct(Product orderedProduct) throws IllegalArgumentException {

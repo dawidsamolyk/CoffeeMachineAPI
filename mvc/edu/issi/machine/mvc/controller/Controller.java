@@ -8,6 +8,7 @@ import java.util.Set;
 import edu.issi.machine.Validator;
 import edu.issi.machine.mvc.model.Model;
 import edu.issi.machine.mvc.view.View;
+import edu.issi.machine.operation.OperationStatus;
 import edu.issi.machine.product.ingredient.Unit;
 
 /**
@@ -121,16 +122,28 @@ public class Controller {
 	public void actionPerformed(EventArguments arguments) {
 	    for (View eachView : views) {
 		if (arguments.isCalledBy(eachView)) {
-		    String orderedProductName = eachView.getSelectedForPreparationProductName();
+		    List<OperationStatus> operationsStatuses = makeOrderOn(eachView);
 
-		    try {
-			model.makeOrder(orderedProductName);
-		    }
-		    catch (IllegalArgumentException e) {
-			eachView.showError(e.getMessage());
+		    if (operationsStatuses != null) {
+			OperationStatus operationsStatus = OperationStatus.Factory.getFrom(operationsStatuses);
+			eachView.showOperationStatus(operationsStatus.getStatus(), operationsStatus.getDescription());
 		    }
 		}
 	    }
+	}
+
+	private List<OperationStatus> makeOrderOn(View eachView) {
+	    String orderedProductName = eachView.getSelectedForPreparationProductName();
+
+	    List<OperationStatus> operationsStatuses = null;
+
+	    try {
+		operationsStatuses = model.makeOrder(orderedProductName);
+	    }
+	    catch (IllegalArgumentException e) {
+		eachView.showError(e.getMessage());
+	    }
+	    return operationsStatuses;
 	}
     }
 
