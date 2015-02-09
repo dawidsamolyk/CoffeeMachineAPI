@@ -41,7 +41,6 @@ public class MvcDemoApplication {
 	Model model = new Model(config);
 
 	Controller controller = new Controller(model);
-	//controller.addAndInitializeView(new ConsoleView());
 	controller.addAndInitializeView(new GraphicalView());
 
 	controller.startMachine();
