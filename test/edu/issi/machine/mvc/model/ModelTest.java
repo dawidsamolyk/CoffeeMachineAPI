@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +16,7 @@ import org.junit.rules.ExpectedException;
 import edu.issi.machine.configuration.MachineConfiguration;
 import edu.issi.machine.configuration.MachineConfigurationTest;
 import edu.issi.machine.configuration.MachineConfigurationTest.Fixtures;
+import edu.issi.machine.id.Identity;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ProductTest;
 import edu.issi.machine.product.ingredient.Ingredient;
@@ -100,36 +102,71 @@ public class ModelTest {
 	List<Subassembly> subassemblies = Fixtures.getFixtureSubassemlies();
 	List<Ingredient> ingredients = Fixtures.getFixtureIngredients();
 	String[] fixtureProductsNames = { "Kawa", "Herbata", "Czekolada" };
-	List<Product> products = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients, fixtureProductsNames);
+	List<Product> products = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients,
+		fixtureProductsNames);
 	MachineConfiguration configuration = new MachineConfiguration(subassemblies, ingredients, products);
 	Model model = new Model(configuration);
-	
+
 	Set<String> productsNames = model.getProductsNames();
-	
+
 	assertSame(productsNames.size(), fixtureProductsNames.length);
-	
-	for(String eachFixtureProductName : fixtureProductsNames) {
+
+	for (String eachFixtureProductName : fixtureProductsNames) {
 	    assertTrue(productsNames.contains(eachFixtureProductName));
 	}
     }
-    
+
     @Test
     public void modelShouldProvidesIngredientsNames() throws Exception {
 	MachineConfiguration configuration = Fixtures.getFixture();
 	Model model = new Model(configuration);
-	
+
 	Set<String> ingredientsNames = model.getAllIngredientsNames();
-	
+
 	Iterator<Ingredient> ingredientsIterator = configuration.getIngredientsIterator();
 	int ingredientsQuantity = 0;
-	while(ingredientsIterator.hasNext()) {
+	while (ingredientsIterator.hasNext()) {
 	    Ingredient eachIngredient = ingredientsIterator.next();
 	    assertTrue(ingredientsNames.contains(eachIngredient.getName()));
-	    
+
 	    ingredientsQuantity++;
 	}
-	
+
 	assertSame(ingredientsNames.size(), ingredientsQuantity);
+    }
+
+    @Test
+    public void modelShouldProvidesIngredientsNamesForSpecifiedProductWhichExistsInMachineConfiguration() throws Exception {
+	List<Subassembly> subassemblies = MachineConfigurationTest.Fixtures.getFixtureSubassemlies();
+	List<Ingredient> ingredients = MachineConfigurationTest.Fixtures.getFixtureIngredients();
+	List<Product> products = MachineConfigurationTest.Fixtures.getFixtureProducts(ingredients);
+	MachineConfiguration configuration = new MachineConfiguration(subassemblies, ingredients, products);
+	
+	String productName = "Coffee";
+	Product product = new Product(Identity.Factory.newIdentity(productName));
+	
+	List<Ingredient> selectedIngredients = Arrays.asList(ingredients.get(0), ingredients.get(2));
+	for(Ingredient eachIngredient : selectedIngredients) {
+	    product.add(eachIngredient);
+	}
+	
+	configuration.addProduct(product);
+	Model model = new Model(configuration);
+	
+	Set<String> result = model.getIngredientsNamesForProductNamed(productName);
+	
+	for(Ingredient eachIngredient : selectedIngredients) {
+	    assertTrue(result.contains(eachIngredient.getName()));
+	}
+    }
+    
+    @Test
+    public void modelShouldNotProvidesIngredientsNamesForUnknownProduct() throws Exception {
+	MachineConfiguration configuration = Fixtures.getFixture();
+	Model model = new Model(configuration);
+	
+	exception.expect(IllegalArgumentException.class);
+	model.getIngredientsNamesForProductNamed("Unknown product");
     }
 
     public static Model getFixture() throws Exception {

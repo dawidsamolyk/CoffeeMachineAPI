@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.IdentityTest;
 import edu.issi.machine.id.PropertyIdentity;
 import edu.issi.machine.operation.Operation;
@@ -19,6 +20,7 @@ import edu.issi.machine.product.OrderedElementsList;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ProductTest;
 import edu.issi.machine.product.ingredient.Ingredient;
+import edu.issi.machine.product.ingredient.IngredientTest;
 import edu.issi.machine.product.ingredient.Unit;
 import edu.issi.machine.subassembly.Subassembly;
 import edu.issi.machine.subassembly.TestingSubassembly;
@@ -30,7 +32,7 @@ public class MachineConfigurationTest {
 
     @SuppressWarnings("unused")
     @Test
-    public void subassembliesShouldBeSetted()  {
+    public void subassembliesShouldBeSetted() {
 	List<Ingredient> fixtureIngredients = Fixtures.getFixtureIngredients();
 
 	exception.expect(IllegalArgumentException.class);
@@ -39,7 +41,7 @@ public class MachineConfigurationTest {
 
     @SuppressWarnings("unused")
     @Test
-    public void subassembliesListShouldNotBeEmpty()  {
+    public void subassembliesListShouldNotBeEmpty() {
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
 	List<Ingredient> fixtureIngredients = Fixtures.getFixtureIngredients();
 
@@ -66,7 +68,7 @@ public class MachineConfigurationTest {
 
     @SuppressWarnings("unused")
     @Test
-    public void productsListShouldNotBeEmpty()  {
+    public void productsListShouldNotBeEmpty() {
 	List<Product> products = new ArrayList<Product>();
 
 	exception.expect(IllegalArgumentException.class);
@@ -74,14 +76,14 @@ public class MachineConfigurationTest {
     }
 
     @Test
-    public void shouldProvidesIteratorForProducts()  {
+    public void shouldProvidesIteratorForProducts() {
 	MachineConfiguration fixture = Fixtures.getFixture();
 
 	assertNotNull(fixture.getProductsIterator());
     }
 
     @Test
-    public void shouldAddNewProduct()  {
+    public void shouldAddNewProduct() {
 	List<Ingredient> ingredients = Fixtures.getFixtureIngredients();
 	List<Subassembly> subassemlies = Fixtures.getFixtureSubassemlies();
 	List<Product> products = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients, "Kawa");
@@ -102,7 +104,7 @@ public class MachineConfigurationTest {
     }
 
     @Test
-    public void shouldNotAddEmptyProduct()  {
+    public void shouldNotAddEmptyProduct() {
 	MachineConfiguration fixture = Fixtures.getFixture();
 
 	exception.expect(IllegalArgumentException.class);
@@ -110,8 +112,7 @@ public class MachineConfigurationTest {
     }
 
     @Test
-    public void shouldNotAddProductWhichHasUnavailableIngredients() throws IllegalArgumentException
-	     {
+    public void shouldNotAddProductWhichHasUnavailableIngredients() throws IllegalArgumentException {
 
 	List<Ingredient> ingredients = Fixtures.getFixtureIngredients();
 	List<Subassembly> subassemlies = Fixtures.getFixtureSubassemlies();
@@ -125,8 +126,7 @@ public class MachineConfigurationTest {
     }
 
     @Test
-    public void shouldNotAddProductWhichHasNotAnyIngredients() throws IllegalArgumentException
-	     {
+    public void shouldNotAddProductWhichHasNotAnyIngredients() throws IllegalArgumentException {
 	MachineConfiguration fixture = Fixtures.getFixture();
 
 	exception.expect(IllegalArgumentException.class);
@@ -178,18 +178,21 @@ public class MachineConfigurationTest {
 	public static List<Ingredient> getFixtureIngredients() throws IllegalArgumentException {
 	    List<Ingredient> result = new ArrayList<Ingredient>();
 
-	    OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
-	    operations.add(OperationTest.getFixture());
-
-	    Ingredient ingredient = edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getSimpleFixture();
-	    ingredient.setOperations(operations);
-
-	    PropertyIdentity property = PropertyIdentity.Factory.newProperty("Pressure", Unit.BAR);
-	    ingredient.add(property, new Double(-1.0));
-
-	    result.add(ingredient);
+	    result.add(getFixtureIngredient("Woda", PropertyIdentity.Factory.newProperty("Temperatura", Unit.C), 100.0));
+	    result.add(getFixtureIngredient("Cukier", PropertyIdentity.Factory.newProperty("Iloœæ", Unit.G), 20.0));
+	    result.add(getFixtureIngredient("Kawa", PropertyIdentity.Factory.newProperty("Iloœæ", Unit.G), 70.0));
+	    result.add(getFixtureIngredient("Mleko", PropertyIdentity.Factory.newProperty("Iloœæ", Unit.ML), 10.0));
 
 	    return result;
+	}
+
+	private static Ingredient getFixtureIngredient(String name, PropertyIdentity property, Double value) {
+	    OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
+	    operations.add(OperationTest.getFixture());
+	    Ingredient ingredient = new Ingredient(Identity.Factory.newIdentity(name));
+	    ingredient.setOperations(operations);
+	    ingredient.add(property, value);
+	    return ingredient;
 	}
 
 	public static List<Product> getFixtureProducts(List<Ingredient> fixtureIngredients)
