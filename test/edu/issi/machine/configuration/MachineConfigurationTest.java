@@ -16,11 +16,11 @@ import edu.issi.machine.id.IdentityTest;
 import edu.issi.machine.id.PropertyIdentity;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationTest;
+import edu.issi.machine.operation.fakes.FakeOperation;
 import edu.issi.machine.product.OrderedElementsList;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ProductTest;
 import edu.issi.machine.product.ingredient.Ingredient;
-import edu.issi.machine.product.ingredient.IngredientTest;
 import edu.issi.machine.product.ingredient.Unit;
 import edu.issi.machine.subassembly.Subassembly;
 import edu.issi.machine.subassembly.TestingSubassembly;
@@ -188,7 +188,7 @@ public class MachineConfigurationTest {
 
 	private static Ingredient getFixtureIngredient(String name, PropertyIdentity property, Double value) {
 	    OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
-	    operations.add(OperationTest.getFixture());
+	    operations.add(new FakeOperation());
 	    Ingredient ingredient = new Ingredient(Identity.Factory.newIdentity(name));
 	    ingredient.setOperations(operations);
 	    ingredient.add(property, value);

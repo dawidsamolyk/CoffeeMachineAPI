@@ -15,7 +15,7 @@ import edu.issi.machine.id.IdentityTest;
 import edu.issi.machine.id.PropertyIdentity;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationStatus;
-import edu.issi.machine.operation.OperationTest;
+import edu.issi.machine.operation.fakes.FakeOperation;
 import edu.issi.machine.product.OrderedElementsList;
 
 @SuppressWarnings("javadoc")
@@ -113,7 +113,7 @@ public class IngredientTest {
 
 	public static Ingredient getComplexFixture() {
 	    OrderedElementsList<Operation> operations = new OrderedElementsList<Operation>();
-	    operations.add(OperationTest.getFixture());
+	    operations.add(new FakeOperation());
 
 	    Ingredient result = IngredientTest.Fixtures.getSimpleFixture();
 	    result.setOperations(operations);

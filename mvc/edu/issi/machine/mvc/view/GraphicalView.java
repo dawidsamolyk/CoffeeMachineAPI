@@ -296,13 +296,11 @@ public class GraphicalView implements View {
 
     @Override
     public String getNewProductName() {
-	// TODO Auto-generated method stub
 	return null;
     }
 
     @Override
     public Set<String> getNewProductIngredients(Set<String> availableIngredients) {
-	// TODO Auto-generated method stub
 	return null;
     }
 
