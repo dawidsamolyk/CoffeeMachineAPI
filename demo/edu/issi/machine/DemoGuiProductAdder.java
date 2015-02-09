@@ -31,7 +31,7 @@ public class DemoGuiProductAdder extends Operation {
 	try {
 	    readedLine = readLineAfterComunicate("Chcesz dodaæ nowy produkt? [T/N]:");
 	} catch (IOException e) {
-	    return OperationStatus.Factory.createErrorWithDescription("Niedostêpny interfejs u¿ytkownika!");
+	    return OperationStatus.Factory.createError("Niedostêpny interfejs u¿ytkownika!");
 	}
 
 	if (!readedLine.equals("T")) {
@@ -42,7 +42,7 @@ public class DemoGuiProductAdder extends Operation {
 	    products.add(newProduct());
 	} 
 	catch (IOException e) {
-	    return OperationStatus.Factory.createErrorWithDescription("Niedostêpny interfejs u¿ytkownika!");
+	    return OperationStatus.Factory.createError("Niedostêpny interfejs u¿ytkownika!");
 	}
 
 	return OperationStatus.Factory.createValid();

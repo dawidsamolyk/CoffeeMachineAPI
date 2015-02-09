@@ -1,6 +1,7 @@
 package edu.issi.machine.mvc.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,7 +18,7 @@ import edu.issi.machine.product.ingredient.Unit;
  */
 public class Controller {
     private Model model;
-    private List<View> views = new ArrayList<View>();
+    protected List<View> views = new ArrayList<View>();
 
     /**
      * @param model
@@ -103,11 +104,11 @@ public class Controller {
 	@Override
 	public void actionPerformed(EventArguments arguments) {
 	    if (arguments.hasSelectedElementName()) {
-		String selectedElementName = arguments.getSelectedElementName();
+		String selectedIngredientName = arguments.getSelectedElementName();
 
 		for (View eachView : views) {
-		    Map<String, Unit> properties = model.getPropertiesForIngredientNamed(selectedElementName);
-		    eachView.showIngredientProperties(selectedElementName, properties);
+		    Map<String, Unit> properties = model.getPropertiesForIngredientNamed(selectedIngredientName);
+		    eachView.showIngredientProperties(selectedIngredientName, properties);
 		}
 	    }
 	}
@@ -132,19 +133,23 @@ public class Controller {
 	    }
 	}
 
-	private List<OperationStatus> makeOrderOn(View eachView) {
-	    String orderedProductName = eachView.getSelectedForPreparationProductName();
-	    
-	    List<OperationStatus> operationsStatuses = null;
+	private List<OperationStatus> makeOrderOn(View view) {
+	    String orderedProductName = view.getSelectedForPreparationProductName();
 
 	    try {
-		operationsStatuses = model.makeOrder(orderedProductName);
+		Set<String> ingredients = model.getIngredientsNamesForProductNamed(orderedProductName);
+
+		for (String eachIngredient : ingredients) {
+		    Map<String, Unit> properties = model.getPropertiesForIngredientNamed(eachIngredient);
+		    Map<String, Float> userProperties = view.getPropertiesForIngredient(eachIngredient, properties);
+		}
+
+		return model.makeOrder(orderedProductName);
 	    }
 	    catch (IllegalArgumentException e) {
-		eachView.showError(e.getMessage());
+		OperationStatus error = OperationStatus.Factory.createError(e.getMessage());
+		return Arrays.asList(error);
 	    }
-	    return operationsStatuses;
 	}
     }
-
 }

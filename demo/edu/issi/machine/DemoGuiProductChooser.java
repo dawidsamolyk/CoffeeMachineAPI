@@ -36,13 +36,13 @@ public class DemoGuiProductChooser extends Operation {
 	    selectProductByID(productID);
 	} 
 	catch (NumberFormatException e) {
-	    return OperationStatus.Factory.createErrorWithDescription("Podano nieprawid這wy ID!");
+	    return OperationStatus.Factory.createError("Podano nieprawid這wy ID!");
 	} 
 	catch (NoSuchElementException e) {
-	    return OperationStatus.Factory.createErrorWithDescription(e.getMessage());
+	    return OperationStatus.Factory.createError(e.getMessage());
 	} 
 	catch (IOException e) {
-	    return OperationStatus.Factory.createErrorWithDescription("Podano nieprawid這wy ID!");
+	    return OperationStatus.Factory.createError("Podano nieprawid這wy ID!");
 	}
 
 	System.out.println(">>> Wybrano " + selectedProduct);

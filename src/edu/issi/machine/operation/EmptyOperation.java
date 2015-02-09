@@ -29,13 +29,13 @@ public class EmptyOperation extends Operation {
 	if (!areRequiredElementsProvided()) {
 	    setNotDone();
 
-	    return OperationStatus.Factory.createErrorWithDescription("Nie ustawiono wymaganych parametrów!");
+	    return OperationStatus.Factory.createError("Nie ustawiono wymaganych parametrów!");
 	}
 	else if (!canDoThisOperation(subassembly)) {
 	    setNotDone();
 
 	    return OperationStatus.Factory
-		    .createErrorWithDescription("Wybrany podzespó³ nie jest w stanie wykonaæ tej operacji!");
+		    .createError("Wybrany podzespó³ nie jest w stanie wykonaæ tej operacji!");
 	}
 
 	setDone();

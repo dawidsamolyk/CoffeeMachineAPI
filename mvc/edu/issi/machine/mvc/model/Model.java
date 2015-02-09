@@ -193,20 +193,19 @@ public class Model {
 	    throw new IllegalArgumentException("Wybrano nieznany produkt!");
 	}
 
-	List<OperationStatus> operationsStatuses = makeProduct(orderedProduct);
-	return operationsStatuses;
+	return makeProduct(orderedProduct);
     }
 
     private List<OperationStatus> makeProduct(Product orderedProduct) throws IllegalArgumentException {
-	List<OperationStatus> allOperationStatuses = new ArrayList<OperationStatus>();
+	List<OperationStatus> allOperationsStatuses = new ArrayList<OperationStatus>();
 
 	for (Iterator<Ingredient> iterator = orderedProduct.iterator(); iterator.hasNext();) {
 	    Ingredient ingredient = iterator.next();
 
 	    List<OperationStatus> ingredientOperationStatuses = ingredient.doOperations();
-	    allOperationStatuses.addAll(ingredientOperationStatuses);
+	    allOperationsStatuses.addAll(ingredientOperationStatuses);
 	}
 
-	return allOperationStatuses;
+	return allOperationsStatuses;
     }
 }

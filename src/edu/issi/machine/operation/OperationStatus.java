@@ -1,8 +1,7 @@
 package edu.issi.machine.operation;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import edu.issi.machine.Validator;
 
@@ -101,11 +100,24 @@ public class OperationStatus {
      */
     public static class Factory {
 	/**
+	 * 
+	 */
+	public static final String ERROR_OCCURS = "Wyst¹pi³y ostrze¿enia! ";
+	/**
+	 * 
+	 */
+	public static final String WARNING_OCCURS = "Wyst¹pi³y b³êdy! ";
+	/**
+	 * 
+	 */
+	public static final String ALL_VALID = "Wszystkie operacje wykonano pomyœlnie! ";
+
+	/**
 	 * @param description
 	 *            Opis.
 	 * @return Status operacji dla b³êdu.
 	 */
-	public static OperationStatus createErrorWithDescription(String description) {
+	public static OperationStatus createError(String description) {
 	    return new OperationStatus(Status.ERROR, description);
 	}
 
@@ -114,7 +126,7 @@ public class OperationStatus {
 	 *            Opis.
 	 * @return Status operacji dla ostrze¿enia.
 	 */
-	public static OperationStatus createWarningWithDescription(String description) {
+	public static OperationStatus createWarning(String description) {
 	    return new OperationStatus(Status.WARNING, description);
 	}
 
@@ -140,27 +152,33 @@ public class OperationStatus {
 	 * @return Jeden status operacji powsta³y w wyniku wielu statusów.
 	 */
 	public static OperationStatus getFrom(List<OperationStatus> operationsStatuses) {
-	    // TODO refaktoryzuj
-	    Map<Status, OperationStatus> invalidStatuses = new HashMap<Status, OperationStatus>();
+	    List<String> invalidStatuses = new ArrayList<String>();
+	    Status maxSeverity = Status.OK;
 
 	    for (OperationStatus eachOperationStatus : operationsStatuses) {
 		Status eachStatus = eachOperationStatus.getStatus();
 
 		if (eachStatus.requiresAttention()) {
-		    invalidStatuses.put(eachStatus, eachOperationStatus);
+		    invalidStatuses.add(eachOperationStatus.getCompensatedStatus());
+		}
+
+		if (!maxSeverity.equals(Status.ERROR) && eachStatus.equals(Status.WARNING)) {
+		    maxSeverity = Status.WARNING;
+		}
+		else if (eachStatus.equals(Status.ERROR)) {
+		    maxSeverity = Status.ERROR;
 		}
 	    }
 
-	    if (invalidStatuses.isEmpty()) {
-		return createValid("Wszystkie operacje wykonano pomyœlnie!");
+	    switch (maxSeverity) {
+		case ERROR:
+		    return createError(ERROR_OCCURS + invalidStatuses);
+		case WARNING:
+		    return createWarning(WARNING_OCCURS + invalidStatuses);
+		case OK:
+		default:
+		    return createValid(ALL_VALID);
 	    }
-	    if (invalidStatuses.keySet().contains(Status.ERROR)) {
-		// TODO przeka¿ opisy tych b³êdów!
-		return createErrorWithDescription("Wyst¹pi³y b³êdy!");
-	    }
-
-	    // TODO przeka¿ opisy tych b³êdów!
-	    return createWarningWithDescription("Wyst¹pi³y ostrze¿enia!");
 	}
     }
 

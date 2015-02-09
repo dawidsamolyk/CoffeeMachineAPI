@@ -1,12 +1,14 @@
 package edu.issi.machine.mvc.view;
 
 import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Window.Type;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -35,6 +37,7 @@ import edu.issi.machine.product.ingredient.Unit;
  *
  */
 public class GraphicalView implements View {
+    private ProductsListener productsListener;
     private PropertiesListener propertiesListener;
     private IngredientsListener ingredientsListener;
     private OrderListener orderListener;
@@ -224,27 +227,66 @@ public class GraphicalView implements View {
 
     @Override
     public Map<String, Float> getPropertiesForIngredient(String ingredientName, Map<String, Unit> availableProperties) {
-	JFrame frame = new JFrame("Ustaw w≥aúciowoúci sk≥adnika " + ingredientName);
-	frame.setType(Type.UTILITY);
-	frame.setBounds(new Rectangle(300, 300));
-	Container contentPane = frame.getContentPane();
-	contentPane.setLayout(new FlowLayout());
+	final JFrame propertiesFrame = new JFrame("Ustaw w≥aúciowoúci sk≥adnika " + ingredientName);
+	propertiesFrame.setType(Type.UTILITY);
+	propertiesFrame.setDefaultCloseOperation(JFrame.ERROR);
+	propertiesFrame.setBounds(new Rectangle(300, 300));
+	Container contentPane = propertiesFrame.getContentPane();
+	int propertiesQuantity = availableProperties.size();
+	contentPane.setLayout(new GridLayout(propertiesQuantity + 1, 2));
 
-	Map<String, JTextField> propertiesValuesFields = new HashMap<String, JTextField>(availableProperties.size());
+	final Map<String, JTextField> propertiesValuesFields = new HashMap<String, JTextField>(propertiesQuantity);
 
 	for (String eachPropertyName : availableProperties.keySet()) {
 	    Unit propertyUnit = availableProperties.get(eachPropertyName);
 	    contentPane.add(new JLabel(eachPropertyName + " [" + propertyUnit + "]"));
-	    
+
 	    JTextField valueField = new JTextField();
 	    propertiesValuesFields.put(eachPropertyName, valueField);
+	    contentPane.add(valueField);
 	}
-	
-	frame.setVisible(true);
-	
-	
 
-	return null;
+	JButton okButton = new JButton("Zatwierdü");
+	okButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		if (areAllTextFieldsFilled(propertiesValuesFields)) {
+		    propertiesFrame.dispose();
+		}
+	    }
+	});
+	contentPane.add(okButton);
+
+	propertiesFrame.setVisible(true);
+
+	// while(!areAllTextFieldsFilled(propertiesValuesFields)) {
+	//
+	// }
+
+	return toValuesMap(propertiesValuesFields);
+    }
+
+    private Map<String, Float> toValuesMap(Map<String, JTextField> propertiesValuesFields) {
+	Map<String, Float> result = new HashMap<String, Float>();
+
+	for (String eachName : propertiesValuesFields.keySet()) {
+	    JTextField textField = propertiesValuesFields.get(eachName);
+
+	    result.put(eachName, Float.valueOf(textField.getText()));
+	}
+
+	return result;
+    }
+
+    private boolean areAllTextFieldsFilled(Map<String, JTextField> propertiesValuesFields) {
+	for (String eachName : propertiesValuesFields.keySet()) {
+	    JTextField textField = propertiesValuesFields.get(eachName);
+
+	    if (textField.getText().isEmpty()) {
+		return false;
+	    }
+	}
+	return true;
     }
 
     @Override
@@ -266,7 +308,8 @@ public class GraphicalView implements View {
 
     @Override
     public void addProductsListener(ProductsListener productsListener) {
-	productsListener.actionPerformed(new EventArguments(this));
+	this.productsListener = productsListener;
+	this.productsListener.actionPerformed(new EventArguments(this));
     }
 
     @Override

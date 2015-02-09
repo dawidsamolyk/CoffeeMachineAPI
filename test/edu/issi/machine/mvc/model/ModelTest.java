@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import edu.issi.machine.configuration.MachineConfiguration;
+import edu.issi.machine.configuration.MachineConfigurationTest;
 import edu.issi.machine.configuration.MachineConfigurationTest.Fixtures;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ProductTest;
@@ -132,6 +133,6 @@ public class ModelTest {
     }
 
     public static Model getFixture() throws Exception {
-	return new Model(Fixtures.getFixture());
+	return new Model(MachineConfigurationTest.Fixtures.getFixture());
     }
 }
