@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,7 +14,6 @@ import edu.issi.machine.mvc.controller.fakes.TestingController;
 import edu.issi.machine.mvc.model.ModelTest;
 import edu.issi.machine.mvc.model.fakes.FakeModel;
 import edu.issi.machine.operation.OperationStatus;
-import edu.issi.machine.operation.Status;
 
 @SuppressWarnings("javadoc")
 public class ControllerTest {
@@ -134,8 +132,9 @@ public class ControllerTest {
     @Test
     public void controllerShouldShowOperationsStatusOnAllViewsAfterOrderWasMade() throws Exception {
 	FakeModel model = FakeModel.getFixture();
+	String orderedProductName = model.getProductsNames().iterator().next();
 	TestingController controller = new TestingController(model);
-	FakeView view = new FakeView();
+	FakeView view = new FakeView(orderedProductName);
 	FakeView secondView = new FakeView();
 	controller.addAndInitializeView(view);
 	controller.addAndInitializeView(secondView);
@@ -146,22 +145,19 @@ public class ControllerTest {
     }
     
     @Test
-    public void controllerShouldShowOperationsStatusOnAllViewsAfterOrderWasMade() throws Exception {
+    public void controllerShouldMakeOrderOnlyOnSelectedView() throws Exception {
 	FakeModel model = FakeModel.getFixture();
+	String productName = model.getProductsNames().iterator().next();
 	TestingController controller = new TestingController(model);
-	FakeView view = new FakeView();
+	FakeView view = new FakeView(productName);
 	FakeView secondView = new FakeView();
 	controller.addAndInitializeView(view);
 	controller.addAndInitializeView(secondView);
 
 	view.performActionOnOrderListener();
 	
-	assertEquals(OperationStatus.Factory.ALL_VALID.getCompensatedStatus(), secondView.getLastMessage());
-    }
-
-    @Test
-    public void controllerShouldMakeOrderOnSelectedView() throws Exception {
-	fail("Not implemented yet!");
+	assertEquals(model.orderedProductName, view.orderedProductName);
+	assertFalse(model.orderedProductName.equals(secondView.orderedProductName));
     }
 
     private Controller getFixture() throws Exception {

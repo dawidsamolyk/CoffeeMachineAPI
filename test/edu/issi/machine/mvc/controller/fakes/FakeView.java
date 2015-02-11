@@ -11,13 +11,12 @@ import edu.issi.machine.mvc.controller.Controller.PropertiesListener;
 import edu.issi.machine.mvc.controller.EventArguments;
 import edu.issi.machine.mvc.view.View;
 import edu.issi.machine.operation.Status;
-import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Unit;
 
 @SuppressWarnings("javadoc")
 public class FakeView implements View {
     public String newProductName = "New test product name";
-    public String orderedProductName = "Test";
+    public String orderedProductName = "Test product name";
 
     protected ProductsListener productsListListener;
     protected PropertiesListener propertiesListener;
@@ -29,8 +28,8 @@ public class FakeView implements View {
     public FakeView() {
     }
 
-    public FakeView(Product orderedProduct) {
-	this.orderedProductName = orderedProduct.getName();
+    public FakeView(String orderedProductName) {
+	this.orderedProductName = orderedProductName;
     }
 
     @Override

@@ -68,7 +68,9 @@ public class Controller {
 	}
 
 	@Override
-	public void actionPerformed(EventArguments arguments) {
+	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
+	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, "Nie mo¿na wykonaæ akcji bez podanych argumentów!");
+
 	    for (View eachView : views) {
 		eachView.showProducts(model.getProductsNames());
 	    }
@@ -84,7 +86,9 @@ public class Controller {
 	}
 
 	@Override
-	public void actionPerformed(EventArguments arguments) {
+	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
+	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, "Nie mo¿na wykonaæ akcji bez podanych argumentów!");
+	    
 	    if (arguments.hasSelectedElementName()) {
 		String selectedElementName = arguments.getSelectedElementName();
 
@@ -110,7 +114,9 @@ public class Controller {
 	}
 
 	@Override
-	public void actionPerformed(EventArguments arguments) {
+	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
+	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, "Nie mo¿na wykonaæ akcji bez podanych argumentów!");
+	    
 	    // TODO strategia
 	    if (arguments.hasSelectedElementName()) {
 		String selectedIngredientName = arguments.getSelectedElementName();
@@ -137,7 +143,9 @@ public class Controller {
 	}
 
 	@Override
-	public void actionPerformed(EventArguments arguments) {
+	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
+	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, "Nie mo¿na wykonaæ akcji bez podanych argumentów!");
+	    
 	    // TODO refaktoryzuj
 	    View activeView = null;
 
@@ -168,17 +176,12 @@ public class Controller {
 		    }
 		}
 	    }
-
-	    for (View eachView : views) {
-		if (arguments.isCalledBy(eachView)) {
-
-		}
-	    }
 	}
 
 	private List<OperationStatus> makeOrderOn(View view) throws IllegalArgumentException {
 	    String orderedProductName = view.getSelectedForPreparationProductName();
 
+	    // TODO pobierz w³aœciwoœci sk³adników przed realizacj¹ zamówienia
 	    // Set<String> ingredients =
 	    // model.getIngredientsNamesForProductNamed(orderedProductName);
 	    //

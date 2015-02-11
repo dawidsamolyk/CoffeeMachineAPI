@@ -9,6 +9,7 @@ import edu.issi.machine.operation.OperationStatus;
 
 @SuppressWarnings("javadoc")
 public class FakeModel extends Model {
+    public String orderedProductName;
     public boolean working = false;
 
     public FakeModel(MachineConfiguration configuration) throws IllegalArgumentException {
@@ -27,6 +28,7 @@ public class FakeModel extends Model {
 
     @Override
     public List<OperationStatus> makeOrder(String orderedProductName) throws IllegalArgumentException {
+	this.orderedProductName = orderedProductName;
 	return super.makeOrder(orderedProductName);
     }
 
