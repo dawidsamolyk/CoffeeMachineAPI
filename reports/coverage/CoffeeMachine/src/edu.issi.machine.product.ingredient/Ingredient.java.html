@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Ingredient.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-11 22:36:32)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.product.ingredient</a> &gt; <span class="el_source">Ingredient.java</span></div><h1>Ingredient.java</h1><pre class="source lang-java linenums">package edu.issi.machine.product.ingredient;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+
+import edu.issi.machine.Validator;
+import edu.issi.machine.id.Identity;
+import edu.issi.machine.id.ObjectWithIdentity;
+import edu.issi.machine.id.PropertyIdentity;
+import edu.issi.machine.operation.Operation;
+import edu.issi.machine.operation.OperationStatus;
+
+/**
+ * @author Dawid Samołyk
+ * 
+ *         Składnik.
+ */
+public class Ingredient extends ObjectWithIdentity {
+    private final Map&lt;PropertyIdentity, Double&gt; properties;
+    private Iterable&lt;Operation&gt; operations;
+
+    /**
+     * @param identity
+     *            Identyfikator.
+     */
+    public Ingredient(Identity identity) {
+<span class="fc" id="L31">	super(identity);</span>
+
+<span class="fc" id="L33">	this.properties = new HashMap&lt;PropertyIdentity, Double&gt;();</span>
+<span class="fc" id="L34">    }</span>
+
+    /**
+     * @param property
+     *            Własność składnika, którą chcemy pobrać.
+     * @return Zwraca wartość przypisaną do wybranej właściwości składnika.
+     * @throws IllegalArgumentException
+     *             Wystąpi, jeśli identyfikator będzie pusty.
+     * @throws NoSuchElementException
+     *             Wystąpi, gdy składnik nie posiada podanej właściwości.
+     */
+    public Double get(PropertyIdentity property) throws IllegalArgumentException, NoSuchElementException {
+<span class="fc" id="L46">	Validator.throwExceptionWhenObjectIsNotCreated(property, &quot;Nie można pobrać pustej właściwości!&quot;);</span>
+
+<span class="fc" id="L48">	final Double result = properties.get(property);</span>
+
+<span class="fc bfc" id="L50" title="All 2 branches covered.">	if (result == null) {</span>
+<span class="fc" id="L51">	    throw new NoSuchElementException(&quot;Wybrany składnik nie posiada podanej właściwości!&quot;);</span>
+	}
+
+<span class="fc" id="L54">	return result;</span>
+    }
+
+    /**
+     * @param property
+     *            Własność składnika.
+     * @param value
+     *            Wartość przypisana do własności.
+     */
+    public void add(PropertyIdentity property, Double value) {
+<span class="fc" id="L64">	Validator.throwExceptionWhenObjectIsNotCreated(property, &quot;Nie można właściwości z pustym identifikatorem!&quot;);</span>
+<span class="fc" id="L65">	Validator.throwExceptionWhenObjectIsNotCreated(value, &quot;Nie można dodać właściwości z pustą wartością!&quot;);</span>
+
+<span class="fc" id="L67">	properties.put(property, value);</span>
+<span class="fc" id="L68">    }</span>
+
+    /**
+     * @param property
+     *            Własność składnika.
+     * @throws IllegalArgumentException
+     *             Wystąpi, gdy zajdzie próba usunięcia właściwości z pustym
+     *             identyfikatorem.
+     * @throws NoSuchElementException
+     *             Wystąpi, gdy zajdzie próba usunięcia właściwości, której ten
+     *             składnik nie posiada.
+     */
+    public void remove(PropertyIdentity property) throws IllegalArgumentException, NoSuchElementException {
+<span class="fc" id="L81">	Validator.throwExceptionWhenObjectIsNotCreated(property,</span>
+<span class="fc" id="L82">		&quot;Nie można usunąć właściwości z pustym identifikatorem!&quot;);</span>
+
+<span class="fc bfc" id="L84" title="All 2 branches covered.">	if (!properties.containsKey(property)) {</span>
+<span class="fc" id="L85">	    throw new NoSuchElementException(</span>
+<span class="fc" id="L86">		    &quot;Wybrany składnik nie posiada podanej właściwości, więc nie można jej usunąć!&quot;);</span>
+	}
+
+<span class="fc" id="L89">	properties.remove(property);</span>
+<span class="fc" id="L90">    }</span>
+
+    /**
+     * @param operations
+     *            Operacje.
+     */
+    public void setOperations(Iterable&lt;Operation&gt; operations) {
+<span class="fc" id="L97">	Validator.throwExceptionWhenContainsNullOrEmpty(operations, &quot;Nie można dodawać pustych operacji do składnika!&quot;);</span>
+
+<span class="fc" id="L99">	this.operations = operations;</span>
+<span class="fc" id="L100">    }</span>
+
+    /**
+     * @return Właściwości składnika.
+     */
+    public Map&lt;PropertyIdentity, Double&gt; getProperties() {
+<span class="fc" id="L106">	return properties;</span>
+    }
+
+    /**
+     * @return Statusy wszystkich wykonanych operacji.
+     * @throws IllegalArgumentException
+     *             Wystąpi, jeśli nie ustawiono poprawnych operacji
+     *             (niepustych).
+     */
+    public List&lt;OperationStatus&gt; doOperations() throws IllegalArgumentException {
+<span class="fc" id="L116">	Validator.throwExceptionWhenContainsNullOrEmpty(operations,</span>
+<span class="fc" id="L117">		&quot;Zbiór operacji na składniku nie może być pusty lub niepełny!&quot;);</span>
+
+<span class="fc" id="L119">	final List&lt;OperationStatus&gt; result = new ArrayList&lt;OperationStatus&gt;();</span>
+
+<span class="fc bfc" id="L121" title="All 2 branches covered.">	for (Iterator&lt;Operation&gt; itearator = operations.iterator(); itearator.hasNext();) {</span>
+<span class="fc" id="L122">	    OperationStatus state = itearator.next().execute();</span>
+<span class="fc" id="L123">	    result.add(state);</span>
+	}
+
+<span class="fc" id="L126">	return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-11 22:36:32)</div></body></html>

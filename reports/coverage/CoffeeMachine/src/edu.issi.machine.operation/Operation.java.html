@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Operation.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-11 22:36:32)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.operation</a> &gt; <span class="el_source">Operation.java</span></div><h1>Operation.java</h1><pre class="source lang-java linenums">package edu.issi.machine.operation;
+
+import edu.issi.machine.Validator;
+import edu.issi.machine.id.Identity;
+import edu.issi.machine.id.ObjectWithIdentity;
+import edu.issi.machine.product.ingredient.Ingredient;
+import edu.issi.machine.subassembly.Subassembly;
+
+/**
+ * @author Dawid Samołyk
+ * 
+ *         Operacja.
+ */
+public abstract class Operation extends ObjectWithIdentity {
+<span class="fc" id="L15">    private boolean isDone = false;</span>
+
+    protected Subassembly subassembly;
+    protected Ingredient ingredient;
+
+    /**
+     * @param identity
+     *            Identyfikator.
+     * @throws IllegalArgumentException
+     *             Wystąpi, jeśli identyfikator będzie pusty.
+     */
+    public Operation(Identity identity) throws IllegalArgumentException {
+<span class="fc" id="L27">	super(identity);</span>
+<span class="fc" id="L28">    }</span>
+
+    /**
+     * @param subassembly
+     *            Podzespół, na którym ma zostać wykonana operacja.
+     * @return Zwraca referencje do siebie - wzorzec Fluent Interface.
+     * @throws IllegalArgumentException
+     *             Wystąpi, jeśli spodany podzespół nie został utworzony.
+     */
+    public Operation setSubassembly(Subassembly subassembly) throws IllegalArgumentException {
+<span class="fc" id="L38">	Validator.throwExceptionWhenObjectIsNotCreated(subassembly,</span>
+<span class="fc" id="L39">		&quot;Nie można ustawić pustego podzespołu do wykonania operacji!&quot;);</span>
+
+<span class="fc" id="L41">	this.subassembly = subassembly;</span>
+<span class="fc" id="L42">	return this;</span>
+    }
+
+    /**
+     * @param ingredient
+     *            Składnik, na którym ma zostać wykonana operacja.
+     * @return Zwraca referencje do siebie - wzorzec Fluent Interface.
+     * @throws IllegalArgumentException
+     *             Wystąpi, jeśli spodany składnik nie został utworzony.
+     */
+    public Operation setIngredient(Ingredient ingredient) throws IllegalArgumentException {
+<span class="fc" id="L53">	Validator.throwExceptionWhenObjectIsNotCreated(ingredient,</span>
+<span class="fc" id="L54">		&quot;Nie można ustawić pustego składnika do wykonania na nim operacji!&quot;);</span>
+
+<span class="fc" id="L56">	this.ingredient = ingredient;</span>
+<span class="fc" id="L57">	return this;</span>
+    }
+
+    /**
+     * Wykonanie operacji.
+     * @return Stan operacji.
+     */
+    public abstract OperationStatus execute();
+
+    protected boolean canDoThisOperation(Subassembly subassembly) throws IllegalArgumentException {
+<span class="fc" id="L67">	Validator.throwExceptionWhenObjectIsNotCreated(subassembly,</span>
+<span class="fc" id="L68">		&quot;Nie można sprawdzić wykonywalności operacji dla pustego podzespołu!&quot;);</span>
+
+<span class="fc" id="L70">	return subassembly.supports(this);</span>
+    }
+
+    protected boolean areRequiredElementsProvided() {
+<span class="fc bfc" id="L74" title="All 4 branches covered.">	return subassembly != null &amp;&amp; ingredient != null;</span>
+    }
+
+    protected synchronized void setDone() {
+<span class="fc" id="L78">	isDone = true;</span>
+<span class="fc" id="L79">    }</span>
+
+    protected synchronized void setNotDone() {
+<span class="fc" id="L82">	isDone = false;</span>
+<span class="fc" id="L83">    }</span>
+
+    /**
+     * @return Czy operacja została zakończona.
+     */
+    public synchronized boolean isDone() {
+<span class="fc" id="L89">	return isDone;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-11 22:36:32)</div></body></html>

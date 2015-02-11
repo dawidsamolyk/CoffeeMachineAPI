@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Product.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-11 22:36:32)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.product</a> &gt; <span class="el_source">Product.java</span></div><h1>Product.java</h1><pre class="source lang-java linenums">package edu.issi.machine.product;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import edu.issi.machine.id.Identity;
+import edu.issi.machine.id.ObjectWithIdentity;
+import edu.issi.machine.product.ingredient.Ingredient;
+
+/**
+ * @author Dawid Samołyk
+ *
+ *         Produkt.
+ */
+public class Product extends ObjectWithIdentity implements Iterable&lt;Ingredient&gt; {
+    private final OrderedElementsList&lt;Ingredient&gt; ingredients;
+
+    /**
+     * @param id
+     *            Identyfikator.
+     * @throws IllegalArgumentException
+     *             Wystąpi, jeśli identyfikator będzie pusty.
+     */
+    public Product(final Identity id) throws IllegalArgumentException {
+<span class="fc" id="L25">	super(id);</span>
+
+<span class="fc" id="L27">	ingredients = new OrderedElementsList&lt;Ingredient&gt;();</span>
+<span class="fc" id="L28">    }</span>
+
+    /**
+     * @param ingredient
+     *            Składnik, który zostanie dodany na końcu listy.
+     * @throws IllegalArgumentException
+     *             Wystąpi, jeśli składnik będzie pusty.
+     */
+    public void add(Ingredient ingredient) throws IllegalArgumentException {
+<span class="fc" id="L37">	ingredients.add(ingredient);</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * @param index
+     *            Indeks, spod którego ma zostać pobrany składnik.
+     * @return Skladnik umieszczony na podanym indeksie.
+     * @throws NoSuchElementException
+     *             Wystąpi, jeśli pod podanym indeksem nie ma żadnego składnika.
+     * @see edu.issi.machine.product.OrderedElementsList#getElement(int)
+     */
+    public Ingredient getIngredientAt(int index) throws NoSuchElementException {
+<span class="fc" id="L49">	return ingredients.getElement(index);</span>
+    }
+
+    /**
+     * @return Liczba skladnikósw.
+     * @see edu.issi.machine.product.OrderedElementsList#getNumberOfElements()
+     */
+    public int numberOfElements() {
+<span class="fc" id="L57">	return ingredients.getNumberOfElements();</span>
+    }
+
+    /**
+     * @param index
+     *            Indeks, pod który ma zostać dodany składnik.
+     * @param ingredient
+     *            Składnik.
+     * @see edu.issi.machine.product.OrderedElementsList#addAt(int, Object)
+     */
+    public void addAt(int index, Ingredient ingredient) {
+<span class="fc" id="L68">	ingredients.addAt(index, ingredient);</span>
+<span class="fc" id="L69">    }</span>
+
+    /**
+     * @param index
+     *            Indeks, spod którego ma zostać usunięty składnik.
+     * @see edu.issi.machine.product.OrderedElementsList#remove(int)
+     */
+    public void remove(int index) {
+<span class="fc" id="L77">	ingredients.remove(index);</span>
+<span class="fc" id="L78">    }</span>
+
+    /**
+     * @return Iterator po skladnikach.
+     * @see edu.issi.machine.product.OrderedElementsList#iterator()
+     */
+    @Override
+    public Iterator&lt;Ingredient&gt; iterator() {
+<span class="fc" id="L86">	return ingredients.iterator();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-11 22:36:32)</div></body></html>

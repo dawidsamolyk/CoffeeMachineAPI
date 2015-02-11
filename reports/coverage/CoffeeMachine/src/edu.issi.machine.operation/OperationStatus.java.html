@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>OperationStatus.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-11 22:36:32)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.operation</a> &gt; <span class="el_source">OperationStatus.java</span></div><h1>OperationStatus.java</h1><pre class="source lang-java linenums">package edu.issi.machine.operation;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.issi.machine.Validator;
+
+/**
+ * @author Dawid Samołyk
+ * 
+ *         Status operacji.
+ */
+public class OperationStatus {
+    private final Status status;
+    private final String description;
+
+    /**
+     * @param status
+     *            Status operacji (@see {@link Status}).
+     * @throws IllegalStateException
+     *             Wystąpi, gdy status będzie wyamgał uwagi (błąd lub
+     *             ostrzeżenie), ponieważ nie został ustawiony dla niego opis.
+     */
+<span class="fc" id="L24">    private OperationStatus(Status status) throws IllegalStateException {</span>
+<span class="fc" id="L25">	Validator.throwExceptionWhenObjectIsNotCreated(status, &quot;Nie podano statusu operacji!&quot;);</span>
+
+<span class="fc" id="L27">	this.status = status;</span>
+<span class="fc" id="L28">	this.description = &quot;&quot;;</span>
+<span class="fc" id="L29">    }</span>
+
+    /**
+     * @param status
+     *            Status operacji (@see {@link Status}).
+     * @param description
+     *            Dodatkowy opis stanu operacji.
+     * @throws IllegalStateException
+     *             Wystąpi, gdy status będzie wyamgał uwagi (błąd lub
+     *             ostrzeżenie) i nie zostanie ustawiony dla niego opis.
+     */
+<span class="fc" id="L40">    private OperationStatus(Status status, String description) throws IllegalStateException {</span>
+<span class="fc" id="L41">	Validator.throwExceptionWhenObjectIsNotCreated(status, &quot;Nie podano statusu operacji!&quot;);</span>
+<span class="fc" id="L42">	Validator.throwExceptionWhenTextIsEmpty(description, &quot;Opis statusu operacji nie może być pusty!&quot;);</span>
+
+<span class="fc" id="L44">	this.status = status;</span>
+<span class="fc" id="L45">	this.description = description;</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * @return Opis stanu operacji.
+     */
+    public String getDescription() {
+<span class="fc" id="L52">	return description;</span>
+    }
+
+    /**
+     * @return Status stanu operacji.
+     */
+    public Status getStatus() {
+<span class="fc" id="L59">	return status;</span>
+    }
+
+    /**
+     * @return Status operacji i opis w jednym tekscie.
+     */
+    public String getCompensatedStatus() {
+<span class="fc" id="L66">	final String statusInBrackets = &quot;[&quot; + status.name() + &quot;]&quot;;</span>
+
+<span class="fc bfc" id="L68" title="All 2 branches covered.">	if (!description.isEmpty()) {</span>
+<span class="fc" id="L69">	    return statusInBrackets + &quot; &quot; + description;</span>
+	}
+
+<span class="fc" id="L72">	return statusInBrackets;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L77">	final int prime = 31;</span>
+<span class="fc" id="L78">	int result = 1;</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">	result = prime * result + ((description == null) ? 0 : description.hashCode());</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">	result = prime * result + ((status == null) ? 0 : status.hashCode());</span>
+<span class="fc" id="L81">	return result;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L86" title="All 2 branches covered.">	if (this == obj) return true;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">	if (obj == null) return false;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">	if (getClass() != obj.getClass()) return false;</span>
+<span class="fc" id="L89">	OperationStatus other = (OperationStatus) obj;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">	if (description == null) {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">	    if (other.description != null) return false;</span>
+	}
+<span class="fc bfc" id="L93" title="All 2 branches covered.">	else if (!description.equals(other.description)) return false;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">	if (status != other.status) return false;</span>
+<span class="fc" id="L95">	return true;</span>
+    }
+
+    /**
+     * Fabryka statusów operacji.
+     *
+     */
+<span class="nc" id="L102">    public static class Factory {</span>
+	/**
+	 * 
+	 */
+	public static final String ERROR_OCCURS_INFO = &quot;Wystąpiły błędy! &quot;;
+	/**
+	 * 
+	 */
+	public static final String WARNING_OCCURS_INFO = &quot;Wystąpiły ostrzeżenia! &quot;;
+	/**
+	 * 
+	 */
+<span class="fc" id="L114">	public static final OperationStatus ALL_VALID = createValid(&quot;Wszystkie operacje wykonano pomyślnie! &quot;);</span>
+
+	/**
+	 * @param description
+	 *            Opis.
+	 * @return Status operacji dla błędu.
+	 */
+	public static OperationStatus createError(String description) {
+<span class="fc" id="L122">	    return new OperationStatus(Status.ERROR, description);</span>
+	}
+
+	/**
+	 * @param description
+	 *            Opis.
+	 * @return Status operacji dla ostrzeżenia.
+	 */
+	public static OperationStatus createWarning(String description) {
+<span class="fc" id="L131">	    return new OperationStatus(Status.WARNING, description);</span>
+	}
+
+	/**
+	 * @param description
+	 *            Opis.
+	 * @return Poprawny status operacji, z opisem.
+	 */
+	public static OperationStatus createValid(String description) {
+<span class="fc" id="L140">	    return new OperationStatus(Status.OK, description);</span>
+	}
+
+	/**
+	 * @return Poprawny status operacji.
+	 */
+	public static OperationStatus createValid() {
+<span class="fc" id="L147">	    return new OperationStatus(Status.OK);</span>
+	}
+
+	/**
+	 * @param operationsStatuses
+	 *            Statusy wielu operacji.
+	 * @return Jeden status operacji powstały w wyniku wielu statusów.
+	 */
+	public static OperationStatus getFrom(List&lt;OperationStatus&gt; operationsStatuses) {
+<span class="fc" id="L156">	    List&lt;String&gt; invalidStatuses = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L157">	    Status maxSeverity = Status.OK;</span>
+
+<span class="fc bfc" id="L159" title="All 2 branches covered.">	    for (OperationStatus eachOperationStatus : operationsStatuses) {</span>
+<span class="fc" id="L160">		Status eachStatus = eachOperationStatus.getStatus();</span>
+
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (eachStatus.requiresAttention()) {</span>
+<span class="fc" id="L163">		    invalidStatuses.add(eachOperationStatus.getCompensatedStatus());</span>
+		}
+
+<span class="fc bfc" id="L166" title="All 4 branches covered.">		if (!maxSeverity.equals(Status.ERROR) &amp;&amp; eachStatus.equals(Status.WARNING)) {</span>
+<span class="fc" id="L167">		    maxSeverity = Status.WARNING;</span>
+<span class="fc" id="L168">		}</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		else if (eachStatus.equals(Status.ERROR)) {</span>
+<span class="fc" id="L170">		    maxSeverity = Status.ERROR;</span>
+		}
+	    }
+
+<span class="fc bfc" id="L174" title="All 3 branches covered.">	    switch (maxSeverity) {</span>
+		case ERROR:
+<span class="fc" id="L176">		    return createError(ERROR_OCCURS_INFO + invalidStatuses);</span>
+		case WARNING:
+<span class="fc" id="L178">		    return createWarning(WARNING_OCCURS_INFO + invalidStatuses);</span>
+		case OK:
+		default:
+<span class="fc" id="L181">		    return ALL_VALID;</span>
+	    }
+	}
+
+	public static List&lt;OperationStatus&gt; createErrors(String ... descriptions) {
+<span class="fc" id="L186">	    List&lt;OperationStatus&gt; result = new ArrayList&lt;OperationStatus&gt;(descriptions.length);</span>
+	    
+<span class="fc bfc" id="L188" title="All 2 branches covered.">	    for(String eachDescription : descriptions) {</span>
+<span class="fc" id="L189">		result.add(createError(eachDescription));</span>
+	    }
+	    
+<span class="fc" id="L192">	    return result;</span>
+	}
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-11 22:36:32)</div></body></html>

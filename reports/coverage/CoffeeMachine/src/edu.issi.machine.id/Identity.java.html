@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Identity.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-11 22:36:32)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.id</a> &gt; <span class="el_source">Identity.java</span></div><h1>Identity.java</h1><pre class="source lang-java linenums">package edu.issi.machine.id;
+
+import edu.issi.machine.Validator;
+
+/**
+ * @author Dawid Samołyk
+ * 
+ *         Identyfikator.
+ */
+public class Identity {
+    private final int id;
+    private String name;
+
+    /**
+     * @param id
+     *            Numer identyfikacyjny.
+     * @param name
+     *            Nazwa.
+     * @throws IllegalArgumentException
+     *             Wystąpi, jeśli nazwa obiektu będzie pusta.
+     */
+<span class="fc" id="L22">    protected Identity(int id, String name) throws IllegalArgumentException {</span>
+<span class="fc" id="L23">	Validator.throwExceptionWhenTextIsEmpty(name, &quot;Nazwa obiektu nie może być pusta!&quot;);</span>
+
+<span class="fc" id="L25">	this.id = id;</span>
+<span class="fc" id="L26">	this.name = name;</span>
+<span class="fc" id="L27">    }</span>
+
+    /**
+     * @param newName
+     *            Nowa nazwa.
+     * @return Poprzednia nazwa.
+     * @throws IllegalArgumentException
+     *             Wystąpi, jeśli nazwa obiektu będzie pusta
+     */
+    public String changeName(String newName) throws IllegalArgumentException {
+<span class="fc" id="L37">	Validator.throwExceptionWhenObjectIsNotCreated(newName, &quot;Nazwa obiektu nie może być pusta!&quot;);</span>
+
+<span class="fc" id="L39">	final String actualName = name;</span>
+<span class="fc" id="L40">	name = newName;</span>
+
+<span class="fc" id="L42">	return actualName;</span>
+    }
+
+    /**
+     * @return Nazwa.
+     */
+    public String getName() {
+<span class="fc" id="L49">	return name;</span>
+    }
+
+    /**
+     * @param productID
+     *            Numer identyfikacyjny.
+     * @return Czy obiekt jest identyfikowany podanym numerem.
+     */
+    public boolean identifiesBy(int productID) {
+<span class="fc bfc" id="L58" title="All 2 branches covered.">	return id == productID;</span>
+    }
+
+    /**
+     * @return Unikalny numer identyfikujący obiekt.
+     */
+    public int getIdNumber() {
+<span class="fc" id="L65">	return id;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L70">	return &quot;ID: &quot; + id + &quot;, Nazwa: &quot; + name;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L75">	return id;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L80" title="All 2 branches covered.">	if (this == obj) {</span>
+<span class="fc" id="L81">	    return true;</span>
+	}
+<span class="fc" id="L83">	return false;</span>
+    }
+
+    /**
+     * Fabryka dostarczająca unikalne identyfikatory.
+     */
+<span class="nc" id="L89">    public static class Factory {</span>
+<span class="fc" id="L90">	private static int Counter = 0;</span>
+
+	/**
+	 * @param name
+	 *            Nazwa.
+	 * @return Identyfikator.
+	 * @throws IllegalArgumentException
+	 *             Wystąpi, jeśli nazwa obiektu będzie pusta.
+	 */
+	public static synchronized Identity newIdentity(String name) throws IllegalArgumentException {
+<span class="fc" id="L100">	    return new Identity(Counter++, name);</span>
+	}
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-11 22:36:32)</div></body></html>
