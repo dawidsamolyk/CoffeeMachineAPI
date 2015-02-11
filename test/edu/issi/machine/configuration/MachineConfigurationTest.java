@@ -30,7 +30,6 @@ public class MachineConfigurationTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-    @SuppressWarnings("unused")
     @Test
     public void subassembliesShouldBeSetted() {
 	List<Ingredient> fixtureIngredients = Fixtures.getFixtureIngredients();
@@ -39,7 +38,6 @@ public class MachineConfigurationTest {
 	new MachineConfiguration(null, fixtureIngredients, Fixtures.getFixtureProducts(fixtureIngredients));
     }
 
-    @SuppressWarnings("unused")
     @Test
     public void subassembliesListShouldNotBeEmpty() {
 	List<Subassembly> subassemblies = new ArrayList<Subassembly>();
@@ -49,14 +47,12 @@ public class MachineConfigurationTest {
 	new MachineConfiguration(subassemblies, fixtureIngredients, Fixtures.getFixtureProducts(fixtureIngredients));
     }
 
-    @SuppressWarnings("unused")
     @Test
     public void productsShouldBeSetted() throws Exception {
 	exception.expect(IllegalArgumentException.class);
 	new MachineConfiguration(Fixtures.getFixtureSubassemlies(), Fixtures.getFixtureIngredients(), null);
     }
 
-    @SuppressWarnings("unused")
     @Test
     public void ingredientsShouldBeSetted() throws Exception {
 	List<Ingredient> fixtureIngredients = Fixtures.getFixtureIngredients();
@@ -66,7 +62,6 @@ public class MachineConfigurationTest {
 		Fixtures.getFixtureProducts(fixtureIngredients));
     }
 
-    @SuppressWarnings("unused")
     @Test
     public void productsListShouldNotBeEmpty() {
 	List<Product> products = new ArrayList<Product>();
@@ -133,7 +128,6 @@ public class MachineConfigurationTest {
 	fixture.addProduct(ProductTest.Fixtures.getFixtureWithoutIngredients());
     }
 
-    @SuppressWarnings("unused")
     @Test
     public void machineConfigurationShouldConsistsOfProductsWhichContainsOnlyAvailableIngredients() throws Exception {
 	List<Ingredient> fixtureIngredients = Fixtures.getFixtureIngredients();
@@ -145,7 +139,6 @@ public class MachineConfigurationTest {
 	new MachineConfiguration(fixtureSubassemlies, fixtureIngredients, fixtureProducts);
     }
 
-    @SuppressWarnings("unused")
     @Test
     public void machineConfigurationShouldConsistsOfProductsWhichContainsAnyIngredients() throws Exception {
 	List<Ingredient> fixtureIngredients = Fixtures.getFixtureIngredients();

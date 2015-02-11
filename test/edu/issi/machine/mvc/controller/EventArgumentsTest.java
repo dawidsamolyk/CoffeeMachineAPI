@@ -14,21 +14,18 @@ public class EventArgumentsTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
     
-    @SuppressWarnings("unused")
     @Test
     public void eventArgumentsShouldNotCreatesWithoutSpecifiedCaller() {
 	exception.expect(IllegalArgumentException.class);
 	new EventArguments(null);
     }
     
-    @SuppressWarnings("unused")
     @Test
     public void eventArgumentsShouldNotCreatesWithoutSelectedElementName() {
 	exception.expect(IllegalArgumentException.class);
 	new EventArguments(new FakeView(), null);
     }
     
-    @SuppressWarnings("unused")
     @Test
     public void eventArgumentsShouldNotCreatesWithEmptySelectedElementName() {
 	exception.expect(IllegalArgumentException.class);

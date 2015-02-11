@@ -18,7 +18,6 @@ public class ControllerTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-    @SuppressWarnings("unused")
     @Test
     public void shouldNotCreatesWithoutModel() {
 	exception.expect(IllegalArgumentException.class);

@@ -32,7 +32,6 @@ public class ModelTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-    @SuppressWarnings("unused")
     @Test
     public void shouldNotCreatesWithoutMachineConfiguration() {
 	exception.expect(IllegalArgumentException.class);

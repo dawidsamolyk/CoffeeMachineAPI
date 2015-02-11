@@ -54,7 +54,7 @@ public class DemoGuiProductAdder extends Operation {
 	Product newProduct = new Product(Identity.Factory.newIdentity(readedLine));
 
 	Ingredient ingredient;
-
+	
 	while (true) {
 	    readedLine = readLineAfterComunicate("Wpisz nazwê sk³adnika produktu (koniec dodawania sk³adników - wpisz END): ");
 

@@ -14,7 +14,6 @@ public class MachineControllerTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-    @SuppressWarnings("unused")
     @Test
     public void configurationShouldBeProvided() throws IllegalArgumentException {
 	exception.expect(IllegalArgumentException.class);

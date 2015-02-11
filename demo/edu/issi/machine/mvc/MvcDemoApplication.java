@@ -3,8 +3,6 @@ package edu.issi.machine.mvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.directory.InvalidAttributeIdentifierException;
-
 import edu.issi.machine.DemoApplication;
 import edu.issi.machine.DemoGrinding;
 import edu.issi.machine.configuration.MachineConfiguration;
@@ -27,11 +25,8 @@ public class MvcDemoApplication {
     /**
      * @param args
      *            Argumenty wywo³ania aplikacji.
-     * @throws InvalidAttributeIdentifierException
-     *             Wyst¹pi, jeœli konfiguracja wstêpna maszyny nie bêdzie
-     *             poprawna.
      */
-    public static void main(String[] args) throws InvalidAttributeIdentifierException {
+    public static void main(String[] args) {
 	List<Ingredient> ingredients = DemoApplication.getDemoIngredients();
 	List<Product> products = DemoApplication.getDemoProducts(ingredients);
 	List<Subassembly> subassemblies = MvcDemoApplication.getDemoSubassemblies();
