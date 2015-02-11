@@ -134,7 +134,7 @@ public class OperationStatusTest {
 
 	OperationStatus result = OperationStatus.Factory.getFrom(operationsStatuses);
 
-	assertEquals(OperationStatus.Factory.ALL_VALID, result.getDescription());
+	assertEquals(OperationStatus.Factory.ALL_VALID.getDescription(), result.getDescription());
     }
 
     @Test
@@ -159,7 +159,7 @@ public class OperationStatusTest {
 
 	OperationStatus result = OperationStatus.Factory.getFrom(operationsStatuses);
 
-	String expectedOutput = OperationStatus.Factory.WARNING_OCCURS + "[" + warning.getCompensatedStatus() + ", "
+	String expectedOutput = OperationStatus.Factory.WARNING_OCCURS_INFO + "[" + warning.getCompensatedStatus() + ", "
 		+ warning2.getCompensatedStatus() + "]";
 	assertEquals(expectedOutput, result.getDescription());
     }
@@ -189,7 +189,7 @@ public class OperationStatusTest {
 
 	OperationStatus result = OperationStatus.Factory.getFrom(operationsStatuses);
 
-	String expectedOutput = OperationStatus.Factory.ERROR_OCCURS + "[" + error.getCompensatedStatus() + ", "
+	String expectedOutput = OperationStatus.Factory.ERROR_OCCURS_INFO + "[" + error.getCompensatedStatus() + ", "
 		+ error2.getCompensatedStatus() + "]";
 	assertEquals(expectedOutput, result.getDescription());
     }
@@ -206,7 +206,7 @@ public class OperationStatusTest {
 
 	OperationStatus result = OperationStatus.Factory.getFrom(operationsStatuses);
 
-	String expectedOutput = OperationStatus.Factory.ERROR_OCCURS + "[" + error.getCompensatedStatus() + ", "
+	String expectedOutput = OperationStatus.Factory.ERROR_OCCURS_INFO + "[" + error.getCompensatedStatus() + ", "
 		+ warning.getCompensatedStatus() + "]";
 	assertEquals(expectedOutput, result.getDescription());
     }

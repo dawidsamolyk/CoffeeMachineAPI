@@ -12,7 +12,7 @@ import edu.issi.machine.Validator;
  */
 public class OperationStatus {
     private final Status status;
-    private String description;
+    private final String description;
 
     /**
      * @param status
@@ -25,6 +25,7 @@ public class OperationStatus {
 	Validator.throwExceptionWhenObjectIsNotCreated(status, "Nie podano statusu operacji!");
 
 	this.status = status;
+	this.description = "";
     }
 
     /**
@@ -64,7 +65,7 @@ public class OperationStatus {
     public String getCompensatedStatus() {
 	final String statusInBrackets = "[" + status.name() + "]";
 
-	if (description != null) {
+	if (!description.isEmpty()) {
 	    return statusInBrackets + " " + description;
 	}
 
@@ -102,15 +103,15 @@ public class OperationStatus {
 	/**
 	 * 
 	 */
-	public static final String ERROR_OCCURS = "Wyst¹pi³y ostrze¿enia! ";
+	public static final String ERROR_OCCURS_INFO = "Wyst¹pi³y b³êdy! ";
 	/**
 	 * 
 	 */
-	public static final String WARNING_OCCURS = "Wyst¹pi³y b³êdy! ";
+	public static final String WARNING_OCCURS_INFO = "Wyst¹pi³y ostrze¿enia! ";
 	/**
 	 * 
 	 */
-	public static final String ALL_VALID = "Wszystkie operacje wykonano pomyœlnie! ";
+	public static final OperationStatus ALL_VALID = createValid("Wszystkie operacje wykonano pomyœlnie! ");
 
 	/**
 	 * @param description
@@ -172,12 +173,12 @@ public class OperationStatus {
 
 	    switch (maxSeverity) {
 		case ERROR:
-		    return createError(ERROR_OCCURS + invalidStatuses);
+		    return createError(ERROR_OCCURS_INFO + invalidStatuses);
 		case WARNING:
-		    return createWarning(WARNING_OCCURS + invalidStatuses);
+		    return createWarning(WARNING_OCCURS_INFO + invalidStatuses);
 		case OK:
 		default:
-		    return createValid(ALL_VALID);
+		    return ALL_VALID;
 	    }
 	}
 

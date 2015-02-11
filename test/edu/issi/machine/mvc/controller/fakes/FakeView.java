@@ -71,7 +71,7 @@ public class FakeView implements View {
 
     @Override
     public void showOperationStatus(Status status, String description) {
-	lastMessage = description;
+	lastMessage = "[" + status + "]" + " " + description;
     }
 
     @Override
