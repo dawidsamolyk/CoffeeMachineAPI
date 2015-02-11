@@ -8,14 +8,16 @@ import edu.issi.machine.mvc.controller.Controller.IngredientsListener;
 import edu.issi.machine.mvc.controller.Controller.OrderListener;
 import edu.issi.machine.mvc.controller.Controller.ProductsListener;
 import edu.issi.machine.mvc.controller.Controller.PropertiesListener;
+import edu.issi.machine.mvc.controller.EventArguments;
 import edu.issi.machine.mvc.view.View;
 import edu.issi.machine.operation.Status;
+import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Unit;
 
 @SuppressWarnings("javadoc")
 public class FakeView implements View {
-    public static final String NEW_TEST_PRODUCT_NAME = "New test product name";
-    public static final String ORDERED_PRODUCT_NAME = "Test";
+    public String newProductName = "New test product name";
+    public String orderedProductName = "Test";
 
     protected ProductsListener productsListListener;
     protected PropertiesListener propertiesListener;
@@ -23,6 +25,13 @@ public class FakeView implements View {
     protected OrderListener orderListener;
 
     protected String lastMessage;
+
+    public FakeView() {
+    }
+
+    public FakeView(Product orderedProduct) {
+	this.orderedProductName = orderedProduct.getName();
+    }
 
     @Override
     public void showProducts(Set<String> products) {
@@ -46,7 +55,7 @@ public class FakeView implements View {
 
     @Override
     public String getSelectedForPreparationProductName() {
-	return ORDERED_PRODUCT_NAME;
+	return orderedProductName;
     }
 
     @Override
@@ -67,7 +76,16 @@ public class FakeView implements View {
 
     @Override
     public String getNewProductName() {
-	return NEW_TEST_PRODUCT_NAME;
+	return newProductName;
+    }
+
+    @Override
+    public void showError(String description) {
+	lastMessage = description;
+    }
+
+    public String getLastMessage() {
+	return lastMessage;
     }
 
     @Override
@@ -95,9 +113,27 @@ public class FakeView implements View {
 	this.orderListener = orderListener;
     }
 
-    @Override
-    public void showError(String description) {
-	lastMessage = description;
+    public void performActionOnProductsListener() {
+	productsListListener.actionPerformed(new EventArguments(this));
     }
 
+    public void performActionOnIngredientsListener() {
+	ingredientsListener.actionPerformed(new EventArguments(this));
+    }
+
+    public void performActionOnIngredientsListenerForProductNamed(String productName) {
+	ingredientsListener.actionPerformed(new EventArguments(this, productName));
+    }
+
+    public void performActionOnPropertiesListener() {
+	propertiesListener.actionPerformed(new EventArguments(this));
+    }
+
+    public void performActionOnPropertiesListenerForIngredientNamed(String ingredientName) {
+	propertiesListener.actionPerformed(new EventArguments(this, ingredientName));
+    }
+
+    public void performActionOnOrderListener() {
+	orderListener.actionPerformed(new EventArguments(this));
+    }
 }

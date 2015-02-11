@@ -229,7 +229,7 @@ public class GraphicalView implements View {
     public Map<String, Float> getPropertiesForIngredient(String ingredientName, Map<String, Unit> availableProperties) {
 	final JFrame propertiesFrame = new JFrame("Ustaw w³aœciowoœci sk³adnika " + ingredientName);
 	propertiesFrame.setType(Type.UTILITY);
-	propertiesFrame.setDefaultCloseOperation(JFrame.ERROR);
+	propertiesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	propertiesFrame.setBounds(new Rectangle(300, 300));
 	Container contentPane = propertiesFrame.getContentPane();
 	int propertiesQuantity = availableProperties.size();

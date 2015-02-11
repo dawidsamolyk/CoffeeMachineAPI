@@ -64,6 +64,8 @@ public class Controller {
      *
      */
     public class ProductsListener implements EventListener {
+	private ProductsListener() {}
+	
 	@Override
 	public void actionPerformed(EventArguments arguments) {
 	    for (View eachView : views) {
@@ -77,6 +79,8 @@ public class Controller {
      *
      */
     public class IngredientsListener implements EventListener {
+	private IngredientsListener() {}
+	
 	@Override
 	public void actionPerformed(EventArguments arguments) {
 	    if (arguments.hasSelectedElementName()) {
@@ -100,6 +104,8 @@ public class Controller {
      *
      */
     public class PropertiesListener implements EventListener {
+	private PropertiesListener() {}
+	
 	@Override
 	public void actionPerformed(EventArguments arguments) {
 	    if (arguments.hasSelectedElementName()) {
@@ -110,7 +116,21 @@ public class Controller {
 		    eachView.showIngredientProperties(selectedIngredientName, properties);
 		}
 	    }
+	    else {
+		for (View eachView : views) {
+		    eachView.showError("Nie wybrano elementu, wiêc nie mo¿na wyœwietliæ w³aœciwoœci sk³adnika.");
+		}
+	    }
 	}
+    }
+
+    private View getExistingCaller(EventArguments arguments) throws IllegalArgumentException {
+	for (View eachView : views) {
+	    if (arguments.isCalledBy(eachView)) {
+		return eachView;
+	    }
+	}
+	throw new IllegalArgumentException("");
     }
 
     /**
@@ -118,36 +138,40 @@ public class Controller {
      *
      */
     public class OrderListener implements EventListener {
+	private OrderListener() {}
+	
 	@Override
 	public void actionPerformed(EventArguments arguments) {
+	    
 	    for (View eachView : views) {
 		if (arguments.isCalledBy(eachView)) {
-		    List<OperationStatus> operationsStatuses = makeOrderOn(eachView);
+		    List<OperationStatus> operationsStatuses;
 
-		    if (operationsStatuses != null) {
-			OperationStatus operationsStatus = OperationStatus.Factory.getFrom(operationsStatuses);
-			eachView.showOperationStatus(operationsStatus.getStatus(), operationsStatus.getDescription());
+		    try {
+			operationsStatuses = makeOrderOn(eachView);
 		    }
+		    catch (IllegalArgumentException e) {
+			eachView.showError(e.getMessage());
+			break;
+		    }
+
+		    OperationStatus operationsStatus = OperationStatus.Factory.getFrom(operationsStatuses);
+		    eachView.showOperationStatus(operationsStatus.getStatus(), operationsStatus.getDescription());
 		}
 	    }
 	}
 
-	private List<OperationStatus> makeOrderOn(View view) {
+	private List<OperationStatus> makeOrderOn(View view) throws IllegalArgumentException {
 	    String orderedProductName = view.getSelectedForPreparationProductName();
 
-	    try {
-		Set<String> ingredients = model.getIngredientsNamesForProductNamed(orderedProductName);
+//	    Set<String> ingredients = model.getIngredientsNamesForProductNamed(orderedProductName);
+//
+//	    for (String eachIngredient : ingredients) {
+//		Map<String, Unit> properties = model.getPropertiesForIngredientNamed(eachIngredient);
+//		Map<String, Float> userProperties = view.getPropertiesForIngredient(eachIngredient, properties);
+//	    }
 
-		for (String eachIngredient : ingredients) {
-		    Map<String, Unit> properties = model.getPropertiesForIngredientNamed(eachIngredient);
-		    Map<String, Float> userProperties = view.getPropertiesForIngredient(eachIngredient, properties);
-		}
-
-		return model.makeOrder(orderedProductName);
-	    }
-	    catch (IllegalArgumentException e) {
-		return OperationStatus.Factory.createErrors(e.getMessage());
-	    }
+	    return model.makeOrder(orderedProductName);
 	}
     }
 }
