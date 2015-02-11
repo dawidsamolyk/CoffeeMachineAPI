@@ -210,6 +210,18 @@ public class OperationStatusTest {
 		+ warning.getCompensatedStatus() + "]";
 	assertEquals(expectedOutput, result.getDescription());
     }
+    
+    @Test
+    public void shouldCreateAggregatedErrorneusStatusesForManyDescriptions() {
+	String[] descriptions = {"Test 1", "Test 2", "Test 3"};
+	
+	List<OperationStatus> result = OperationStatus.Factory.createErrors(descriptions);
+	
+	for(int p = 0 ; p < descriptions.length ; p++) {
+	    OperationStatus eachOperationStatus = result.get(p);
+	    assertEquals(descriptions[p], eachOperationStatus.getDescription());
+	}
+    }
 
     @Test
     public void operationStatusShouldProvideHashCode() {

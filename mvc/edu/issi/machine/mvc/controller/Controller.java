@@ -1,7 +1,6 @@
 package edu.issi.machine.mvc.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -147,8 +146,7 @@ public class Controller {
 		return model.makeOrder(orderedProductName);
 	    }
 	    catch (IllegalArgumentException e) {
-		OperationStatus error = OperationStatus.Factory.createError(e.getMessage());
-		return Arrays.asList(error);
+		return OperationStatus.Factory.createErrors(e.getMessage());
 	    }
 	}
     }

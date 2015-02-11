@@ -180,6 +180,16 @@ public class OperationStatus {
 		    return createValid(ALL_VALID);
 	    }
 	}
+
+	public static List<OperationStatus> createErrors(String ... descriptions) {
+	    List<OperationStatus> result = new ArrayList<OperationStatus>(descriptions.length);
+	    
+	    for(String eachDescription : descriptions) {
+		result.add(createError(eachDescription));
+	    }
+	    
+	    return result;
+	}
     }
 
 }
