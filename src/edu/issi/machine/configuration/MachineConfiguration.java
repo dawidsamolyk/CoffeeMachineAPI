@@ -3,7 +3,9 @@ package edu.issi.machine.configuration;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import edu.issi.machine.Utils;
 import edu.issi.machine.Validator;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Ingredient;
@@ -15,10 +17,9 @@ import edu.issi.machine.subassembly.Subassembly;
  *         Konfiguracja maszyny.
  */
 public class MachineConfiguration {
-    // TODO zmieñ na mapê, aby mo¿na by³o ³atwo pobieraæ obiekt po nazwie
-    private final List<Subassembly> subassemblies;
-    private final List<Ingredient> ingredients;
-    private final List<Product> products;
+    private final Map<String, Subassembly> subassemblies;
+    private final Map<String, Ingredient> ingredients;
+    private final Map<String, Product> products;
 
     /**
      * @param subassemblies
@@ -40,9 +41,9 @@ public class MachineConfiguration {
 	// TODO zablokuj mo¿liwoœæ dodania takiego samego produktu lub produktu
 	// o tej samej nazwie
 
-	this.subassemblies = subassemblies;
-	this.ingredients = ingredients;
-	this.products = products;
+	this.subassemblies = Utils.asMap(subassemblies);
+	this.ingredients = Utils.asMap(ingredients);
+	this.products = Utils.asMap(products);
     }
 
     private void ensureValidity(List<Subassembly> subassemblies, List<Ingredient> ingredients, List<Product> products)
@@ -58,7 +59,7 @@ public class MachineConfiguration {
 	final List<String> invalidProductsNames = new ArrayList<String>();
 
 	for (Product eachProduct : products) {
-	    if (hasInvalidIngredients(eachProduct, ingredients)) {
+	    if (hasInvalidIngredients(eachProduct, Utils.asMap(ingredients))) {
 		invalidProductsNames.add(eachProduct.getName());
 	    }
 	}
@@ -68,7 +69,7 @@ public class MachineConfiguration {
 	}
     }
 
-    private boolean hasInvalidIngredients(Product product, List<Ingredient> ingredients) {
+    private boolean hasInvalidIngredients(Product product, Map<String, Ingredient> ingredients) {
 	return !hasAnyIngredients(product) || !hasOnlyAvailableIngredients(product, ingredients);
     }
 
@@ -76,11 +77,11 @@ public class MachineConfiguration {
 	return eachProduct.numberOfElements() > 0;
     }
 
-    private boolean hasOnlyAvailableIngredients(Product product, List<Ingredient> ingredients) {
+    private boolean hasOnlyAvailableIngredients(Product product, Map<String, Ingredient> ingredients) {
 	for (Iterator<Ingredient> productIngredientsIterator = product.iterator(); productIngredientsIterator.hasNext();) {
 	    Ingredient eachIngredient = productIngredientsIterator.next();
 
-	    if (!ingredients.contains(eachIngredient)) {
+	    if (!ingredients.values().contains(eachIngredient)) {
 		return false;
 	    }
 	}
@@ -91,21 +92,21 @@ public class MachineConfiguration {
      * @return Iterator po produktach, które mo¿e wydaæ maszyna.
      */
     public Iterator<Product> getProductsIterator() {
-	return products.iterator();
+	return products.values().iterator();
     }
 
     /**
      * @return Iterator po sk³adnikach produktów, które mo¿e wydaæ maszyny.
      */
     public Iterator<Ingredient> getIngredientsIterator() {
-	return ingredients.iterator();
+	return ingredients.values().iterator();
     }
 
     /**
      * @return Iterator po podzespo³ach maszyny.
      */
     public Iterator<Subassembly> getSubassembliesIterator() {
-	return subassemblies.iterator();
+	return subassemblies.values().iterator();
     }
 
     /**
@@ -127,6 +128,6 @@ public class MachineConfiguration {
 	    throw new IllegalArgumentException("Produkt " + product.getName() + " zawiera nieznane sk³adniki!");
 	}
 
-	products.add(product);
+	products.put(product.getName(), product);
     }
 }

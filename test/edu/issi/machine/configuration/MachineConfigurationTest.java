@@ -1,7 +1,6 @@
 package edu.issi.machine.configuration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -58,8 +57,7 @@ public class MachineConfigurationTest {
 	List<Ingredient> fixtureIngredients = Fixtures.getFixtureIngredients();
 
 	exception.expect(IllegalArgumentException.class);
-	new MachineConfiguration(Fixtures.getFixtureSubassemlies(), null,
-		Fixtures.getFixtureProducts(fixtureIngredients));
+	new MachineConfiguration(Fixtures.getFixtureSubassemlies(), null, Fixtures.getFixtureProducts(fixtureIngredients));
     }
 
     @Test
@@ -84,18 +82,20 @@ public class MachineConfigurationTest {
 	List<Product> products = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients, "Kawa");
 	MachineConfiguration fixture = new MachineConfiguration(subassemlies, ingredients, products);
 
-	Product product = ProductTest.Fixtures.getFixtureWith(ingredients, "Czekolada");
-	fixture.addProduct(product);
+	Product newProduct = ProductTest.Fixtures.getFixtureWith(ingredients, "Czekolada");
+	fixture.addProduct(newProduct);
 
-	// Pobieram ostatni produkt, poniewa¿ nowo dodany produkt bêdzie na
-	// koñcu listy
-	Iterator<Product> iterator = fixture.getProductsIterator();
-	Product productToCheck = null;
-	while (iterator.hasNext()) {
-	    productToCheck = iterator.next();
+	boolean containsNewProduct = false;
+	for (Iterator<Product> iterator = fixture.getProductsIterator(); iterator.hasNext();) {
+	    Product eachProduct = iterator.next();
+	    
+	    if(eachProduct.equals(newProduct)) {
+		containsNewProduct = true;
+		break;
+	    }
 	}
 
-	assertEquals(product, productToCheck);
+	assertTrue(containsNewProduct);
     }
 
     @Test
@@ -188,8 +188,7 @@ public class MachineConfigurationTest {
 	    return ingredient;
 	}
 
-	public static List<Product> getFixtureProducts(List<Ingredient> fixtureIngredients)
-		throws IllegalArgumentException {
+	public static List<Product> getFixtureProducts(List<Ingredient> fixtureIngredients) throws IllegalArgumentException {
 	    List<Product> result = new ArrayList<Product>();
 
 	    for (Ingredient eachIngredient : fixtureIngredients) {
