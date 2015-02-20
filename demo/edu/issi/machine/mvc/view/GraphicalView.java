@@ -1,10 +1,7 @@
 package edu.issi.machine.mvc.view;
 
 import java.awt.Container;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
@@ -44,8 +41,6 @@ public class GraphicalView implements View {
     private JFrame frame;
     private JLabel statusLabel;
     private DefaultListModel<String> productsListModel = new DefaultListModel<String>();
-    private DefaultListModel<String> ingredientsListModel = new DefaultListModel<String>();
-    private DefaultListModel<String> propertiesListModel = new DefaultListModel<String>();
     private JList<String> productsList;
 
     /**
@@ -62,42 +57,12 @@ public class GraphicalView implements View {
 	frame = new JFrame();
 	frame.setBounds(100, 100, 450, 300);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	GridBagLayout frameGridBagLayout = new GridBagLayout();
-	frameGridBagLayout.columnWidths = new int[] { 10, 10, 10, 5 };
-	frameGridBagLayout.rowHeights = new int[] { 5, 20, 5 };
-	frameGridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0, 0.0 };
-	frameGridBagLayout.rowWeights = new double[] { 1.0, 1.0, 0.0 };
-	frame.getContentPane().setLayout(frameGridBagLayout);
-
-	JLabel productsLabel = new JLabel("Produkty");
-	GridBagConstraints produktyLabelConstraints = new GridBagConstraints();
-	produktyLabelConstraints.insets = new Insets(0, 0, 5, 5);
-	produktyLabelConstraints.gridx = 0;
-	produktyLabelConstraints.gridy = 0;
-	frame.getContentPane().add(productsLabel, produktyLabelConstraints);
-
-	JLabel ingredientsLabel = new JLabel("Sk\u0142adniki");
-	GridBagConstraints ingredientsLabelConstraints = new GridBagConstraints();
-	ingredientsLabelConstraints.insets = new Insets(0, 0, 5, 5);
-	ingredientsLabelConstraints.gridx = 1;
-	ingredientsLabelConstraints.gridy = 0;
-	frame.getContentPane().add(ingredientsLabel, ingredientsLabelConstraints);
-
-	JLabel propertiesLabel = new JLabel("W\u0142a\u015Bciwo\u015Bci");
-	GridBagConstraints propertiesLabelConstraints = new GridBagConstraints();
-	propertiesLabelConstraints.insets = new Insets(0, 0, 5, 5);
-	propertiesLabelConstraints.gridx = 2;
-	propertiesLabelConstraints.gridy = 0;
-	frame.getContentPane().add(propertiesLabel, propertiesLabelConstraints);
+	Container contentPane = frame.getContentPane();
+	contentPane.setLayout(new GridLayout(2, 2));
 
 	productsList = new JList<String>();
 	productsList.setModel(productsListModel);
 	productsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	GridBagConstraints productsListContraints = new GridBagConstraints();
-	productsListContraints.insets = new Insets(0, 0, 5, 5);
-	productsListContraints.fill = GridBagConstraints.BOTH;
-	productsListContraints.gridx = 0;
-	productsListContraints.gridy = 1;
 	productsList.addMouseListener(new MouseAdapter() {
 	    @Override
 	    public void mousePressed(MouseEvent e) {
@@ -105,74 +70,36 @@ public class GraphicalView implements View {
 		ingredientsListener.actionPerformed(arguments);
 	    }
 	});
-	frame.getContentPane().add(productsList, productsListContraints);
-
-	final JList<String> ingredientsList = new JList<String>();
-	ingredientsList.setModel(ingredientsListModel);
-	ingredientsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	GridBagConstraints ingredientsListConstraints = new GridBagConstraints();
-	ingredientsListConstraints.insets = new Insets(0, 0, 5, 5);
-	ingredientsListConstraints.fill = GridBagConstraints.BOTH;
-	ingredientsListConstraints.gridx = 1;
-	ingredientsListConstraints.gridy = 1;
-	ingredientsList.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mousePressed(MouseEvent e) {
-		EventArguments arguments = new EventArguments(GraphicalView.this, ingredientsList.getSelectedValue());
-		propertiesListener.actionPerformed(arguments);
-	    }
-	});
-	frame.getContentPane().add(ingredientsList, ingredientsListConstraints);
-
-	final JList<String> propertiesList = new JList<String>();
-	propertiesList.setModel(propertiesListModel);
-	propertiesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	GridBagConstraints propertiesListConstraints = new GridBagConstraints();
-	propertiesListConstraints.insets = new Insets(0, 0, 5, 5);
-	propertiesListConstraints.fill = GridBagConstraints.BOTH;
-	propertiesListConstraints.gridx = 2;
-	propertiesListConstraints.gridy = 1;
-	frame.getContentPane().add(propertiesList, propertiesListConstraints);
+	contentPane.add(productsList);
 
 	JButton makeOrderButton = new JButton("Zamów!");
-	GridBagConstraints makeOrderButtonConstraints = new GridBagConstraints();
-	makeOrderButtonConstraints.insets = new Insets(0, 0, 5, 0);
-	makeOrderButtonConstraints.gridx = 3;
-	makeOrderButtonConstraints.gridy = 1;
 	makeOrderButton.addMouseListener(new MouseAdapter() {
 	    @Override
 	    public void mousePressed(MouseEvent e) {
-		EventArguments arguments = new EventArguments(GraphicalView.this, productsList.getSelectedValue());
-		orderListener.actionPerformed(arguments);
+		String selectedProduct = productsList.getSelectedValue();
+
+		if (selectedProduct == null) {
+		    showError("Nie wybrano produktu!");
+		}
+		else {
+		    EventArguments arguments = new EventArguments(GraphicalView.this, selectedProduct);
+		    orderListener.actionPerformed(arguments);
+		}
 	    }
 	});
-	frame.getContentPane().add(makeOrderButton, makeOrderButtonConstraints);
+	contentPane.add(makeOrderButton);
 
 	statusLabel = new JLabel("Status...");
-	GridBagConstraints statusLabelConstraints = new GridBagConstraints();
-	statusLabelConstraints.insets = new Insets(0, 0, 0, 5);
-	statusLabelConstraints.gridx = 0;
-	statusLabelConstraints.gridy = 2;
-	frame.getContentPane().add(statusLabel, statusLabelConstraints);
+	contentPane.add(statusLabel);
 
 	JButton customProductButton = new JButton("W\u0142asny produkt");
-	GridBagConstraints customProductButtonConstraints = new GridBagConstraints();
-	customProductButtonConstraints.insets = new Insets(0, 0, 0, 5);
-	customProductButtonConstraints.gridx = 1;
-	customProductButtonConstraints.gridy = 2;
-	frame.getContentPane().add(customProductButton, customProductButtonConstraints);
-
-	JButton endButton = new JButton("Zako\u0144cz");
-	GridBagConstraints endButtonConstraints = new GridBagConstraints();
-	endButtonConstraints.gridx = 3;
-	endButtonConstraints.gridy = 2;
-	endButton.addMouseListener(new MouseAdapter() {
+	makeOrderButton.addMouseListener(new MouseAdapter() {
 	    @Override
-	    public void mouseClicked(MouseEvent e) {
-		frame.dispose();
+	    public void mousePressed(MouseEvent e) {
+		// TODO implementacja w³asnego produktu
 	    }
 	});
-	frame.getContentPane().add(endButton, endButtonConstraints);
+	contentPane.add(customProductButton);
 
 	frame.setVisible(true);
     }
@@ -205,19 +132,12 @@ public class GraphicalView implements View {
 
     @Override
     public void showIngredients(Set<String> ingredients) {
-	refresh(ingredientsListModel);
-	refresh(propertiesListModel);
-	showOn(ingredients, ingredientsListModel);
+
     }
 
     @Override
     public void showIngredientProperties(String ingredientName, Map<String, Unit> properties) {
-	propertiesListModel.clear();
 
-	for (String each : properties.keySet()) {
-	    Unit unit = properties.get(each);
-	    propertiesListModel.addElement(each + " [" + unit.name() + "]");
-	}
     }
 
     @Override
