@@ -88,10 +88,21 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
     }
 
     /**
+     * @param ingredients
+     *            Sk³adniki.
      * @return Czy produkt zawiera tylko i wy³¹czie sk³adniki, które podano jako
      *         argument wejœciowy.
      */
     public boolean containsOnly(Collection<Ingredient> ingredients) {
 	return this.ingredients.containsOnly(ingredients);
     }
+
+    /**
+     * @return Skopiowany produkt.
+     * @throws CloneNotSupportedException
+     */
+    public Product getClone() throws CloneNotSupportedException {
+	return (Product) super.clone();
+    }
+
 }

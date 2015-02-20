@@ -83,15 +83,21 @@ public class OperationStatus {
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj) return true;
-	if (obj == null) return false;
-	if (getClass() != obj.getClass()) return false;
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
 	OperationStatus other = (OperationStatus) obj;
 	if (description == null) {
-	    if (other.description != null) return false;
+	    if (other.description != null)
+		return false;
 	}
-	else if (!description.equals(other.description)) return false;
-	if (status != other.status) return false;
+	else if (!description.equals(other.description))
+	    return false;
+	if (status != other.status)
+	    return false;
 	return true;
     }
 
@@ -182,13 +188,19 @@ public class OperationStatus {
 	    }
 	}
 
-	public static List<OperationStatus> createErrors(String ... descriptions) {
+	/**
+	 * @param descriptions
+	 *            Opisy.
+	 * @return Lista statusów operacji (b³êdnych) z opisami, które podano
+	 *         jako argument wejœciowy.
+	 */
+	public static List<OperationStatus> createErrors(String... descriptions) {
 	    List<OperationStatus> result = new ArrayList<OperationStatus>(descriptions.length);
-	    
-	    for(String eachDescription : descriptions) {
+
+	    for (String eachDescription : descriptions) {
 		result.add(createError(eachDescription));
 	    }
-	    
+
 	    return result;
 	}
     }

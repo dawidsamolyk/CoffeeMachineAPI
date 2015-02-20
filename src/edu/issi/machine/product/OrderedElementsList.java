@@ -98,6 +98,9 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     }
 
     /**
+     * @param objects
+     *            Zbiór, wewn¹trz którego powinny zawieraæ siê elementy tej
+     *            listy.
      * @return Czy lista zawiera tylko i wy³¹czie obiekty, które podano jako
      *         argument wejœciowy.
      */
