@@ -1,12 +1,12 @@
 package edu.issi.machine.configuration;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import edu.issi.machine.Utils;
-import edu.issi.machine.Validator;
+import edu.issi.machine.id.ObjectWithIdentity;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.subassembly.Subassembly;
@@ -17,6 +17,7 @@ import edu.issi.machine.subassembly.Subassembly;
  *         Konfiguracja maszyny.
  */
 public class MachineConfiguration {
+    private final Validator validator = new Validator();
     private final Map<String, Subassembly> subassemblies;
     private final Map<String, Ingredient> ingredients;
     private final Map<String, Product> products;
@@ -29,63 +30,30 @@ public class MachineConfiguration {
      *            wytwarzania produktów.
      * @param products
      *            Produkty, które mo¿e stworzyæ maszyna.
-     * @throws IllegalStateException
+     * @throws IllegalArgumentException
      *             Wyst¹pi w momencie próby stworzenia maszyny z pust¹ list¹
-     *             podzespo³ów lub produktów.
+     *             podzespo³ów lub produktów lub sk³adników lub gdy którykolwiek
+     *             z produktów posiada sk³adniki, które nie s¹ znane dla
+     *             konfiguracji maszyny.
      */
-    public MachineConfiguration(List<Subassembly> subassemblies, List<Ingredient> ingredients, List<Product> products)
-	    throws IllegalStateException {
-	ensureValidity(subassemblies, ingredients, products);
-	ensureIngredientsValidity(ingredients, products);
+    public MachineConfiguration(Collection<Subassembly> subassemblies, Collection<Ingredient> ingredients,
+	    Collection<Product> products) throws IllegalArgumentException {
+	validator.throwExceptionIfAnyIsInvalid(subassemblies, ingredients, products);
 
-	// TODO zablokuj mo¿liwoœæ dodania takiego samego produktu lub produktu
-	// o tej samej nazwie
-
-	this.subassemblies = Utils.asMap(subassemblies);
-	this.ingredients = Utils.asMap(ingredients);
-	this.products = Utils.asMap(products);
+	this.subassemblies = transformToMap(subassemblies);
+	this.ingredients = transformToMap(ingredients);
+	this.products = new HashMap<String, Product>();
+	this.addAll(products);
     }
 
-    private void ensureValidity(List<Subassembly> subassemblies, List<Ingredient> ingredients, List<Product> products)
-	    throws IllegalStateException {
-	final String message = "Nie mozna utworzyc konfiguracji maszyny bez zadnych ";
-
-	Validator.throwExceptionWhenContainsNullOrEmpty(subassemblies, message + "podzespo³ów!");
-	Validator.throwExceptionWhenContainsNullOrEmpty(ingredients, message + "sk³adników!");
-	Validator.throwExceptionWhenContainsNullOrEmpty(products, message + "produktów!");
-    }
-
-    private void ensureIngredientsValidity(List<Ingredient> ingredients, List<Product> products) {
-	final List<String> invalidProductsNames = new ArrayList<String>();
-
+    private void addAll(Collection<Product> products) throws IllegalStateException {
 	for (Product eachProduct : products) {
-	    if (hasInvalidIngredients(eachProduct, Utils.asMap(ingredients))) {
-		invalidProductsNames.add(eachProduct.getName());
-	    }
-	}
-
-	if (!invalidProductsNames.isEmpty()) {
-	    throw new IllegalStateException("Produkty " + invalidProductsNames + " zawieraj¹ nieznane sk³adniki!");
+	    this.addProduct(eachProduct);
 	}
     }
 
-    private boolean hasInvalidIngredients(Product product, Map<String, Ingredient> ingredients) {
-	return !hasAnyIngredients(product) || !hasOnlyAvailableIngredients(product, ingredients);
-    }
-
-    private boolean hasAnyIngredients(Product eachProduct) {
-	return eachProduct.numberOfElements() > 0;
-    }
-
-    private boolean hasOnlyAvailableIngredients(Product product, Map<String, Ingredient> ingredients) {
-	for (Iterator<Ingredient> productIngredientsIterator = product.iterator(); productIngredientsIterator.hasNext();) {
-	    Ingredient eachIngredient = productIngredientsIterator.next();
-
-	    if (!ingredients.values().contains(eachIngredient)) {
-		return false;
-	    }
-	}
-	return true;
+    private <T extends ObjectWithIdentity> Map<String, T> transformToMap(Collection<T> objects) {
+	return Utils.asMap(objects);
     }
 
     /**
@@ -118,16 +86,43 @@ public class MachineConfiguration {
      *             nieznane sk³adniki (takie, których nie obs³uguje maszyna).
      */
     public void addProduct(Product product) throws IllegalArgumentException {
-	Validator.throwExceptionWhenObjectIsNotCreated(product,
-		"Nie mo¿na dodaæ pustego produktu do konfiguracji maszyny!");
-
-	// TODO zablokuj mo¿liwoœæ dodania takiego samego produktu lub produktu
-	// o tej samej nazwie
-
-	if (hasInvalidIngredients(product, ingredients)) {
-	    throw new IllegalArgumentException("Produkt " + product.getName() + " zawiera nieznane sk³adniki!");
-	}
+	validator.throwExceptionWhenInvalid(product);
 
 	products.put(product.getName(), product);
+    }
+
+    private class Validator {
+
+	private boolean containsOnlyKnownIngredients(Product product) {
+	    return product.containsOnly(ingredients.values());
+	}
+
+	private void throwExceptionWhenInvalid(Product product) throws IllegalArgumentException {
+	    edu.issi.machine.Validator.throwExceptionWhenObjectIsNotCreated(product,
+		    "Nie mo¿na dodaæ pustego produktu do konfiguracji maszyny!");
+
+	    if (!containsOnlyKnownIngredients(product)) {
+		throw new IllegalArgumentException("Produkt " + product.getName() + " zawiera nieznane sk³adniki!");
+	    }
+	}
+
+	private void throwExceptionIfAnyIsInvalid(Collection<Subassembly> subassemblies, Collection<Ingredient> ingredients,
+		Collection<Product> products) throws IllegalArgumentException {
+	    edu.issi.machine.Validator.throwExceptionWhenEmptyOrContainsEmptyObject(subassemblies,
+		    "Nie mo¿na utworzyæ konfiguracji maszyny bez ¿adnych podzespo³ów!");
+	    edu.issi.machine.Validator.throwExceptionWhenEmptyOrContainsEmptyObject(ingredients,
+		    "Nie mo¿na utworzyæ konfiguracji maszyny bez ¿adnych sk³adników!");
+	    edu.issi.machine.Validator.throwExceptionWhenEmptyOrContainsEmptyObject(products,
+		    "Nie mo¿na utworzyæ konfiguracji maszyny bez ¿adnych produktów!");
+
+	    for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
+		Product eachProduct = iterator.next();
+
+		if (eachProduct.numberOfElements() == 0) {
+		    throw new IllegalArgumentException("Produkt " + eachProduct.getName() + " nie posiada ¿adnych sk³adników!");
+		}
+	    }
+	}
+
     }
 }

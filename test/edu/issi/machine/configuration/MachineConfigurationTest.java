@@ -121,21 +121,13 @@ public class MachineConfigurationTest {
     }
 
     @Test
-    public void shouldNotAddProductWhichHasNotAnyIngredients() throws IllegalArgumentException {
-	MachineConfiguration fixture = Fixtures.getFixture();
-
-	exception.expect(IllegalArgumentException.class);
-	fixture.addProduct(ProductTest.Fixtures.getFixtureWithoutIngredients());
-    }
-
-    @Test
     public void machineConfigurationShouldConsistsOfProductsWhichContainsOnlyAvailableIngredients() throws Exception {
 	List<Ingredient> fixtureIngredients = Fixtures.getFixtureIngredients();
 	List<Subassembly> fixtureSubassemlies = Fixtures.getFixtureSubassemlies();
 	List<Product> fixtureProducts = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(
 		Fixtures.getFixtureIngredients(), "Kawa", "Herbata");
 
-	exception.expect(IllegalStateException.class);
+	exception.expect(IllegalArgumentException.class);
 	new MachineConfiguration(fixtureSubassemlies, fixtureIngredients, fixtureProducts);
     }
 
@@ -145,16 +137,15 @@ public class MachineConfigurationTest {
 	List<Subassembly> fixtureSubassemlies = Fixtures.getFixtureSubassemlies();
 	List<Product> fixtureProducts = ProductTest.Fixtures.getManyFixtures();
 
-	exception.expect(IllegalStateException.class);
+	exception.expect(IllegalArgumentException.class);
 	new MachineConfiguration(fixtureSubassemlies, fixtureIngredients, fixtureProducts);
     }
 
     public static class Fixtures {
 
 	public static MachineConfiguration getFixture() throws IllegalArgumentException {
-
-	    List<Ingredient> fixtureIngredients = Fixtures.getFixtureIngredients();
 	    List<Subassembly> fixtureSubassemlies = Fixtures.getFixtureSubassemlies();
+	    List<Ingredient> fixtureIngredients = Fixtures.getFixtureIngredients();
 	    List<Product> fixtureProducts = Fixtures.getFixtureProducts(fixtureIngredients);
 
 	    return new MachineConfiguration(fixtureSubassemlies, fixtureIngredients, fixtureProducts);

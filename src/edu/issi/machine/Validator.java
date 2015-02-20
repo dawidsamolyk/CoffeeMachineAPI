@@ -33,8 +33,7 @@ public class Validator {
      * @throws IllegalArgumentException
      *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenTextIsEmpty(String text, String exceptionMessage)
-	    throws IllegalArgumentException {
+    public static void throwExceptionWhenTextIsEmpty(String text, String exceptionMessage) throws IllegalArgumentException {
 	if (text == null || text.length() == 0) {
 	    throw new IllegalArgumentException(exceptionMessage);
 	}
@@ -55,7 +54,7 @@ public class Validator {
     public static void throwExceptionWhenNoSuchElementAtIndex(List<?> list, int index, String exceptionMessage)
 	    throws NoSuchElementException, IllegalArgumentException {
 
-	throwExceptionWhenContainsNullOrEmpty(list, "Na podanej liœcie nie ma obiektów!");
+	throwExceptionWhenEmptyOrContainsEmptyObject(list, "Na podanej liœcie nie ma obiektów!");
 
 	if (index < 0 || index >= list.size()) {
 	    throw new NoSuchElementException("Nie ma elementu pod podanym indeksem!");
@@ -70,7 +69,7 @@ public class Validator {
      * @throws IllegalArgumentException
      *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenContainsNullOrEmpty(Iterable<?> itearable, String exceptionMessage)
+    public static void throwExceptionWhenEmptyOrContainsEmptyObject(Iterable<?> itearable, String exceptionMessage)
 	    throws IllegalArgumentException {
 	if (itearable == null || !itearable.iterator().hasNext() || containsNullObjects(itearable)) {
 	    throw new IllegalArgumentException(exceptionMessage);

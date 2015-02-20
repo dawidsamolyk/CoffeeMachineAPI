@@ -55,13 +55,13 @@ public class ValidatorTest {
     @Test
     public void shouldThrowsExceptionWhenIterableIsNotCreated() {
 	exception.expect(IllegalArgumentException.class);
-	Validator.throwExceptionWhenContainsNullOrEmpty(null, TEST_EXCEPTION_MESSAGE);
+	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(null, TEST_EXCEPTION_MESSAGE);
     }
     
     @Test
     public void shouldThrowsExceptionWhenIterableHasNoElements() {
 	exception.expect(IllegalArgumentException.class);
-	Validator.throwExceptionWhenContainsNullOrEmpty(new ArrayList<Object>(), TEST_EXCEPTION_MESSAGE);
+	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(new ArrayList<Object>(), TEST_EXCEPTION_MESSAGE);
     }
     
     @Test
@@ -72,7 +72,7 @@ public class ValidatorTest {
 	itearable.add(new Object());
 	
 	exception.expect(IllegalArgumentException.class);
-	Validator.throwExceptionWhenContainsNullOrEmpty(itearable, TEST_EXCEPTION_MESSAGE);
+	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(itearable, TEST_EXCEPTION_MESSAGE);
     }
     
     @Test

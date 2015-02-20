@@ -26,7 +26,7 @@ public abstract class Subassembly extends ObjectWithIdentity {
     public Subassembly(Identity id, List<Operation> operations) throws IllegalArgumentException {
 	super(id);
 
-	Validator.throwExceptionWhenContainsNullOrEmpty(operations,
+	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(operations,
 		"Lista operacji nie mo¿e byæ pusta oraz nie mo¿e zawieraæ pustych operacji!");
 
 	this.operations = operations;

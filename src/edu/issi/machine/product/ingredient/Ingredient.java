@@ -94,7 +94,7 @@ public class Ingredient extends ObjectWithIdentity {
      *            Operacje.
      */
     public void setOperations(Iterable<Operation> operations) {
-	Validator.throwExceptionWhenContainsNullOrEmpty(operations, "Nie mo¿na dodawaæ pustych operacji do sk³adnika!");
+	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(operations, "Nie mo¿na dodawaæ pustych operacji do sk³adnika!");
 
 	this.operations = operations;
     }
@@ -113,7 +113,7 @@ public class Ingredient extends ObjectWithIdentity {
      *             (niepustych).
      */
     public List<OperationStatus> doOperations() throws IllegalArgumentException {
-	Validator.throwExceptionWhenContainsNullOrEmpty(operations,
+	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(operations,
 		"Zbiór operacji na sk³adniku nie mo¿e byæ pusty lub niepe³ny!");
 
 	final List<OperationStatus> result = new ArrayList<OperationStatus>();

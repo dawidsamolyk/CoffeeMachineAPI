@@ -1,5 +1,6 @@
 package edu.issi.machine.product;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -86,4 +87,11 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
 	return ingredients.iterator();
     }
 
+    /**
+     * @return Czy produkt zawiera tylko i wy³¹czie sk³adniki, które podano jako
+     *         argument wejœciowy.
+     */
+    public boolean containsOnly(Collection<Ingredient> ingredients) {
+	return this.ingredients.containsOnly(ingredients);
+    }
 }

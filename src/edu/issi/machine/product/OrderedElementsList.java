@@ -1,5 +1,6 @@
 package edu.issi.machine.product;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,8 +32,7 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
      *             Wyst¹pi, jeœli obiekt wejœciowy nie zosta³ utworzony.
      */
     public void add(Type object) throws IllegalArgumentException {
-	Validator
-		.throwExceptionWhenObjectIsNotCreated(object, "Obiekt dodawany do listy elementów nie mo¿e byæ pusty!");
+	Validator.throwExceptionWhenObjectIsNotCreated(object, "Obiekt dodawany do listy elementów nie mo¿e byæ pusty!");
 
 	elements.add(object);
     }
@@ -49,8 +49,7 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
      *             Wyst¹pi, jeœli obiekt wejœciowy nie zosta³ utworzony.
      */
     public void addAt(int index, Type object) throws UnsupportedOperationException, IllegalArgumentException {
-	Validator
-		.throwExceptionWhenObjectIsNotCreated(object, "Obiekt dodawany do listy elementów nie mo¿e byæ pusty!");
+	Validator.throwExceptionWhenObjectIsNotCreated(object, "Obiekt dodawany do listy elementów nie mo¿e byæ pusty!");
 
 	if (index >= elements.size() || index < 0) {
 	    throw new UnsupportedOperationException("Nie mozna dodac elementu pod indeksem " + index + "!");
@@ -66,8 +65,7 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
      *             Wyst¹pi, jeœli nie ma obiektu pod podanym indeksem.
      */
     public Type getElement(int index) throws NoSuchElementException {
-	Validator.throwExceptionWhenNoSuchElementAtIndex(elements, index,
-		"Nie istnieje ¿aden element pod wskazanym indeksem!");
+	Validator.throwExceptionWhenNoSuchElementAtIndex(elements, index, "Nie istnieje ¿aden element pod wskazanym indeksem!");
 
 	return elements.get(index);
     }
@@ -79,8 +77,7 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
      *             Wyst¹pi, jeœli nie ma obiektu pod podanym indeksem.
      */
     public void remove(int index) throws NoSuchElementException {
-	Validator.throwExceptionWhenNoSuchElementAtIndex(elements, index,
-		"Nie istnieje ¿aden element pod wskazanym indeksem!");
+	Validator.throwExceptionWhenNoSuchElementAtIndex(elements, index, "Nie istnieje ¿aden element pod wskazanym indeksem!");
 
 	elements.remove(index);
     }
@@ -98,5 +95,13 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
      */
     public int getNumberOfElements() {
 	return elements.size();
+    }
+
+    /**
+     * @return Czy lista zawiera tylko i wy³¹czie obiekty, które podano jako
+     *         argument wejœciowy.
+     */
+    public boolean containsOnly(Collection<Type> objects) {
+	return objects.containsAll(elements);
     }
 }
