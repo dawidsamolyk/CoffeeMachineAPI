@@ -42,14 +42,6 @@ public class ProductTest {
     }
 
     @Test
-    public void shouldNotAddNewElementAtZeroIndexWhenTheresNoElementsOnIngredienstList() {
-	Product fixture = Fixtures.getFixtureWithoutIngredients();
-
-	exception.expect(java.lang.UnsupportedOperationException.class);
-	fixture.addAt(0, edu.issi.machine.product.ingredient.IngredientTest.Fixtures.getComplexFixture());
-    }
-
-    @Test
     public void shouldNotAddNewElementAtSecondPlaceWhenTheresNoElementsOnIngredienstList() {
 	Product fixture = Fixtures.getFixtureWithoutIngredients();
 

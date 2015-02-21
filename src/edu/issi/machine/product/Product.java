@@ -97,8 +97,11 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
      *            Sk³adniki.
      * @return Czy produkt zawiera tylko i wy³¹czie sk³adniki, które podano jako
      *         argument wejœciowy.
+     * @throws IllegalArgumentException
+     *             Wyst¹p, jeœli podano na wejœciu niestworzony lub
+     *             nieprawid³owy zbiór.
      */
-    public boolean containsOnly(Collection<Ingredient> ingredients) {
+    public boolean containsOnly(Collection<Ingredient> ingredients) throws IllegalArgumentException {
 	return this.ingredients.containsOnly(ingredients);
     }
 

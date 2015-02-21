@@ -33,7 +33,6 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
      */
     public void add(Type object) throws IllegalArgumentException {
 	Validator.throwExceptionWhenObjectIsNotCreated(object, "Obiekt dodawany do listy elementów nie mo¿e byæ pusty!");
-
 	elements.add(object);
     }
 
@@ -51,7 +50,7 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     public void addAt(int index, Type object) throws UnsupportedOperationException, IllegalArgumentException {
 	Validator.throwExceptionWhenObjectIsNotCreated(object, "Obiekt dodawany do listy elementów nie mo¿e byæ pusty!");
 
-	if (index >= elements.size() || index < 0) {
+	if (index > elements.size() || index < 0) {
 	    throw new UnsupportedOperationException("Nie mozna dodac elementu pod indeksem " + index + "!");
 	}
 	elements.add(index, object);
@@ -66,7 +65,6 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
      */
     public Type getElement(int index) throws NoSuchElementException {
 	Validator.throwExceptionWhenNoSuchElementAtIndex(elements, index, "Nie istnieje ¿aden element pod wskazanym indeksem!");
-
 	return elements.get(index);
     }
 
@@ -78,7 +76,6 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
      */
     public void remove(int index) throws NoSuchElementException {
 	Validator.throwExceptionWhenNoSuchElementAtIndex(elements, index, "Nie istnieje ¿aden element pod wskazanym indeksem!");
-
 	elements.remove(index);
     }
 
