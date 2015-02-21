@@ -1,4 +1,4 @@
-package edu.issi.machine.mvc.controller.fakes;
+package edu.issi.machine.mvc.view.fakes;
 
 import java.util.HashMap;
 import java.util.Map;

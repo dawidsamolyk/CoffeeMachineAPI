@@ -10,7 +10,7 @@ import edu.issi.machine.id.IdentityTest;
 import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.product.ingredient.IngredientTest.Fixtures;
 import edu.issi.machine.subassembly.Subassembly;
-import edu.issi.machine.subassembly.TestingSubassembly;
+import edu.issi.machine.subassembly.fakes.TestingSubassembly;
 
 @SuppressWarnings("javadoc")
 public class OperationTest {

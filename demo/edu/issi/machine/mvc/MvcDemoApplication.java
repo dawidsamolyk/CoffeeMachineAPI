@@ -14,7 +14,7 @@ import edu.issi.machine.operation.Operation;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.subassembly.Subassembly;
-import edu.issi.machine.subassembly.TestingSubassembly;
+import edu.issi.machine.subassembly.fakes.TestingSubassembly;
 
 /**
  * @author DawidSamolyk

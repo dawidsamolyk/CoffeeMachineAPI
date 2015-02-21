@@ -13,6 +13,7 @@ import org.junit.rules.ExpectedException;
 import edu.issi.machine.id.IdentityTest;
 import edu.issi.machine.operation.Operation;
 import edu.issi.machine.operation.OperationTest;
+import edu.issi.machine.subassembly.fakes.TestingSubassembly;
 
 @SuppressWarnings("javadoc")
 public class SubassemblyTest {

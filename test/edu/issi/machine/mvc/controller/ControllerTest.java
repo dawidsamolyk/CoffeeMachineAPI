@@ -9,10 +9,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import edu.issi.machine.mvc.controller.fakes.FakeView;
 import edu.issi.machine.mvc.controller.fakes.TestingController;
 import edu.issi.machine.mvc.model.ModelTest;
 import edu.issi.machine.mvc.model.fakes.FakeModel;
+import edu.issi.machine.mvc.view.fakes.FakeView;
 import edu.issi.machine.operation.OperationStatus;
 
 @SuppressWarnings("javadoc")

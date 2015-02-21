@@ -1,4 +1,4 @@
-package edu.issi.machine.subassembly;
+package edu.issi.machine.subassembly.fakes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import edu.issi.machine.id.Identity;
 import edu.issi.machine.id.IdentityTest;
 import edu.issi.machine.operation.Operation;
+import edu.issi.machine.subassembly.Subassembly;
 
 @SuppressWarnings("javadoc")
 public class TestingSubassembly extends Subassembly {
