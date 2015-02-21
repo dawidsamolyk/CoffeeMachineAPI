@@ -117,7 +117,6 @@ public class Controller {
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
 	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, "Nie mo¿na wykonaæ akcji bez podanych argumentów!");
 
-	    // TODO strategia
 	    if (arguments.hasSelectedElementName()) {
 		String selectedIngredientName = arguments.getSelectedElementName();
 
@@ -178,17 +177,6 @@ public class Controller {
 
 	private OperationStatus makeOrderOn(View view) throws IllegalArgumentException {
 	    String orderedProductName = view.getSelectedForPreparationProductName();
-
-	    // TODO pobierz w³aœciwoœci sk³adników przed realizacj¹ zamówienia
-	    // Set<String> ingredients =
-	    // model.getIngredientsNamesForProductNamed(orderedProductName);
-	    //
-	    // for (String eachIngredient : ingredients) {
-	    // Map<String, Unit> properties =
-	    // model.getPropertiesForIngredientNamed(eachIngredient);
-	    // Map<String, Float> userProperties =
-	    // view.getPropertiesForIngredient(eachIngredient, properties);
-	    // }
 
 	    return model.makeOrder(orderedProductName);
 	}

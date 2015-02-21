@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>OperationStatus.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-11 22:36:32)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.operation</a> &gt; <span class="el_source">OperationStatus.java</span></div><h1>OperationStatus.java</h1><pre class="source lang-java linenums">package edu.issi.machine.operation;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>OperationStatus.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-21 14:05:10)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.operation</a> &gt; <span class="el_source">OperationStatus.java</span></div><h1>OperationStatus.java</h1><pre class="source lang-java linenums">package edu.issi.machine.operation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,23 +83,29 @@ public class OperationStatus {
 
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L86" title="All 2 branches covered.">	if (this == obj) return true;</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">	if (obj == null) return false;</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">	if (getClass() != obj.getClass()) return false;</span>
-<span class="fc" id="L89">	OperationStatus other = (OperationStatus) obj;</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">	if (description == null) {</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">	    if (other.description != null) return false;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">	if (this == obj)</span>
+<span class="fc" id="L87">	    return true;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">	if (obj == null)</span>
+<span class="fc" id="L89">	    return false;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">	if (getClass() != obj.getClass())</span>
+<span class="fc" id="L91">	    return false;</span>
+<span class="fc" id="L92">	OperationStatus other = (OperationStatus) obj;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">	if (description == null) {</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">	    if (other.description != null)</span>
+<span class="nc" id="L95">		return false;</span>
 	}
-<span class="fc bfc" id="L93" title="All 2 branches covered.">	else if (!description.equals(other.description)) return false;</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">	if (status != other.status) return false;</span>
-<span class="fc" id="L95">	return true;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">	else if (!description.equals(other.description))</span>
+<span class="fc" id="L98">	    return false;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">	if (status != other.status)</span>
+<span class="fc" id="L100">	    return false;</span>
+<span class="fc" id="L101">	return true;</span>
     }
 
     /**
      * Fabryka statusów operacji.
      *
      */
-<span class="nc" id="L102">    public static class Factory {</span>
+<span class="nc" id="L108">    public static class Factory {</span>
 	/**
 	 * 
 	 */
@@ -111,7 +117,7 @@ public class OperationStatus {
 	/**
 	 * 
 	 */
-<span class="fc" id="L114">	public static final OperationStatus ALL_VALID = createValid(&quot;Wszystkie operacje wykonano pomyślnie! &quot;);</span>
+<span class="fc" id="L120">	public static final OperationStatus ALL_VALID = createValid(&quot;Wszystkie operacje wykonano pomyślnie! &quot;);</span>
 
 	/**
 	 * @param description
@@ -119,7 +125,7 @@ public class OperationStatus {
 	 * @return Status operacji dla błędu.
 	 */
 	public static OperationStatus createError(String description) {
-<span class="fc" id="L122">	    return new OperationStatus(Status.ERROR, description);</span>
+<span class="fc" id="L128">	    return new OperationStatus(Status.ERROR, description);</span>
 	}
 
 	/**
@@ -128,7 +134,7 @@ public class OperationStatus {
 	 * @return Status operacji dla ostrzeżenia.
 	 */
 	public static OperationStatus createWarning(String description) {
-<span class="fc" id="L131">	    return new OperationStatus(Status.WARNING, description);</span>
+<span class="fc" id="L137">	    return new OperationStatus(Status.WARNING, description);</span>
 	}
 
 	/**
@@ -137,14 +143,14 @@ public class OperationStatus {
 	 * @return Poprawny status operacji, z opisem.
 	 */
 	public static OperationStatus createValid(String description) {
-<span class="fc" id="L140">	    return new OperationStatus(Status.OK, description);</span>
+<span class="fc" id="L146">	    return new OperationStatus(Status.OK, description);</span>
 	}
 
 	/**
 	 * @return Poprawny status operacji.
 	 */
 	public static OperationStatus createValid() {
-<span class="fc" id="L147">	    return new OperationStatus(Status.OK);</span>
+<span class="fc" id="L153">	    return new OperationStatus(Status.OK);</span>
 	}
 
 	/**
@@ -153,45 +159,54 @@ public class OperationStatus {
 	 * @return Jeden status operacji powstały w wyniku wielu statusów.
 	 */
 	public static OperationStatus getFrom(List&lt;OperationStatus&gt; operationsStatuses) {
-<span class="fc" id="L156">	    List&lt;String&gt; invalidStatuses = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L157">	    Status maxSeverity = Status.OK;</span>
+<span class="fc" id="L162">	    Validator.throwExceptionWhenEmptyOrContainsEmptyObject(operationsStatuses,</span>
+<span class="fc" id="L163">		    &quot;Nie można stworzyć skompensowanego statusu operacji z pustą listą statusów operacji.&quot;);</span>
 
-<span class="fc bfc" id="L159" title="All 2 branches covered.">	    for (OperationStatus eachOperationStatus : operationsStatuses) {</span>
-<span class="fc" id="L160">		Status eachStatus = eachOperationStatus.getStatus();</span>
+<span class="fc" id="L165">	    List&lt;String&gt; invalidStatuses = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L166">	    Status maxSeverity = Status.OK;</span>
 
-<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (eachStatus.requiresAttention()) {</span>
-<span class="fc" id="L163">		    invalidStatuses.add(eachOperationStatus.getCompensatedStatus());</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">	    for (OperationStatus eachOperationStatus : operationsStatuses) {</span>
+<span class="fc" id="L169">		Status eachStatus = eachOperationStatus.getStatus();</span>
+
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		if (eachStatus.requiresAttention()) {</span>
+<span class="fc" id="L172">		    invalidStatuses.add(eachOperationStatus.getCompensatedStatus());</span>
 		}
 
-<span class="fc bfc" id="L166" title="All 4 branches covered.">		if (!maxSeverity.equals(Status.ERROR) &amp;&amp; eachStatus.equals(Status.WARNING)) {</span>
-<span class="fc" id="L167">		    maxSeverity = Status.WARNING;</span>
-<span class="fc" id="L168">		}</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">		else if (eachStatus.equals(Status.ERROR)) {</span>
-<span class="fc" id="L170">		    maxSeverity = Status.ERROR;</span>
+<span class="fc bfc" id="L175" title="All 4 branches covered.">		if (!maxSeverity.equals(Status.ERROR) &amp;&amp; eachStatus.equals(Status.WARNING)) {</span>
+<span class="fc" id="L176">		    maxSeverity = Status.WARNING;</span>
+<span class="fc" id="L177">		}</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		else if (eachStatus.equals(Status.ERROR)) {</span>
+<span class="fc" id="L179">		    maxSeverity = Status.ERROR;</span>
 		}
 	    }
 
-<span class="fc bfc" id="L174" title="All 3 branches covered.">	    switch (maxSeverity) {</span>
+<span class="fc bfc" id="L183" title="All 3 branches covered.">	    switch (maxSeverity) {</span>
 		case ERROR:
-<span class="fc" id="L176">		    return createError(ERROR_OCCURS_INFO + invalidStatuses);</span>
+<span class="fc" id="L185">		    return createError(ERROR_OCCURS_INFO + invalidStatuses);</span>
 		case WARNING:
-<span class="fc" id="L178">		    return createWarning(WARNING_OCCURS_INFO + invalidStatuses);</span>
+<span class="fc" id="L187">		    return createWarning(WARNING_OCCURS_INFO + invalidStatuses);</span>
 		case OK:
 		default:
-<span class="fc" id="L181">		    return ALL_VALID;</span>
+<span class="fc" id="L190">		    return ALL_VALID;</span>
 	    }
 	}
 
-	public static List&lt;OperationStatus&gt; createErrors(String ... descriptions) {
-<span class="fc" id="L186">	    List&lt;OperationStatus&gt; result = new ArrayList&lt;OperationStatus&gt;(descriptions.length);</span>
-	    
-<span class="fc bfc" id="L188" title="All 2 branches covered.">	    for(String eachDescription : descriptions) {</span>
-<span class="fc" id="L189">		result.add(createError(eachDescription));</span>
+	/**
+	 * @param descriptions
+	 *            Opisy.
+	 * @return Lista statusów operacji (błędnych) z opisami, które podano
+	 *         jako argument wejściowy.
+	 */
+	public static List&lt;OperationStatus&gt; createErrors(String... descriptions) {
+<span class="fc" id="L201">	    List&lt;OperationStatus&gt; result = new ArrayList&lt;OperationStatus&gt;(descriptions.length);</span>
+
+<span class="fc bfc" id="L203" title="All 2 branches covered.">	    for (String eachDescription : descriptions) {</span>
+<span class="fc" id="L204">		result.add(createError(eachDescription));</span>
 	    }
-	    
-<span class="fc" id="L192">	    return result;</span>
+
+<span class="fc" id="L207">	    return result;</span>
 	}
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-11 22:36:32)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-21 14:05:10)</div></body></html>
