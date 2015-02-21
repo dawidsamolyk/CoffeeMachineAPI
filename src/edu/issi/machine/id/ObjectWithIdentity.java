@@ -18,7 +18,6 @@ public class ObjectWithIdentity {
      */
     public ObjectWithIdentity(final Identity id) throws IllegalArgumentException {
 	Validator.throwExceptionWhenObjectIsNotCreated(id, "Nie podano ID!");
-
 	this.id = id;
     }
 

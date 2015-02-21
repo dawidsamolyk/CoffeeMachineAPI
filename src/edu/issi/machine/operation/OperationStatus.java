@@ -159,6 +159,9 @@ public class OperationStatus {
 	 * @return Jeden status operacji powsta³y w wyniku wielu statusów.
 	 */
 	public static OperationStatus getFrom(List<OperationStatus> operationsStatuses) {
+	    Validator.throwExceptionWhenEmptyOrContainsEmptyObject(operationsStatuses,
+		    "Nie mo¿na stworzyæ skompensowanego statusu operacji z pust¹ list¹ statusów operacji.");
+
 	    List<String> invalidStatuses = new ArrayList<String>();
 	    Status maxSeverity = Status.OK;
 

@@ -113,6 +113,20 @@ public class OperationStatusTest {
     }
 
     @Test
+    public void shouldNotProvideOperationStatusFromEmptyOperationStatuses() {
+	List<OperationStatus> operationsStatuses = new ArrayList<OperationStatus>();
+	
+	exception.expect(IllegalArgumentException.class);
+	OperationStatus.Factory.getFrom(operationsStatuses);
+    }
+    
+    @Test
+    public void shouldNotProvideOperationStatusFromNotCreatedOperationStatuses() {
+	exception.expect(IllegalArgumentException.class);
+	OperationStatus.Factory.getFrom(null);
+    }
+    
+    @Test
     public void shouldProvideOneValidOperationStatusFromManyObjectsOfThisKind() {
 	List<OperationStatus> operationsStatuses = new ArrayList<OperationStatus>();
 	operationsStatuses.add(OperationStatus.Factory.createValid());

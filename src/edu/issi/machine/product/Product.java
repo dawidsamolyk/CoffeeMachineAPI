@@ -24,7 +24,6 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
      */
     public Product(final Identity id) throws IllegalArgumentException {
 	super(id);
-
 	ingredients = new OrderedElementsList<Ingredient>();
     }
 
@@ -99,10 +98,16 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
 
     /**
      * @return Skopiowany produkt.
-     * @throws CloneNotSupportedException
      */
-    public Product getClone() throws CloneNotSupportedException {
-	return (Product) super.clone();
+    @Override
+    public Product clone() {
+	Product result = new Product(Identity.Factory.newIdentity(this.getName()));
+	
+	for(Ingredient eachIngredient : this.ingredients) {
+	    result.add(eachIngredient);
+	}
+	
+	return result;
     }
 
 }
