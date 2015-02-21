@@ -1,7 +1,5 @@
 package edu.issi.machine.mvc.model.fakes;
 
-import java.util.List;
-
 import edu.issi.machine.configuration.MachineConfiguration;
 import edu.issi.machine.configuration.MachineConfigurationTest;
 import edu.issi.machine.mvc.model.Model;
@@ -27,7 +25,7 @@ public class FakeModel extends Model {
     }
 
     @Override
-    public List<OperationStatus> makeOrder(String orderedProductName) throws IllegalArgumentException {
+    public OperationStatus makeOrder(String orderedProductName) throws IllegalArgumentException {
 	this.orderedProductName = orderedProductName;
 	return super.makeOrder(orderedProductName);
     }

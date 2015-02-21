@@ -1,15 +1,14 @@
 package edu.issi.machine.mvc.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import edu.issi.machine.Validator;
 import edu.issi.machine.configuration.MachineConfiguration;
+import edu.issi.machine.configuration.Order;
 import edu.issi.machine.controller.MachineController;
 import edu.issi.machine.id.PropertyIdentity;
 import edu.issi.machine.operation.OperationStatus;
@@ -184,7 +183,7 @@ public class Model {
      *             wpisany w konfiguracji maszyny. Mo¿e równie¿ wyst¹piæ w
      *             przypadku b³êdu wykonywania operacji na sk³adnikach produktu.
      */
-    public List<OperationStatus> makeOrder(String orderedProductName) throws IllegalArgumentException {
+    public OperationStatus makeOrder(String orderedProductName) throws IllegalArgumentException {
 	Validator.throwExceptionWhenTextIsEmpty(orderedProductName, "Nie wybrano produktu!");
 
 	Product orderedProduct = getProductByName(orderedProductName);
@@ -193,19 +192,9 @@ public class Model {
 	    throw new IllegalArgumentException("Wybrano nieznany produkt!");
 	}
 
-	return makeProduct(orderedProduct);
+	Order order = new Order(orderedProduct);
+
+	return order.execute();
     }
 
-    private List<OperationStatus> makeProduct(Product orderedProduct) throws IllegalArgumentException {
-	List<OperationStatus> allOperationsStatuses = new ArrayList<OperationStatus>();
-
-	for (Iterator<Ingredient> iterator = orderedProduct.iterator(); iterator.hasNext();) {
-	    Ingredient ingredient = iterator.next();
-
-	    List<OperationStatus> ingredientOperationStatuses = ingredient.doOperations();
-	    allOperationsStatuses.addAll(ingredientOperationStatuses);
-	}
-
-	return allOperationsStatuses;
-    }
 }

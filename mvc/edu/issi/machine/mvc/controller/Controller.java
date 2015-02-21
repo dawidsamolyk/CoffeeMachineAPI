@@ -88,7 +88,7 @@ public class Controller {
 	@Override
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
 	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, "Nie mo¿na wykonaæ akcji bez podanych argumentów!");
-	    
+
 	    if (arguments.hasSelectedElementName()) {
 		String selectedElementName = arguments.getSelectedElementName();
 
@@ -116,7 +116,7 @@ public class Controller {
 	@Override
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
 	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, "Nie mo¿na wykonaæ akcji bez podanych argumentów!");
-	    
+
 	    // TODO strategia
 	    if (arguments.hasSelectedElementName()) {
 		String selectedIngredientName = arguments.getSelectedElementName();
@@ -145,7 +145,7 @@ public class Controller {
 	@Override
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
 	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, "Nie mo¿na wykonaæ akcji bez podanych argumentów!");
-	    
+
 	    // TODO refaktoryzuj
 	    View activeView = null;
 
@@ -157,10 +157,10 @@ public class Controller {
 	    }
 
 	    if (activeView != null) {
-		List<OperationStatus> operationsStatuses = null;
+		OperationStatus operationsStatus = null;
 
 		try {
-		    operationsStatuses = makeOrderOn(activeView);
+		    operationsStatus = makeOrderOn(activeView);
 		}
 		catch (IllegalArgumentException e) {
 		    for (View eachView : views) {
@@ -168,9 +168,7 @@ public class Controller {
 		    }
 		}
 
-		if (operationsStatuses != null) {
-		    OperationStatus operationsStatus = OperationStatus.Factory.getFrom(operationsStatuses);
-
+		if (operationsStatus != null) {
 		    for (View eachView : views) {
 			eachView.showOperationStatus(operationsStatus.getStatus(), operationsStatus.getDescription());
 		    }
@@ -178,7 +176,7 @@ public class Controller {
 	    }
 	}
 
-	private List<OperationStatus> makeOrderOn(View view) throws IllegalArgumentException {
+	private OperationStatus makeOrderOn(View view) throws IllegalArgumentException {
 	    String orderedProductName = view.getSelectedForPreparationProductName();
 
 	    // TODO pobierz w³aœciwoœci sk³adników przed realizacj¹ zamówienia

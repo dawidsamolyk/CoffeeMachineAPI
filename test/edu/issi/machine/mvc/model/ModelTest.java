@@ -228,10 +228,9 @@ public class ModelTest {
 	Model model = new Model(configuration);
 	String productName = products.get(0).getName();
 
-	List<OperationStatus> result = model.makeOrder(productName);
-	OperationStatus operationsStatus = OperationStatus.Factory.getFrom(result);
+	OperationStatus result = model.makeOrder(productName);
 	
-	assertEquals(Status.OK, operationsStatus.getStatus());
+	assertEquals(Status.OK, result.getStatus());
     }
 
     public static Model getFixture() throws Exception {

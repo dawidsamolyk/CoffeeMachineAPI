@@ -19,16 +19,18 @@ public class Order {
 
     /**
      * @param name
+     * @throws IllegalArgumentException 
      */
-    public Order(String name) {
+    public Order(String name) throws IllegalArgumentException {
 	Validator.throwExceptionWhenTextIsEmpty(name, "Nie podano nazwy produktu!");
 	this.product = new Product(Identity.Factory.newIdentity(name));
     }
 
     /**
      * @param product
+     * @throws IllegalArgumentException 
      */
-    public Order(Product product) {
+    public Order(Product product) throws IllegalArgumentException {
 	Validator.throwExceptionWhenObjectIsNotCreated(product, "Nie mo¿na z³o¿yæ zamówienia dla pustego produktu!");
 	this.product = product.clone();
     }
