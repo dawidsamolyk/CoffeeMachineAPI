@@ -17,9 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 
 import edu.issi.machine.mvc.controller.Controller.IngredientsListener;
 import edu.issi.machine.mvc.controller.Controller.OrderListener;
@@ -34,14 +32,15 @@ import edu.issi.machine.product.ingredient.Unit;
  *
  */
 public class GraphicalView implements View {
+    private MenuPanel menu = new MenuPanel();
+    private ErrorPanel error = new ErrorPanel();
+
     private ProductsListener productsListener;
     private PropertiesListener propertiesListener;
     private IngredientsListener ingredientsListener;
     private OrderListener orderListener;
+
     private JFrame frame;
-    private JLabel statusLabel;
-    private DefaultListModel<String> productsListModel = new DefaultListModel<String>();
-    private JList<String> productsList;
 
     /**
      * Create the application.
@@ -57,72 +56,21 @@ public class GraphicalView implements View {
 	frame = new JFrame();
 	frame.setBounds(100, 100, 450, 300);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	Container contentPane = frame.getContentPane();
-	contentPane.setLayout(new GridLayout(2, 2));
 
-	productsList = new JList<String>();
-	productsList.setModel(productsListModel);
-	productsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	productsList.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mousePressed(MouseEvent e) {
-		EventArguments arguments = new EventArguments(GraphicalView.this, productsList.getSelectedValue());
-		ingredientsListener.actionPerformed(arguments);
-	    }
-	});
-	contentPane.add(productsList);
-
-	JButton makeOrderButton = new JButton("Zamów!");
-	makeOrderButton.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mousePressed(MouseEvent e) {
-		String selectedProduct = productsList.getSelectedValue();
-
-		if (selectedProduct == null) {
-		    showError("Nie wybrano produktu!");
-		}
-		else {
-		    EventArguments arguments = new EventArguments(GraphicalView.this, selectedProduct);
-		    orderListener.actionPerformed(arguments);
-		}
-	    }
-	});
-	contentPane.add(makeOrderButton);
-
-	statusLabel = new JLabel("Status...");
-	contentPane.add(statusLabel);
-
-	JButton customProductButton = new JButton("W\u0142asny produkt");
-	makeOrderButton.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mousePressed(MouseEvent e) {
-		// TODO implementacja w³asnego produktu
-	    }
-	});
-	contentPane.add(customProductButton);
+	frame.setContentPane(menu);
 
 	frame.setVisible(true);
     }
 
     @Override
     public void showError(String description) {
-	JOptionPane.showMessageDialog(frame, description);
-    }
-
-    private void refresh(DefaultListModel<String> listModel) {
-	listModel.clear();
-    }
-
-    private void showOn(Set<String> content, DefaultListModel<String> listModel) {
-	for (String each : content) {
-	    listModel.addElement(each);
-	}
+	frame.setContentPane(error);
+	error.show(description);
     }
 
     @Override
     public void showProducts(Set<String> products) {
-	refresh(productsListModel);
-	showOn(products, productsListModel);
+	// TODO 
     }
 
     @Override
@@ -142,7 +90,7 @@ public class GraphicalView implements View {
 
     @Override
     public String getSelectedForPreparationProductName() {
-	return productsList.getSelectedValue();
+	return null;
     }
 
     @Override
@@ -211,7 +159,7 @@ public class GraphicalView implements View {
 
     @Override
     public void showOperationStatus(Status status, String description) {
-	statusLabel.setText("[" + status.name() + "] " + description);
+
     }
 
     @Override
@@ -245,4 +193,17 @@ public class GraphicalView implements View {
 	this.propertiesListener = propertiesListener;
     }
 
+    public class IngredientListener extends MouseAdapter {
+	private JList<String> productsList;
+
+	public IngredientListener(JList<String> productsList) {
+	    this.productsList = productsList;
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	    EventArguments arguments = new EventArguments(GraphicalView.this, productsList.getSelectedValue());
+	    ingredientsListener.actionPerformed(arguments);
+	}
+    }
 }
