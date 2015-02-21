@@ -20,6 +20,10 @@ public class GraphicalView extends JFrame implements View {
     private Container contentPane;
     private MenuPanel menuPanel = new MenuPanel();
     private OrderPanel orderPanel = new OrderPanel();
+    private MenuPanel menu = new MenuPanel();
+    private ErrorPanel error = new ErrorPanel();
+
+
 
     public GraphicalView() {
 	contentPane = getContentPane();
@@ -39,7 +43,6 @@ public class GraphicalView extends JFrame implements View {
 
     @Override
     public void showError(String description) {
-
     }
 
     @Override
@@ -108,4 +111,17 @@ public class GraphicalView extends JFrame implements View {
 
     }
 
+    public class IngredientListener extends MouseAdapter {
+	private JList<String> productsList;
+
+	public IngredientListener(JList<String> productsList) {
+	    this.productsList = productsList;
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	    EventArguments arguments = new EventArguments(GraphicalView.this, productsList.getSelectedValue());
+	    ingredientsListener.actionPerformed(arguments);
+	}
+    }
 }

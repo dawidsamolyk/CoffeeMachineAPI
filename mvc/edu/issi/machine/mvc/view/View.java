@@ -21,6 +21,11 @@ public interface View {
      *            Produkty.
      */
     void showProducts(Set<String> products);
+    
+    /**
+     * @return Nazwa produktu, który ma zostaæ wydany.
+     */
+    String getSelectedForPreparationProductName();
 
     /**
      * @param productName
@@ -46,10 +51,7 @@ public interface View {
      */
     void showIngredientProperties(String ingredientName, Map<String, Unit> properties);
 
-    /**
-     * @return Nazwa produktu, który ma zostaæ wydany.
-     */
-    String getSelectedForPreparationProductName();
+    
 
     /**
      * @param ingredientName
