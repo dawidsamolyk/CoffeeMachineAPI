@@ -103,8 +103,12 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
      *            listy.
      * @return Czy lista zawiera tylko i wy³¹czie obiekty, które podano jako
      *         argument wejœciowy.
+     * @throws IllegalArgumentException
+     *             Wyst¹p, jeœli podano na wejœciu niestworzony lub
+     *             nieprawid³owy zbiór.
      */
-    public boolean containsOnly(Collection<Type> objects) {
+    public boolean containsOnly(Collection<Type> objects) throws IllegalArgumentException {
+	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(objects, "Podany zbiór do porówania jest nieprawid³owy!");
 	return objects.containsAll(elements);
     }
 }

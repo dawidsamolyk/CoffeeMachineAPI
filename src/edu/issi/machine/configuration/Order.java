@@ -2,6 +2,7 @@ package edu.issi.machine.configuration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import edu.issi.machine.Validator;
 import edu.issi.machine.id.Identity;
@@ -37,12 +38,45 @@ public class Order {
      */
     public OperationStatus execute() {
 	List<OperationStatus> result = new ArrayList<OperationStatus>();
-	
-	for(Ingredient eachIngredient : product) {
+
+	for (Ingredient eachIngredient : product) {
 	    List<OperationStatus> operationsStatus = eachIngredient.doOperations();
 	    result.addAll(operationsStatus);
 	}
-	
+
 	return OperationStatus.Factory.getFrom(result);
+    }
+
+    /**
+     * @author Dawid
+     *
+     */
+    public class Configurator {
+
+	/**
+	 * @param index
+	 *            Indeks, pod który ma zostaæ dodany sk³adnik.
+	 * @param ingredient
+	 *            Sk³adnik, który zostanie dodany do produktu.
+	 * @throws UnsupportedOperationException
+	 *             Wyst¹pi, jeœli podano nieprawid³owy indeks.
+	 * @throws IllegalArgumentException
+	 *             Wyst¹pi, jeœli obiekt wejœciowy nie zosta³ utworzony.
+	 * @see #Product.addAt(int, Ingredient)
+	 */
+	public void addAt(int index, Ingredient ingredient) throws UnsupportedOperationException, IllegalArgumentException {
+	    product.addAt(index, ingredient);
+	}
+
+	/**
+	 * @param index
+	 *            Indeks, spod którego ma zostaæ usuniêty sk³adnik.
+	 * @throws NoSuchElementException
+	 *             Wyst¹pi, jeœli nie ma obiektu pod podanym indeksem.
+	 * @see #Product.remove(int)
+	 */
+	public void remove(int index) throws NoSuchElementException {
+	    product.remove(index);
+	}
     }
 }

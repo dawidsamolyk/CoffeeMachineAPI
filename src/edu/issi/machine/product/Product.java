@@ -62,18 +62,24 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
      *            Indeks, pod który ma zostaæ dodany sk³adnik.
      * @param ingredient
      *            Sk³adnik.
+     * @throws UnsupportedOperationException
+     *             Wyst¹pi, jeœli podano nieprawid³owy indeks.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli obiekt wejœciowy nie zosta³ utworzony.
      * @see edu.issi.machine.product.OrderedElementsList#addAt(int, Object)
      */
-    public void addAt(int index, Ingredient ingredient) {
+    public void addAt(int index, Ingredient ingredient) throws UnsupportedOperationException, IllegalArgumentException {
 	ingredients.addAt(index, ingredient);
     }
 
     /**
      * @param index
      *            Indeks, spod którego ma zostaæ usuniêty sk³adnik.
+     * @throws NoSuchElementException
+     *             Wyst¹pi, jeœli nie ma obiektu pod podanym indeksem.
      * @see edu.issi.machine.product.OrderedElementsList#remove(int)
      */
-    public void remove(int index) {
+    public void remove(int index) throws NoSuchElementException {
 	ingredients.remove(index);
     }
 
@@ -102,11 +108,11 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
     @Override
     public Product clone() {
 	Product result = new Product(Identity.Factory.newIdentity(this.getName()));
-	
-	for(Ingredient eachIngredient : this.ingredients) {
+
+	for (Ingredient eachIngredient : this.ingredients) {
 	    result.add(eachIngredient);
 	}
-	
+
 	return result;
     }
 
