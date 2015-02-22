@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import edu.issi.machine.Validator;
 import edu.issi.machine.configuration.Order;
@@ -181,7 +182,9 @@ public class Controller {
 		showOnAllViews(operationsStatus);
 	    }
 	    catch (IllegalArgumentException e) {
-
+		showErrorOnAllViews(e.getMessage());
+	    }
+	    catch (NoSuchElementException e) {
 		showErrorOnAllViews(e.getMessage());
 	    }
 	}

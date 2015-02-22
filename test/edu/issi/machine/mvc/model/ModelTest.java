@@ -39,39 +39,6 @@ public class ModelTest {
     }
 
     @Test
-    public void modelShouldNotBeAbleToAddNotCreatedProcutToMachineConfiguration() throws Exception {
-	Model fixture = ModelTest.getFixture();
-
-	exception.expect(IllegalArgumentException.class);
-	fixture.addProduct(null);
-    }
-
-    @Test
-    public void modelShouldBeAbleToAddNewProductToMachineConfiguration() throws Exception {
-	List<Ingredient> ingredients = Fixtures.getFixtureIngredients();
-	List<Subassembly> subassemlies = Fixtures.getFixtureSubassemlies();
-	List<Product> products = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients, "Kawa");
-	MachineConfiguration configuration = new MachineConfiguration(subassemlies, ingredients, products);
-	Model model = new Model(configuration);
-
-	Product newProduct = ProductTest.Fixtures.getFixtureWith(ingredients, "Czekolada");
-	model.addProduct(newProduct);
-
-	boolean hasNewProduct = false;
-
-	Iterator<Product> productsIterator = configuration.getProductsIterator();
-	while (productsIterator.hasNext()) {
-	    Product eachProduct = productsIterator.next();
-
-	    if (eachProduct.equals(newProduct)) {
-		hasNewProduct = true;
-	    }
-	}
-
-	assertTrue(hasNewProduct);
-    }
-
-    @Test
     public void modelShouldBeAbleToStartMachine() throws Exception {
 	MachineConfiguration configuration = Fixtures.getFixture();
 	Model model = new Model(configuration);

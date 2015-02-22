@@ -115,7 +115,7 @@ public class MvcTest {
 
 	view.performActionOnOrderListener();
 
-	assertEquals("Nie mo¿na z³o¿yæ zamówienia dla nieznanego produktu!", view.getLastMessage());
+	assertEquals("Nie znaleziono podanego produktu w konfiguracji maszyny!", view.getLastMessage());
     } 
     
     @Test
@@ -130,7 +130,7 @@ public class MvcTest {
 
 	view.performActionOnOrderListener();
 
-	assertEquals("Nie mo¿na z³o¿yæ zamówienia dla nieznanego produktu!", view.getLastMessage());
+	assertEquals("Nie znaleziono podanego produktu w konfiguracji maszyny!", view.getLastMessage());
     }
     
     @Test
