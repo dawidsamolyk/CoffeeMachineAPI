@@ -31,7 +31,7 @@ public class Order {
      * @throws IllegalArgumentException 
      */
     public Order(Product product) throws IllegalArgumentException {
-	Validator.throwExceptionWhenObjectIsNotCreated(product, "Nie mo¿na z³o¿yæ zamówienia dla pustego produktu!");
+	Validator.throwExceptionWhenObjectIsNotCreated(product, "Nie mo¿na z³o¿yæ zamówienia dla nieznanego produktu!");
 	this.product = product.clone();
     }
 
@@ -80,5 +80,7 @@ public class Order {
 	public void remove(int index) throws NoSuchElementException {
 	    product.remove(index);
 	}
+	
+	
     }
 }

@@ -1,8 +1,9 @@
 package edu.issi.machine.mvc.view;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import edu.issi.machine.mvc.controller.Controller.CustomOrderListener;
 import edu.issi.machine.mvc.controller.Controller.IngredientsListener;
 import edu.issi.machine.mvc.controller.Controller.OrderListener;
 import edu.issi.machine.mvc.controller.Controller.ProductsListener;
@@ -17,11 +18,11 @@ import edu.issi.machine.product.ingredient.Unit;
 public interface View {
 
     /**
-     * @param products
+     * @param list
      *            Produkty.
      */
-    void showProducts(Set<String> products);
-    
+    void showProducts(List<String> list);
+
     /**
      * @return Nazwa produktu, który ma zostaæ wydany.
      */
@@ -33,13 +34,13 @@ public interface View {
      * @param ingredients
      *            Sk³adniki produktu.
      */
-    void showProductIngredients(String productName, Set<String> ingredients);
+    void showProductIngredients(String productName, List<String> ingredients);
 
     /**
      * @param ingredients
      *            Sk³adniki.
      */
-    void showIngredients(Set<String> ingredients);
+    void showIngredients(List<String> ingredients);
 
     /**
      * @param ingredientName
@@ -51,8 +52,6 @@ public interface View {
      */
     void showIngredientProperties(String ingredientName, Map<String, Unit> properties);
 
-    
-
     /**
      * @param ingredientName
      *            Nazwa sk³adnika produktu, który ma zostaæ wydany.
@@ -63,7 +62,7 @@ public interface View {
      *         drugim parametrem jest wartoœæ dla wybranej w³aœciwoœci (wartoœæ
      *         ta jest wyra¿ana w jednostkach ustawionych we w³aœciwoœci).
      */
-    Map<String, Float> getPropertiesForIngredient(String ingredientName, Map<String, Unit> availableProperties);
+    Map<String, Double> getPropertiesForIngredient(String ingredientName, Map<String, Unit> availableProperties);
 
     /**
      * @param status
@@ -76,14 +75,14 @@ public interface View {
     /**
      * @return Nazwa produktu.
      */
-    String getNewProductName();
+    String getCustomProductName();
 
     /**
      * @param availableIngredients
      *            Dostêpne sk³adniki.
      * @return Sk³adniki nowego produktu.
      */
-    Set<String> getNewProductIngredients(Set<String> availableIngredients);
+    List<String> getNewProductIngredients(List<String> availableIngredients);
 
     /**
      * @param productsListListener
@@ -110,8 +109,11 @@ public interface View {
     void addOrderListener(OrderListener orderListener);
 
     /**
-     * @param description Opis b³êdu.
+     * @param description
+     *            Opis b³êdu.
      */
     void showError(String description);
+
+    void addCustomOrderListener(CustomOrderListener customOrderListener);
 
 }

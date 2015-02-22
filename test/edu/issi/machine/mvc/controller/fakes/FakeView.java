@@ -1,9 +1,10 @@
 package edu.issi.machine.mvc.controller.fakes;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import edu.issi.machine.mvc.controller.Controller.CustomOrderListener;
 import edu.issi.machine.mvc.controller.Controller.IngredientsListener;
 import edu.issi.machine.mvc.controller.Controller.OrderListener;
 import edu.issi.machine.mvc.controller.Controller.ProductsListener;
@@ -22,6 +23,7 @@ public class FakeView implements View {
     protected PropertiesListener propertiesListener;
     protected IngredientsListener ingredientsListener;
     protected OrderListener orderListener;
+    protected CustomOrderListener customOrderListener;
 
     protected String lastMessage;
 
@@ -33,17 +35,17 @@ public class FakeView implements View {
     }
 
     @Override
-    public void showProducts(Set<String> products) {
+    public void showProducts(List<String> products) {
 	lastMessage = products.toString();
     }
 
     @Override
-    public void showProductIngredients(String productName, Set<String> ingredients) {
+    public void showProductIngredients(String productName, List<String> ingredients) {
 	lastMessage = ingredients.toString();
     }
 
     @Override
-    public void showIngredients(Set<String> ingredients) {
+    public void showIngredients(List<String> ingredients) {
 	lastMessage = ingredients.toString();
     }
 
@@ -58,11 +60,11 @@ public class FakeView implements View {
     }
 
     @Override
-    public Map<String, Float> getPropertiesForIngredient(String ingredientName, Map<String, Unit> availableProperties) {
-	Map<String, Float> result = new HashMap<String, Float>();
+    public Map<String, Double> getPropertiesForIngredient(String ingredientName, Map<String, Unit> availableProperties) {
+	Map<String, Double> result = new HashMap<String, Double>();
 
 	for (String eachPropertyname : availableProperties.keySet()) {
-	    result.put(eachPropertyname, 100f);
+	    result.put(eachPropertyname, 100.0);
 	}
 
 	return result;
@@ -74,7 +76,7 @@ public class FakeView implements View {
     }
 
     @Override
-    public String getNewProductName() {
+    public String getCustomProductName() {
 	return newProductName;
     }
 
@@ -88,7 +90,7 @@ public class FakeView implements View {
     }
 
     @Override
-    public Set<String> getNewProductIngredients(Set<String> availableIngredients) {
+    public List<String> getNewProductIngredients(List<String> availableIngredients) {
 	return availableIngredients;
     }
 
@@ -110,6 +112,11 @@ public class FakeView implements View {
     @Override
     public void addOrderListener(OrderListener orderListener) {
 	this.orderListener = orderListener;
+    }
+
+    @Override
+    public void addCustomOrderListener(CustomOrderListener customOrderListener) {
+	this.customOrderListener = customOrderListener;
     }
 
     public void performActionOnProductsListener() {
@@ -134,5 +141,9 @@ public class FakeView implements View {
 
     public void performActionOnOrderListener() {
 	orderListener.actionPerformed(new EventArguments(this));
+    }
+
+    public void performActionOnCustomOrderListener() {
+	customOrderListener.actionPerformed(new EventArguments(this));
     }
 }

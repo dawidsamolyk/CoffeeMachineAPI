@@ -3,7 +3,6 @@ package edu.issi.machine.mvc.model.fakes;
 import edu.issi.machine.configuration.MachineConfiguration;
 import edu.issi.machine.configuration.MachineConfigurationTest;
 import edu.issi.machine.mvc.model.Model;
-import edu.issi.machine.operation.OperationStatus;
 
 @SuppressWarnings("javadoc")
 public class FakeModel extends Model {
@@ -22,12 +21,6 @@ public class FakeModel extends Model {
     @Override
     public void stopMachine() {
 	working = false;
-    }
-
-    @Override
-    public OperationStatus makeOrder(String orderedProductName) throws IllegalArgumentException {
-	this.orderedProductName = orderedProductName;
-	return super.makeOrder(orderedProductName);
     }
 
     public static FakeModel getFixture() {

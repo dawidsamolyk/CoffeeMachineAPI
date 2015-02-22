@@ -115,7 +115,7 @@ public class MvcTest {
 
 	view.performActionOnOrderListener();
 
-	assertEquals("Nie wybrano produktu!", view.getLastMessage());
+	assertEquals("Nie mo¿na z³o¿yæ zamówienia dla nieznanego produktu!", view.getLastMessage());
     } 
     
     @Test
@@ -130,7 +130,7 @@ public class MvcTest {
 
 	view.performActionOnOrderListener();
 
-	assertEquals("Wybrano nieznany produkt!", view.getLastMessage());
+	assertEquals("Nie mo¿na z³o¿yæ zamówienia dla nieznanego produktu!", view.getLastMessage());
     }
     
     @Test
@@ -143,7 +143,7 @@ public class MvcTest {
 	controller.startMachine();
 	view.newProductName = "Herbatka u Tadka";
 	
-	view.performActionOnOrderListener();
+	view.performActionOnCustomOrderListener();
 	
 	assertEquals("[OK] Wszystkie operacje wykonano pomyœlnie! ", view.getLastMessage());
     }

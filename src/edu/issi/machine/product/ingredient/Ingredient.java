@@ -20,7 +20,7 @@ import edu.issi.machine.operation.OperationStatus;
  *         Sk³adnik.
  */
 public class Ingredient extends ObjectWithIdentity {
-    private final Map<PropertyIdentity, Double> properties;
+    private Map<PropertyIdentity, Double> properties;
     private Iterable<Operation> operations;
 
     /**
@@ -78,12 +78,10 @@ public class Ingredient extends ObjectWithIdentity {
      *             sk³adnik nie posiada.
      */
     public void remove(PropertyIdentity property) throws IllegalArgumentException, NoSuchElementException {
-	Validator.throwExceptionWhenObjectIsNotCreated(property,
-		"Nie mo¿na usun¹æ w³aœciwoœci z pustym identifikatorem!");
+	Validator.throwExceptionWhenObjectIsNotCreated(property, "Nie mo¿na usun¹æ w³aœciwoœci z pustym identifikatorem!");
 
 	if (!properties.containsKey(property)) {
-	    throw new NoSuchElementException(
-		    "Wybrany sk³adnik nie posiada podanej w³aœciwoœci, wiêc nie mo¿na jej usun¹æ!");
+	    throw new NoSuchElementException("Wybrany sk³adnik nie posiada podanej w³aœciwoœci, wiêc nie mo¿na jej usun¹æ!");
 	}
 
 	properties.remove(property);
@@ -124,5 +122,19 @@ public class Ingredient extends ObjectWithIdentity {
 	}
 
 	return result;
+    }
+
+    /**
+     * @param ingredientProperties
+     *            W³aœciwoœci sk³adnika.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli wejœciowe w³aœciwoœci s¹ puste lub
+     *             nieprawid³owe.
+     */
+    public void set(Map<PropertyIdentity, Double> ingredientProperties) throws IllegalArgumentException {
+	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(ingredientProperties.keySet(),
+		"Nie mo¿na ustawiæ pustych w³aœciwoœci sk³adnika");
+
+	properties = ingredientProperties;
     }
 }

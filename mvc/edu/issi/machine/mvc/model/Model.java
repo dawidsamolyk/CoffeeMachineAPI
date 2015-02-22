@@ -1,17 +1,16 @@
 package edu.issi.machine.mvc.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.NoSuchElementException;
 
 import edu.issi.machine.Validator;
 import edu.issi.machine.configuration.MachineConfiguration;
-import edu.issi.machine.configuration.Order;
 import edu.issi.machine.controller.MachineController;
 import edu.issi.machine.id.PropertyIdentity;
-import edu.issi.machine.operation.OperationStatus;
 import edu.issi.machine.product.Product;
 import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.product.ingredient.Unit;
@@ -64,8 +63,8 @@ public class Model {
     /**
      * @return Nazwy dostêpnych produktów.
      */
-    public Set<String> getProductsNames() {
-	Set<String> result = new HashSet<String>();
+    public List<String> getProductsNames() {
+	List<String> result = new ArrayList<String>();
 	Iterator<Product> productsIterator = configuration.getProductsIterator();
 
 	while (productsIterator.hasNext()) {
@@ -79,8 +78,8 @@ public class Model {
     /**
      * @return Nazwy wszystkich dostêpnych sk³adników.
      */
-    public Set<String> getAllIngredientsNames() {
-	Set<String> result = new HashSet<String>();
+    public List<String> getAllIngredientsNames() {
+	List<String> result = new ArrayList<String>();
 	Iterator<Ingredient> ingredientsIterator = configuration.getIngredientsIterator();
 
 	while (ingredientsIterator.hasNext()) {
@@ -99,7 +98,7 @@ public class Model {
      *             Wyst¹pi, jeœli nazwa produktu bêdzie pusta lub gdy maszyna
      *             nie obs³uguje produktu o podanej nazwie.
      */
-    public Set<String> getIngredientsNamesForProductNamed(String productName) throws IllegalArgumentException {
+    public List<String> getIngredientsNamesForProductNamed(String productName) throws IllegalArgumentException {
 	Validator.throwExceptionWhenTextIsEmpty(productName, "Nazwa produktu nie mo¿e byæ pusta!");
 	Product product = getProductByName(productName);
 
@@ -107,7 +106,7 @@ public class Model {
 	    throw new IllegalArgumentException("Maszyna nie obs³uguje produktu o nazwie " + productName);
 	}
 
-	Set<String> result = new HashSet<String>();
+	List<String> result = new ArrayList<String>();
 
 	for (Ingredient eachIngredient : product) {
 	    result.add(eachIngredient.getName());
@@ -116,19 +115,22 @@ public class Model {
 	return result;
     }
 
-    private Product getProductByName(String productName) {
+    /**
+     * @param productName
+     *            Nazwa produktu.
+     * @return Produkt.
+     */
+    public Product getProductByName(String productName) throws NoSuchElementException {
 	Iterator<Product> iterator = configuration.getProductsIterator();
 
-	Product product = null;
 	while (iterator.hasNext()) {
 	    Product eachProduct = iterator.next();
 
 	    if (eachProduct.getName().equals(productName)) {
-		product = eachProduct;
-		break;
+		return eachProduct;
 	    }
 	}
-	return product;
+	throw new NoSuchElementException("Nie znaleziono podanej w³aœciwoœci sk³adnika w konfiguracji maszyny!");
     }
 
     /**
@@ -159,42 +161,44 @@ public class Model {
 	return result;
     }
 
-    private Ingredient getIngredientByName(String ingredientName) {
+    /**
+     * @param ingredientName
+     *            Nazwa sk³adnika.
+     * @return Sk³adnik.
+     */
+    public Ingredient getIngredientByName(String ingredientName) throws NoSuchElementException {
 	Iterator<Ingredient> iterator = configuration.getIngredientsIterator();
 
-	Ingredient ingredient = null;
 	while (iterator.hasNext()) {
 	    Ingredient eachIngredient = iterator.next();
 
 	    if (eachIngredient.getName().equals(ingredientName)) {
-		ingredient = eachIngredient;
-		break;
+		return eachIngredient;
 	    }
 	}
-	return ingredient;
+	throw new NoSuchElementException("Nie znaleziono podanej w³aœciwoœci sk³adnika w konfiguracji maszyny!");
     }
 
     /**
-     * @param orderedProductName
-     *            Nazwa zamawianago produktu.
-     * @return Statusy operacji wykonanych na sk³adnikach produktu.
-     * @throws IllegalArgumentException
-     *             Wyst¹pi, jeœli nie wybrano produktu lub produkt nie jest
-     *             wpisany w konfiguracji maszyny. Mo¿e równie¿ wyst¹piæ w
-     *             przypadku b³êdu wykonywania operacji na sk³adnikach produktu.
+     * @param propertyName
+     *            Nazwa w³aœciwoœci.
+     * @return Identyfikator w³aœciwoœci.
+     * @throws NoSuchElementException 
      */
-    public OperationStatus makeOrder(String orderedProductName) throws IllegalArgumentException {
-	Validator.throwExceptionWhenTextIsEmpty(orderedProductName, "Nie wybrano produktu!");
+    public PropertyIdentity getPropertyByName(String propertyName) throws NoSuchElementException {
+	Iterator<Ingredient> iterator = configuration.getIngredientsIterator();
 
-	Product orderedProduct = getProductByName(orderedProductName);
+	while (iterator.hasNext()) {
+	    Ingredient eachIngredient = iterator.next();
 
-	if (orderedProduct == null) {
-	    throw new IllegalArgumentException("Wybrano nieznany produkt!");
+	    Map<PropertyIdentity, Double> properties = eachIngredient.getProperties();
+	    for (PropertyIdentity eachProperty : properties.keySet()) {
+		if (eachProperty.getName().equals(propertyName)) {
+		    return eachProperty;
+		}
+	    }
 	}
-
-	Order order = new Order(orderedProduct);
-
-	return order.execute();
+	throw new NoSuchElementException("Nie znaleziono podanej w³aœciwoœci sk³adnika w konfiguracji maszyny!");
     }
 
 }

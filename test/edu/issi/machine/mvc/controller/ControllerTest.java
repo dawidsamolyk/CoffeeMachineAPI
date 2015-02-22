@@ -169,7 +169,7 @@ public class ControllerTest {
 	
 	view.performActionOnOrderListener();
 	
-	assertEquals("Wybrano nieznany produkt!", view.getLastMessage());
+	assertEquals("Nie mo¿na z³o¿yæ zamówienia dla nieznanego produktu!", view.getLastMessage());
     }
 
     private Controller getFixture() throws Exception {

@@ -1,15 +1,20 @@
 package edu.issi.machine.mvc.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import edu.issi.machine.Validator;
+import edu.issi.machine.configuration.Order;
+import edu.issi.machine.configuration.Order.Configurator;
 import edu.issi.machine.mvc.model.Model;
 import edu.issi.machine.mvc.view.View;
 import edu.issi.machine.operation.OperationStatus;
+import edu.issi.machine.product.Product;
+import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.product.ingredient.Unit;
+import edu.issi.machine.id.PropertyIdentity;
 
 /**
  * @author DawidSamolyk
@@ -43,6 +48,7 @@ public class Controller {
 	view.addIngredientsListener(new IngredientsListener());
 	view.addPropertiesListener(new PropertiesListener());
 	view.addOrderListener(new OrderListener());
+	view.addCustomOrderListener(new CustomOrderListener());
     }
 
     /**
@@ -73,7 +79,7 @@ public class Controller {
 
     private View getCaller(EventArguments arguments) {
 	View caller = null;
-	
+
 	for (View eachView : views) {
 	    if (arguments.isCalledBy(eachView)) {
 		caller = eachView;
@@ -94,7 +100,7 @@ public class Controller {
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
 	    Validator.throwExceptionWhenObjectIsNotCreated(arguments,
 		    "Nie mo¿na wykonaæ akcji wyœwietlenia produktów bez podanych argumentów!");
-	    
+
 	    for (View eachView : views) {
 		eachView.showProducts(model.getProductsNames());
 	    }
@@ -118,7 +124,7 @@ public class Controller {
 		String selectedElementName = arguments.getSelectedElementName();
 
 		for (View eachView : views) {
-		    Set<String> ingredients = model.getIngredientsNamesForProductNamed(selectedElementName);
+		    List<String> ingredients = model.getIngredientsNamesForProductNamed(selectedElementName);
 		    eachView.showProductIngredients(selectedElementName, ingredients);
 		}
 	    }
@@ -175,13 +181,62 @@ public class Controller {
 		showOnAllViews(operationsStatus);
 	    }
 	    catch (IllegalArgumentException e) {
+
 		showErrorOnAllViews(e.getMessage());
 	    }
 	}
 
-	private OperationStatus makeOrderOn(View view) throws IllegalArgumentException {
+	protected OperationStatus makeOrderOn(View view) throws IllegalArgumentException {
 	    String orderedProductName = view.getSelectedForPreparationProductName();
-	    return model.makeOrder(orderedProductName);
+	    Product orderedProduct = model.getProductByName(orderedProductName);
+
+	    return new Order(orderedProduct).execute();
+	}
+    }
+
+    /**
+     * @author Dawid
+     *
+     */
+    public class CustomOrderListener extends OrderListener {
+	private CustomOrderListener() {
+	}
+
+	@Override
+	protected OperationStatus makeOrderOn(View view) throws IllegalArgumentException {
+	    String orderedProductName = view.getCustomProductName();
+
+	    Order order = new Order(orderedProductName);
+	    Configurator orderConfigurator = order.new Configurator();
+
+	    configureIngredients(view, orderConfigurator);
+
+	    return order.execute();
+	}
+
+	private void configureIngredients(View view, Configurator orderConfigurator) {
+	    List<String> ingredients = view.getNewProductIngredients(model.getAllIngredientsNames());
+
+	    for (int p = 0; p < ingredients.size(); p++) {
+		String ingredientName = ingredients.get(p);
+		Ingredient ingredient = model.getIngredientByName(ingredientName);
+
+		Map<String, Unit> availableIngredientProperties = model.getPropertiesForIngredientNamed(ingredientName);
+		Map<String, Double> ingredientProperties = view.getPropertiesForIngredient(ingredientName,
+			availableIngredientProperties);
+
+		Map<PropertyIdentity, Double> resultProperties = new HashMap<PropertyIdentity, Double>();
+
+		for (String eachPropertyName : ingredientProperties.keySet()) {
+		    PropertyIdentity property = model.getPropertyByName(eachPropertyName);
+		    Double value = ingredientProperties.get(eachPropertyName);
+		    resultProperties.put(property, value);
+		}
+
+		ingredient.set(resultProperties);
+
+		orderConfigurator.addAt(p, ingredient);
+	    }
 	}
     }
 }
