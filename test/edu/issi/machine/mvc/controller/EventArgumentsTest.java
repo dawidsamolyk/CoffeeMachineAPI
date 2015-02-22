@@ -6,8 +6,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import edu.issi.machine.mvc.controller.fakes.FakeView;
 import edu.issi.machine.mvc.view.View;
-import edu.issi.machine.mvc.view.fakes.FakeView;
 
 @SuppressWarnings("javadoc")
 public class EventArgumentsTest {
