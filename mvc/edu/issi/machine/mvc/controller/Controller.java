@@ -42,6 +42,12 @@ public class Controller {
 	model.stopMachine();
     }
 
+    private void showErrorOnAllViews(String message) {
+	for (View eachView : views) {
+	    eachView.showError(message);
+	}
+    }
+
     /**
      * @param view
      *            Widok, który ma zostaæ dodany.
@@ -126,9 +132,7 @@ public class Controller {
 		}
 	    }
 	    else {
-		for (View eachView : views) {
-		    eachView.showError("Nie wybrano elementu, wiêc nie mo¿na wyœwietliæ w³aœciwoœci sk³adnika.");
-		}
+		showErrorOnAllViews("Nie wybrano elementu, wiêc nie mo¿na wyœwietliæ w³aœciwoœci sk³adnika.");
 	    }
 	}
     }
@@ -145,7 +149,6 @@ public class Controller {
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
 	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, "Nie mo¿na wykonaæ akcji bez podanych argumentów!");
 
-	    // TODO refaktoryzuj
 	    View activeView = null;
 
 	    for (View eachView : views) {
@@ -160,24 +163,19 @@ public class Controller {
 
 		try {
 		    operationsStatus = makeOrderOn(activeView);
-		}
-		catch (IllegalArgumentException e) {
-		    for (View eachView : views) {
-			eachView.showError(e.getMessage());
-		    }
-		}
 
-		if (operationsStatus != null) {
 		    for (View eachView : views) {
 			eachView.showOperationStatus(operationsStatus.getStatus(), operationsStatus.getDescription());
 		    }
+		}
+		catch (IllegalArgumentException e) {
+		    showErrorOnAllViews(e.getMessage());
 		}
 	    }
 	}
 
 	private OperationStatus makeOrderOn(View view) throws IllegalArgumentException {
 	    String orderedProductName = view.getSelectedForPreparationProductName();
-
 	    return model.makeOrder(orderedProductName);
 	}
     }
