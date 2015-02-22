@@ -7,6 +7,7 @@ import java.util.Set;
 
 import edu.issi.machine.Validator;
 import edu.issi.machine.mvc.model.Model;
+import edu.issi.machine.mvc.view.EmptyView;
 import edu.issi.machine.mvc.view.View;
 import edu.issi.machine.operation.OperationStatus;
 import edu.issi.machine.product.ingredient.Unit;
@@ -29,6 +30,23 @@ public class Controller {
     }
 
     /**
+     * @param view
+     *            Widok, który ma zostaæ dodany.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli zajdzie próba dodania pustego widoku.
+     */
+    public void addAndInitializeView(View view) throws IllegalArgumentException {
+	Validator.throwExceptionWhenObjectIsNotCreated(view, "Nie mo¿na dodaæ pustego widoku!");
+
+	views.add(view);
+
+	view.addProductsListener(new ProductsListener());
+	view.addIngredientsListener(new IngredientsListener());
+	view.addPropertiesListener(new PropertiesListener());
+	view.addOrderListener(new OrderListener());
+    }
+
+    /**
      * 
      */
     public void startMachine() {
@@ -48,21 +66,19 @@ public class Controller {
 	}
     }
 
-    /**
-     * @param view
-     *            Widok, który ma zostaæ dodany.
-     * @throws IllegalArgumentException
-     *             Wyst¹pi, jeœli zajdzie próba dodania pustego widoku.
-     */
-    public void addAndInitializeView(View view) throws IllegalArgumentException {
-	Validator.throwExceptionWhenObjectIsNotCreated(view, "Nie mo¿na dodaæ pustego widoku!");
+    private void showOnAllViews(OperationStatus operationStatus) {
+	for (View eachView : views) {
+	    eachView.showOperationStatus(operationStatus.getStatus(), operationStatus.getDescription());
+	}
+    }
 
-	views.add(view);
-
-	view.addProductsListener(new ProductsListener());
-	view.addIngredientsListener(new IngredientsListener());
-	view.addPropertiesListener(new PropertiesListener());
-	view.addOrderListener(new OrderListener());
+    private View getCaller(EventArguments arguments) {
+	for (View eachView : views) {
+	    if (arguments.isCalledBy(eachView)) {
+		return eachView;
+	    }
+	}
+	return new EmptyView();
     }
 
     /**
@@ -132,7 +148,7 @@ public class Controller {
 		}
 	    }
 	    else {
-		showErrorOnAllViews("Nie wybrano elementu, wiêc nie mo¿na wyœwietliæ w³aœciwoœci sk³adnika.");
+		showErrorOnAllViews("Nie wybrano produktu, wiêc nie mo¿na wyœwietliæ w³aœciwoœci sk³adnika.");
 	    }
 	}
     }
@@ -149,28 +165,14 @@ public class Controller {
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
 	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, "Nie mo¿na wykonaæ akcji bez podanych argumentów!");
 
-	    View activeView = null;
+	    View caller = getCaller(arguments);
 
-	    for (View eachView : views) {
-		if (arguments.isCalledBy(eachView)) {
-		    activeView = eachView;
-		    break;
-		}
+	    try {
+		OperationStatus operationsStatus = makeOrderOn(caller);
+		showOnAllViews(operationsStatus);
 	    }
-
-	    if (activeView != null) {
-		OperationStatus operationsStatus = null;
-
-		try {
-		    operationsStatus = makeOrderOn(activeView);
-
-		    for (View eachView : views) {
-			eachView.showOperationStatus(operationsStatus.getStatus(), operationsStatus.getDescription());
-		    }
-		}
-		catch (IllegalArgumentException e) {
-		    showErrorOnAllViews(e.getMessage());
-		}
+	    catch (IllegalArgumentException e) {
+		showErrorOnAllViews(e.getMessage());
 	    }
 	}
 
