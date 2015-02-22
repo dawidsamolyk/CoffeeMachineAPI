@@ -1,6 +1,3 @@
-/**
- * 
- */
 package edu.issi.machine.operation;
 
 import edu.issi.machine.id.Identity;

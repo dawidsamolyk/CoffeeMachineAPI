@@ -94,7 +94,7 @@ public class Controller {
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
 	    Validator.throwExceptionWhenObjectIsNotCreated(arguments,
 		    "Nie mo¿na wykonaæ akcji wyœwietlenia produktów bez podanych argumentów!");
-
+	    
 	    for (View eachView : views) {
 		eachView.showProducts(model.getProductsNames());
 	    }

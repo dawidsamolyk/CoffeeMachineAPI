@@ -7,6 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ 
+    	edu.issi.machine.mvc.MvcTest.class,
     	edu.issi.machine.ValidatorTest.class,
     	edu.issi.machine.configuration.AllTests.class, 
     	edu.issi.machine.controller.AllTests.class,
