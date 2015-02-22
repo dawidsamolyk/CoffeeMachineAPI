@@ -126,7 +126,7 @@ public class ControllerTest {
 
 	view.performActionOnPropertiesListener();
 
-	assertEquals("Nie wybrano elementu, wiêc nie mo¿na wyœwietliæ w³aœciwoœci sk³adnika.", view.getLastMessage());
+	assertEquals("Nie wybrano produktu, wiêc nie mo¿na wyœwietliæ w³aœciwoœci sk³adnika.", view.getLastMessage());
     }
 
     @Test
@@ -158,6 +158,18 @@ public class ControllerTest {
 	
 	assertEquals(model.orderedProductName, view.orderedProductName);
 	assertFalse(model.orderedProductName.equals(secondView.orderedProductName));
+    }
+    
+    @Test
+    public void controllerShouldNotMakeOrderWhenViewProvidedInvalidProductName() throws Exception {
+	FakeModel model = FakeModel.getFixture();
+	TestingController controller = new TestingController(model);
+	FakeView view = new FakeView("Unknown product name");
+	controller.addAndInitializeView(view);
+	
+	view.performActionOnOrderListener();
+	
+	assertEquals("Wybrano nieznany produkt!", view.getLastMessage());
     }
 
     private Controller getFixture() throws Exception {

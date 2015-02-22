@@ -7,7 +7,6 @@ import java.util.Set;
 
 import edu.issi.machine.Validator;
 import edu.issi.machine.mvc.model.Model;
-import edu.issi.machine.mvc.view.EmptyView;
 import edu.issi.machine.mvc.view.View;
 import edu.issi.machine.operation.OperationStatus;
 import edu.issi.machine.product.ingredient.Unit;
@@ -73,12 +72,14 @@ public class Controller {
     }
 
     private View getCaller(EventArguments arguments) {
+	View caller = null;
+	
 	for (View eachView : views) {
 	    if (arguments.isCalledBy(eachView)) {
-		return eachView;
+		caller = eachView;
 	    }
 	}
-	return new EmptyView();
+	return caller;
     }
 
     /**
@@ -91,7 +92,8 @@ public class Controller {
 
 	@Override
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
-	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, "Nie mo¿na wykonaæ akcji bez podanych argumentów!");
+	    Validator.throwExceptionWhenObjectIsNotCreated(arguments,
+		    "Nie mo¿na wykonaæ akcji wyœwietlenia produktów bez podanych argumentów!");
 
 	    for (View eachView : views) {
 		eachView.showProducts(model.getProductsNames());
@@ -109,7 +111,8 @@ public class Controller {
 
 	@Override
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
-	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, "Nie mo¿na wykonaæ akcji bez podanych argumentów!");
+	    Validator.throwExceptionWhenObjectIsNotCreated(arguments,
+		    "Nie mo¿na wykonaæ akcji wyœwietlenia sk³adników bez podanych argumentów!");
 
 	    if (arguments.hasSelectedElementName()) {
 		String selectedElementName = arguments.getSelectedElementName();
