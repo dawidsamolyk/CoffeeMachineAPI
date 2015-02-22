@@ -5,13 +5,15 @@ import edu.issi.machine.mvc.view.View;
 
 /**
  * @author DawidSamolyk
- *
+ *         Argumenty wydarzenia.
  */
 public class EventArguments {
     private View caller;
     private String selectedElementName;
 
     /**
+     * Konstruktor. Widok, który wywo³a³ wydarzenie, jest wymagany.
+     * 
      * @param caller
      *            Widok, który wywo³a³ zdarzenie.
      * @throws IllegalArgumentException
@@ -24,6 +26,10 @@ public class EventArguments {
     }
 
     /**
+     * Konstruktor. Widok, który wywo³a³ wydarzenie, jest wymagany. Równie¿
+     * nazwa wybranego elementu jest wymagana. Jest to dodatkowy argument, wiêc
+     * jeœli nie jest konieczny, u¿yj innego konstruktora.
+     * 
      * @param caller
      *            Widok, który wywo³a³ zdarzenie.
      * @param selectedElementName
@@ -36,12 +42,14 @@ public class EventArguments {
     public EventArguments(View caller, String selectedElementName) throws IllegalArgumentException {
 	this(caller);
 
-	Validator.throwExceptionWhenTextIsEmpty(selectedElementName,
-		"Nazwa wybranego w zdarzeniu elementu nie mo¿e byæ pusta!");
+	Validator.throwExceptionWhenTextIsEmpty(selectedElementName, "Nazwa wybranego w zdarzeniu elementu nie mo¿e byæ pusta!");
 	this.selectedElementName = selectedElementName;
     }
 
     /**
+     * Podaje informacje na temat tego czy podany widok wywo³a³ zdarzenie, które
+     * niesie ten argument.
+     * 
      * @param view
      *            Widok.
      * @return Wskazuje czy widok jest tym, który wywo³a³ to zdarzenie.
@@ -55,6 +63,8 @@ public class EventArguments {
     }
 
     /**
+     * Pobranie nazwy elementu.
+     * 
      * @return Nazwa elementu, którego dotyczy zdarzenie.
      */
     public String getSelectedElementName() {
@@ -62,6 +72,8 @@ public class EventArguments {
     }
 
     /**
+     * Informuje czy podano dodatkowy argument.
+     * 
      * @return Wskazuje czy posiada ustawion¹ nazwê elementu, którego dotyczy
      *         zdarzenie.
      */

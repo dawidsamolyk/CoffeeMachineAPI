@@ -18,17 +18,23 @@ import edu.issi.machine.product.ingredient.Unit;
 public interface View {
 
     /**
+     * Wyœwietlenie wszystkich produktów.
+     * 
      * @param list
      *            Produkty.
      */
     void showProducts(List<String> list);
 
     /**
+     * Pobranie wybranego do przygotowania produktu.
+     * 
      * @return Nazwa produktu, który ma zostaæ wydany.
      */
     String getSelectedForPreparationProductName();
 
     /**
+     * Wyœwietlenie sk³adników podanego produktu.
+     * 
      * @param productName
      *            Nazwa produktu.
      * @param ingredients
@@ -37,12 +43,16 @@ public interface View {
     void showProductIngredients(String productName, List<String> ingredients);
 
     /**
+     * Wyœwietlenie wszystkich sk³adników.
+     * 
      * @param ingredients
      *            Sk³adniki.
      */
     void showIngredients(List<String> ingredients);
 
     /**
+     * Wyœwietlenie wszystkich w³aœciwoœci podanego sk³adnika.
+     * 
      * @param ingredientName
      *            Nazwa sk³adnika.
      * @param properties
@@ -53,6 +63,8 @@ public interface View {
     void showIngredientProperties(String ingredientName, Map<String, Unit> properties);
 
     /**
+     * Pobranie w³aœciwoœci dla podanego sk³adnika.
+     * 
      * @param ingredientName
      *            Nazwa sk³adnika produktu, który ma zostaæ wydany.
      * @param availableProperties
@@ -65,6 +77,8 @@ public interface View {
     Map<String, Double> getPropertiesForIngredient(String ingredientName, Map<String, Unit> availableProperties);
 
     /**
+     * Wyœwietlenie statusu operacji.
+     * 
      * @param status
      *            Status operacji.
      * @param description
@@ -73,11 +87,15 @@ public interface View {
     void showOperationStatus(Status status, String description);
 
     /**
+     * Pobranie nazwy produktu, który samodzielnie definiuje u¿ytkownik.
+     * 
      * @return Nazwa produktu.
      */
     String getCustomProductName();
 
     /**
+     * Pobranie sk³adników dla nowego produktu.
+     * 
      * @param availableIngredients
      *            Dostêpne sk³adniki.
      * @return Sk³adniki nowego produktu.
@@ -85,35 +103,56 @@ public interface View {
     List<String> getNewProductIngredients(List<String> availableIngredients);
 
     /**
+     * Dodanie obiektu nas³uchuj¹cego zdarzenia dotycz¹cego produktów (np. ich
+     * wyœwietlenie).
+     * 
      * @param productsListListener
      *            Obiekt nas³uchuj¹cy zmian listy produktów.
      */
     void addProductsListener(ProductsListener productsListListener);
 
     /**
+     * Dodanie obiektu nas³uchuj¹cego zdarzenia dotycz¹cego sk³adników (np. ich
+     * wyœwietlenie).
+     * 
      * @param ingredientsListener
      *            Obiekt nas³uchuj¹cy zmian listy sk³adników.
      */
     void addIngredientsListener(IngredientsListener ingredientsListener);
 
     /**
+     * Dodanie obiektu nas³uchuj¹cego zdarzenia dotycz¹cego w³aœciwoœci
+     * sk³adników (np. ich wyœwietlenie).
+     * 
      * @param propertiesListener
      *            Obiekt nas³uchuj¹cy zmian listy w³aœciwoœci sk³adników.
      */
     void addPropertiesListener(PropertiesListener propertiesListener);
 
     /**
+     * Dodanie obiektu nas³uchuj¹cego zdarzenia dotycz¹cego z³o¿enia zamówienia.
+     * 
      * @param orderListener
      *            Obiekt nas³uchuj¹cy zdarzenia z³o¿enia zamówienia.
      */
     void addOrderListener(OrderListener orderListener);
 
     /**
+     * Wyœwietlenie informacji o b³êdzie.
+     * 
      * @param description
      *            Opis b³êdu.
      */
     void showError(String description);
 
+    /**
+     * Dodanie obiektu nas³uchuj¹cego zdarzenia dotycz¹cego z³o¿enia zamówienia
+     * produktu zdefiniowanego przez u¿ytkownika.
+     * 
+     * @param customOrderListener
+     *            Obiekt nas³uchuj¹cy zdarzenia z³o¿enia zamówienia produktu
+     *            zdefiniowanego przez u¿ytkownika.
+     */
     void addCustomOrderListener(CustomOrderListener customOrderListener);
 
 }

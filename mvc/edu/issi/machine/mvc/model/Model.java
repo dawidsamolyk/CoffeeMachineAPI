@@ -17,13 +17,15 @@ import edu.issi.machine.product.ingredient.Unit;
 
 /**
  * @author DawidSamolyk
- * 
+ *         Model (MVC).
  */
 public class Model {
     private MachineConfiguration configuration;
     private MachineController controller;
 
     /**
+     * Konstruktor. Wymaga niepustej konfiguracji maszyny.
+     * 
      * @param configuration
      *            Konfiguracja maszyny.
      * @throws IllegalArgumentException
@@ -52,6 +54,8 @@ public class Model {
     }
 
     /**
+     * Pobranie nazw dostêpnych produktów.
+     * 
      * @return Nazwy dostêpnych produktów.
      */
     public List<String> getProductsNames() {
@@ -67,6 +71,8 @@ public class Model {
     }
 
     /**
+     * Pobranie nazw dostêpnych sk³adników.
+     * 
      * @return Nazwy wszystkich dostêpnych sk³adników.
      */
     public List<String> getAllIngredientsNames() {
@@ -82,14 +88,20 @@ public class Model {
     }
 
     /**
+     * Pobranie nazw sk³adników dla podanego produktu.
+     * 
      * @param productName
      *            Nazwa produktu.
      * @return Nazwy sk³adników wybranego produktu.
      * @throws IllegalArgumentException
      *             Wyst¹pi, jeœli nazwa produktu bêdzie pusta lub gdy maszyna
      *             nie obs³uguje produktu o podanej nazwie.
+     * @throws NoSuchElementException
+     *             Wyst¹pi, jeœli nie ma podanego produktu w konfiguracji
+     *             maszyny.
      */
-    public List<String> getIngredientsNamesForProductNamed(String productName) throws IllegalArgumentException, NoSuchElementException {
+    public List<String> getIngredientsNamesForProductNamed(String productName) throws IllegalArgumentException,
+	    NoSuchElementException {
 	Validator.throwExceptionWhenTextIsEmpty(productName, "Nazwa produktu nie mo¿e byæ pusta!");
 	Product product = getProductByName(productName);
 
@@ -103,14 +115,20 @@ public class Model {
     }
 
     /**
+     * Pobranie w³aœciwoœci dla podanego sk³adniku.
+     * 
      * @param ingredientName
      *            Nazwa sk³adnika.
      * @return W³aœciowœci sk³adnika.
      * @throws IllegalArgumentException
      *             Wyst¹pi, jeœli nazwa sk³adnika bêdzie pusta lub gdy maszyna
      *             nie obs³uguje sk³adnika o podanej nazwie.
+     * @throws NoSuchElementException
+     *             Wyst¹pi, jeœli nie ma podanego sk³adnika w konfiguracji
+     *             maszyny.
      */
-    public Map<String, Unit> getPropertiesForIngredientNamed(String ingredientName) throws IllegalArgumentException, NoSuchElementException {
+    public Map<String, Unit> getPropertiesForIngredientNamed(String ingredientName) throws IllegalArgumentException,
+	    NoSuchElementException {
 	Validator.throwExceptionWhenTextIsEmpty(ingredientName, "Nazwa sk³adnika nie mo¿e byæ pusta!");
 
 	Ingredient ingredient = getIngredientByName(ingredientName);
@@ -125,11 +143,16 @@ public class Model {
 
 	return result;
     }
-    
+
     /**
+     * Pobranie produktu po nazwie.
+     * 
      * @param productName
      *            Nazwa produktu.
      * @return Produkt.
+     * @throws NoSuchElementException
+     *             Wyst¹pi, jeœli nie ma podanego produktu w konfiguracji
+     *             maszyny.
      */
     public Product getProductByName(String productName) throws NoSuchElementException {
 	Iterator<Product> iterator = configuration.getProductsIterator();
@@ -145,9 +168,14 @@ public class Model {
     }
 
     /**
+     * Pobranie sk³adnika po nazwie.
+     * 
      * @param ingredientName
      *            Nazwa sk³adnika.
      * @return Sk³adnik.
+     * @throws NoSuchElementException
+     *             Wyst¹pi, jeœli nie ma podanego sk³adnika w konfiguracji
+     *             maszyny.
      */
     public Ingredient getIngredientByName(String ingredientName) throws NoSuchElementException {
 	Iterator<Ingredient> iterator = configuration.getIngredientsIterator();
@@ -163,10 +191,15 @@ public class Model {
     }
 
     /**
+     * Pobranie w³aœciwoœci sk³adnika po nazwie.
+     * 
      * @param propertyName
      *            Nazwa w³aœciwoœci.
      * @return Identyfikator w³aœciwoœci.
-     * @throws NoSuchElementException 
+     * @throws NoSuchElementException
+     *             Wyst¹pi, jeœli nie ma podanej w³aœciwoœci sk³adnika w
+     *             konfiguracji
+     *             maszyny.
      */
     public PropertyIdentity getPropertyByName(String propertyName) throws NoSuchElementException {
 	Iterator<Ingredient> iterator = configuration.getIngredientsIterator();

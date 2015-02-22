@@ -19,13 +19,15 @@ import edu.issi.machine.id.PropertyIdentity;
 
 /**
  * @author DawidSamolyk
- *
+ *         Kontroler (MVC).
  */
 public class Controller {
     private Model model;
     protected List<View> views = new ArrayList<View>();
 
     /**
+     * Model jest wymagany.
+     * 
      * @param model
      *            Model.
      */
@@ -35,6 +37,8 @@ public class Controller {
     }
 
     /**
+     * Dodaje oraz inicjalizuje widok.
+     * 
      * @param view
      *            Widok, który ma zostaæ dodany.
      * @throws IllegalArgumentException
@@ -53,14 +57,14 @@ public class Controller {
     }
 
     /**
-     * 
+     * Startuje maszynê.
      */
     public void startMachine() {
 	model.startMachine();
     }
 
     /**
-     * 
+     * Zatrzymuje maszynê.
      */
     public void stopMachine() {
 	model.stopMachine();
@@ -91,7 +95,7 @@ public class Controller {
 
     /**
      * @author DawidSamolyk
-     *
+     *         Obiekt nas³uchuj¹cy wydarzen zwi¹zanych z produktami.
      */
     public class ProductsListener implements EventListener {
 	private ProductsListener() {
@@ -110,7 +114,7 @@ public class Controller {
 
     /**
      * @author DawidSamolyk
-     *
+     *         Obiekt nas³uchuj¹cy wydarzen zwi¹zanych ze sk³adnikami.
      */
     public class IngredientsListener implements EventListener {
 	private IngredientsListener() {
@@ -139,7 +143,8 @@ public class Controller {
 
     /**
      * @author DawidSamolyk
-     *
+     *         Obiekt nas³uchuj¹cy wydarzen zwi¹zanych z w³aœciwoœciami
+     *         sk³adników.
      */
     public class PropertiesListener implements EventListener {
 	private PropertiesListener() {
@@ -165,7 +170,7 @@ public class Controller {
 
     /**
      * @author DawidSamolyk
-     *
+     *         Obiekt nas³uchuj¹cy wydarzen zwi¹zanych ze z³o¿eniem zamówienia.
      */
     public class OrderListener implements EventListener {
 	private OrderListener() {
@@ -199,7 +204,8 @@ public class Controller {
 
     /**
      * @author Dawid
-     *
+     *         Obiekt nas³uchuj¹cy wydarzen zwi¹zanych ze z³o¿eniem zamówienia
+     *         produktu definiowanego przez u¿ytkownika.
      */
     public class CustomOrderListener extends OrderListener {
 	private CustomOrderListener() {
@@ -223,23 +229,29 @@ public class Controller {
 	    for (int p = 0; p < ingredients.size(); p++) {
 		String ingredientName = ingredients.get(p);
 		Ingredient ingredient = model.getIngredientByName(ingredientName);
-
-		Map<String, Unit> availableIngredientProperties = model.getPropertiesForIngredientNamed(ingredientName);
-		Map<String, Double> ingredientProperties = view.getPropertiesForIngredient(ingredientName,
-			availableIngredientProperties);
-
-		Map<PropertyIdentity, Double> resultProperties = new HashMap<PropertyIdentity, Double>();
-
-		for (String eachPropertyName : ingredientProperties.keySet()) {
-		    PropertyIdentity property = model.getPropertyByName(eachPropertyName);
-		    Double value = ingredientProperties.get(eachPropertyName);
-		    resultProperties.put(property, value);
-		}
-
+		
+		Map<PropertyIdentity, Double> resultProperties = getIngredientProperties(view, ingredientName);
 		ingredient.set(resultProperties);
 
 		orderConfigurator.addAt(p, ingredient);
 	    }
+	}
+
+	private Map<PropertyIdentity, Double> getIngredientProperties(View view, String ingredientName) {
+	    Map<PropertyIdentity, Double> resultProperties = new HashMap<PropertyIdentity, Double>();
+
+	    Map<String, Unit> availableIngredientProperties = model.getPropertiesForIngredientNamed(ingredientName);
+	    Map<String, Double> ingredientProperties = view.getPropertiesForIngredient(ingredientName,
+	    	availableIngredientProperties);
+
+	    for (String eachPropertyName : ingredientProperties.keySet()) {
+	        PropertyIdentity property = model.getPropertyByName(eachPropertyName);
+	        Double value = ingredientProperties.get(eachPropertyName);
+	        
+	        resultProperties.put(property, value);
+	    }
+	    
+	    return resultProperties;
 	}
     }
 }
