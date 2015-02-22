@@ -2,6 +2,9 @@ edu.issi.machine
 edu.issi.machine.configuration
 edu.issi.machine.controller
 edu.issi.machine.id
+edu.issi.machine.mvc.controller
+edu.issi.machine.mvc.model
+edu.issi.machine.mvc.view
 edu.issi.machine.operation
 edu.issi.machine.product
 edu.issi.machine.product.ingredient

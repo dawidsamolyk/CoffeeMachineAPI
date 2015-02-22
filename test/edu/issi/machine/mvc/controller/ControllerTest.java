@@ -145,22 +145,6 @@ public class ControllerTest {
     }
     
     @Test
-    public void controllerShouldMakeOrderOnlyOnSelectedView() throws Exception {
-	FakeModel model = FakeModel.getFixture();
-	String productName = model.getProductsNames().iterator().next();
-	TestingController controller = new TestingController(model);
-	FakeView view = new FakeView(productName);
-	FakeView secondView = new FakeView();
-	controller.addAndInitializeView(view);
-	controller.addAndInitializeView(secondView);
-
-	view.performActionOnOrderListener();
-	
-	assertEquals(model.orderedProductName, view.orderedProductName);
-	assertFalse(model.orderedProductName.equals(secondView.orderedProductName));
-    }
-    
-    @Test
     public void controllerShouldNotMakeOrderWhenViewProvidedInvalidProductName() throws Exception {
 	FakeModel model = FakeModel.getFixture();
 	TestingController controller = new TestingController(model);
@@ -169,7 +153,7 @@ public class ControllerTest {
 	
 	view.performActionOnOrderListener();
 	
-	assertEquals("Nie mo¿na z³o¿yæ zamówienia dla nieznanego produktu!", view.getLastMessage());
+	assertEquals("Nie znaleziono podanego produktu w konfiguracji maszyny!", view.getLastMessage());
     }
 
     private Controller getFixture() throws Exception {

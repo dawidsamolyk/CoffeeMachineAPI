@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Ingredient.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-21 14:05:10)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.product.ingredient</a> &gt; <span class="el_source">Ingredient.java</span></div><h1>Ingredient.java</h1><pre class="source lang-java linenums">package edu.issi.machine.product.ingredient;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Ingredient.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-22 19:17:42)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.product.ingredient</a> &gt; <span class="el_source">Ingredient.java</span></div><h1>Ingredient.java</h1><pre class="source lang-java linenums">package edu.issi.machine.product.ingredient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import edu.issi.machine.operation.OperationStatus;
  *         Składnik.
  */
 public class Ingredient extends ObjectWithIdentity {
-    private final Map&lt;PropertyIdentity, Double&gt; properties;
+    private Map&lt;PropertyIdentity, Double&gt; properties;
     private Iterable&lt;Operation&gt; operations;
 
     /**
@@ -78,32 +78,30 @@ public class Ingredient extends ObjectWithIdentity {
      *             składnik nie posiada.
      */
     public void remove(PropertyIdentity property) throws IllegalArgumentException, NoSuchElementException {
-<span class="fc" id="L81">	Validator.throwExceptionWhenObjectIsNotCreated(property,</span>
-<span class="fc" id="L82">		&quot;Nie można usunąć właściwości z pustym identifikatorem!&quot;);</span>
+<span class="fc" id="L81">	Validator.throwExceptionWhenObjectIsNotCreated(property, &quot;Nie można usunąć właściwości z pustym identifikatorem!&quot;);</span>
 
-<span class="fc bfc" id="L84" title="All 2 branches covered.">	if (!properties.containsKey(property)) {</span>
-<span class="fc" id="L85">	    throw new NoSuchElementException(</span>
-<span class="fc" id="L86">		    &quot;Wybrany składnik nie posiada podanej właściwości, więc nie można jej usunąć!&quot;);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">	if (!properties.containsKey(property)) {</span>
+<span class="fc" id="L84">	    throw new NoSuchElementException(&quot;Wybrany składnik nie posiada podanej właściwości, więc nie można jej usunąć!&quot;);</span>
 	}
 
-<span class="fc" id="L89">	properties.remove(property);</span>
-<span class="fc" id="L90">    }</span>
+<span class="fc" id="L87">	properties.remove(property);</span>
+<span class="fc" id="L88">    }</span>
 
     /**
      * @param operations
      *            Operacje.
      */
     public void setOperations(Iterable&lt;Operation&gt; operations) {
-<span class="fc" id="L97">	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(operations, &quot;Nie można dodawać pustych operacji do składnika!&quot;);</span>
+<span class="fc" id="L95">	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(operations, &quot;Nie można dodawać pustych operacji do składnika!&quot;);</span>
 
-<span class="fc" id="L99">	this.operations = operations;</span>
-<span class="fc" id="L100">    }</span>
+<span class="fc" id="L97">	this.operations = operations;</span>
+<span class="fc" id="L98">    }</span>
 
     /**
      * @return Właściwości składnika.
      */
     public Map&lt;PropertyIdentity, Double&gt; getProperties() {
-<span class="fc" id="L106">	return properties;</span>
+<span class="fc" id="L104">	return properties;</span>
     }
 
     /**
@@ -113,17 +111,31 @@ public class Ingredient extends ObjectWithIdentity {
      *             (niepustych).
      */
     public List&lt;OperationStatus&gt; doOperations() throws IllegalArgumentException {
-<span class="fc" id="L116">	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(operations,</span>
-<span class="fc" id="L117">		&quot;Zbiór operacji na składniku nie może być pusty lub niepełny!&quot;);</span>
+<span class="fc" id="L114">	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(operations,</span>
+<span class="fc" id="L115">		&quot;Zbiór operacji na składniku nie może być pusty lub niepełny!&quot;);</span>
 
-<span class="fc" id="L119">	final List&lt;OperationStatus&gt; result = new ArrayList&lt;OperationStatus&gt;();</span>
+<span class="fc" id="L117">	final List&lt;OperationStatus&gt; result = new ArrayList&lt;OperationStatus&gt;();</span>
 
-<span class="fc bfc" id="L121" title="All 2 branches covered.">	for (Iterator&lt;Operation&gt; itearator = operations.iterator(); itearator.hasNext();) {</span>
-<span class="fc" id="L122">	    OperationStatus state = itearator.next().execute();</span>
-<span class="fc" id="L123">	    result.add(state);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">	for (Iterator&lt;Operation&gt; itearator = operations.iterator(); itearator.hasNext();) {</span>
+<span class="fc" id="L120">	    OperationStatus state = itearator.next().execute();</span>
+<span class="fc" id="L121">	    result.add(state);</span>
 	}
 
-<span class="fc" id="L126">	return result;</span>
+<span class="fc" id="L124">	return result;</span>
     }
+
+    /**
+     * @param ingredientProperties
+     *            Właściwości składnika.
+     * @throws IllegalArgumentException
+     *             Wystąpi, jeśli wejściowe właściwości są puste lub
+     *             nieprawidłowe.
+     */
+    public void set(Map&lt;PropertyIdentity, Double&gt; ingredientProperties) throws IllegalArgumentException {
+<span class="fc" id="L135">	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(ingredientProperties.keySet(),</span>
+<span class="fc" id="L136">		&quot;Nie można ustawić pustych właściwości składnika&quot;);</span>
+
+<span class="fc" id="L138">	properties = ingredientProperties;</span>
+<span class="fc" id="L139">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-21 14:05:10)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-22 19:17:42)</div></body></html>

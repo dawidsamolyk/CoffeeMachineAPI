@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -136,7 +137,7 @@ public class ModelTest {
 	MachineConfiguration configuration = Fixtures.getFixture();
 	Model model = new Model(configuration);
 
-	exception.expect(IllegalArgumentException.class);
+	exception.expect(NoSuchElementException.class);
 	model.getIngredientsNamesForProductNamed("Unknown product");
     }
 
@@ -173,7 +174,7 @@ public class ModelTest {
 	MachineConfiguration configuration = Fixtures.getFixture();
 	Model model = new Model(configuration);
 
-	exception.expect(IllegalArgumentException.class);
+	exception.expect(NoSuchElementException.class);
 	model.getPropertiesForIngredientNamed("Unknown ingredient");
     }
 

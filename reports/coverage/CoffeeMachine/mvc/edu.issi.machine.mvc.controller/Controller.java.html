@@ -1,185 +1,258 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Controller.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-21 14:05:10)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">mvc</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.mvc.controller</a> &gt; <span class="el_source">Controller.java</span></div><h1>Controller.java</h1><pre class="source lang-java linenums">package edu.issi.machine.mvc.controller;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Controller.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-22 19:17:42)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">mvc</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.mvc.controller</a> &gt; <span class="el_source">Controller.java</span></div><h1>Controller.java</h1><pre class="source lang-java linenums">package edu.issi.machine.mvc.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.NoSuchElementException;
 
 import edu.issi.machine.Validator;
+import edu.issi.machine.configuration.Order;
+import edu.issi.machine.configuration.Order.Configurator;
 import edu.issi.machine.mvc.model.Model;
 import edu.issi.machine.mvc.view.View;
 import edu.issi.machine.operation.OperationStatus;
+import edu.issi.machine.product.Product;
+import edu.issi.machine.product.ingredient.Ingredient;
 import edu.issi.machine.product.ingredient.Unit;
+import edu.issi.machine.id.PropertyIdentity;
 
 /**
  * @author DawidSamolyk
- *
+ *         Kontroler (MVC).
  */
 public class Controller {
     private Model model;
-<span class="fc" id="L20">    protected List&lt;View&gt; views = new ArrayList&lt;View&gt;();</span>
+<span class="fc" id="L26">    protected List&lt;View&gt; views = new ArrayList&lt;View&gt;();</span>
 
     /**
+     * Model jest wymagany.
+     * 
      * @param model
      *            Model.
      */
-<span class="fc" id="L26">    public Controller(Model model) {</span>
-<span class="fc" id="L27">	Validator.throwExceptionWhenObjectIsNotCreated(model, &quot;Nie podano modelu aplikacji!&quot;);</span>
-<span class="fc" id="L28">	this.model = model;</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L34">    public Controller(Model model) {</span>
+<span class="fc" id="L35">	Validator.throwExceptionWhenObjectIsNotCreated(model, &quot;Nie podano modelu aplikacji!&quot;);</span>
+<span class="fc" id="L36">	this.model = model;</span>
+<span class="fc" id="L37">    }</span>
 
     /**
+     * Dodaje oraz inicjalizuje widok.
      * 
-     */
-    public void startMachine() {
-<span class="fc" id="L35">	model.startMachine();</span>
-<span class="fc" id="L36">    }</span>
-
-    /**
-     * 
-     */
-    public void stopMachine() {
-<span class="fc" id="L42">	model.stopMachine();</span>
-<span class="fc" id="L43">    }</span>
-
-    /**
      * @param view
      *            Widok, który ma zostać dodany.
      * @throws IllegalArgumentException
      *             Wystąpi, jeśli zajdzie próba dodania pustego widoku.
      */
     public void addAndInitializeView(View view) throws IllegalArgumentException {
-<span class="fc" id="L52">	Validator.throwExceptionWhenObjectIsNotCreated(view, &quot;Nie można dodać pustego widoku!&quot;);</span>
+<span class="fc" id="L48">	Validator.throwExceptionWhenObjectIsNotCreated(view, &quot;Nie można dodać pustego widoku!&quot;);</span>
 
-<span class="fc" id="L54">	views.add(view);</span>
+<span class="fc" id="L50">	views.add(view);</span>
 
-<span class="fc" id="L56">	view.addProductsListener(new ProductsListener());</span>
-<span class="fc" id="L57">	view.addIngredientsListener(new IngredientsListener());</span>
-<span class="fc" id="L58">	view.addPropertiesListener(new PropertiesListener());</span>
-<span class="fc" id="L59">	view.addOrderListener(new OrderListener());</span>
-<span class="fc" id="L60">    }</span>
+<span class="fc" id="L52">	view.addProductsListener(new ProductsListener());</span>
+<span class="fc" id="L53">	view.addIngredientsListener(new IngredientsListener());</span>
+<span class="fc" id="L54">	view.addPropertiesListener(new PropertiesListener());</span>
+<span class="fc" id="L55">	view.addOrderListener(new OrderListener());</span>
+<span class="fc" id="L56">	view.addCustomOrderListener(new CustomOrderListener());</span>
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Startuje maszynę.
+     */
+    public void startMachine() {
+<span class="fc" id="L63">	model.startMachine();</span>
+<span class="fc" id="L64">    }</span>
+
+    /**
+     * Zatrzymuje maszynę.
+     */
+    public void stopMachine() {
+<span class="fc" id="L70">	model.stopMachine();</span>
+<span class="fc" id="L71">    }</span>
+
+    private void showErrorOnAllViews(String message) {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">	for (View eachView : views) {</span>
+<span class="fc" id="L75">	    eachView.showError(message);</span>
+	}
+<span class="fc" id="L77">    }</span>
+
+    private void showOnAllViews(OperationStatus operationStatus) {
+<span class="fc bfc" id="L80" title="All 2 branches covered.">	for (View eachView : views) {</span>
+<span class="fc" id="L81">	    eachView.showOperationStatus(operationStatus.getStatus(), operationStatus.getDescription());</span>
+	}
+<span class="fc" id="L83">    }</span>
+
+    private View getCaller(EventArguments arguments) {
+<span class="fc" id="L86">	View caller = null;</span>
+
+<span class="fc bfc" id="L88" title="All 2 branches covered.">	for (View eachView : views) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">	    if (arguments.isCalledBy(eachView)) {</span>
+<span class="fc" id="L90">		caller = eachView;</span>
+	    }
+	}
+<span class="fc" id="L93">	return caller;</span>
+    }
 
     /**
      * @author DawidSamolyk
-     *
+     *         Obiekt nasłuchujący wydarzen związanych z produktami.
      */
     public class ProductsListener implements EventListener {
-<span class="fc" id="L67">	private ProductsListener() {</span>
-<span class="fc" id="L68">	}</span>
+<span class="fc" id="L101">	private ProductsListener() {</span>
+<span class="fc" id="L102">	}</span>
 
 	@Override
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
-<span class="fc" id="L72">	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, &quot;Nie można wykonać akcji bez podanych argumentów!&quot;);</span>
+<span class="fc" id="L106">	    Validator.throwExceptionWhenObjectIsNotCreated(arguments,</span>
+<span class="fc" id="L107">		    &quot;Nie można wykonać akcji wyświetlenia produktów bez podanych argumentów!&quot;);</span>
 
-<span class="fc bfc" id="L74" title="All 2 branches covered.">	    for (View eachView : views) {</span>
-<span class="fc" id="L75">		eachView.showProducts(model.getProductsNames());</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">	    for (View eachView : views) {</span>
+<span class="fc" id="L110">		eachView.showProducts(model.getProductsNames());</span>
 	    }
-<span class="fc" id="L77">	}</span>
+<span class="fc" id="L112">	}</span>
     }
 
     /**
      * @author DawidSamolyk
-     *
+     *         Obiekt nasłuchujący wydarzen związanych ze składnikami.
      */
     public class IngredientsListener implements EventListener {
-<span class="fc" id="L85">	private IngredientsListener() {</span>
-<span class="fc" id="L86">	}</span>
+<span class="fc" id="L120">	private IngredientsListener() {</span>
+<span class="fc" id="L121">	}</span>
 
 	@Override
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
-<span class="fc" id="L90">	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, &quot;Nie można wykonać akcji bez podanych argumentów!&quot;);</span>
+<span class="fc" id="L125">	    Validator.throwExceptionWhenObjectIsNotCreated(arguments,</span>
+<span class="fc" id="L126">		    &quot;Nie można wykonać akcji wyświetlenia składników bez podanych argumentów!&quot;);</span>
 
-<span class="fc bfc" id="L92" title="All 2 branches covered.">	    if (arguments.hasSelectedElementName()) {</span>
-<span class="fc" id="L93">		String selectedElementName = arguments.getSelectedElementName();</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">	    if (arguments.hasSelectedElementName()) {</span>
+<span class="fc" id="L129">		String selectedElementName = arguments.getSelectedElementName();</span>
 
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		for (View eachView : views) {</span>
-<span class="fc" id="L96">		    Set&lt;String&gt; ingredients = model.getIngredientsNamesForProductNamed(selectedElementName);</span>
-<span class="fc" id="L97">		    eachView.showProductIngredients(selectedElementName, ingredients);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		for (View eachView : views) {</span>
+<span class="fc" id="L132">		    List&lt;String&gt; ingredients = model.getIngredientsNamesForProductNamed(selectedElementName);</span>
+<span class="fc" id="L133">		    eachView.showProductIngredients(selectedElementName, ingredients);</span>
 		}
-<span class="fc" id="L99">	    }</span>
+<span class="fc" id="L135">	    }</span>
 	    else {
-<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (View eachView : views) {</span>
-<span class="fc" id="L102">		    eachView.showIngredients(model.getAllIngredientsNames());</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		for (View eachView : views) {</span>
+<span class="fc" id="L138">		    eachView.showIngredients(model.getAllIngredientsNames());</span>
 		}
 	    }
-<span class="fc" id="L105">	}</span>
+<span class="fc" id="L141">	}</span>
     }
 
     /**
      * @author DawidSamolyk
-     *
+     *         Obiekt nasłuchujący wydarzen związanych z właściwościami
+     *         składników.
      */
     public class PropertiesListener implements EventListener {
-<span class="fc" id="L113">	private PropertiesListener() {</span>
-<span class="fc" id="L114">	}</span>
+<span class="fc" id="L150">	private PropertiesListener() {</span>
+<span class="fc" id="L151">	}</span>
 
 	@Override
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
-<span class="fc" id="L118">	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, &quot;Nie można wykonać akcji bez podanych argumentów!&quot;);</span>
+<span class="fc" id="L155">	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, &quot;Nie można wykonać akcji bez podanych argumentów!&quot;);</span>
 
-<span class="fc bfc" id="L120" title="All 2 branches covered.">	    if (arguments.hasSelectedElementName()) {</span>
-<span class="fc" id="L121">		String selectedIngredientName = arguments.getSelectedElementName();</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">	    if (arguments.hasSelectedElementName()) {</span>
+<span class="fc" id="L158">		String selectedIngredientName = arguments.getSelectedElementName();</span>
 
-<span class="fc bfc" id="L123" title="All 2 branches covered.">		for (View eachView : views) {</span>
-<span class="fc" id="L124">		    Map&lt;String, Unit&gt; properties = model.getPropertiesForIngredientNamed(selectedIngredientName);</span>
-<span class="fc" id="L125">		    eachView.showIngredientProperties(selectedIngredientName, properties);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		for (View eachView : views) {</span>
+<span class="fc" id="L161">		    Map&lt;String, Unit&gt; properties = model.getPropertiesForIngredientNamed(selectedIngredientName);</span>
+<span class="fc" id="L162">		    eachView.showIngredientProperties(selectedIngredientName, properties);</span>
 		}
-<span class="fc" id="L127">	    }</span>
+<span class="fc" id="L164">	    }</span>
 	    else {
-<span class="fc bfc" id="L129" title="All 2 branches covered.">		for (View eachView : views) {</span>
-<span class="fc" id="L130">		    eachView.showError(&quot;Nie wybrano elementu, więc nie można wyświetlić właściwości składnika.&quot;);</span>
-		}
+<span class="fc" id="L166">		showErrorOnAllViews(&quot;Nie wybrano produktu, więc nie można wyświetlić właściwości składnika.&quot;);</span>
 	    }
-<span class="fc" id="L133">	}</span>
+<span class="fc" id="L168">	}</span>
     }
 
     /**
      * @author DawidSamolyk
-     *
+     *         Obiekt nasłuchujący wydarzen związanych ze złożeniem zamówienia.
      */
     public class OrderListener implements EventListener {
-<span class="fc" id="L141">	private OrderListener() {</span>
-<span class="fc" id="L142">	}</span>
+<span class="fc" id="L176">	private OrderListener() {</span>
+<span class="fc" id="L177">	}</span>
 
 	@Override
 	public void actionPerformed(EventArguments arguments) throws IllegalArgumentException {
-<span class="fc" id="L146">	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, &quot;Nie można wykonać akcji bez podanych argumentów!&quot;);</span>
+<span class="fc" id="L181">	    Validator.throwExceptionWhenObjectIsNotCreated(arguments, &quot;Nie można wykonać akcji bez podanych argumentów!&quot;);</span>
 
-	    // TODO refaktoryzuj
-<span class="fc" id="L149">	    View activeView = null;</span>
+<span class="fc" id="L183">	    View caller = getCaller(arguments);</span>
 
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">	    for (View eachView : views) {</span>
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (arguments.isCalledBy(eachView)) {</span>
-<span class="fc" id="L153">		    activeView = eachView;</span>
-<span class="fc" id="L154">		    break;</span>
-		}
+	    try {
+<span class="fc" id="L186">		OperationStatus operationsStatus = makeOrderOn(caller);</span>
+<span class="fc" id="L187">		showOnAllViews(operationsStatus);</span>
+<span class="fc" id="L188">	    }</span>
+<span class="nc" id="L189">	    catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L190">		showErrorOnAllViews(e.getMessage());</span>
 	    }
-
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">	    if (activeView != null) {</span>
-<span class="fc" id="L159">		OperationStatus operationsStatus = null;</span>
-
-		try {
-<span class="fc" id="L162">		    operationsStatus = makeOrderOn(activeView);</span>
-<span class="fc" id="L163">		}</span>
-<span class="nc" id="L164">		catch (IllegalArgumentException e) {</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		    for (View eachView : views) {</span>
-<span class="nc" id="L166">			eachView.showError(e.getMessage());</span>
-		    }
-		}
-
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (operationsStatus != null) {</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">		    for (View eachView : views) {</span>
-<span class="fc" id="L172">			eachView.showOperationStatus(operationsStatus.getStatus(), operationsStatus.getDescription());</span>
-		    }
-		}
+<span class="fc" id="L192">	    catch (NoSuchElementException e) {</span>
+<span class="fc" id="L193">		showErrorOnAllViews(e.getMessage());</span>
 	    }
-<span class="fc" id="L176">	}</span>
+<span class="fc" id="L195">	}</span>
 
-	private OperationStatus makeOrderOn(View view) throws IllegalArgumentException {
-<span class="fc" id="L179">	    String orderedProductName = view.getSelectedForPreparationProductName();</span>
+	protected OperationStatus makeOrderOn(View view) throws IllegalArgumentException {
+<span class="fc" id="L198">	    String orderedProductName = view.getSelectedForPreparationProductName();</span>
+<span class="fc" id="L199">	    Product orderedProduct = model.getProductByName(orderedProductName);</span>
 
-<span class="fc" id="L181">	    return model.makeOrder(orderedProductName);</span>
+<span class="fc" id="L201">	    return new Order(orderedProduct).execute();</span>
+	}
+    }
+
+    /**
+     * @author Dawid
+     *         Obiekt nasłuchujący wydarzen związanych ze złożeniem zamówienia
+     *         produktu definiowanego przez użytkownika.
+     */
+    public class CustomOrderListener extends OrderListener {
+<span class="fc" id="L211">	private CustomOrderListener() {</span>
+<span class="fc" id="L212">	}</span>
+
+	@Override
+	protected OperationStatus makeOrderOn(View view) throws IllegalArgumentException {
+<span class="fc" id="L216">	    String orderedProductName = view.getCustomProductName();</span>
+
+<span class="fc" id="L218">	    Order order = new Order(orderedProductName);</span>
+<span class="fc" id="L219">	    Configurator orderConfigurator = order.new Configurator();</span>
+
+<span class="fc" id="L221">	    configureIngredients(view, orderConfigurator);</span>
+
+<span class="fc" id="L223">	    return order.execute();</span>
+	}
+
+	private void configureIngredients(View view, Configurator orderConfigurator) {
+<span class="fc" id="L227">	    List&lt;String&gt; ingredients = view.getNewProductIngredients(model.getAllIngredientsNames());</span>
+
+<span class="fc bfc" id="L229" title="All 2 branches covered.">	    for (int p = 0; p &lt; ingredients.size(); p++) {</span>
+<span class="fc" id="L230">		String ingredientName = ingredients.get(p);</span>
+<span class="fc" id="L231">		Ingredient ingredient = model.getIngredientByName(ingredientName);</span>
+		
+<span class="fc" id="L233">		Map&lt;PropertyIdentity, Double&gt; resultProperties = getIngredientProperties(view, ingredientName);</span>
+<span class="fc" id="L234">		ingredient.set(resultProperties);</span>
+
+<span class="fc" id="L236">		orderConfigurator.addAt(p, ingredient);</span>
+	    }
+<span class="fc" id="L238">	}</span>
+
+	private Map&lt;PropertyIdentity, Double&gt; getIngredientProperties(View view, String ingredientName) {
+<span class="fc" id="L241">	    Map&lt;PropertyIdentity, Double&gt; resultProperties = new HashMap&lt;PropertyIdentity, Double&gt;();</span>
+
+<span class="fc" id="L243">	    Map&lt;String, Unit&gt; availableIngredientProperties = model.getPropertiesForIngredientNamed(ingredientName);</span>
+<span class="fc" id="L244">	    Map&lt;String, Double&gt; ingredientProperties = view.getPropertiesForIngredient(ingredientName,</span>
+<span class="fc" id="L245">	    	availableIngredientProperties);</span>
+
+<span class="fc bfc" id="L247" title="All 2 branches covered.">	    for (String eachPropertyName : ingredientProperties.keySet()) {</span>
+<span class="fc" id="L248">	        PropertyIdentity property = model.getPropertyByName(eachPropertyName);</span>
+<span class="fc" id="L249">	        Double value = ingredientProperties.get(eachPropertyName);</span>
+	        
+<span class="fc" id="L251">	        resultProperties.put(property, value);</span>
+	    }
+	    
+<span class="fc" id="L254">	    return resultProperties;</span>
 	}
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-21 14:05:10)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-22 19:17:42)</div></body></html>
