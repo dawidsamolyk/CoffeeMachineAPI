@@ -133,6 +133,21 @@ public class MvcTest {
 	assertEquals("Wybrano nieznany produkt!", view.getLastMessage());
     }
     
+    @Test
+    public void shouldMakeOrderWithCustomProduct() {
+	MachineConfiguration config = MachineConfigurationTest.Fixtures.getFixture();
+	Model model = new Model(config);
+	Controller controller = new Controller(model);
+	FakeView view = new FakeView();
+	controller.addAndInitializeView(view);
+	controller.startMachine();
+	view.newProductName = "Herbatka u Tadka";
+	
+	view.performActionOnOrderListener();
+	
+	assertEquals("[OK] Wszystkie operacje wykonano pomyœlnie! ", view.getLastMessage());
+    }
+    
     public static void main(String[] args) {
 	JUnitCore.runClasses(new Class[] { edu.issi.machine.mvc.MvcTest.class });
     }
