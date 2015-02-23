@@ -9,11 +9,13 @@ import edu.issi.machine.id.ObjectWithIdentity;
 /**
  * @author Dawid
  * 
- * 
+ *         Dodatkowe narzêdzia wspomaj¹ce.
  */
 public class Utils {
 
     /**
+     * Przekszta³cenie kolekcji w mapê, gdzie kluczem bêdzie nazwa obiektu.
+     * 
      * @param objects
      *            Zbiór obiektów, który ma zostaæ przekszta³cony na mapê.
      * @return Mapa stworzona na podstawie wejœciowego zbioru. Kluczem

@@ -1,9 +1,8 @@
 package edu.issi.machine.configuration;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Rule;
@@ -73,51 +72,6 @@ public class MachineConfigurationTest {
 	MachineConfiguration fixture = Fixtures.getFixture();
 
 	assertNotNull(fixture.getProductsIterator());
-    }
-
-    @Test
-    public void shouldAddNewProduct() {
-	List<Ingredient> ingredients = Fixtures.getFixtureIngredients();
-	List<Subassembly> subassemlies = Fixtures.getFixtureSubassemlies();
-	List<Product> products = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients, "Kawa");
-	MachineConfiguration fixture = new MachineConfiguration(subassemlies, ingredients, products);
-
-	Product newProduct = ProductTest.Fixtures.getFixtureWith(ingredients, "Czekolada");
-	fixture.addProduct(newProduct);
-
-	boolean containsNewProduct = false;
-	for (Iterator<Product> iterator = fixture.getProductsIterator(); iterator.hasNext();) {
-	    Product eachProduct = iterator.next();
-	    
-	    if(eachProduct.equals(newProduct)) {
-		containsNewProduct = true;
-		break;
-	    }
-	}
-
-	assertTrue(containsNewProduct);
-    }
-
-    @Test
-    public void shouldNotAddEmptyProduct() {
-	MachineConfiguration fixture = Fixtures.getFixture();
-
-	exception.expect(IllegalArgumentException.class);
-	fixture.addProduct(null);
-    }
-
-    @Test
-    public void shouldNotAddProductWhichHasUnavailableIngredients() throws IllegalArgumentException {
-
-	List<Ingredient> ingredients = Fixtures.getFixtureIngredients();
-	List<Subassembly> subassemlies = Fixtures.getFixtureSubassemlies();
-	List<Product> products = ProductTest.Fixtures.getManyNamedFixturesWithIngredients(ingredients, "Kawa");
-	MachineConfiguration fixture = new MachineConfiguration(subassemlies, ingredients, products);
-
-	Product newProduct = ProductTest.Fixtures.getFixtureWith(Fixtures.getFixtureIngredients(), "Czekolada");
-
-	exception.expect(IllegalArgumentException.class);
-	fixture.addProduct(newProduct);
     }
 
     @Test

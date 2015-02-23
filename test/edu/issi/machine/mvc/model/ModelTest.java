@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -104,32 +103,6 @@ public class ModelTest {
 	}
 
 	assertSame(ingredientsNames.size(), ingredientsQuantity);
-    }
-
-    @Test
-    public void modelShouldProvidesIngredientsNamesForSpecifiedProductWhichExistsInMachineConfiguration()
-	    throws Exception {
-	List<Subassembly> subassemblies = MachineConfigurationTest.Fixtures.getFixtureSubassemlies();
-	List<Ingredient> ingredients = MachineConfigurationTest.Fixtures.getFixtureIngredients();
-	List<Product> products = MachineConfigurationTest.Fixtures.getFixtureProducts(ingredients);
-	MachineConfiguration configuration = new MachineConfiguration(subassemblies, ingredients, products);
-
-	String productName = "Coffee";
-	Product product = new Product(Identity.Factory.newIdentity(productName));
-
-	List<Ingredient> selectedIngredients = Arrays.asList(ingredients.get(0), ingredients.get(2));
-	for (Ingredient eachIngredient : selectedIngredients) {
-	    product.add(eachIngredient);
-	}
-
-	configuration.addProduct(product);
-	Model model = new Model(configuration);
-
-	List<String> result = model.getIngredientsNamesForProductNamed(productName);
-
-	for (Ingredient eachIngredient : selectedIngredients) {
-	    assertTrue(result.contains(eachIngredient.getName()));
-	}
     }
 
     @Test

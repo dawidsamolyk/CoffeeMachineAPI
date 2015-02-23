@@ -1,6 +1,6 @@
 package edu.issi.machine;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.NoSuchElementException;
 
 /**
@@ -11,6 +11,9 @@ import java.util.NoSuchElementException;
 public class Validator {
 
     /**
+     * Zostanie rzucony wyj¹tek, gdy sprawdzany obiekt nie zosta³ utworzony
+     * (referencja do null).
+     * 
      * @param object
      *            Obiekt do sprawdzenia.
      * @param exceptionMessage
@@ -26,6 +29,9 @@ public class Validator {
     }
 
     /**
+     * Zostanie rzucony wyj¹tek, gdy sprawdzany tekst nie zosta³ utworzony lub
+     * jest pusty (nie zawiera treœci).
+     * 
      * @param text
      *            Tekst do sprawdzenia.
      * @param exceptionMessage
@@ -40,6 +46,9 @@ public class Validator {
     }
 
     /**
+     * Zostanie rzucony wyj¹tek, gdy sprawdzana kolekcja nie zosta³a utworzona
+     * lub, gdy podany na wejœciu indeks jest nieprawid³owy dla kolekcji.
+     * 
      * @param list
      *            Lista obiektów do sprawdzenia.
      * @param index
@@ -51,7 +60,7 @@ public class Validator {
      * @throws IllegalArgumentException
      *             Wygenerowany b³¹d.
      */
-    public static void throwExceptionWhenNoSuchElementAtIndex(List<?> list, int index, String exceptionMessage)
+    public static void throwExceptionWhenNoSuchElementAtIndex(Collection<?> list, int index, String exceptionMessage)
 	    throws NoSuchElementException, IllegalArgumentException {
 
 	throwExceptionWhenEmptyOrContainsEmptyObject(list, "Na podanej liœcie nie ma obiektów!");
@@ -62,6 +71,9 @@ public class Validator {
     }
 
     /**
+     * Zostanie rzucony wyj¹tek, gdy sprawdzany zbiór obiektów (iterowalny) nie
+     * zosta³ stworzony lub zawiera niestaworzone elementy (referencje do null).
+     * 
      * @param itearable
      *            Zbiór obiektów do sprawdzenia.
      * @param exceptionMessage
@@ -77,6 +89,9 @@ public class Validator {
     }
 
     /**
+     * Zostanie rzucony wyj¹tek, gdy sprawdzany zbiór obiektów zawiera
+     * nieutworzone elementy (referencje do null).
+     * 
      * @param itearable
      *            Zbiór obiektów do sprawdzenia.
      * @return Czy zawiera puste referencje.

@@ -23,6 +23,11 @@ public class MachineConfiguration {
     private final Map<String, Product> products;
 
     /**
+     * Konstruktor. Wymagane jest, aby wszystkie parametry by³y utworzone oraz
+     * nie by³y puste. Konieczne jest równie¿, aby kolekcja obiektów Product
+     * bazowa³a na obiektach kolekcji Ingredient (ka¿dy obiekt Product jest
+     * kolekcj¹ obiektów Ingredient).
+     * 
      * @param subassemblies
      *            Podzespo³y maszyny.
      * @param ingredients
@@ -57,6 +62,8 @@ public class MachineConfiguration {
     }
 
     /**
+     * Zwraca iterator, umo¿liwiaj¹cy przejrzenie produktów.
+     * 
      * @return Iterator po produktach, które mo¿e wydaæ maszyna.
      */
     public Iterator<Product> getProductsIterator() {
@@ -64,6 +71,8 @@ public class MachineConfiguration {
     }
 
     /**
+     * Zwraca iterator, umo¿liwiaj¹cy przejrzenie sk³adników.
+     * 
      * @return Iterator po sk³adnikach produktów, które mo¿e wydaæ maszyny.
      */
     public Iterator<Ingredient> getIngredientsIterator() {
@@ -71,23 +80,16 @@ public class MachineConfiguration {
     }
 
     /**
+     * Zwraca iterator, umo¿liwiaj¹cy przejrzenie podzespo³ów.
+     * 
      * @return Iterator po podzespo³ach maszyny.
      */
     public Iterator<Subassembly> getSubassembliesIterator() {
 	return subassemblies.values().iterator();
     }
 
-    /**
-     * @param product
-     *            Produkt.
-     * @throws IllegalArgumentException
-     *             Wyst¹pi, jeœli produkt, który jest argumentem wejœciowym
-     *             funkcji, nie zosta³ stworzony lub jeœli produkt zawiera
-     *             nieznane sk³adniki (takie, których nie obs³uguje maszyna).
-     */
-    public void addProduct(Product product) throws IllegalArgumentException {
+    private void addProduct(Product product) throws IllegalArgumentException {
 	validator.throwExceptionWhenInvalid(product);
-
 	products.put(product.getName(), product);
     }
 
