@@ -18,6 +18,8 @@ public abstract class Operation extends ObjectWithIdentity {
     protected Ingredient ingredient;
 
     /**
+     * Konstruktor. Obiekt klasy Identity jest wymagany.
+     * 
      * @param identity
      *            Identyfikator.
      * @throws IllegalArgumentException
@@ -28,6 +30,8 @@ public abstract class Operation extends ObjectWithIdentity {
     }
 
     /**
+     * Ustawienie podzespo³u, na którym ma byæ wykonana operacja.
+     * 
      * @param subassembly
      *            Podzespó³, na którym ma zostaæ wykonana operacja.
      * @return Zwraca referencje do siebie - wzorzec Fluent Interface.
@@ -35,14 +39,16 @@ public abstract class Operation extends ObjectWithIdentity {
      *             Wyst¹pi, jeœli spodany podzespó³ nie zosta³ utworzony.
      */
     public Operation setSubassembly(Subassembly subassembly) throws IllegalArgumentException {
-	Validator.throwExceptionWhenObjectIsNotCreated(subassembly,
-		"Nie mo¿na ustawiæ pustego podzespo³u do wykonania operacji!");
+	Validator
+		.throwExceptionWhenObjectIsNotCreated(subassembly, "Nie mo¿na ustawiæ pustego podzespo³u do wykonania operacji!");
 
 	this.subassembly = subassembly;
 	return this;
     }
 
     /**
+     * Ustawienie sk³adnika, na którym ma byæ wykonana operacja.
+     * 
      * @param ingredient
      *            Sk³adnik, na którym ma zostaæ wykonana operacja.
      * @return Zwraca referencje do siebie - wzorzec Fluent Interface.
@@ -59,6 +65,7 @@ public abstract class Operation extends ObjectWithIdentity {
 
     /**
      * Wykonanie operacji.
+     * 
      * @return Stan operacji.
      */
     public abstract OperationStatus execute();
@@ -83,6 +90,8 @@ public abstract class Operation extends ObjectWithIdentity {
     }
 
     /**
+     * Informuje czy operacja zosta³a wykonana.
+     * 
      * @return Czy operacja zosta³a zakoñczona.
      */
     public synchronized boolean isDone() {

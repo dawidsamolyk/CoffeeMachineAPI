@@ -13,7 +13,7 @@ import edu.issi.machine.product.ingredient.Unit;
 
 /**
  * @author DawidSamolyk
- *
+ *         Widok (MVC).
  */
 public interface View {
 

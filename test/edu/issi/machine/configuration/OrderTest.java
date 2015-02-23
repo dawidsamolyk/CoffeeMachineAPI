@@ -64,7 +64,7 @@ public class OrderTest {
 
 	List<OperationStatus> allOperationsStatuses = new ArrayList<OperationStatus>();
 	for (Ingredient eachIngredient : product) {
-	    List<OperationStatus> operationsStatus = eachIngredient.doOperations();
+	    List<OperationStatus> operationsStatus = (List<OperationStatus>) eachIngredient.doOperations();
 	    allOperationsStatuses.addAll(operationsStatus);
 	}
 	OperationStatus productOperationsStatus = OperationStatus.Factory.getFrom(allOperationsStatuses);

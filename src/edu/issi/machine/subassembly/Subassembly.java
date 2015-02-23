@@ -1,6 +1,6 @@
 package edu.issi.machine.subassembly;
 
-import java.util.List;
+import java.util.Collection;
 
 import edu.issi.machine.Validator;
 import edu.issi.machine.id.Identity;
@@ -13,9 +13,12 @@ import edu.issi.machine.operation.Operation;
  *         Podzespó³.
  */
 public abstract class Subassembly extends ObjectWithIdentity {
-    protected final List<Operation> operations;
+    protected final Collection<Operation> operations;
 
     /**
+     * Konstruktor. Obiekt klasy Identity oraz kolekcja obiektów Operation musz¹
+     * byæ utworzone.
+     * 
      * @param id
      *            Identyfikator.
      * @param operations
@@ -23,7 +26,7 @@ public abstract class Subassembly extends ObjectWithIdentity {
      * @throws IllegalArgumentException
      *             Wyst¹pi, jeœli lista operacji bêdzie pusta lub niepoprawna.
      */
-    public Subassembly(Identity id, List<Operation> operations) throws IllegalArgumentException {
+    public Subassembly(Identity id, Collection<Operation> operations) throws IllegalArgumentException {
 	super(id);
 
 	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(operations,
@@ -33,6 +36,8 @@ public abstract class Subassembly extends ObjectWithIdentity {
     }
 
     /**
+     * Informuje czy podzespó³ jest w stanie wykonaæ podan¹ operacjê.
+     * 
      * @param operation
      *            Operacja.
      * @return Czy podzespol wspiera podana operacje.
@@ -40,9 +45,7 @@ public abstract class Subassembly extends ObjectWithIdentity {
      *             Wyst¹pi, jeœli operacja nie zosta³a utworzona.
      */
     public boolean supports(Operation operation) throws IllegalArgumentException {
-	Validator.throwExceptionWhenObjectIsNotCreated(operation,
-		"Nie jest mo¿liwe sprawdzanie zgodnoœci z pust¹ operacj¹!");
-
+	Validator.throwExceptionWhenObjectIsNotCreated(operation, "Nie jest mo¿liwe sprawdzanie zgodnoœci z pust¹ operacj¹!");
 	return operations.contains(operation);
     }
 

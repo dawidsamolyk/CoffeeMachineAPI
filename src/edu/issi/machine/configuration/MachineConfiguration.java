@@ -96,7 +96,7 @@ public class MachineConfiguration {
     private class Validator {
 
 	private boolean containsOnlyKnownIngredients(Product product) {
-	    return product.containsOnly(ingredients.values());
+	    return product.containsIn(ingredients.values());
 	}
 
 	private void throwExceptionWhenInvalid(Product product) throws IllegalArgumentException {

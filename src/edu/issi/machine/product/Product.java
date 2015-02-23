@@ -11,12 +11,15 @@ import edu.issi.machine.product.ingredient.Ingredient;
 /**
  * @author Dawid Samo³yk
  *
- *         Produkt.
+ *         Produkt. Kolejnoœæ dodanych sk³adników determuje kolejnoœæ, w której
+ *         bêd¹ one przygotowywane.
  */
 public class Product extends ObjectWithIdentity implements Iterable<Ingredient> {
     private final OrderedElementsList<Ingredient> ingredients;
 
     /**
+     * Konstruktor. Obiekt klasy Identity jest wymagany.
+     * 
      * @param id
      *            Identyfikator.
      * @throws IllegalArgumentException
@@ -28,6 +31,8 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
     }
 
     /**
+     * Dodanie nowego sk³adnika na koñcu listy sk³adników.
+     * 
      * @param ingredient
      *            Sk³adnik, który zostanie dodany na koñcu listy.
      * @throws IllegalArgumentException
@@ -38,6 +43,8 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
     }
 
     /**
+     * Pobranie sk³adnika spod podanego indeksu.
+     * 
      * @param index
      *            Indeks, spod którego ma zostaæ pobrany sk³adnik.
      * @return Skladnik umieszczony na podanym indeksie.
@@ -50,6 +57,8 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
     }
 
     /**
+     * Zwraca liczbê sk³adników.
+     * 
      * @return Liczba skladnikósw.
      * @see edu.issi.machine.product.OrderedElementsList#getNumberOfElements()
      */
@@ -58,6 +67,8 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
     }
 
     /**
+     * Dodaje nowy sk³adnik pod wskazanym indeksem.
+     * 
      * @param index
      *            Indeks, pod który ma zostaæ dodany sk³adnik.
      * @param ingredient
@@ -73,6 +84,8 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
     }
 
     /**
+     * Usuwa sk³adnik spod wybranego indeksu.
+     * 
      * @param index
      *            Indeks, spod którego ma zostaæ usuniêty sk³adnik.
      * @throws NoSuchElementException
@@ -84,6 +97,8 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
     }
 
     /**
+     * Zwraca iterator po sk³adnikach.
+     * 
      * @return Iterator po skladnikach.
      * @see edu.issi.machine.product.OrderedElementsList#iterator()
      */
@@ -93,6 +108,9 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
     }
 
     /**
+     * Informuje czy sk³adniki zawieraj¹ siê w kolekcji, która jest parametrem
+     * wejœciowym.
+     * 
      * @param ingredients
      *            Sk³adniki.
      * @return Czy produkt zawiera tylko i wy³¹czie sk³adniki, które podano jako
@@ -101,11 +119,13 @@ public class Product extends ObjectWithIdentity implements Iterable<Ingredient> 
      *             Wyst¹p, jeœli podano na wejœciu niestworzony lub
      *             nieprawid³owy zbiór.
      */
-    public boolean containsOnly(Collection<Ingredient> ingredients) throws IllegalArgumentException {
-	return this.ingredients.containsOnly(ingredients);
+    public boolean containsIn(Collection<Ingredient> ingredients) throws IllegalArgumentException {
+	return this.ingredients.containsIn(ingredients);
     }
 
     /**
+     * Zwraca kopiê obiektu.
+     * 
      * @return Skopiowany produkt.
      */
     @Override

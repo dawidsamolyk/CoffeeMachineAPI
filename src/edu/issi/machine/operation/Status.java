@@ -1,25 +1,28 @@
 package edu.issi.machine.operation;
 
 /**
- * @author Dawid Samo≈Çyk
+ * @author Dawid Samo≥yk
  *
- * Status.
+ *         Status.
  */
 public enum Status {
     /**
-     * 
+     * Poprawny.
      */
     OK,
     /**
-     * 
+     * Ostrzeøenie.
      */
     WARNING,
     /**
-     * 
+     * B≥πd.
      */
     ERROR;
 
     /**
+     * Informuje czy dany status wymaga uwagi, czyli czy jest to b≥πd
+     * lub ostrzeøenie.
+     * 
      * @return Czy dany status wymaga uwagi.
      */
     public boolean requiresAttention() {

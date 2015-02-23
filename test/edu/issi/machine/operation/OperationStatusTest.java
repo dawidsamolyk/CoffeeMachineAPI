@@ -1,6 +1,9 @@
 package edu.issi.machine.operation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,7 +151,7 @@ public class OperationStatusTest {
 
 	OperationStatus result = OperationStatus.Factory.getFrom(operationsStatuses);
 
-	assertEquals(OperationStatus.Factory.ALL_VALID.getDescription(), result.getDescription());
+	assertEquals(OperationStatus.Factory.ALL_VALID_INFO.getDescription(), result.getDescription());
     }
 
     @Test
@@ -173,7 +176,7 @@ public class OperationStatusTest {
 
 	OperationStatus result = OperationStatus.Factory.getFrom(operationsStatuses);
 
-	String expectedOutput = OperationStatus.Factory.WARNING_OCCURS_INFO + "[" + warning.getCompensatedStatus() + ", "
+	String expectedOutput = OperationStatus.Factory.WARNING_OCCURS_HEADER + "[" + warning.getCompensatedStatus() + ", "
 		+ warning2.getCompensatedStatus() + "]";
 	assertEquals(expectedOutput, result.getDescription());
     }
@@ -203,7 +206,7 @@ public class OperationStatusTest {
 
 	OperationStatus result = OperationStatus.Factory.getFrom(operationsStatuses);
 
-	String expectedOutput = OperationStatus.Factory.ERROR_OCCURS_INFO + "[" + error.getCompensatedStatus() + ", "
+	String expectedOutput = OperationStatus.Factory.ERROR_OCCURS_HEADER + "[" + error.getCompensatedStatus() + ", "
 		+ error2.getCompensatedStatus() + "]";
 	assertEquals(expectedOutput, result.getDescription());
     }
@@ -220,7 +223,7 @@ public class OperationStatusTest {
 
 	OperationStatus result = OperationStatus.Factory.getFrom(operationsStatuses);
 
-	String expectedOutput = OperationStatus.Factory.ERROR_OCCURS_INFO + "[" + error.getCompensatedStatus() + ", "
+	String expectedOutput = OperationStatus.Factory.ERROR_OCCURS_HEADER + "[" + error.getCompensatedStatus() + ", "
 		+ warning.getCompensatedStatus() + "]";
 	assertEquals(expectedOutput, result.getDescription());
     }
@@ -229,7 +232,7 @@ public class OperationStatusTest {
     public void shouldCreateAggregatedErrorneusStatusesForManyDescriptions() {
 	String[] descriptions = {"Test 1", "Test 2", "Test 3"};
 	
-	List<OperationStatus> result = OperationStatus.Factory.createErrors(descriptions);
+	List<OperationStatus> result = (List<OperationStatus>) OperationStatus.Factory.createErrors(descriptions);
 	
 	for(int p = 0 ; p < descriptions.length ; p++) {
 	    OperationStatus eachOperationStatus = result.get(p);

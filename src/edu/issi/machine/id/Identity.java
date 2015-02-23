@@ -11,14 +11,6 @@ public class Identity {
     private final int id;
     private String name;
 
-    /**
-     * @param id
-     *            Numer identyfikacyjny.
-     * @param name
-     *            Nazwa.
-     * @throws IllegalArgumentException
-     *             Wyst¹pi, jeœli nazwa obiektu bêdzie pusta.
-     */
     protected Identity(int id, String name) throws IllegalArgumentException {
 	Validator.throwExceptionWhenTextIsEmpty(name, "Nazwa obiektu nie mo¿e byæ pusta!");
 
@@ -27,6 +19,8 @@ public class Identity {
     }
 
     /**
+     * Zmiana nazwy.
+     * 
      * @param newName
      *            Nowa nazwa.
      * @return Poprzednia nazwa.
@@ -43,6 +37,8 @@ public class Identity {
     }
 
     /**
+     * Pobranie nazwy.
+     * 
      * @return Nazwa.
      */
     public String getName() {
@@ -50,6 +46,8 @@ public class Identity {
     }
 
     /**
+     * Sprawdzenie czy dany identyfikator jest uto¿samiany z podanym numerem ID.
+     * 
      * @param productID
      *            Numer identyfikacyjny.
      * @return Czy obiekt jest identyfikowany podanym numerem.
@@ -59,6 +57,8 @@ public class Identity {
     }
 
     /**
+     * Pobranie numeru ID.
+     * 
      * @return Unikalny numer identyfikuj¹cy obiekt.
      */
     public int getIdNumber() {
@@ -84,12 +84,14 @@ public class Identity {
     }
 
     /**
-     * Fabryka dostarczaj¹ca unikalne identyfikatory.
+     * Fabryka dostarczaj¹ca unikalnych identyfikatorów.
      */
     public static class Factory {
 	private static int Counter = 0;
 
 	/**
+	 * Tworzenie nowego, unikalnego identyfikatora.
+	 * 
 	 * @param name
 	 *            Nazwa.
 	 * @return Identyfikator.

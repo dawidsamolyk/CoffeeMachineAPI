@@ -11,6 +11,8 @@ public class ObjectWithIdentity {
     private final Identity id;
 
     /**
+     * Konstruktor. Obiekt Identity jest wymagany.
+     * 
      * @param id
      *            Identyfikator.
      * @throws IllegalArgumentException
@@ -32,6 +34,8 @@ public class ObjectWithIdentity {
     }
 
     /**
+     * Pobranie numeru ID.
+     * 
      * @return Numer ID.
      */
     public int getIdNumber() {
@@ -39,6 +43,8 @@ public class ObjectWithIdentity {
     }
 
     /**
+     * Pobranie nazwy.
+     * 
      * @return Nazwa obiektu.
      */
     public String getName() {
@@ -69,6 +75,9 @@ public class ObjectWithIdentity {
     }
 
     /**
+     * Sprawdzenie czy identyfikator danego obiektu jest uto¿samiany z podanym
+     * numerem ID.
+     * 
      * @param productID
      *            Numer identyfikacyjny.
      * @return Czy ten obiekt jest identyfikowany podanym ID.

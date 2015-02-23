@@ -1,6 +1,7 @@
 package edu.issi.machine.operation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import edu.issi.machine.Validator;
@@ -14,13 +15,6 @@ public class OperationStatus {
     private final Status status;
     private final String description;
 
-    /**
-     * @param status
-     *            Status operacji (@see {@link Status}).
-     * @throws IllegalStateException
-     *             Wyst¹pi, gdy status bêdzie wyamga³ uwagi (b³¹d lub
-     *             ostrze¿enie), poniewa¿ nie zosta³ ustawiony dla niego opis.
-     */
     private OperationStatus(Status status) throws IllegalStateException {
 	Validator.throwExceptionWhenObjectIsNotCreated(status, "Nie podano statusu operacji!");
 
@@ -28,15 +22,6 @@ public class OperationStatus {
 	this.description = "";
     }
 
-    /**
-     * @param status
-     *            Status operacji (@see {@link Status}).
-     * @param description
-     *            Dodatkowy opis stanu operacji.
-     * @throws IllegalStateException
-     *             Wyst¹pi, gdy status bêdzie wyamga³ uwagi (b³¹d lub
-     *             ostrze¿enie) i nie zostanie ustawiony dla niego opis.
-     */
     private OperationStatus(Status status, String description) throws IllegalStateException {
 	Validator.throwExceptionWhenObjectIsNotCreated(status, "Nie podano statusu operacji!");
 	Validator.throwExceptionWhenTextIsEmpty(description, "Opis statusu operacji nie mo¿e byæ pusty!");
@@ -46,6 +31,8 @@ public class OperationStatus {
     }
 
     /**
+     * Dostarcza opis stanu operacji.
+     * 
      * @return Opis stanu operacji.
      */
     public String getDescription() {
@@ -53,6 +40,8 @@ public class OperationStatus {
     }
 
     /**
+     * Dostarcza stan operacji.
+     * 
      * @return Status stanu operacji.
      */
     public Status getStatus() {
@@ -60,6 +49,9 @@ public class OperationStatus {
     }
 
     /**
+     * Dostarcza skompensowan¹ informacjê (w formie tekstu) na temat stanu
+     * operacji oraz opisu stanu operacji.
+     * 
      * @return Status operacji i opis w jednym tekscie.
      */
     public String getCompensatedStatus() {
@@ -107,19 +99,21 @@ public class OperationStatus {
      */
     public static class Factory {
 	/**
-	 * 
+	 * Nag³ówek informacji, gdy wyst¹pi³y b³êdy.
 	 */
-	public static final String ERROR_OCCURS_INFO = "Wyst¹pi³y b³êdy! ";
+	public static final String ERROR_OCCURS_HEADER = "Wyst¹pi³y b³êdy! ";
 	/**
-	 * 
+	 * Nag³ówek informacji, gdy wyst¹pi³y ostrze¿enia.
 	 */
-	public static final String WARNING_OCCURS_INFO = "Wyst¹pi³y ostrze¿enia! ";
+	public static final String WARNING_OCCURS_HEADER = "Wyst¹pi³y ostrze¿enia! ";
 	/**
-	 * 
+	 * Informacja, gdy wszystkie operacje wykonano pomyœlnie.
 	 */
-	public static final OperationStatus ALL_VALID = createValid("Wszystkie operacje wykonano pomyœlnie! ");
+	public static final OperationStatus ALL_VALID_INFO = createValid("Wszystkie operacje wykonano pomyœlnie! ");
 
 	/**
+	 * Tworzy status operacji dla sytuacji, gdy wyst¹pi³ b³¹d.
+	 * 
 	 * @param description
 	 *            Opis.
 	 * @return Status operacji dla b³êdu.
@@ -129,6 +123,8 @@ public class OperationStatus {
 	}
 
 	/**
+	 * Tworzy status operacji dla sytuacji, gdy wyst¹pi³o ostrze¿enie.
+	 * 
 	 * @param description
 	 *            Opis.
 	 * @return Status operacji dla ostrze¿enia.
@@ -138,6 +134,8 @@ public class OperationStatus {
 	}
 
 	/**
+	 * Tworzy status poprawnie wykonanej operacji (z opisem).
+	 * 
 	 * @param description
 	 *            Opis.
 	 * @return Poprawny status operacji, z opisem.
@@ -147,6 +145,8 @@ public class OperationStatus {
 	}
 
 	/**
+	 * Tworzy status poprawnie wykonanej operacji (bez opisu).
+	 * 
 	 * @return Poprawny status operacji.
 	 */
 	public static OperationStatus createValid() {
@@ -154,11 +154,14 @@ public class OperationStatus {
 	}
 
 	/**
+	 * Tworzy jeden status operacji agreguj¹cy informacjê z wielu statusów
+	 * operacji.
+	 * 
 	 * @param operationsStatuses
 	 *            Statusy wielu operacji.
 	 * @return Jeden status operacji powsta³y w wyniku wielu statusów.
 	 */
-	public static OperationStatus getFrom(List<OperationStatus> operationsStatuses) {
+	public static OperationStatus getFrom(Collection<OperationStatus> operationsStatuses) {
 	    Validator.throwExceptionWhenEmptyOrContainsEmptyObject(operationsStatuses,
 		    "Nie mo¿na stworzyæ skompensowanego statusu operacji z pust¹ list¹ statusów operacji.");
 
@@ -182,22 +185,25 @@ public class OperationStatus {
 
 	    switch (maxSeverity) {
 		case ERROR:
-		    return createError(ERROR_OCCURS_INFO + invalidStatuses);
+		    return createError(ERROR_OCCURS_HEADER + invalidStatuses);
 		case WARNING:
-		    return createWarning(WARNING_OCCURS_INFO + invalidStatuses);
+		    return createWarning(WARNING_OCCURS_HEADER + invalidStatuses);
 		case OK:
 		default:
-		    return ALL_VALID;
+		    return ALL_VALID_INFO;
 	    }
 	}
 
 	/**
+	 * Tworzy statusy operacji, gdy wyst¹pi³y b³edy. Opisy kolejnych
+	 * statusów s¹ dostarczane jako argumenty wejœciowe.
+	 * 
 	 * @param descriptions
 	 *            Opisy.
 	 * @return Lista statusów operacji (b³êdnych) z opisami, które podano
 	 *         jako argument wejœciowy.
 	 */
-	public static List<OperationStatus> createErrors(String... descriptions) {
+	public static Collection<OperationStatus> createErrors(String... descriptions) {
 	    List<OperationStatus> result = new ArrayList<OperationStatus>(descriptions.length);
 
 	    for (String eachDescription : descriptions) {

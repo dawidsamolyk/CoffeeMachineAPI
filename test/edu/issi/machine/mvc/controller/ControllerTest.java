@@ -141,7 +141,7 @@ public class ControllerTest {
 
 	view.performActionOnOrderListener();
 	
-	assertEquals(OperationStatus.Factory.ALL_VALID.getCompensatedStatus(), secondView.getLastMessage());
+	assertEquals(OperationStatus.Factory.ALL_VALID_INFO.getCompensatedStatus(), secondView.getLastMessage());
     }
     
     @Test

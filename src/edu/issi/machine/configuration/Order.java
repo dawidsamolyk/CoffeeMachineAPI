@@ -1,6 +1,7 @@
 package edu.issi.machine.configuration;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -12,14 +13,21 @@ import edu.issi.machine.product.ingredient.Ingredient;
 
 /**
  * @author Dawid
- *
+ *         Zamówienie.
  */
 public class Order {
     protected Product product;
 
     /**
+     * Konstruktor. Wymagana jest nazwa produktu, który ma byæ zamówiony. Ten
+     * konstruktor powinien byæ u¿ywany do realizacji zamówienia produktu, który
+     * samodzielnie definiuje u¿ytkownik (tj. podaje sk³adniki oraz ich
+     * w³aœciwoœci).
+     * 
      * @param name
-     * @throws IllegalArgumentException 
+     *            Nazwa nowego produktu.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli nazwa produktu nie zostanie podana.
      */
     public Order(String name) throws IllegalArgumentException {
 	Validator.throwExceptionWhenTextIsEmpty(name, "Nie podano nazwy produktu!");
@@ -27,8 +35,14 @@ public class Order {
     }
 
     /**
+     * Konstruktor. Wymagany jest obiekt klasy Product, który bêdzie tworzony i
+     * wydawany w ramach zamówienia. W tej klasie zapamiêtana zostanie kopia
+     * obiektu Product.
+     * 
      * @param product
-     * @throws IllegalArgumentException 
+     *            Produkt.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli produkt nie zosta³ utworzony.
      */
     public Order(Product product) throws IllegalArgumentException {
 	Validator.throwExceptionWhenObjectIsNotCreated(product, "Nie mo¿na z³o¿yæ zamówienia dla nieznanego produktu!");
@@ -36,13 +50,15 @@ public class Order {
     }
 
     /**
+     * Realizacja zamówienia.
+     * 
      * @return Status wykonanych operacji.
      */
     public OperationStatus execute() {
 	List<OperationStatus> result = new ArrayList<OperationStatus>();
 
 	for (Ingredient eachIngredient : product) {
-	    List<OperationStatus> operationsStatus = eachIngredient.doOperations();
+	    Collection<OperationStatus> operationsStatus = eachIngredient.doOperations();
 	    result.addAll(operationsStatus);
 	}
 
@@ -80,7 +96,6 @@ public class Order {
 	public void remove(int index) throws NoSuchElementException {
 	    product.remove(index);
 	}
-	
-	
+
     }
 }

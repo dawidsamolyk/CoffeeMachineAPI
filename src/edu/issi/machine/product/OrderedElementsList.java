@@ -19,13 +19,15 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     private final List<Type> elements;
 
     /**
-     * 
+     * Konstruktor. Tworzy pust¹ listê obiektów podanego typu.
      */
     public OrderedElementsList() {
 	elements = new LinkedList<Type>();
     }
 
     /**
+     * Dodaje nowy element na koñcu listy.
+     * 
      * @param object
      *            Obiekt, który zostanie dodany na koñcu listy.
      * @throws IllegalArgumentException
@@ -37,6 +39,8 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     }
 
     /**
+     * Dodaje nowy element pod wskazany indeks listy.
+     * 
      * @param index
      *            Indeks, pod który ma zostaæ wstawiony nowy obiekt.
      * @param object
@@ -57,6 +61,8 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     }
 
     /**
+     * Pobiera element spod wskazanego indeksu.
+     * 
      * @param index
      *            Indeks, spod którego ma zostaæ pobrany obiekt.
      * @return Skladnik na podanym indeksie.
@@ -69,6 +75,8 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     }
 
     /**
+     * Usuwa element spod wskazanego indeksu.
+     * 
      * @param index
      *            Indeks, spod którego ma zostaæ usuniêty obiekt.
      * @throws NoSuchElementException
@@ -80,6 +88,8 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     }
 
     /**
+     * Dostarcza iteratora po elementach listy.
+     * 
      * @return Iterator po elementach.
      */
     @Override
@@ -88,6 +98,8 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     }
 
     /**
+     * Dostarcza liczbê elementów zawartych na liœcie.
+     * 
      * @return Liczba elementow.
      */
     public int getNumberOfElements() {
@@ -95,6 +107,9 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
     }
 
     /**
+     * Inforuje czy lista zawiera siê w kolekcji, która zosta³a podana jako
+     * argument wejœciowy.
+     * 
      * @param objects
      *            Zbiór, wewn¹trz którego powinny zawieraæ siê elementy tej
      *            listy.
@@ -104,7 +119,7 @@ public class OrderedElementsList<Type> implements Iterable<Type> {
      *             Wyst¹p, jeœli podano na wejœciu niestworzony lub
      *             nieprawid³owy zbiór.
      */
-    public boolean containsOnly(Collection<Type> objects) throws IllegalArgumentException {
+    public boolean containsIn(Collection<Type> objects) throws IllegalArgumentException {
 	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(objects, "Podany zbiór do porówania jest nieprawid³owy!");
 	return objects.containsAll(elements);
     }

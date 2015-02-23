@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.NoSuchElementException;
 
 import org.junit.Rule;
@@ -92,7 +92,7 @@ public class IngredientTest {
     public void ingredientShouldProvidesOperationStatesAfterAllOperationsExecuting() {
 	Ingredient ingredient = Fixtures.getComplexFixture();
 
-	List<OperationStatus> operationsStates = ingredient.doOperations();
+	Collection<OperationStatus> operationsStates = ingredient.doOperations();
 
 	assertFalse(operationsStates.isEmpty());
     }

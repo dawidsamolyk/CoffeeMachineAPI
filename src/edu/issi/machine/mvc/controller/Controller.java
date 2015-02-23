@@ -26,12 +26,15 @@ public class Controller {
     protected List<View> views = new ArrayList<View>();
 
     /**
-     * Model jest wymagany.
+     * Konstruktor. Model jest wymagany.
      * 
      * @param model
      *            Model.
+     * @throws IllegalArgumentException
+     *             Wyst¹pi, jeœli obiekt Model nie zosta³ utworzony (referencja
+     *             do null).
      */
-    public Controller(Model model) {
+    public Controller(Model model) throws IllegalArgumentException {
 	Validator.throwExceptionWhenObjectIsNotCreated(model, "Nie podano modelu aplikacji!");
 	this.model = model;
     }
@@ -57,7 +60,7 @@ public class Controller {
     }
 
     /**
-     * Startuje maszynê.
+     * Uruchamia maszynê.
      */
     public void startMachine() {
 	model.startMachine();
@@ -229,7 +232,7 @@ public class Controller {
 	    for (int p = 0; p < ingredients.size(); p++) {
 		String ingredientName = ingredients.get(p);
 		Ingredient ingredient = model.getIngredientByName(ingredientName);
-		
+
 		Map<PropertyIdentity, Double> resultProperties = getIngredientProperties(view, ingredientName);
 		ingredient.set(resultProperties);
 
@@ -242,15 +245,15 @@ public class Controller {
 
 	    Map<String, Unit> availableIngredientProperties = model.getPropertiesForIngredientNamed(ingredientName);
 	    Map<String, Double> ingredientProperties = view.getPropertiesForIngredient(ingredientName,
-	    	availableIngredientProperties);
+		    availableIngredientProperties);
 
 	    for (String eachPropertyName : ingredientProperties.keySet()) {
-	        PropertyIdentity property = model.getPropertyByName(eachPropertyName);
-	        Double value = ingredientProperties.get(eachPropertyName);
-	        
-	        resultProperties.put(property, value);
+		PropertyIdentity property = model.getPropertyByName(eachPropertyName);
+		Double value = ingredientProperties.get(eachPropertyName);
+
+		resultProperties.put(property, value);
 	    }
-	    
+
 	    return resultProperties;
 	}
     }

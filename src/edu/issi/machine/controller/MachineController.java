@@ -17,6 +17,8 @@ public class MachineController {
     private boolean working = false;
 
     /**
+     * Konstruktor. Obiekt MachineConfiguration jest wymagany.
+     * 
      * @param configuration
      *            Konfiguracja maszyny.
      * @throws IllegalArgumentException
@@ -74,6 +76,8 @@ public class MachineController {
     }
 
     /**
+     * Funkcja wskazuj¹ca czy maszyna zosta³a uruchomiona.
+     * 
      * @return Wskazuje czy maszyna jest uruchomiona.
      */
     public boolean isWorking() {

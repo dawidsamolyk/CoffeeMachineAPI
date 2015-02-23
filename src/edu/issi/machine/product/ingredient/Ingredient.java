@@ -1,9 +1,9 @@
 package edu.issi.machine.product.ingredient;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -24,6 +24,8 @@ public class Ingredient extends ObjectWithIdentity {
     private Iterable<Operation> operations;
 
     /**
+     * Konstruktor. Obiekt klasy Identity jest wymagany.
+     * 
      * @param identity
      *            Identyfikator.
      */
@@ -34,6 +36,8 @@ public class Ingredient extends ObjectWithIdentity {
     }
 
     /**
+     * Zwraca wartoœæ w³aœciwoœci sk³adnika.
+     * 
      * @param property
      *            W³asnoœæ sk³adnika, któr¹ chcemy pobraæ.
      * @return Zwraca wartoœæ przypisan¹ do wybranej w³aœciwoœci sk³adnika.
@@ -55,6 +59,8 @@ public class Ingredient extends ObjectWithIdentity {
     }
 
     /**
+     * Dodaje now¹ w³aœciwoœæ sk³adnika.
+     * 
      * @param property
      *            W³asnoœæ sk³adnika.
      * @param value
@@ -68,6 +74,8 @@ public class Ingredient extends ObjectWithIdentity {
     }
 
     /**
+     * Usuwa konkretn¹ w³aœciwoœæ sk³adnika.
+     * 
      * @param property
      *            W³asnoœæ sk³adnika.
      * @throws IllegalArgumentException
@@ -88,6 +96,9 @@ public class Ingredient extends ObjectWithIdentity {
     }
 
     /**
+     * Ustawia listê operacji do wykoania. Kolejnoœæ wykonania operacji jest
+     * istotna.
+     * 
      * @param operations
      *            Operacje.
      */
@@ -98,6 +109,8 @@ public class Ingredient extends ObjectWithIdentity {
     }
 
     /**
+     * Zwraca wszystkie w³aœciwoœci sk³adnika.
+     * 
      * @return W³aœciwoœci sk³adnika.
      */
     public Map<PropertyIdentity, Double> getProperties() {
@@ -105,16 +118,18 @@ public class Ingredient extends ObjectWithIdentity {
     }
 
     /**
+     * Wykonuje wszystkie operacje na sk³adniku i zwraca statusy tych operacji.
+     * 
      * @return Statusy wszystkich wykonanych operacji.
      * @throws IllegalArgumentException
      *             Wyst¹pi, jeœli nie ustawiono poprawnych operacji
      *             (niepustych).
      */
-    public List<OperationStatus> doOperations() throws IllegalArgumentException {
+    public Collection<OperationStatus> doOperations() throws IllegalArgumentException {
 	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(operations,
 		"Zbiór operacji na sk³adniku nie mo¿e byæ pusty lub niepe³ny!");
 
-	final List<OperationStatus> result = new ArrayList<OperationStatus>();
+	final Collection<OperationStatus> result = new ArrayList<OperationStatus>();
 
 	for (Iterator<Operation> itearator = operations.iterator(); itearator.hasNext();) {
 	    OperationStatus state = itearator.next().execute();
@@ -125,6 +140,8 @@ public class Ingredient extends ObjectWithIdentity {
     }
 
     /**
+     * Ustawia zupe³nie nowe w³aœciwoœci sk³adnika (poprzednie zostan¹ usniête).
+     * 
      * @param ingredientProperties
      *            W³aœciwoœci sk³adnika.
      * @throws IllegalArgumentException

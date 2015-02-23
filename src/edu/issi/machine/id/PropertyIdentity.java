@@ -11,16 +11,6 @@ import edu.issi.machine.product.ingredient.Unit;
 public class PropertyIdentity extends Identity {
     private final Unit unit;
 
-    /**
-     * @param id
-     *            Numer identyfikacyjny.
-     * @param name
-     *            Nazwa w³aœciwoœci.
-     * @param unit
-     *            Jednostka miary w³aœciwoœci.
-     * @throws IllegalArgumentException
-     *             Wyst¹pi, jeœli jednostka miary nie zostanie podana.
-     */
     protected PropertyIdentity(int id, String name, Unit unit) throws IllegalArgumentException {
 	super(id, name);
 
@@ -29,6 +19,8 @@ public class PropertyIdentity extends Identity {
     }
 
     /**
+     * Pobranie jednostki miary.
+     * 
      * @return Jednostka miary w³aœciwoœci.
      */
     public Unit getUnit() {
@@ -43,6 +35,8 @@ public class PropertyIdentity extends Identity {
 	private static int Counter = 0;
 
 	/**
+	 * Dostarcza nowy identyfikator w³aœciwoœci sk³adnika.
+	 * 
 	 * @param name
 	 *            Nazwa w³aœciwoœci.
 	 * @param unit
