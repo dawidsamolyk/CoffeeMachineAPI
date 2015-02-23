@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MachineConfiguration.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-22 19:17:42)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.configuration</a> &gt; <span class="el_source">MachineConfiguration.java</span></div><h1>MachineConfiguration.java</h1><pre class="source lang-java linenums">package edu.issi.machine.configuration;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MachineConfiguration.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-23 17:07:09)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.configuration</a> &gt; <span class="el_source">MachineConfiguration.java</span></div><h1>MachineConfiguration.java</h1><pre class="source lang-java linenums">package edu.issi.machine.configuration;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -23,6 +23,11 @@ public class MachineConfiguration {
     private final Map&lt;String, Product&gt; products;
 
     /**
+     * Konstruktor. Wymagane jest, aby wszystkie parametry były utworzone oraz
+     * nie były puste. Konieczne jest również, aby kolekcja obiektów Product
+     * bazowała na obiektach kolekcji Ingredient (każdy obiekt Product jest
+     * kolekcją obiektów Ingredient).
+     * 
      * @param subassemblies
      *            Podzespoły maszyny.
      * @param ingredients
@@ -36,94 +41,91 @@ public class MachineConfiguration {
      *             z produktów posiada składniki, które nie są znane dla
      *             konfiguracji maszyny.
      */
-<span class="fc" id="L39">    public MachineConfiguration(Collection&lt;Subassembly&gt; subassemblies, Collection&lt;Ingredient&gt; ingredients,</span>
+<span class="fc" id="L44">    public MachineConfiguration(Collection&lt;Subassembly&gt; subassemblies, Collection&lt;Ingredient&gt; ingredients,</span>
 	    Collection&lt;Product&gt; products) throws IllegalArgumentException {
-<span class="fc" id="L41">	validator.throwExceptionIfAnyIsInvalid(subassemblies, ingredients, products);</span>
+<span class="fc" id="L46">	validator.throwExceptionIfAnyIsInvalid(subassemblies, ingredients, products);</span>
 
-<span class="fc" id="L43">	this.subassemblies = transformToMap(subassemblies);</span>
-<span class="fc" id="L44">	this.ingredients = transformToMap(ingredients);</span>
-<span class="fc" id="L45">	this.products = new HashMap&lt;String, Product&gt;();</span>
-<span class="fc" id="L46">	this.addAll(products);</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L48">	this.subassemblies = transformToMap(subassemblies);</span>
+<span class="fc" id="L49">	this.ingredients = transformToMap(ingredients);</span>
+<span class="fc" id="L50">	this.products = new HashMap&lt;String, Product&gt;();</span>
+<span class="fc" id="L51">	this.addAll(products);</span>
+<span class="fc" id="L52">    }</span>
 
     private void addAll(Collection&lt;Product&gt; products) throws IllegalStateException {
-<span class="fc bfc" id="L50" title="All 2 branches covered.">	for (Product eachProduct : products) {</span>
-<span class="fc" id="L51">	    this.addProduct(eachProduct);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">	for (Product eachProduct : products) {</span>
+<span class="fc" id="L56">	    this.addProduct(eachProduct);</span>
 	}
-<span class="fc" id="L53">    }</span>
+<span class="fc" id="L58">    }</span>
 
     private &lt;T extends ObjectWithIdentity&gt; Map&lt;String, T&gt; transformToMap(Collection&lt;T&gt; objects) {
-<span class="fc" id="L56">	return Utils.asMap(objects);</span>
+<span class="fc" id="L61">	return Utils.asMap(objects);</span>
     }
 
     /**
+     * Zwraca iterator, umożliwiający przejrzenie produktów.
+     * 
      * @return Iterator po produktach, które może wydać maszyna.
      */
     public Iterator&lt;Product&gt; getProductsIterator() {
-<span class="fc" id="L63">	return products.values().iterator();</span>
+<span class="fc" id="L70">	return products.values().iterator();</span>
     }
 
     /**
+     * Zwraca iterator, umożliwiający przejrzenie składników.
+     * 
      * @return Iterator po składnikach produktów, które może wydać maszyny.
      */
     public Iterator&lt;Ingredient&gt; getIngredientsIterator() {
-<span class="fc" id="L70">	return ingredients.values().iterator();</span>
+<span class="fc" id="L79">	return ingredients.values().iterator();</span>
     }
 
     /**
+     * Zwraca iterator, umożliwiający przejrzenie podzespołów.
+     * 
      * @return Iterator po podzespołach maszyny.
      */
     public Iterator&lt;Subassembly&gt; getSubassembliesIterator() {
-<span class="fc" id="L77">	return subassemblies.values().iterator();</span>
+<span class="fc" id="L88">	return subassemblies.values().iterator();</span>
     }
 
-    /**
-     * @param product
-     *            Produkt.
-     * @throws IllegalArgumentException
-     *             Wystąpi, jeśli produkt, który jest argumentem wejściowym
-     *             funkcji, nie został stworzony lub jeśli produkt zawiera
-     *             nieznane składniki (takie, których nie obsługuje maszyna).
-     */
-    public void addProduct(Product product) throws IllegalArgumentException {
-<span class="fc" id="L89">	validator.throwExceptionWhenInvalid(product);</span>
+    private void addProduct(Product product) throws IllegalArgumentException {
+<span class="fc" id="L92">	validator.throwExceptionWhenInvalid(product);</span>
+<span class="fc" id="L93">	products.put(product.getName(), product);</span>
+<span class="fc" id="L94">    }</span>
 
-<span class="fc" id="L91">	products.put(product.getName(), product);</span>
-<span class="fc" id="L92">    }</span>
-
-<span class="fc" id="L94">    private class Validator {</span>
+<span class="fc" id="L96">    private class Validator {</span>
 
 	private boolean containsOnlyKnownIngredients(Product product) {
-<span class="fc" id="L97">	    return product.containsOnly(ingredients.values());</span>
+<span class="fc" id="L99">	    return product.containsIn(ingredients.values());</span>
 	}
 
 	private void throwExceptionWhenInvalid(Product product) throws IllegalArgumentException {
-<span class="fc" id="L101">	    edu.issi.machine.Validator.throwExceptionWhenObjectIsNotCreated(product,</span>
-<span class="fc" id="L102">		    &quot;Nie można dodać pustego produktu do konfiguracji maszyny!&quot;);</span>
+<span class="fc" id="L103">	    edu.issi.machine.Validator.throwExceptionWhenObjectIsNotCreated(product,</span>
+<span class="fc" id="L104">		    &quot;Nie można dodać pustego produktu do konfiguracji maszyny!&quot;);</span>
 
-<span class="fc bfc" id="L104" title="All 2 branches covered.">	    if (!containsOnlyKnownIngredients(product)) {</span>
-<span class="fc" id="L105">		throw new IllegalArgumentException(&quot;Produkt &quot; + product.getName() + &quot; zawiera nieznane składniki!&quot;);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">	    if (!containsOnlyKnownIngredients(product)) {</span>
+<span class="fc" id="L107">		throw new IllegalArgumentException(&quot;Produkt &quot; + product.getName() + &quot; zawiera nieznane składniki!&quot;);</span>
 	    }
-<span class="fc" id="L107">	}</span>
+<span class="fc" id="L109">	}</span>
 
 	private void throwExceptionIfAnyIsInvalid(Collection&lt;Subassembly&gt; subassemblies, Collection&lt;Ingredient&gt; ingredients,
 		Collection&lt;Product&gt; products) throws IllegalArgumentException {
-<span class="fc" id="L111">	    edu.issi.machine.Validator.throwExceptionWhenEmptyOrContainsEmptyObject(subassemblies,</span>
-<span class="fc" id="L112">		    &quot;Nie można utworzyć konfiguracji maszyny bez żadnych podzespołów!&quot;);</span>
-<span class="fc" id="L113">	    edu.issi.machine.Validator.throwExceptionWhenEmptyOrContainsEmptyObject(ingredients,</span>
-<span class="fc" id="L114">		    &quot;Nie można utworzyć konfiguracji maszyny bez żadnych składników!&quot;);</span>
-<span class="fc" id="L115">	    edu.issi.machine.Validator.throwExceptionWhenEmptyOrContainsEmptyObject(products,</span>
-<span class="fc" id="L116">		    &quot;Nie można utworzyć konfiguracji maszyny bez żadnych produktów!&quot;);</span>
+<span class="fc" id="L113">	    edu.issi.machine.Validator.throwExceptionWhenEmptyOrContainsEmptyObject(subassemblies,</span>
+<span class="fc" id="L114">		    &quot;Nie można utworzyć konfiguracji maszyny bez żadnych podzespołów!&quot;);</span>
+<span class="fc" id="L115">	    edu.issi.machine.Validator.throwExceptionWhenEmptyOrContainsEmptyObject(ingredients,</span>
+<span class="fc" id="L116">		    &quot;Nie można utworzyć konfiguracji maszyny bez żadnych składników!&quot;);</span>
+<span class="fc" id="L117">	    edu.issi.machine.Validator.throwExceptionWhenEmptyOrContainsEmptyObject(products,</span>
+<span class="fc" id="L118">		    &quot;Nie można utworzyć konfiguracji maszyny bez żadnych produktów!&quot;);</span>
 
-<span class="fc bfc" id="L118" title="All 2 branches covered.">	    for (Iterator&lt;Product&gt; iterator = products.iterator(); iterator.hasNext();) {</span>
-<span class="fc" id="L119">		Product eachProduct = iterator.next();</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">	    for (Iterator&lt;Product&gt; iterator = products.iterator(); iterator.hasNext();) {</span>
+<span class="fc" id="L121">		Product eachProduct = iterator.next();</span>
 
-<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (eachProduct.numberOfElements() == 0) {</span>
-<span class="fc" id="L122">		    throw new IllegalArgumentException(&quot;Produkt &quot; + eachProduct.getName() + &quot; nie posiada żadnych składników!&quot;);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (eachProduct.numberOfElements() == 0) {</span>
+<span class="fc" id="L124">		    throw new IllegalArgumentException(&quot;Produkt &quot; + eachProduct.getName() + &quot; nie posiada żadnych składników!&quot;);</span>
 		}
 	    }
-<span class="fc" id="L125">	}</span>
+<span class="fc" id="L127">	}</span>
 
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-22 19:17:42)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-23 17:07:09)</div></body></html>

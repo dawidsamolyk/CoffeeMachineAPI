@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>OrderedElementsList.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-22 19:17:42)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.product</a> &gt; <span class="el_source">OrderedElementsList.java</span></div><h1>OrderedElementsList.java</h1><pre class="source lang-java linenums">package edu.issi.machine.product;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>OrderedElementsList.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-23 17:07:09)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.product</a> &gt; <span class="el_source">OrderedElementsList.java</span></div><h1>OrderedElementsList.java</h1><pre class="source lang-java linenums">package edu.issi.machine.product;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -19,24 +19,28 @@ public class OrderedElementsList&lt;Type&gt; implements Iterable&lt;Type&gt; {
     private final List&lt;Type&gt; elements;
 
     /**
-     * 
+     * Konstruktor. Tworzy pustą listę obiektów podanego typu.
      */
 <span class="fc" id="L24">    public OrderedElementsList() {</span>
 <span class="fc" id="L25">	elements = new LinkedList&lt;Type&gt;();</span>
 <span class="fc" id="L26">    }</span>
 
     /**
+     * Dodaje nowy element na końcu listy.
+     * 
      * @param object
      *            Obiekt, który zostanie dodany na końcu listy.
      * @throws IllegalArgumentException
      *             Wystąpi, jeśli obiekt wejściowy nie został utworzony.
      */
     public void add(Type object) throws IllegalArgumentException {
-<span class="fc" id="L35">	Validator.throwExceptionWhenObjectIsNotCreated(object, &quot;Obiekt dodawany do listy elementów nie może być pusty!&quot;);</span>
-<span class="fc" id="L36">	elements.add(object);</span>
-<span class="fc" id="L37">    }</span>
+<span class="fc" id="L37">	Validator.throwExceptionWhenObjectIsNotCreated(object, &quot;Obiekt dodawany do listy elementów nie może być pusty!&quot;);</span>
+<span class="fc" id="L38">	elements.add(object);</span>
+<span class="fc" id="L39">    }</span>
 
     /**
+     * Dodaje nowy element pod wskazany indeks listy.
+     * 
      * @param index
      *            Indeks, pod który ma zostać wstawiony nowy obiekt.
      * @param object
@@ -48,15 +52,17 @@ public class OrderedElementsList&lt;Type&gt; implements Iterable&lt;Type&gt; {
      *             Wystąpi, jeśli obiekt wejściowy nie został utworzony.
      */
     public void addAt(int index, Type object) throws UnsupportedOperationException, IllegalArgumentException {
-<span class="fc" id="L51">	Validator.throwExceptionWhenObjectIsNotCreated(object, &quot;Obiekt dodawany do listy elementów nie może być pusty!&quot;);</span>
+<span class="fc" id="L55">	Validator.throwExceptionWhenObjectIsNotCreated(object, &quot;Obiekt dodawany do listy elementów nie może być pusty!&quot;);</span>
 
-<span class="pc bpc" id="L53" title="1 of 4 branches missed.">	if (index &gt; elements.size() || index &lt; 0) {</span>
-<span class="fc" id="L54">	    throw new UnsupportedOperationException(&quot;Nie mozna dodac elementu pod indeksem &quot; + index + &quot;!&quot;);</span>
+<span class="pc bpc" id="L57" title="1 of 4 branches missed.">	if (index &gt; elements.size() || index &lt; 0) {</span>
+<span class="fc" id="L58">	    throw new UnsupportedOperationException(&quot;Nie mozna dodac elementu pod indeksem &quot; + index + &quot;!&quot;);</span>
 	}
-<span class="fc" id="L56">	elements.add(index, object);</span>
-<span class="fc" id="L57">    }</span>
+<span class="fc" id="L60">	elements.add(index, object);</span>
+<span class="fc" id="L61">    }</span>
 
     /**
+     * Pobiera element spod wskazanego indeksu.
+     * 
      * @param index
      *            Indeks, spod którego ma zostać pobrany obiekt.
      * @return Skladnik na podanym indeksie.
@@ -64,37 +70,46 @@ public class OrderedElementsList&lt;Type&gt; implements Iterable&lt;Type&gt; {
      *             Wystąpi, jeśli nie ma obiektu pod podanym indeksem.
      */
     public Type getElement(int index) throws NoSuchElementException {
-<span class="fc" id="L67">	Validator.throwExceptionWhenNoSuchElementAtIndex(elements, index, &quot;Nie istnieje żaden element pod wskazanym indeksem!&quot;);</span>
-<span class="fc" id="L68">	return elements.get(index);</span>
+<span class="fc" id="L73">	Validator.throwExceptionWhenNoSuchElementAtIndex(elements, index, &quot;Nie istnieje żaden element pod wskazanym indeksem!&quot;);</span>
+<span class="fc" id="L74">	return elements.get(index);</span>
     }
 
     /**
+     * Usuwa element spod wskazanego indeksu.
+     * 
      * @param index
      *            Indeks, spod którego ma zostać usunięty obiekt.
      * @throws NoSuchElementException
      *             Wystąpi, jeśli nie ma obiektu pod podanym indeksem.
      */
     public void remove(int index) throws NoSuchElementException {
-<span class="fc" id="L78">	Validator.throwExceptionWhenNoSuchElementAtIndex(elements, index, &quot;Nie istnieje żaden element pod wskazanym indeksem!&quot;);</span>
-<span class="fc" id="L79">	elements.remove(index);</span>
-<span class="fc" id="L80">    }</span>
+<span class="fc" id="L86">	Validator.throwExceptionWhenNoSuchElementAtIndex(elements, index, &quot;Nie istnieje żaden element pod wskazanym indeksem!&quot;);</span>
+<span class="fc" id="L87">	elements.remove(index);</span>
+<span class="fc" id="L88">    }</span>
 
     /**
+     * Dostarcza iteratora po elementach listy.
+     * 
      * @return Iterator po elementach.
      */
     @Override
     public Iterator&lt;Type&gt; iterator() {
-<span class="fc" id="L87">	return elements.iterator();</span>
+<span class="fc" id="L97">	return elements.iterator();</span>
     }
 
     /**
+     * Dostarcza liczbę elementów zawartych na liście.
+     * 
      * @return Liczba elementow.
      */
     public int getNumberOfElements() {
-<span class="fc" id="L94">	return elements.size();</span>
+<span class="fc" id="L106">	return elements.size();</span>
     }
 
     /**
+     * Inforuje czy lista zawiera się w kolekcji, która została podana jako
+     * argument wejściowy.
+     * 
      * @param objects
      *            Zbiór, wewnątrz którego powinny zawierać się elementy tej
      *            listy.
@@ -104,9 +119,9 @@ public class OrderedElementsList&lt;Type&gt; implements Iterable&lt;Type&gt; {
      *             Wystąp, jeśli podano na wejściu niestworzony lub
      *             nieprawidłowy zbiór.
      */
-    public boolean containsOnly(Collection&lt;Type&gt; objects) throws IllegalArgumentException {
-<span class="fc" id="L108">	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(objects, &quot;Podany zbiór do porówania jest nieprawidłowy!&quot;);</span>
-<span class="fc" id="L109">	return objects.containsAll(elements);</span>
+    public boolean containsIn(Collection&lt;Type&gt; objects) throws IllegalArgumentException {
+<span class="fc" id="L123">	Validator.throwExceptionWhenEmptyOrContainsEmptyObject(objects, &quot;Podany zbiór do porówania jest nieprawidłowy!&quot;);</span>
+<span class="fc" id="L124">	return objects.containsAll(elements);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-22 19:17:42)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-23 17:07:09)</div></body></html>

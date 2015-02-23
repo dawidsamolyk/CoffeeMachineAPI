@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Validator.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-22 19:17:42)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine</a> &gt; <span class="el_source">Validator.java</span></div><h1>Validator.java</h1><pre class="source lang-java linenums">package edu.issi.machine;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Validator.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-23 17:07:09)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine</a> &gt; <span class="el_source">Validator.java</span></div><h1>Validator.java</h1><pre class="source lang-java linenums">package edu.issi.machine;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.NoSuchElementException;
 
 /**
@@ -11,6 +11,9 @@ import java.util.NoSuchElementException;
 <span class="nc" id="L11">public class Validator {</span>
 
     /**
+     * Zostanie rzucony wyjątek, gdy sprawdzany obiekt nie został utworzony
+     * (referencja do null).
+     * 
      * @param object
      *            Obiekt do sprawdzenia.
      * @param exceptionMessage
@@ -20,12 +23,15 @@ import java.util.NoSuchElementException;
      */
     public static void throwExceptionWhenObjectIsNotCreated(Object object, String exceptionMessage)
 	    throws IllegalArgumentException {
-<span class="fc bfc" id="L23" title="All 2 branches covered.">	if (object == null) {</span>
-<span class="fc" id="L24">	    throw new IllegalArgumentException(exceptionMessage);</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">	if (object == null) {</span>
+<span class="fc" id="L27">	    throw new IllegalArgumentException(exceptionMessage);</span>
 	}
-<span class="fc" id="L26">    }</span>
+<span class="fc" id="L29">    }</span>
 
     /**
+     * Zostanie rzucony wyjątek, gdy sprawdzany tekst nie został utworzony lub
+     * jest pusty (nie zawiera treści).
+     * 
      * @param text
      *            Tekst do sprawdzenia.
      * @param exceptionMessage
@@ -34,12 +40,15 @@ import java.util.NoSuchElementException;
      *             Wygenerowany błąd.
      */
     public static void throwExceptionWhenTextIsEmpty(String text, String exceptionMessage) throws IllegalArgumentException {
-<span class="fc bfc" id="L37" title="All 4 branches covered.">	if (text == null || text.length() == 0) {</span>
-<span class="fc" id="L38">	    throw new IllegalArgumentException(exceptionMessage);</span>
+<span class="fc bfc" id="L43" title="All 4 branches covered.">	if (text == null || text.length() == 0) {</span>
+<span class="fc" id="L44">	    throw new IllegalArgumentException(exceptionMessage);</span>
 	}
-<span class="fc" id="L40">    }</span>
+<span class="fc" id="L46">    }</span>
 
     /**
+     * Zostanie rzucony wyjątek, gdy sprawdzana kolekcja nie została utworzona
+     * lub, gdy podany na wejściu indeks jest nieprawidłowy dla kolekcji.
+     * 
      * @param list
      *            Lista obiektów do sprawdzenia.
      * @param index
@@ -51,17 +60,20 @@ import java.util.NoSuchElementException;
      * @throws IllegalArgumentException
      *             Wygenerowany błąd.
      */
-    public static void throwExceptionWhenNoSuchElementAtIndex(List&lt;?&gt; list, int index, String exceptionMessage)
+    public static void throwExceptionWhenNoSuchElementAtIndex(Collection&lt;?&gt; list, int index, String exceptionMessage)
 	    throws NoSuchElementException, IllegalArgumentException {
 
-<span class="fc" id="L57">	throwExceptionWhenEmptyOrContainsEmptyObject(list, &quot;Na podanej liście nie ma obiektów!&quot;);</span>
+<span class="fc" id="L66">	throwExceptionWhenEmptyOrContainsEmptyObject(list, &quot;Na podanej liście nie ma obiektów!&quot;);</span>
 
-<span class="fc bfc" id="L59" title="All 4 branches covered.">	if (index &lt; 0 || index &gt;= list.size()) {</span>
-<span class="fc" id="L60">	    throw new NoSuchElementException(&quot;Nie ma elementu pod podanym indeksem!&quot;);</span>
+<span class="fc bfc" id="L68" title="All 4 branches covered.">	if (index &lt; 0 || index &gt;= list.size()) {</span>
+<span class="fc" id="L69">	    throw new NoSuchElementException(&quot;Nie ma elementu pod podanym indeksem!&quot;);</span>
 	}
-<span class="fc" id="L62">    }</span>
+<span class="fc" id="L71">    }</span>
 
     /**
+     * Zostanie rzucony wyjątek, gdy sprawdzany zbiór obiektów (iterowalny) nie
+     * został stworzony lub zawiera niestaworzone elementy (referencje do null).
+     * 
      * @param itearable
      *            Zbiór obiektów do sprawdzenia.
      * @param exceptionMessage
@@ -71,23 +83,26 @@ import java.util.NoSuchElementException;
      */
     public static void throwExceptionWhenEmptyOrContainsEmptyObject(Iterable&lt;?&gt; itearable, String exceptionMessage)
 	    throws IllegalArgumentException {
-<span class="fc bfc" id="L74" title="All 6 branches covered.">	if (itearable == null || !itearable.iterator().hasNext() || containsNullObjects(itearable)) {</span>
-<span class="fc" id="L75">	    throw new IllegalArgumentException(exceptionMessage);</span>
+<span class="fc bfc" id="L86" title="All 6 branches covered.">	if (itearable == null || !itearable.iterator().hasNext() || containsNullObjects(itearable)) {</span>
+<span class="fc" id="L87">	    throw new IllegalArgumentException(exceptionMessage);</span>
 	}
-<span class="fc" id="L77">    }</span>
+<span class="fc" id="L89">    }</span>
 
     /**
+     * Zostanie rzucony wyjątek, gdy sprawdzany zbiór obiektów zawiera
+     * nieutworzone elementy (referencje do null).
+     * 
      * @param itearable
      *            Zbiór obiektów do sprawdzenia.
      * @return Czy zawiera puste referencje.
      */
     public static boolean containsNullObjects(Iterable&lt;?&gt; itearable) {
-<span class="fc bfc" id="L85" title="All 2 branches covered.">	for (Object eachElement : itearable) {</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">	    if (eachElement == null) {</span>
-<span class="fc" id="L87">		return true;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">	for (Object eachElement : itearable) {</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">	    if (eachElement == null) {</span>
+<span class="fc" id="L102">		return true;</span>
 	    }
 	}
-<span class="fc" id="L90">	return false;</span>
+<span class="fc" id="L105">	return false;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-22 19:17:42)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-23 17:07:09)</div></body></html>

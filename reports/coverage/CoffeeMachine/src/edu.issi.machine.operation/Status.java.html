@@ -1,30 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Status.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-22 19:17:42)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.operation</a> &gt; <span class="el_source">Status.java</span></div><h1>Status.java</h1><pre class="source lang-java linenums"><span class="pc" id="L1">package edu.issi.machine.operation;</span>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Status.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-23 17:07:09)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.operation</a> &gt; <span class="el_source">Status.java</span></div><h1>Status.java</h1><pre class="source lang-java linenums"><span class="pc" id="L1">package edu.issi.machine.operation;</span>
 
 /**
- * @author Dawid SamoĹ‚yk
+ * @author Dawid Samołyk
  *
- * Status.
+ *         Status.
  */
 <span class="fc" id="L8">public enum Status {</span>
 <span class="fc" id="L9">    /**</span>
-     * 
+     * Poprawny.
      */
 <span class="fc" id="L12">    OK,</span>
 <span class="fc" id="L13">    /**</span>
-     * 
+     * Ostrzeżenie.
      */
 <span class="fc" id="L16">    WARNING,</span>
 <span class="fc" id="L17">    /**</span>
-     * 
+     * Błąd.
      */
 <span class="fc" id="L20">    ERROR;</span>
 
     /**
+     * Informuje czy dany status wymaga uwagi, czyli czy jest to błąd
+     * lub ostrzeżenie.
+     * 
      * @return Czy dany status wymaga uwagi.
      */
     public boolean requiresAttention() {
-<span class="fc bfc" id="L26" title="All 4 branches covered.">	return this == ERROR || this == WARNING;</span>
+<span class="fc bfc" id="L29" title="All 4 branches covered.">	return this == ERROR || this == WARNING;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-22 19:17:42)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-23 17:07:09)</div></body></html>

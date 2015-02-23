@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Product.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-22 19:17:42)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.product</a> &gt; <span class="el_source">Product.java</span></div><h1>Product.java</h1><pre class="source lang-java linenums">package edu.issi.machine.product;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Product.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=8;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (2015-02-23 17:07:09)</a> &gt; <a href="../../index.html" class="el_group">CoffeeMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.issi.machine.product</a> &gt; <span class="el_source">Product.java</span></div><h1>Product.java</h1><pre class="source lang-java linenums">package edu.issi.machine.product;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -11,33 +11,40 @@ import edu.issi.machine.product.ingredient.Ingredient;
 /**
  * @author Dawid Samołyk
  *
- *         Produkt.
+ *         Produkt. Kolejność dodanych składników determuje kolejność, w której
+ *         będą one przygotowywane.
  */
 public class Product extends ObjectWithIdentity implements Iterable&lt;Ingredient&gt; {
     private final OrderedElementsList&lt;Ingredient&gt; ingredients;
 
     /**
+     * Konstruktor. Obiekt klasy Identity jest wymagany.
+     * 
      * @param id
      *            Identyfikator.
      * @throws IllegalArgumentException
      *             Wystąpi, jeśli identyfikator będzie pusty.
      */
     public Product(final Identity id) throws IllegalArgumentException {
-<span class="fc" id="L26">	super(id);</span>
-<span class="fc" id="L27">	ingredients = new OrderedElementsList&lt;Ingredient&gt;();</span>
-<span class="fc" id="L28">    }</span>
+<span class="fc" id="L29">	super(id);</span>
+<span class="fc" id="L30">	ingredients = new OrderedElementsList&lt;Ingredient&gt;();</span>
+<span class="fc" id="L31">    }</span>
 
     /**
+     * Dodanie nowego składnika na końcu listy składników.
+     * 
      * @param ingredient
      *            Składnik, który zostanie dodany na końcu listy.
      * @throws IllegalArgumentException
      *             Wystąpi, jeśli składnik będzie pusty.
      */
     public void add(Ingredient ingredient) throws IllegalArgumentException {
-<span class="fc" id="L37">	ingredients.add(ingredient);</span>
-<span class="fc" id="L38">    }</span>
+<span class="fc" id="L42">	ingredients.add(ingredient);</span>
+<span class="fc" id="L43">    }</span>
 
     /**
+     * Pobranie składnika spod podanego indeksu.
+     * 
      * @param index
      *            Indeks, spod którego ma zostać pobrany składnik.
      * @return Skladnik umieszczony na podanym indeksie.
@@ -46,18 +53,22 @@ public class Product extends ObjectWithIdentity implements Iterable&lt;Ingredien
      * @see edu.issi.machine.product.OrderedElementsList#getElement(int)
      */
     public Ingredient getIngredientAt(int index) throws NoSuchElementException {
-<span class="fc" id="L49">	return ingredients.getElement(index);</span>
+<span class="fc" id="L56">	return ingredients.getElement(index);</span>
     }
 
     /**
+     * Zwraca liczbę składników.
+     * 
      * @return Liczba skladnikósw.
      * @see edu.issi.machine.product.OrderedElementsList#getNumberOfElements()
      */
     public int numberOfElements() {
-<span class="fc" id="L57">	return ingredients.getNumberOfElements();</span>
+<span class="fc" id="L66">	return ingredients.getNumberOfElements();</span>
     }
 
     /**
+     * Dodaje nowy składnik pod wskazanym indeksem.
+     * 
      * @param index
      *            Indeks, pod który ma zostać dodany składnik.
      * @param ingredient
@@ -69,10 +80,12 @@ public class Product extends ObjectWithIdentity implements Iterable&lt;Ingredien
      * @see edu.issi.machine.product.OrderedElementsList#addAt(int, Object)
      */
     public void addAt(int index, Ingredient ingredient) throws UnsupportedOperationException, IllegalArgumentException {
-<span class="fc" id="L72">	ingredients.addAt(index, ingredient);</span>
-<span class="fc" id="L73">    }</span>
+<span class="fc" id="L83">	ingredients.addAt(index, ingredient);</span>
+<span class="fc" id="L84">    }</span>
 
     /**
+     * Usuwa składnik spod wybranego indeksu.
+     * 
      * @param index
      *            Indeks, spod którego ma zostać usunięty składnik.
      * @throws NoSuchElementException
@@ -80,19 +93,24 @@ public class Product extends ObjectWithIdentity implements Iterable&lt;Ingredien
      * @see edu.issi.machine.product.OrderedElementsList#remove(int)
      */
     public void remove(int index) throws NoSuchElementException {
-<span class="fc" id="L83">	ingredients.remove(index);</span>
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L96">	ingredients.remove(index);</span>
+<span class="fc" id="L97">    }</span>
 
     /**
+     * Zwraca iterator po składnikach.
+     * 
      * @return Iterator po skladnikach.
      * @see edu.issi.machine.product.OrderedElementsList#iterator()
      */
     @Override
     public Iterator&lt;Ingredient&gt; iterator() {
-<span class="fc" id="L92">	return ingredients.iterator();</span>
+<span class="fc" id="L107">	return ingredients.iterator();</span>
     }
 
     /**
+     * Informuje czy składniki zawierają się w kolekcji, która jest parametrem
+     * wejściowym.
+     * 
      * @param ingredients
      *            Składniki.
      * @return Czy produkt zawiera tylko i wyłączie składniki, które podano jako
@@ -101,23 +119,25 @@ public class Product extends ObjectWithIdentity implements Iterable&lt;Ingredien
      *             Wystąp, jeśli podano na wejściu niestworzony lub
      *             nieprawidłowy zbiór.
      */
-    public boolean containsOnly(Collection&lt;Ingredient&gt; ingredients) throws IllegalArgumentException {
-<span class="fc" id="L105">	return this.ingredients.containsOnly(ingredients);</span>
+    public boolean containsIn(Collection&lt;Ingredient&gt; ingredients) throws IllegalArgumentException {
+<span class="fc" id="L123">	return this.ingredients.containsIn(ingredients);</span>
     }
 
     /**
+     * Zwraca kopię obiektu.
+     * 
      * @return Skopiowany produkt.
      */
     @Override
     public Product clone() {
-<span class="fc" id="L113">	Product result = new Product(Identity.Factory.newIdentity(this.getName()));</span>
+<span class="fc" id="L133">	Product result = new Product(Identity.Factory.newIdentity(this.getName()));</span>
 
-<span class="fc bfc" id="L115" title="All 2 branches covered.">	for (Ingredient eachIngredient : this.ingredients) {</span>
-<span class="fc" id="L116">	    result.add(eachIngredient);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">	for (Ingredient eachIngredient : this.ingredients) {</span>
+<span class="fc" id="L136">	    result.add(eachIngredient);</span>
 	}
 
-<span class="fc" id="L119">	return result;</span>
+<span class="fc" id="L139">	return result;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-22 19:17:42)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (2015-02-23 17:07:09)</div></body></html>
